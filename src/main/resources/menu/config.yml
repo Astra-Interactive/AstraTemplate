@@ -1,0 +1,19 @@
+#Do not delete this section
+item_navigation:
+  back:
+    name: "Назад"
+    material: STONE
+    custom_model_data: 32
+
+  next:
+    name: "След. страница ->"
+    material: STONE
+    custom_model_data: 32
+
+  prev:
+    name: "<- Пред. страница"
+    material: STONE
+    custom_model_data: 32
+
+
+
