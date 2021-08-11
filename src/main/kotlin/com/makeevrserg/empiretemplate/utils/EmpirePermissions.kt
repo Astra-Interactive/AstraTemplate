@@ -1,9 +1,12 @@
 package com.makeevrserg.empiretemplate.utils
 
+/**
+ * Permission class.
+ *
+ * All permission should be stored in companion object
+ */
 public class EmpirePermissions{
     public companion object {
-        public val EMPGIVE: String = "empireitems.give"
-        public val EZIP: String = "empireitems.zip"
-        public val RELOAD: String = "empireitems.reload"
+        public val RELOAD: String = "empiretemplate.reload"
     }
 }

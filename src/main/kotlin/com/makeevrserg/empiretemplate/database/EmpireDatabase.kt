@@ -1,79 +1,83 @@
 package com.makeevrserg.empiretemplate.database
 
-import com.makeevrserg.empiretemplate.EmpireTemplate.Companion.plugin
-import com.makeevrserg.empiretemplate.utils.Translations.Companion.translations
+import com.makeevrserg.empiretemplate.EmpireTemplate
+import com.makeevrserg.empiretemplate.database.entities.User
 import java.io.File
 import java.sql.Connection
 import java.sql.DriverManager
-import java.sql.ResultSet
 import java.sql.SQLException
 
-
+/**
+ * Database for plugin
+ */
+@Deprecated("Not fully working")
 class EmpireDatabase {
 
 
-    val dbPath = "${plugin.dataFolder}${File.separator}data.db"
-    lateinit var conn: Connection
+    /**
+     * Path for your plugin database
+     *
+     * Should be private
+     */
+    private val dbPath = "${EmpireTemplate.instance.dataFolder}${File.separator}data.db"
 
+    /**
+     * Connection for your database.
+     *
+     * You should call this object only from DatabaseQuerries
+     * @See DatabaseQuerries
+     */
+    companion object {
+        lateinit var connection: Connection
+    }
 
-    private fun CreateTables(): Boolean {
+    /**
+     * Function for connecting to local database
+     */
+    private fun connectDatabase(): Boolean {
         return try {
-            conn = DriverManager.getConnection("jdbc:sqlite:$dbPath")
-            conn.prepareStatement("CREATE TABLE IF NOT EXISTS USER(discord_id varchar(32),mincraft_uuid varchar(16))")
-                .execute()
+            connection = DriverManager.getConnection("jdbc:sqlite:$dbPath")
             true
         } catch (ex: SQLException) {
             false
         }
     }
 
-    data class User(var discordID: String, var mincraftUUID: String) {
-        constructor(result: ResultSet) : this("", "") {
-            discordID = result.getString(1)
-            mincraftUUID = result.getString(2)
-        }
+    /**
+     * Demonstrating of creating user
+     */
+    @Deprecated("Only for demonstation purposes")
+    private fun createUser() {
+        DatabaseQuerries.createUser(User("RomaRoman", 21))
     }
 
-    public fun createUser(user: User): Boolean {
-        return try {
-            conn.prepareStatement("INSERT INTO USER (discord_id, mincraft_uuid) VALUES('${user.discordID}','${user.mincraftUUID}')")
-                .execute()
-
-            true
-        } catch (ex: SQLException) {
-            false
-        }
+    /**
+     * Demonstrating of getting all users
+     */
+    @Deprecated("Only for demonstation purposes")
+    private fun getUsers() {
+        DatabaseQuerries.getUsers()
     }
 
-    public fun getUsers(): MutableList<User> {
-        return try {
-            val result = conn.createStatement().executeQuery("SELECT * from USER")
-            if (!result.next())
-                return mutableListOf()
-            val users = mutableListOf<User>()
-            while (result.next())
-                users.add(User(result))
-            users
-        } catch (ex: SQLException) {
-            return mutableListOf()
+    /**
+     * Initialization for your database
+     */
+    private fun initDatabase() {
+        if (connectDatabase())
+            println(EmpireTemplate.translation.DB_SUCCESS)
+        else {
+            println(EmpireTemplate.translation.DB_FAIL)
         }
+        createUser()
+        getUsers()
     }
 
     init {
-        if (CreateTables())
-            println(translations.DB_SUCCESS)
-        else
-            println(translations.DB_FAIL)
-
-
-        (createUser(User("AAaaaa", "Bbbbb")))
-        getUsers()
-
-
+        initDatabase()
     }
 
     public fun onDisable() {
-        conn.close()
+        connection.close()
     }
 
 }
