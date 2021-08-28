@@ -74,7 +74,7 @@ public class FileManager(var configName:String){
         try {
             getConfig()?.save(this.configFiles!!)
         } catch (e: IOException) {
-            println("${EmpireTemplate.translation.SAVE_ERROR} $configName")
+            println("${EmpireTemplate.translations.SAVE_ERROR} $configName")
         }
     }
 
@@ -86,7 +86,7 @@ public class FileManager(var configName:String){
         try {
             if (!this.configFiles!!.exists()) EmpireTemplate.instance.saveResource(configName, false)
         }catch (e:IllegalArgumentException){
-            println(EmpireTemplate.translation.NONSTANDART_FILE)
+            println(EmpireTemplate.translations.NONSTANDART_FILE)
         }
     }
 }

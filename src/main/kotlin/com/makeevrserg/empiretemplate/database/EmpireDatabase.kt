@@ -9,6 +9,8 @@ import java.sql.SQLException
 
 /**
  * Database for plugin
+ *
+ * Not fully functional!
  */
 @Deprecated("Not fully working")
 class EmpireDatabase {
@@ -64,9 +66,9 @@ class EmpireDatabase {
      */
     private fun initDatabase() {
         if (connectDatabase())
-            println(EmpireTemplate.translation.DB_SUCCESS)
+            println(EmpireTemplate.translations.DB_SUCCESS)
         else {
-            println(EmpireTemplate.translation.DB_FAIL)
+            println(EmpireTemplate.translations.DB_FAIL)
         }
         createUser()
         getUsers()

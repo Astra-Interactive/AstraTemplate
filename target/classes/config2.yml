@@ -1,0 +1,32 @@
+config__:
+  config1: "string config"
+  confi2: 0
+  config3: false
+  section:
+    value1: "value"
+    value2: 0
+  list:
+    - "config"
+    - "config"
+  another_list:
+    - value1: "value"
+      value2: 0
+    - value1: "value2"
+      value2: 0
+config2__:
+  config__2_3:
+    config1: "string config"
+    confi2: 0
+    config3: false
+    section:
+      value1: "value"
+      value2: 0
+    list:
+      - "config"
+      - "config"
+    another_list:
+      - value1: "value"
+        value2: 0
+      - value1: "value2"
+        value2: 0
+

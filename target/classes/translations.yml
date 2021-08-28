@@ -1,0 +1,5 @@
+PLUGIN_PREFIX: "#18dbd1[EmpireItems]"
+RELOAD: "#dbbb18Перезагрузка плагина"
+RELOAD_COMPLETE: "#42f596Перезагрузка успешно завершена"
+SAVE_ERROR: "#db2c18Не удалось сохранить файл"
+NONSTANDART_FILE: "#db2c18Нестнадартный файл"

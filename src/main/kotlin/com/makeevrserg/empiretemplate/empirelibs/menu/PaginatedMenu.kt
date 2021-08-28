@@ -48,7 +48,7 @@ abstract class PaginatedMenu(playerMenuUtility: PlayerMenuUtility?) : Menu(playe
     fun isFirstPage(): Boolean {
         if (page == 0) {
             playerMenuUtility.player
-                .sendMessage(EmpireTemplate.translation.FIRST_PAGE)
+                .sendMessage(EmpireTemplate.translations.FIRST_PAGE)
             return true
         }
         return false
@@ -59,7 +59,7 @@ abstract class PaginatedMenu(playerMenuUtility: PlayerMenuUtility?) : Menu(playe
     fun isLastPage(): Boolean {
         if (page >= maxPages) {
             playerMenuUtility.player
-                .sendMessage(EmpireTemplate.translation.LAST_PAGE)
+                .sendMessage(EmpireTemplate.translations.LAST_PAGE)
             return true
         }
         return false
@@ -92,18 +92,18 @@ abstract class PaginatedMenu(playerMenuUtility: PlayerMenuUtility?) : Menu(playe
         if (page >= 1)
             inventory.setItem(
                 getPrevButtonIndex(),
-                setManageButton(EmpireTemplate.translation.PREV_PAGE,Material.PAPER)
+                setManageButton(EmpireTemplate.translations.PREV_PAGE,Material.PAPER)
             )
 
         inventory.setItem(
             getBackButtonIndex(),
-            setManageButton(EmpireTemplate.translation.BACK_PAGE,Material.PAPER)
+            setManageButton(EmpireTemplate.translations.BACK_PAGE,Material.PAPER)
         )
 
         if (page < maxPages)
             inventory.setItem(
                 getNextButtonIndex(),
-                setManageButton(EmpireTemplate.translation.NEXT_PAGE,Material.PAPER)
+                setManageButton(EmpireTemplate.translations.NEXT_PAGE,Material.PAPER)
             )
 
     }

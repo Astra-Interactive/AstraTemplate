@@ -42,11 +42,28 @@ fun ItemStack.setDisplayName(name:String){
 }
 
 /**
- * Utils class
+ * If you have list with entries {"entry","ementry","emementry"} and entry="me", you'll have returned list {"ementry","emementry"}.
+ *
+ * Very useful for TabCompleter
+ *
  */
-class EmpireUtils {
+fun List<String>.withEntry(entry:String,ignoreCase:Boolean=true): List<String> {
+    val list = mutableListOf<String>()
+    for (line in this)
+        if (line.contains(entry,ignoreCase = true))
+            list.add(line)
+    return list
+}
 
-    companion object {
+
+/**
+ * Utils class
+ *
+ * Usage: EmpireUtils.fun()
+ */
+object EmpireUtils {
+
+
         private val hexPattern =
             Pattern.compile("#[a-fA-F0-9]{6}|&#[a-fA-F0-9]{6}")
 
@@ -83,5 +100,5 @@ class EmpireUtils {
             }
             return org.bukkit.ChatColor.translateAlternateColorCodes('&', line)
         }
-    }
+
 }

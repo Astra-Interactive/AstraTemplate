@@ -1,15 +1,15 @@
 package com.makeevrserg.empiretemplate.events
 
+import com.makeevrserg.empiretemplate.empirelibs.IEmpireListener
 import com.makeevrserg.empiretemplate.EmpireTemplate
 import org.bukkit.event.EventHandler
-import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockPlaceEvent
 
 
 /**
  * Template event class
  */
-class TemplateEvent : Listener {
+class TemplateEvent : IEmpireListener {
 
     /**
      * Sample event which is called when Block is placed
@@ -32,7 +32,7 @@ class TemplateEvent : Listener {
      * @see blockPlaceEvent
      * @see EventHandler
      */
-    public fun onDisable() {
+    public override fun onDisable() {
         BlockPlaceEvent.getHandlerList().unregister(this)
     }
 }

@@ -19,9 +19,9 @@ class Reload : CommandExecutor {
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
         if (!sender.hasPermission(EmpirePermissions.RELOAD))
             return false
-        sender.sendMessage(EmpireTemplate.translation.RELOAD)
+        sender.sendMessage(EmpireTemplate.translations.RELOAD)
         EmpireTemplate.instance.reloadPlugin()
-        sender.sendMessage(EmpireTemplate.translation.RELOAD_COMPLETE)
+        sender.sendMessage(EmpireTemplate.translations.RELOAD_COMPLETE)
         return true
 
     }

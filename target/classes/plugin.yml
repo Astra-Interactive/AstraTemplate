@@ -1,0 +1,12 @@
+main: com.makeevrserg.empiretemplate.EmpireTemplate
+name: EmpireTemplate
+version: 2.2
+author: MakeevRoman
+api-version: 1.13
+softdepend: []
+depend: []
+commands:
+  etempreload:
+  etemp:
+    usage: |
+      /etempreload - Перезагружает плагин

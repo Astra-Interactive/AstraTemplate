@@ -1,5 +1,6 @@
 package com.makeevrserg.empiretemplate.commands
 
+import com.makeevrserg.empiretemplate.empirelibs.withEntry
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
 import org.bukkit.command.TabCompleter
@@ -19,14 +20,10 @@ public class EmpireTabCompleter() : TabCompleter {
         args: Array<out String>
     ): List<String>? {
         if (args.isEmpty())
-            return on0Args()
+            return listOf("etemp", "etempreload")
+        if (args.size == 1)
+            return listOf("etemp", "etempreload").withEntry(alias)
         return null
-    }
-
-    private fun on0Args(): List<String> {
-        val list = mutableListOf<String>()
-        list.add("etemp")
-        return list.toList()
     }
 
 

@@ -1,16 +1,16 @@
 package com.makeevrserg.empiretemplate
 
 import CommandManager
-import com.makeevrserg.empiretemplate.database.EmpireDatabase
 import com.makeevrserg.empiretemplate.events.EventHandler
 import com.makeevrserg.empiretemplate.utils.Files
 import com.makeevrserg.empiretemplate.utils.EmpireTranslation
+import com.makeevrserg.empiretemplate.utils.config.EmpireConfig
 import org.bukkit.plugin.java.JavaPlugin
 
 /**
  * Initial class for your plugin
  */
-public final class EmpireTemplate : JavaPlugin() {
+class EmpireTemplate : JavaPlugin() {
 
     /**
      * Contains instance of the plugin and translation.
@@ -23,14 +23,17 @@ public final class EmpireTemplate : JavaPlugin() {
      * @see EmpireTranslation
      */
     companion object {
-        public lateinit var instance: EmpireTemplate
+        lateinit var instance: EmpireTemplate
             private set
-        public lateinit var translation: EmpireTranslation
+        lateinit var translations: EmpireTranslation
             private set
-        public lateinit var empireFiles: Files
+        lateinit var empireFiles: Files
             private set
-        public lateinit var database: EmpireDatabase
+
+        lateinit var pluginConfig: EmpireConfig
             private set
+//        public lateinit var database: EmpireDatabase
+//            private set
     }
 
     /**
@@ -39,6 +42,7 @@ public final class EmpireTemplate : JavaPlugin() {
      * Should be private
      */
     private lateinit var eventHandler: EventHandler
+
     /**
      * Command manager for your commands.
      *
@@ -50,42 +54,20 @@ public final class EmpireTemplate : JavaPlugin() {
 
 
     /**
-     * Made for PlugMan support, so you don't need to reload server for plugin updating
-     */
-    public fun loadPlugin() {
-        translation = EmpireTranslation()
-        empireFiles = Files()
-        eventHandler = EventHandler()
-        commandManager = CommandManager()
-        database = EmpireDatabase()
-
-    }
-
-
-    /**
-     * Made for PlugMan support, so you don't need to reload server for plugin updating
-     */
-    public fun disablePlugin() {
-        eventHandler.onDisable()
-        database.onDisable()
-    }
-
-    /**
-     * As it says, function for plugin reload
-     */
-    public fun reloadPlugin(){
-        disablePlugin()
-        loadPlugin()
-    }
-
-    /**
      * This method called when server starts.
      *
      * When server starts or PlugMan load plugin.
      */
     override fun onEnable() {
         instance = this
-        loadPlugin()
+        translations = EmpireTranslation()
+        empireFiles = Files()
+        eventHandler = EventHandler()
+        commandManager = CommandManager()
+        pluginConfig = EmpireConfig.new1()
+        EmpireConfig.new2()
+        EmpireConfig.new3()
+//        database = EmpireDatabase()
     }
 
     /**
@@ -94,6 +76,17 @@ public final class EmpireTemplate : JavaPlugin() {
      * Or when PlugMan disable plugin.
      */
     override fun onDisable() {
-        disablePlugin()
+        eventHandler.onDisable()
+
+//        database.onDisable()
+    }
+
+    /**
+     * As it says, function for plugin reload
+     */
+    fun reloadPlugin() {
+        onDisable()
+        onEnable()
+
     }
 }

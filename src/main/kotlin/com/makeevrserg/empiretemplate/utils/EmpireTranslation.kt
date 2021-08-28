@@ -14,7 +14,7 @@ class EmpireTranslation() {
      * This is a default translation file. Don't forget to create translation.yml in resources of the plugin
      * translation contains non-null assert because translation.yml exist in every possible situation except whe you forget to add it to resources
      */
-    val _translationFile: FileManager = FileManager("config" + File.separator + "translations.yml")
+    val _translationFile: FileManager = FileManager("translations.yml")
     private val translation = _translationFile.getConfig()!!
 
     public val PLUGIN_PREFIX: String = translation.getHEXString("PLUGIN_PREFIX") ?: "#18dbd1[EmpireItems]".HEX()
@@ -40,5 +40,8 @@ class EmpireTranslation() {
         translation.getHEXString("SAVE_ERROR") ?: "#db2c18Не удалось сохранить файл".HEX()
     public val NONSTANDART_FILE: String =
         translation.getHEXString("NONSTANDART_FILE") ?: "#db2c18Нестнадартный файл".HEX()
+    val FILE_WRONG_PARSE: String =
+        translation.getHEXString("FILE_WRONG_PARSE", "#f55442 Ошибка при парсинге файла: ")
+
 
 }
