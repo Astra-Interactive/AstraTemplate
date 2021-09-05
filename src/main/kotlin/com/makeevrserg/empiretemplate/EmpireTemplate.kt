@@ -1,10 +1,12 @@
 package com.makeevrserg.empiretemplate
 
 import CommandManager
+import com.makeevrserg.empiretemplate.database.EmpireDatabase
 import com.makeevrserg.empiretemplate.events.EventHandler
 import com.makeevrserg.empiretemplate.utils.Files
 import com.makeevrserg.empiretemplate.utils.EmpireTranslation
 import com.makeevrserg.empiretemplate.utils.config.EmpireConfig
+import org.bukkit.ChatColor
 import org.bukkit.plugin.java.JavaPlugin
 
 /**
@@ -32,8 +34,8 @@ class EmpireTemplate : JavaPlugin() {
 
         lateinit var pluginConfig: EmpireConfig
             private set
-//        public lateinit var database: EmpireDatabase
-//            private set
+        public lateinit var database: EmpireDatabase
+            private set
     }
 
     /**
@@ -53,18 +55,23 @@ class EmpireTemplate : JavaPlugin() {
     private lateinit var commandManager: CommandManager
 
 
+
     /**
      * This method called when server starts.
      *
      * When server starts or PlugMan load plugin.
      */
     override fun onEnable() {
+
+
+
         instance = this
         translations = EmpireTranslation()
         empireFiles = Files()
         eventHandler = EventHandler()
         commandManager = CommandManager()
         pluginConfig = EmpireConfig.new1()
+        database = EmpireDatabase()
         EmpireConfig.new2()
         EmpireConfig.new3()
 //        database = EmpireDatabase()
@@ -78,7 +85,7 @@ class EmpireTemplate : JavaPlugin() {
     override fun onDisable() {
         eventHandler.onDisable()
 
-//        database.onDisable()
+        database.onDisable()
     }
 
     /**

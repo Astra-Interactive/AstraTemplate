@@ -2,17 +2,27 @@ package com.makeevrserg.empiretemplate.database
 
 import com.makeevrserg.empiretemplate.EmpireTemplate
 import com.makeevrserg.empiretemplate.database.entities.User
+import com.makeevrserg.empiretemplate.database.entities.Users
+import org.bukkit.ChatColor
+import org.jetbrains.exposed.sql.Database
+import org.jetbrains.exposed.sql.SchemaUtils
+import org.jetbrains.exposed.sql.transactions.TransactionManager
+import org.jetbrains.exposed.sql.transactions.transaction
 import java.io.File
+import java.lang.annotation.ElementType
+import java.lang.annotation.RetentionPolicy
 import java.sql.Connection
 import java.sql.DriverManager
 import java.sql.SQLException
+import kotlin.random.Random
+import kotlin.reflect.KClass
+
 
 /**
  * Database for plugin
  *
  * Not fully functional!
  */
-@Deprecated("Not fully working")
 class EmpireDatabase {
 
 
@@ -23,6 +33,7 @@ class EmpireDatabase {
      */
     private val dbPath = "${EmpireTemplate.instance.dataFolder}${File.separator}data.db"
 
+
     /**
      * Connection for your database.
      *
@@ -30,56 +41,37 @@ class EmpireDatabase {
      * @See DatabaseQuerries
      */
     companion object {
-        lateinit var connection: Connection
+        lateinit var connection: Database
     }
 
     /**
      * Function for connecting to local database
      */
-    private fun connectDatabase(): Boolean {
-        return try {
-            connection = DriverManager.getConnection("jdbc:sqlite:$dbPath")
-            true
-        } catch (ex: SQLException) {
-            false
-        }
+    private fun connectDatabase() {
+
+        connection = Database.connect("jdbc:sqlite:${dbPath}", "org.sqlite.JDBC")
+        TransactionManager.manager.defaultIsolationLevel =
+            Connection.TRANSACTION_SERIALIZABLE
+
+
     }
 
-    /**
-     * Demonstrating of creating user
-     */
-    @Deprecated("Only for demonstation purposes")
-    private fun createUser() {
-        DatabaseQuerries.createUser(User("RomaRoman", 21))
-    }
-
-    /**
-     * Demonstrating of getting all users
-     */
-    @Deprecated("Only for demonstation purposes")
-    private fun getUsers() {
-        DatabaseQuerries.getUsers()
-    }
-
-    /**
-     * Initialization for your database
-     */
-    private fun initDatabase() {
-        if (connectDatabase())
-            println(EmpireTemplate.translations.DB_SUCCESS)
-        else {
-            println(EmpireTemplate.translations.DB_FAIL)
-        }
-        createUser()
-        getUsers()
-    }
 
     init {
-        initDatabase()
+        connectDatabase()
+        DatabaseQuerries.createUser("id${Random.nextInt(20000)}","mine${Random.nextInt(5000)}")
+        transaction {
+            for (user in User.all()){
+                println("${ChatColor.RED}${user.discordId} ${user.minecraftUuid}")
+            }
+        }
+
+
     }
 
     public fun onDisable() {
-        connection.close()
+
+        TransactionManager.managerFor(connection)?.currentOrNull()?.close()
     }
 
 }
