@@ -1,5 +1,0 @@
-Manifest-Version: 1.0
-Class-Path: annotations-13.0.jar kotlin-stdlib-jdk7-1.5.0.jar kotlinx-co
- routines-core-jvm-1.5.0.jar kotlin-stdlib-jdk8-1.5.0.jar kotlin-stdlib-
- common-1.5.10.jar kotlin-stdlib-1.5.10.jar
-
