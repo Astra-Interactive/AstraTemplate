@@ -29,3 +29,4 @@ gradle/
 build/
 out/
 .git/
+target/

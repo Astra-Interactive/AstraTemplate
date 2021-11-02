@@ -1,5 +1,6 @@
 import com.astrainteractive.astratemplate.AstraTemplate
 import com.astrainteractive.astratemplate.commands.EmpireTabCompleter
+import com.astrainteractive.astratemplate.commands.Gui
 import com.astrainteractive.astratemplate.commands.Reload
 
 
@@ -26,6 +27,7 @@ class CommandManager {
     init {
         AstraTemplate.instance.getCommand("atemp")!!.tabCompleter = tabCompletion
         AstraTemplate.instance.getCommand("atempreload")!!.setExecutor(Reload())
+        AstraTemplate.instance.getCommand("atempgui")!!.setExecutor(Gui())
     }
 
 }

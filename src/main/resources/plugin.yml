@@ -7,6 +7,7 @@ softdepend: []
 depend: []
 commands:
   atempreload:
+  atempgui:
   atemp:
     usage: |
       /atemp - Перезагружает плагин
