@@ -1,9 +1,11 @@
-package com.makeevrserg.empiretemplate.commands
+package com.astrainteractive.astratemplate.commands
 
-import com.makeevrserg.empiretemplate.empirelibs.withEntry
+
+import com.astrainteractive.astralibs.withEntry
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
 import org.bukkit.command.TabCompleter
+
 
 /**
  * Tab completer for your plugin which is called when player typing commands
@@ -22,7 +24,7 @@ public class EmpireTabCompleter() : TabCompleter {
         if (args.isEmpty())
             return listOf("etemp", "etempreload")
         if (args.size == 1)
-            return listOf("etemp", "etempreload").withEntry(alias)
+            return listOf("etemp", "etempreload").withEntry(args.last())
         return null
     }
 

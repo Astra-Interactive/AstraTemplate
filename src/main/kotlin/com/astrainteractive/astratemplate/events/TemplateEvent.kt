@@ -1,7 +1,7 @@
-package com.makeevrserg.empiretemplate.events
+package com.astrainteractive.astratemplate.events
 
-import com.makeevrserg.empiretemplate.empirelibs.IEmpireListener
-import com.makeevrserg.empiretemplate.EmpireTemplate
+import com.astrainteractive.astralibs.IAstraListener
+import com.astrainteractive.astratemplate.AstraTemplate
 import org.bukkit.event.EventHandler
 import org.bukkit.event.block.BlockPlaceEvent
 
@@ -9,7 +9,7 @@ import org.bukkit.event.block.BlockPlaceEvent
 /**
  * Template event class
  */
-class TemplateEvent : IEmpireListener {
+class TemplateEvent : IAstraListener {
 
     /**
      * Sample event which is called when Block is placed
@@ -23,7 +23,7 @@ class TemplateEvent : IEmpireListener {
      * Here you should add listener to this class
      */
     init {
-        EmpireTemplate.instance.server.pluginManager.registerEvents(this, EmpireTemplate.instance)
+        AstraTemplate.instance.server.pluginManager.registerEvents(this, AstraTemplate.instance)
 
     }
     /**

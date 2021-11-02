@@ -1,9 +1,12 @@
-package com.makeevrserg.empiretemplate.utils.config
+package com.astrainteractive.astratemplate.utils.config
 
+import com.astrainteractive.astralibs.AstraYamlParser
 import com.google.gson.reflect.TypeToken
-import com.makeevrserg.empiretemplate.EmpireTemplate
-import empirelibs.EmpireYamlParser
-
+import com.astrainteractive.astratemplate.AstraTemplate
+data class Section(
+    val value1:String,
+    val value2:Int
+)
 /**
  * Example config file with 3 types of initialization
  */
@@ -17,8 +20,8 @@ data class EmpireConfig(
 ) {
     companion object {
         fun new1(): EmpireConfig {
-            val config = EmpireYamlParser.fromYAML<EmpireConfig>(
-                EmpireTemplate.empireFiles.configFile.getConfig(),
+            val config = AstraYamlParser.fromYAML<EmpireConfig>(
+                AstraTemplate.empireFiles.configFile.getConfig(),
                 EmpireConfig::class.java
             )!!
             println(config)
@@ -26,8 +29,8 @@ data class EmpireConfig(
         }
 
         fun new2() {
-            val config = EmpireYamlParser.fromYAML<EmpireConfig>(
-                EmpireTemplate.empireFiles.configFile2.getConfig(),
+            val config = AstraYamlParser.fromYAML<EmpireConfig>(
+                AstraTemplate.empireFiles.configFile2.getConfig(),
                 object : TypeToken<EmpireConfig?>() {}.type,
                 listOf("config__")
             )!!
@@ -35,8 +38,8 @@ data class EmpireConfig(
         }
 
         fun new3() {
-            val config = EmpireYamlParser.fromYAML<EmpireConfig>(
-                EmpireTemplate.empireFiles.configFile2.getConfig(),
+            val config = AstraYamlParser.fromYAML<EmpireConfig>(
+                AstraTemplate.empireFiles.configFile2.getConfig(),
                 object : TypeToken<EmpireConfig?>() {}.type,
                 listOf("config2__","config__2_3")
             )!!

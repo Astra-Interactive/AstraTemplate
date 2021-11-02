@@ -1,5 +1,6 @@
-package com.makeevrserg.empiretemplate.utils
-import empirelibs.FileManager
+package com.astrainteractive.astratemplate.utils
+
+import com.astrainteractive.astralibs.FileManager
 
 
 /**
@@ -12,4 +13,6 @@ public class Files() {
         FileManager("config.yml")
     val configFile2: FileManager =
         FileManager("config2.yml")
+    val configFile3: FileManager =
+        FileManager("config3.yml")
 }

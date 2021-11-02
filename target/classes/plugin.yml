@@ -1,12 +1,12 @@
-main: com.makeevrserg.empiretemplate.EmpireTemplate
-name: EmpireTemplate
+main: com.astrainteractive.astratemplate.AstraTemplate
+name: AstraTemplate
 version: 2.2
 author: MakeevRoman
 api-version: 1.13
 softdepend: []
 depend: []
 commands:
-  etempreload:
-  etemp:
+  atempreload:
+  atemp:
     usage: |
-      /etempreload - Перезагружает плагин
+      /atemp - Перезагружает плагин

@@ -4,12 +4,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>mainModule</artifactId>
-    <groupId>me.makee</groupId>
+    <artifactId>AstraTemplate</artifactId>
+    <groupId>com.astrainteractive</groupId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>mainModule</name>
+    <name>AstraTemplate</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -64,19 +64,17 @@
                             <goal>compile</goal>
                         </goals>
                     </execution>
-<!--                    <execution>-->
-<!--                        <id>test-compile</id>-->
-<!--                        <phase>test-compile</phase>-->
-<!--                        <goals>-->
-<!--                            <goal>test-compile</goal>-->
-<!--                        </goals>-->
-<!--                    </execution>-->
                 </executions>
             </plugin>
         </plugins>
     </build>
 
     <dependencies>
+        <dependency>
+            <groupId>com.astrainteractive</groupId>
+            <artifactId>astralibs</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-stdlib-jdk8</artifactId>
@@ -99,36 +97,25 @@
             <version>2.10.9</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>com.sk89q.worldguard</groupId>
-            <artifactId>worldguard-bukkit</artifactId>
-            <version>7.0.5</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jetbrains.kotlin</groupId>
-            <artifactId>kotlin-reflect</artifactId>
-            <version>RELEASE</version>
-            <scope>compile</scope>
-        </dependency>
 
 
-<!--        Database-->
-        <dependency>
-            <groupId>org.jetbrains.exposed</groupId>
-            <artifactId>exposed-core</artifactId>
-            <version>0.34.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jetbrains.exposed</groupId>
-            <artifactId>exposed-dao</artifactId>
-            <version>0.34.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jetbrains.exposed</groupId>
-            <artifactId>exposed-jdbc</artifactId>
-            <version>0.34.1</version>
-        </dependency>
+
+        <!--        Database-->
+<!--        <dependency>-->
+<!--            <groupId>org.jetbrains.exposed</groupId>-->
+<!--            <artifactId>exposed-core</artifactId>-->
+<!--            <version>0.34.1</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.jetbrains.exposed</groupId>-->
+<!--            <artifactId>exposed-dao</artifactId>-->
+<!--            <version>0.34.1</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.jetbrains.exposed</groupId>-->
+<!--            <artifactId>exposed-jdbc</artifactId>-->
+<!--            <version>0.34.1</version>-->
+<!--        </dependency>-->
     </dependencies>
 
 </project>

@@ -1,9 +1,8 @@
-package com.makeevrserg.empiretemplate.utils
+package com.astrainteractive.astratemplate.utils
 
-import empirelibs.FileManager
-import com.makeevrserg.empiretemplate.empirelibs.HEX
-import com.makeevrserg.empiretemplate.empirelibs.getHEXString
-import java.io.File
+import com.astrainteractive.astralibs.FileManager
+import com.astrainteractive.astralibs.HEX
+import com.astrainteractive.astralibs.getHEXString
 
 /**
  * All translation stored here by default

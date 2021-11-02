@@ -1,4 +1,4 @@
-package com.makeevrserg.empiretemplate.utils
+package com.astrainteractive.astratemplate.utils
 
 /**
  * Permission class.

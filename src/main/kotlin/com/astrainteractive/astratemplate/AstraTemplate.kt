@@ -1,18 +1,20 @@
-package com.makeevrserg.empiretemplate
+package com.astrainteractive.astratemplate
 
 import CommandManager
-import com.makeevrserg.empiretemplate.database.EmpireDatabase
-import com.makeevrserg.empiretemplate.events.EventHandler
-import com.makeevrserg.empiretemplate.utils.Files
-import com.makeevrserg.empiretemplate.utils.EmpireTranslation
-import com.makeevrserg.empiretemplate.utils.config.EmpireConfig
-import org.bukkit.ChatColor
+import com.astrainteractive.astralibs.AstraLibs
+//import com.makeevrserg.empiretemplate.database.EmpireDatabase
+import com.astrainteractive.astratemplate.events.EventHandler
+import com.astrainteractive.astratemplate.sqldatabase.Database
+import com.astrainteractive.astratemplate.utils.Files
+import com.astrainteractive.astratemplate.utils.EmpireTranslation
+import com.astrainteractive.astratemplate.utils.config.Config
+import com.astrainteractive.astratemplate.utils.config.EmpireConfig
 import org.bukkit.plugin.java.JavaPlugin
 
 /**
  * Initial class for your plugin
  */
-class EmpireTemplate : JavaPlugin() {
+class AstraTemplate : JavaPlugin() {
 
     /**
      * Contains instance of the plugin and translation.
@@ -25,7 +27,7 @@ class EmpireTemplate : JavaPlugin() {
      * @see EmpireTranslation
      */
     companion object {
-        lateinit var instance: EmpireTemplate
+        lateinit var instance: AstraTemplate
             private set
         lateinit var translations: EmpireTranslation
             private set
@@ -34,7 +36,7 @@ class EmpireTemplate : JavaPlugin() {
 
         lateinit var pluginConfig: EmpireConfig
             private set
-        public lateinit var database: EmpireDatabase
+        public lateinit var database: Database
             private set
     }
 
@@ -62,19 +64,19 @@ class EmpireTemplate : JavaPlugin() {
      * When server starts or PlugMan load plugin.
      */
     override fun onEnable() {
-
-
-
+        AstraLibs.create(this)
         instance = this
         translations = EmpireTranslation()
         empireFiles = Files()
         eventHandler = EventHandler()
         commandManager = CommandManager()
         pluginConfig = EmpireConfig.new1()
-        database = EmpireDatabase()
+        database = Database()
         EmpireConfig.new2()
         EmpireConfig.new3()
-//        database = EmpireDatabase()
+        Config.print()
+        Config.load()
+        Config.print()
     }
 
     /**
@@ -84,7 +86,6 @@ class EmpireTemplate : JavaPlugin() {
      */
     override fun onDisable() {
         eventHandler.onDisable()
-
         database.onDisable()
     }
 
@@ -94,6 +95,5 @@ class EmpireTemplate : JavaPlugin() {
     fun reloadPlugin() {
         onDisable()
         onEnable()
-
     }
 }
