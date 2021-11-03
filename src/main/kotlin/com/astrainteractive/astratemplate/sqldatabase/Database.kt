@@ -22,7 +22,7 @@ class Database {
      *
      * Should be private
      */
-    private val dbPath = "${AstraTemplate.instance.dataFolder}${File.separator}data.db"
+    private val _dbPath = "${AstraTemplate.instance.dataFolder}${File.separator}data.db"
 
 
     /**
@@ -38,19 +38,21 @@ class Database {
     /**
      * Function for connecting to local database
      */
-    private fun connectDatabase() {
+    private fun connectDatabase() =
         catching {
-            connection = DriverManager.getConnection(("jdbc:sqlite:${dbPath}"))
+            connection = DriverManager.getConnection(("jdbc:sqlite:${_dbPath}"))
+            return@catching true
         }
-    }
+
 
 
     init {
+
         connectDatabase()
-        Querries.createUserTable()
+        Queries.createUserTable()
         val user = User("id${Random.nextInt(20000)}", "mine${Random.nextInt(5000)}")
-        Querries.insertUser(user)
-        Querries.getAllUsers()
+        Queries.insertUser(user)
+        Queries.getAllUsers()
     }
 
     public fun onDisable() {

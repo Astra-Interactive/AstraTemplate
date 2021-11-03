@@ -2,6 +2,7 @@ package com.astrainteractive.astratemplate
 
 import CommandManager
 import com.astrainteractive.astralibs.AstraLibs
+import com.astrainteractive.astralibs.Logger
 //import com.makeevrserg.empiretemplate.database.EmpireDatabase
 import com.astrainteractive.astratemplate.events.EventHandler
 import com.astrainteractive.astratemplate.sqldatabase.Database
@@ -65,6 +66,7 @@ class AstraTemplate : JavaPlugin() {
      */
     override fun onEnable() {
         AstraLibs.create(this)
+        Logger.init("AstraTemplate")
         instance = this
         translations = EmpireTranslation()
         empireFiles = Files()
@@ -77,6 +79,7 @@ class AstraTemplate : JavaPlugin() {
         Config.print()
         Config.load()
         Config.print()
+        Logger.log("onEnable","1","2",logInFile = true)
     }
 
     /**
