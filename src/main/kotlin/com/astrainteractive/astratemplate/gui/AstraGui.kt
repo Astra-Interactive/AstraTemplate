@@ -1,12 +1,12 @@
 package com.astrainteractive.astratemplate.gui
+import com.astrainteractive.astralibs.menu.AstraPlayerMenuUtility
 import com.astrainteractive.astralibs.menu.PaginatedMenu
-import com.astrainteractive.astralibs.menu.PlayerMenuUtility
 import org.bukkit.ChatColor
 import org.bukkit.Material
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.inventory.ItemStack
 
-class AstraGui(playerMenuUtility: PlayerMenuUtility): PaginatedMenu(playerMenuUtility) {
+class AstraGui(override val playerMenuUtility: AstraPlayerMenuUtility): PaginatedMenu() {
 
     override var menuName: String = "Меню"
     override val menuSize: Int = 54

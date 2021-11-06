@@ -1,6 +1,6 @@
 package com.astrainteractive.astratemplate.commands
 
-import com.astrainteractive.astralibs.menu.PlayerMenuUtility
+import com.astrainteractive.astralibs.menu.AstraPlayerMenuUtility
 import com.astrainteractive.astratemplate.AstraTemplate
 import com.astrainteractive.astratemplate.gui.AstraGui
 import com.astrainteractive.astratemplate.utils.EmpirePermissions
@@ -16,7 +16,7 @@ class Gui : CommandExecutor {
      */
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
         if (sender is Player)
-            AstraGui(PlayerMenuUtility(sender)).open()
+            AstraGui(AstraPlayerMenuUtility(sender)).open()
 
         return true
 

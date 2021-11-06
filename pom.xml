@@ -73,7 +73,7 @@
         <dependency>
             <groupId>com.astrainteractive</groupId>
             <artifactId>astralibs</artifactId>
-            <version>1.0.1</version>
+            <version>1.0.5</version>
         </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
@@ -98,24 +98,6 @@
             <scope>provided</scope>
         </dependency>
 
-
-
-        <!--        Database-->
-<!--        <dependency>-->
-<!--            <groupId>org.jetbrains.exposed</groupId>-->
-<!--            <artifactId>exposed-core</artifactId>-->
-<!--            <version>0.34.1</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.jetbrains.exposed</groupId>-->
-<!--            <artifactId>exposed-dao</artifactId>-->
-<!--            <version>0.34.1</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.jetbrains.exposed</groupId>-->
-<!--            <artifactId>exposed-jdbc</artifactId>-->
-<!--            <version>0.34.1</version>-->
-<!--        </dependency>-->
     </dependencies>
 
 </project>

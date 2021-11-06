@@ -8,6 +8,7 @@ depend: []
 commands:
   atempreload:
   atempgui:
+  test:
   atemp:
     usage: |
       /atemp - Перезагружает плагин
