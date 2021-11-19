@@ -19,10 +19,14 @@ data class User(
 
         }
 
-        val table: String = "users"
-        val discordId: EntityInfo = EntityInfo("discord_id", "varchar(16)")
-        val minecraftUuid: EntityInfo = EntityInfo("minecraft_uuid", "varchar(16)")
-        val primaryKey: String = discordId.name
+        val table: String
+            get() = "users"
+        val discordId: EntityInfo
+            get() = EntityInfo("discord_id", "varchar(16)")
+        val minecraftUuid: EntityInfo
+            get() = EntityInfo("minecraft_uuid", "varchar(16)")
+        val primaryKey: String
+            get() = discordId.name
     }
 }
 

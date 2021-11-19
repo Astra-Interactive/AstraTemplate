@@ -34,29 +34,6 @@ class CommandManager {
         AstraTemplate.instance.getCommand("atemp")!!.tabCompleter = tabCompletion
         AstraTemplate.instance.getCommand("atempreload")!!.setExecutor(Reload())
         AstraTemplate.instance.getCommand("atempgui")!!.setExecutor(Gui())
-
-
-        AstraTemplate.instance.getCommand("test")!!.setExecutor { sender: CommandSender, command: Command, label: String, args: Array<out String> ->
-            val response = AstraCommandBuilder()
-                .label("test", label)
-                .argsSize(0, args.size)
-                .sender(sender)
-                .example("/reload")
-                .explain("Plugin reload")
-                .permission("astratemplate.perm1", "astratemplate.perm1")
-                .playerCommand {
-                    sender.sendMessage("FromPlayer")
-                }
-                .consoleCommand {
-                    sender.sendMessage("FromConsole")
-                }
-                .build()
-            Logger.log("CommandManager",response.toString())
-            return@setExecutor true
-
-        }
-
-
     }
 
 

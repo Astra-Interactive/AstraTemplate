@@ -1,15 +1,16 @@
 package com.astrainteractive.astratemplate
 
+//import com.makeevrserg.empiretemplate.database.EmpireDatabase
 import CommandManager
 import com.astrainteractive.astralibs.AstraLibs
 import com.astrainteractive.astralibs.Logger
-//import com.makeevrserg.empiretemplate.database.EmpireDatabase
 import com.astrainteractive.astratemplate.events.EventHandler
 import com.astrainteractive.astratemplate.sqldatabase.Database
-import com.astrainteractive.astratemplate.utils.Files
 import com.astrainteractive.astratemplate.utils.EmpireTranslation
+import com.astrainteractive.astratemplate.utils.Files
 import com.astrainteractive.astratemplate.utils.config.Config
 import com.astrainteractive.astratemplate.utils.config.EmpireConfig
+import org.bukkit.event.HandlerList
 import org.bukkit.plugin.java.JavaPlugin
 
 /**
@@ -90,6 +91,7 @@ class AstraTemplate : JavaPlugin() {
     override fun onDisable() {
         eventHandler.onDisable()
         database.onDisable()
+        HandlerList.unregisterAll()
     }
 
     /**
@@ -99,4 +101,7 @@ class AstraTemplate : JavaPlugin() {
         onDisable()
         onEnable()
     }
+
 }
+
+
