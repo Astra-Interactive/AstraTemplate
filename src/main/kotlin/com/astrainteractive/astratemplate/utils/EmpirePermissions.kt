@@ -5,8 +5,6 @@ package com.astrainteractive.astratemplate.utils
  *
  * All permission should be stored in companion object
  */
-public class EmpirePermissions{
-    public companion object {
-        public val RELOAD: String = "empiretemplate.reload"
-    }
+public object EmpirePermissions {
+    public val RELOAD: String = "empiretemplate.reload"
 }

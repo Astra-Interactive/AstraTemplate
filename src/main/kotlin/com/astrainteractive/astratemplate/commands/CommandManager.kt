@@ -1,13 +1,10 @@
-import com.astrainteractive.astralibs.AstraCommandBuilder
-import com.astrainteractive.astralibs.ETimer
-import com.astrainteractive.astralibs.Logger
+import com.astrainteractive.astralibs.AstraLibs
+import com.astrainteractive.astralibs.registerTabCompleter
+import com.astrainteractive.astralibs.withEntry
 import com.astrainteractive.astratemplate.AstraTemplate
 import com.astrainteractive.astratemplate.commands.EmpireTabCompleter
 import com.astrainteractive.astratemplate.commands.Gui
 import com.astrainteractive.astratemplate.commands.Reload
-import org.bukkit.command.Command
-import org.bukkit.command.CommandExecutor
-import org.bukkit.command.CommandSender
 
 
 /**
@@ -16,13 +13,6 @@ import org.bukkit.command.CommandSender
  * @see Reload
  */
 class CommandManager {
-
-    /**
-     * Tab completer for your plugin
-     * @see EmpireTabCompleter
-     */
-    private var tabCompletion: EmpireTabCompleter = EmpireTabCompleter()
-
     /**
      * Here you should declare commands for your plugin
      *
@@ -31,9 +21,15 @@ class CommandManager {
      * etemp has TabCompleter
      */
     init {
-        AstraTemplate.instance.getCommand("atemp")!!.tabCompleter = tabCompletion
-        AstraTemplate.instance.getCommand("atempreload")!!.setExecutor(Reload())
-        AstraTemplate.instance.getCommand("atempgui")!!.setExecutor(Gui())
+        AstraLibs.registerTabCompleter("atemp"){sender, args ->
+            if (args.isEmpty())
+                return@registerTabCompleter listOf("etemp", "etempreload")
+            if (args.size == 1)
+                return@registerTabCompleter listOf("etemp", "etempreload").withEntry(args.last())
+            return@registerTabCompleter listOf<String>()
+        }
+        Reload()
+        Gui()
     }
 
 

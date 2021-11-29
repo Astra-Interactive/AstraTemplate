@@ -1,4 +1,5 @@
 package com.astrainteractive.astratemplate.gui
+import com.astrainteractive.astralibs.menu.AstraMenuSize
 import com.astrainteractive.astralibs.menu.AstraPlayerMenuUtility
 import com.astrainteractive.astralibs.menu.PaginatedMenu
 import org.bukkit.ChatColor
@@ -9,27 +10,27 @@ import org.bukkit.inventory.ItemStack
 class AstraGui(override val playerMenuUtility: AstraPlayerMenuUtility): PaginatedMenu() {
 
     override var menuName: String = "Меню"
-    override val menuSize: Int = 54
+    override val menuSize: AstraMenuSize = AstraMenuSize.XL
     override val backPageButton: ItemStack = ItemStack(Material.PAPER).apply {
         val meta = itemMeta
         meta.setDisplayName("Закрыть")
         itemMeta = meta
     }
-    override var maxItemsPerPage: Int = 45
-    override var maxPages: Int = getMaxPages()
     override val nextPageButton: ItemStack = ItemStack(Material.PAPER).apply {
         val meta = itemMeta
         meta.setDisplayName("Вперед")
         itemMeta = meta
     }
-    override var page: Int = 0
     override val prevPageButton: ItemStack = ItemStack(Material.PAPER).apply {
         val meta = itemMeta
         meta.setDisplayName("Назад")
         itemMeta = meta
     }
+    override var maxItemsPerPage: Int = 45
+    override var page: Int = 0
     private val itemsInGui = listOf("Предмет 1","Предмет 2")
-    override var slotsAmount: Int = itemsInGui.size
+    override val maxItemsAmount: Int = itemsInGui.size
+
 
     override fun handleMenu(e: InventoryClickEvent) {
         super.handleMenu(e)

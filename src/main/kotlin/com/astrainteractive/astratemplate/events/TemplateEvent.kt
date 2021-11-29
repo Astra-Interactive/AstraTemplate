@@ -18,14 +18,6 @@ class TemplateEvent : IAstraListener {
     public fun blockPlaceEvent(e: BlockPlaceEvent) {
         return
     }
-
-    /**
-     * Here you should add listener to this class
-     */
-    init {
-        AstraTemplate.instance.server.pluginManager.registerEvents(this, AstraTemplate.instance)
-
-    }
     /**
      * As said in EventHandler, every Event must have onDisable method, which disabling events
      * Here BlockPlaceEvent is unregistering

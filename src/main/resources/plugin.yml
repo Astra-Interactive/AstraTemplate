@@ -1,10 +1,13 @@
 main: com.astrainteractive.astratemplate.AstraTemplate
 name: AstraTemplate
-version: 2.2
+prefix: AstraTemplate
+version: '${project.version}'
+authors: [ MakeevRoman ]
 author: MakeevRoman
-api-version: 1.13
-softdepend: []
-depend: []
+website: AstraInteractive.ru
+api-version: 1.17
+softdepend: [ ]
+depend: [ ]
 commands:
   atempreload:
   atempgui:

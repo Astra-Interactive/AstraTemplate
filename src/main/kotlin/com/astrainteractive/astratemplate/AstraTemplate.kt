@@ -35,7 +35,6 @@ class AstraTemplate : JavaPlugin() {
             private set
         lateinit var empireFiles: Files
             private set
-
         lateinit var pluginConfig: EmpireConfig
             private set
         public lateinit var database: Database
