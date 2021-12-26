@@ -2,9 +2,16 @@ package com.astrainteractive.astratemplate.sqldatabase
 
 import com.astrainteractive.astralibs.catching
 import com.astrainteractive.astratemplate.sqldatabase.entities.User
+import java.sql.ResultSet
 import javax.xml.crypto.Data
 
-object Queries {
+/**
+ * Repository with all SQL commands
+ */
+object Repository {
+    /**
+     * Return boolean of null if exception happened
+     */
     fun createUserTable() =
         catching {
             Database.connection.prepareStatement(
@@ -29,17 +36,30 @@ object Queries {
     fun getAllUsers() = catching {
         val rs = Database.connection.createStatement().executeQuery("SELECT * FROM ${User.table}")
         val list = mutableListOf<User>()
-        while (rs.next()) {
-            val user = User.fromResultSet(rs) ?: continue
+        rs.forEach {
+            val user = User.fromResultSet(rs) ?: return@forEach
             list.add(user)
             println("User = ${user}")
         }
-
-
         return@catching list
     }
 }
 
+/**
+ * For loop for ResultSet
+ */
+inline fun ResultSet.forEach(rs: (ResultSet) -> Unit) {
+    while (this.next()) {
+        rs(this)
+    }
+}
+
+fun <T> ResultSet.asSequence(extract: () -> T): Sequence<T> = generateSequence {
+    if (this.next()) extract() else null
+}
+
+
+@Deprecated("Какой-то кал. Надо использовать обычные команды SQL")
 class InsertQuery private constructor() {
 
     data class Builder(

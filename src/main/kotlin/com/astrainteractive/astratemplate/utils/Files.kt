@@ -11,8 +11,4 @@ import com.astrainteractive.astralibs.FileManager
 public class Files() {
     val configFile: FileManager =
         FileManager("config.yml")
-    val configFile2: FileManager =
-        FileManager("config2.yml")
-    val configFile3: FileManager =
-        FileManager("config3.yml")
 }

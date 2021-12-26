@@ -49,10 +49,10 @@ class Database {
     init {
 
         connectDatabase()
-        Queries.createUserTable()
+        Repository.createUserTable()
         val user = User("id${Random.nextInt(20000)}", "mine${Random.nextInt(5000)}")
-        Queries.insertUser(user)
-        Queries.getAllUsers()
+        Repository.insertUser(user)
+        Repository.getAllUsers()
     }
 
     public fun onDisable() {

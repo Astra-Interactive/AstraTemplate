@@ -8,7 +8,6 @@ import com.astrainteractive.astratemplate.events.EventHandler
 import com.astrainteractive.astratemplate.sqldatabase.Database
 import com.astrainteractive.astratemplate.utils.EmpireTranslation
 import com.astrainteractive.astratemplate.utils.Files
-import com.astrainteractive.astratemplate.utils.config.Config
 import com.astrainteractive.astratemplate.utils.config.EmpireConfig
 import org.bukkit.event.HandlerList
 import org.bukkit.plugin.java.JavaPlugin
@@ -19,13 +18,7 @@ import org.bukkit.plugin.java.JavaPlugin
 class AstraTemplate : JavaPlugin() {
 
     /**
-     * Contains instance of the plugin and translation.
-     *
-     * Translation should be initialized before other classes!
-     *
-     * Other files of plugin should be initialized after Translation class
-     *
-     * Instance should be initialized only once
+     * Static objects of this class
      * @see EmpireTranslation
      */
     companion object {
@@ -72,13 +65,9 @@ class AstraTemplate : JavaPlugin() {
         empireFiles = Files()
         eventHandler = EventHandler()
         commandManager = CommandManager()
-        pluginConfig = EmpireConfig.new1()
+        pluginConfig = EmpireConfig.new2()
+        println(pluginConfig)
         database = Database()
-        EmpireConfig.new2()
-        EmpireConfig.new3()
-        Config.print()
-        Config.load()
-        Config.print()
         Logger.log("onEnable","1","2",logInFile = true)
     }
 
@@ -90,7 +79,7 @@ class AstraTemplate : JavaPlugin() {
     override fun onDisable() {
         eventHandler.onDisable()
         database.onDisable()
-        HandlerList.unregisterAll()
+        HandlerList.unregisterAll(this)
     }
 
     /**
