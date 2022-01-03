@@ -4,13 +4,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>EmpireTemplate</artifactId>
+    <artifactId>AstraTemplate</artifactId>
     <groupId>com.astrainteractive</groupId>
-    <version>1.0.0</version>
+    <version>2.0</version>
     <packaging>jar</packaging>
     <description>Template plugin made by AstraInteractive</description>
 
-    <name>EmpireTemplate</name>
+    <name>AstraTemplate</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -40,14 +40,6 @@
             <id>sk89q-repo</id>
             <url>https://maven.enginehub.org/repo/</url>
         </repository>
-
-<!--        Database-->
-            <repository>
-                <id>jcenter</id>
-                <name>jcenter</name>
-                <url>https://jcenter.bintray.com</url>
-            </repository>
-
     </repositories>
 
     <build>
@@ -100,7 +92,7 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
-                            <outputFile>D:\Minecraft Servers\TEST_SERVER\plugins\EmpireTemplate.jar</outputFile>
+                            <outputFile>D:\Minecraft Servers\TEST_SERVER\plugins\${project.name}.jar</outputFile>
                             <createDependencyReducedPom>false</createDependencyReducedPom>
                         </configuration>
                     </execution>
@@ -119,7 +111,7 @@
         <dependency>
             <groupId>com.astrainteractive</groupId>
             <artifactId>astralibs</artifactId>
-            <version>1.0.18</version>
+            <version>1.0.27</version>
         </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
@@ -145,6 +137,18 @@
             <scope>provided</scope>
         </dependency>
 
+        <!--        Coroutines-->
+        <dependency>
+            <groupId>org.jetbrains.kotlinx</groupId>
+            <artifactId>kotlinx-coroutines-core</artifactId>
+            <version>1.6.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jetbrains.kotlinx</groupId>
+            <artifactId>kotlinx-coroutines-core-jvm</artifactId>
+            <version>1.6.0</version>
+        </dependency>
     </dependencies>
 
 </project>

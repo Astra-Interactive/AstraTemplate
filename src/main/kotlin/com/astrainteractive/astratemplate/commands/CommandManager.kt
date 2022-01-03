@@ -2,6 +2,7 @@ import com.astrainteractive.astralibs.AstraLibs
 import com.astrainteractive.astralibs.registerTabCompleter
 import com.astrainteractive.astralibs.withEntry
 import com.astrainteractive.astratemplate.AstraTemplate
+import com.astrainteractive.astratemplate.commands.Damage
 import com.astrainteractive.astratemplate.commands.EmpireTabCompleter
 import com.astrainteractive.astratemplate.commands.Gui
 import com.astrainteractive.astratemplate.commands.Reload
@@ -21,15 +22,10 @@ class CommandManager {
      * etemp has TabCompleter
      */
     init {
-        AstraLibs.registerTabCompleter("atemp"){sender, args ->
-            if (args.isEmpty())
-                return@registerTabCompleter listOf("etemp", "etempreload")
-            if (args.size == 1)
-                return@registerTabCompleter listOf("etemp", "etempreload").withEntry(args.last())
-            return@registerTabCompleter listOf<String>()
-        }
+        EmpireTabCompleter()
         Reload()
         Gui()
+        Damage()
     }
 
 

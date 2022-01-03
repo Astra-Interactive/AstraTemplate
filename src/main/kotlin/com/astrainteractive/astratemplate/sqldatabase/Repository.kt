@@ -2,93 +2,61 @@ package com.astrainteractive.astratemplate.sqldatabase
 
 import com.astrainteractive.astralibs.catching
 import com.astrainteractive.astratemplate.sqldatabase.entities.User
+import com.astrainteractive.astratemplate.utils.callbackCatching
+import com.astrainteractive.astratemplate.utils.forEach
+import com.astrainteractive.astratemplate.utils.mapNotNull
+import java.sql.Connection
 import java.sql.ResultSet
-import javax.xml.crypto.Data
 
 /**
  * Repository with all SQL commands
  */
 object Repository {
+    private val connection: Connection
+        get() = Database.connection
+
     /**
-     * Return boolean of null if exception happened
+     * Return result on success and null on failure
+     *
+     * If [callback] initialized - also returns result in [Callback.onSuccess] as returns exception in [Callback.onFailure]
+     * @param callback Callback function
+     * @return null or T
      */
-    fun createUserTable() =
-        catching {
-            Database.connection.prepareStatement(
+    suspend fun createUserTable(callback: Callback? = null) =
+        callbackCatching(callback) {
+            val result = connection.prepareStatement(
                 "CREATE TABLE IF NOT EXISTS ${User.table} " +
-                        "(${User.discordId.name} ${User.discordId.type} NOT NULL, " +
-                        "${User.minecraftUuid.name} ${User.minecraftUuid.type} NOT NULL, " +
-                        "PRIMARY KEY (${User.primaryKey}));"
+                        "(" +
+                        "${User.id.name} ${User.id.type} PRIMARY KEY AUTOINCREMENT," +
+                        "${User.discordId.name} ${User.discordId.type} NOT NULL, " +
+                        "${User.minecraftUuid.name} ${User.minecraftUuid.type} NOT NULL" +
+                        ");"
             ).execute()
+            callback?.onSuccess(result)
+            return@callbackCatching result
         }
 
-    fun insertUser(user: User) =
-        catching {
-            val command = InsertQuery.Builder()
-                .table(User.table)
-                .columns(User.discordId.name, User.minecraftUuid.name)
-                .values(user.discordId, user.minecraftUuid)
-                .build()
-            println(command)
-            Database.connection.createStatement().executeUpdate(command)
+    /**
+     * Same as [createUserTable]
+     */
+    suspend fun insertUser(user: User, callback: Callback? = null) =
+        callbackCatching(callback) {
+            val query = "INSERT INTO ${User.table} " +
+                    "(${User.discordId.name}, ${User.minecraftUuid.name}) " +
+                    "VALUES(\'${user.discordId}\', \'${user.minecraftUuid}\');"
+            val result = connection.prepareStatement(query).executeUpdate()
+            callback?.onSuccess(result)
+            return@callbackCatching result
         }
 
-    fun getAllUsers() = catching {
-        val rs = Database.connection.createStatement().executeQuery("SELECT * FROM ${User.table}")
-        val list = mutableListOf<User>()
-        rs.forEach {
-            val user = User.fromResultSet(rs) ?: return@forEach
-            list.add(user)
-            println("User = ${user}")
+    /**
+     * Same as [createUserTable]
+     */
+    suspend fun getAllUsers(callback: Callback? = null) =
+        callbackCatching(callback) {
+            val rs = connection.createStatement().executeQuery("SELECT * FROM ${User.table}")
+            val result = rs.mapNotNull { User.fromResultSet(it) }
+            callback?.onSuccess(result)
+            return@callbackCatching result
         }
-        return@catching list
-    }
-}
-
-/**
- * For loop for ResultSet
- */
-inline fun ResultSet.forEach(rs: (ResultSet) -> Unit) {
-    while (this.next()) {
-        rs(this)
-    }
-}
-
-fun <T> ResultSet.asSequence(extract: () -> T): Sequence<T> = generateSequence {
-    if (this.next()) extract() else null
-}
-
-
-@Deprecated("Какой-то кал. Надо использовать обычные команды SQL")
-class InsertQuery private constructor() {
-
-    data class Builder(
-        private val command: String = "INSERT INTO",
-        private var table: String? = null,
-        private var columns: String? = null,
-        private var values: String? = null
-    ) {
-
-        fun table(table: String) = apply { this.table = table }
-        fun columns(vararg columns: String) = apply { this.columns = "(${columns.joinToString(", ")})" }
-
-
-        private fun Array<out Any>.parseSQLValues(): String {
-            val list = mutableListOf<Any>()
-            this.forEach {
-                if (it is String)
-                    list.add("\'$it\'")
-                else list.add("\'$it\'")
-            }
-            return "(${list.joinToString(",")})"
-        }
-
-
-        fun values(vararg values: Any) = apply { this.values = values.parseSQLValues() }
-
-        fun build(): String? {
-            return "$command $table ${columns ?: ""} VALUES ${values ?: return null};"
-        }
-    }
-
 }

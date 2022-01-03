@@ -1,5 +1,21 @@
-PLUGIN_PREFIX: "#18dbd1[EmpireItems]"
-RELOAD: "#dbbb18Перезагрузка плагина"
-RELOAD_COMPLETE: "#42f596Перезагрузка успешно завершена"
-SAVE_ERROR: "#db2c18Не удалось сохранить файл"
-NONSTANDART_FILE: "#db2c18Нестнадартный файл"
+database:
+  success: #18dbd1Успешно подключено к базе данных
+  fail: #db2c18Нет подключения к базе данных
+general:
+  prefix: #18dbd1[EmpireItems]
+  reload: #dbbb18Перезагрузка плагина
+  reload_complete: #42f596Перезагрузка успешно завершена
+  no_permission: #db2c18У вас нет прав!
+menu:
+  first_page: #dbbb18Вы на первой странице
+  last_page: #dbbb18Вы на последней странице
+  prev_page: #18dbd1Пред. страницы
+  next_page: #18dbd1След. страница
+  back: #18dbd1Назад
+  close: #18dbd1Закрыть
+
+custom:
+  block_placed: #18dbd1Блок поставлен!
+  no_player_name: #db2c18Вы не ввели имя игрока!
+  damage_hint: "<amount>"
+  damaged: #db2c18Вас продамажил игрок %player%!

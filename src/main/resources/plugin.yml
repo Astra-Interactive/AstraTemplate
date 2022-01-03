@@ -1,17 +1,26 @@
 main: com.astrainteractive.astratemplate.AstraTemplate
 name: AstraTemplate
 prefix: AstraTemplate
+description: Template plugin from AstraInteractive
 version: '${project.version}'
 authors: [ MakeevRoman ]
 author: MakeevRoman
 website: AstraInteractive.ru
-api-version: 1.17
+api-version: 1.18
 softdepend: [ ]
 depend: [ ]
+loadbefore: [ ]
 commands:
   atempreload:
+    description: Reload plugin
+    permission: astra_template.reload
+    permission-message: You do not have permission!
+    usage: /<command>
+  adamage:
+    description: Damage player
+    permission: astra_template.damage
+    permission-message: You do not have permission!
+    usage: /<command> <player> amount
   atempgui:
-  test:
-  atemp:
-    usage: |
-      /atemp - Перезагружает плагин
+    description: Shows template gui
+    usage: /<command>

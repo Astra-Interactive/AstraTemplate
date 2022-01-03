@@ -1,6 +1,7 @@
 package com.astrainteractive.astratemplate.utils.config
 
 import com.astrainteractive.astralibs.AstraYamlParser
+import com.astrainteractive.astralibs.Logger
 import com.astrainteractive.astralibs.getHEXString
 import com.google.gson.reflect.TypeToken
 import com.astrainteractive.astratemplate.AstraTemplate
@@ -23,7 +24,6 @@ data class Section(
         }
 
         fun getList(s: List<*>?): List<Section> {
-            println("Get list ${s}")
             return s?.map {
                 val s = (it as LinkedHashMap<String, Any>)
                 Section(value1 = s.getOrDefault("value1", "") as String, value2 = s.getOrDefault("value2", 0) as Int)
@@ -51,7 +51,7 @@ data class EmpireConfig(
         fun new1(): EmpireConfig {
             val config =
                 AstraYamlParser.parser.fileConfigurationToClass<EmpireConfig>(AstraTemplate.empireFiles.configFile.getConfig())!!
-            println(config)
+            Logger.log("$config","EmpireConfig")
             return config
         }
 

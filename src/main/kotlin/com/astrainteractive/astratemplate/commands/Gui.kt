@@ -13,7 +13,6 @@ import org.bukkit.entity.Player
 
 class Gui {
     val command = AstraLibs.registerCommand("atempgui"){sender, args ->
-        println("Gui command")
         if (sender is Player)
             AstraGui(AstraPlayerMenuUtility(sender)).open()
     }
