@@ -7,6 +7,7 @@ import com.astrainteractive.astratemplate.events.EventHandler
 import com.astrainteractive.astratemplate.sqldatabase.Database
 import com.astrainteractive.astratemplate.utils.Translation
 import com.astrainteractive.astratemplate.utils.Files
+import com.astrainteractive.astratemplate.utils.ServerVersion
 import com.astrainteractive.astratemplate.utils.config.EmpireConfig
 import org.bukkit.event.HandlerList
 import org.bukkit.plugin.java.JavaPlugin
@@ -46,7 +47,6 @@ class AstraTemplate : JavaPlugin() {
     private lateinit var commandManager: CommandManager
 
 
-
     /**
      * This method called when server starts or PlugMan load plugin.
      */
@@ -59,12 +59,16 @@ class AstraTemplate : JavaPlugin() {
         eventHandler = EventHandler()
         commandManager = CommandManager()
         pluginConfig = EmpireConfig.new2()
-        Logger.log("$pluginConfig",tag = "EmpireConfig")
+        Logger.log("$pluginConfig", tag = "EmpireConfig")
         database = Database().apply { onEnable() }
         Logger.init("AstraTemplate")
-        Logger.log("Logger enabled","AstraTemplate")
-        Logger.warn("Warn message from logger","AstraTemplate")
-        Logger.error("Error message","AstraTemplate")
+        Logger.log("Logger enabled", "AstraTemplate")
+        Logger.warn("Warn message from logger", "AstraTemplate")
+        Logger.error("Error message", "AstraTemplate")
+        if (ServerVersion.version == ServerVersion.UNMAINTAINED)
+            Logger.warn("Your server version is not maintained and might be not fully functional!", "AstraTemplate")
+        else
+            Logger.log("Your server version is: ${ServerVersion.getServerVersion()}. This version is supported!", "AstraTemplate")
     }
 
     /**
