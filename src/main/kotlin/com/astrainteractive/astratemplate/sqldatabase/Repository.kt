@@ -35,6 +35,17 @@ object Repository {
             callback?.onSuccess(result)
             return@callbackCatching result
         }
+    enum class SqlDataType(val size: Int? = null) {
+        BIT(64), TINYINT(255), BOOL, BOOLEAN, SMALLINT(255);
+
+        override fun toString(): String {
+            when (this) {
+                BIT -> "${this.name}(${this.size})"
+                else -> this.name
+            }
+            return super.toString()
+        }
+    }
 
     /**
      * Same as [createUserTable]

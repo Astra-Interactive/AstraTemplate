@@ -3,15 +3,15 @@ package com.astrainteractive.astratemplate
 import CommandManager
 import com.astrainteractive.astralibs.AstraLibs
 import com.astrainteractive.astralibs.Logger
+import com.astrainteractive.astralibs.ServerVersion
+import com.astrainteractive.astratemplate.api.Api
 import com.astrainteractive.astratemplate.events.EventHandler
 import com.astrainteractive.astratemplate.sqldatabase.Database
 import com.astrainteractive.astratemplate.utils.Translation
 import com.astrainteractive.astratemplate.utils.Files
-import com.astrainteractive.astratemplate.utils.ServerVersion
 import com.astrainteractive.astratemplate.utils.config.EmpireConfig
 import org.bukkit.event.HandlerList
 import org.bukkit.plugin.java.JavaPlugin
-import javax.security.auth.login.LoginException
 
 /**
  * Initial class for your plugin
@@ -68,7 +68,13 @@ class AstraTemplate : JavaPlugin() {
         if (ServerVersion.version == ServerVersion.UNMAINTAINED)
             Logger.warn("Your server version is not maintained and might be not fully functional!", "AstraTemplate")
         else
-            Logger.log("Your server version is: ${ServerVersion.getServerVersion()}. This version is supported!", "AstraTemplate")
+            Logger.log(
+                "Your server version is: ${ServerVersion.getServerVersion()}. This version is supported!",
+                "AstraTemplate"
+            )
+
+        Api.onEnable()
+
     }
 
     /**
@@ -78,6 +84,7 @@ class AstraTemplate : JavaPlugin() {
         eventHandler.onDisable()
         database.onDisable()
         HandlerList.unregisterAll(this)
+        Api.onDisable()
     }
 
     /**

@@ -1,6 +1,6 @@
 package com.astrainteractive.astratemplate.events
 
-import com.astrainteractive.astralibs.IAstraListener
+import com.astrainteractive.astralibs.EventListener
 import com.astrainteractive.astratemplate.AstraTemplate
 import com.astrainteractive.astratemplate.utils.Translation
 import org.bukkit.event.EventHandler
@@ -11,7 +11,7 @@ import org.bukkit.event.block.BlockPlaceEvent
 /**
  * Template event class
  */
-class TemplateEvent : IAstraListener {
+class TemplateEvent : EventListener {
 
     /**
      * Sample event which is called when Block is placed
