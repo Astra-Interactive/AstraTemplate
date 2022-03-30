@@ -13,7 +13,7 @@ data class Section(
 ) {
     companion object {
         fun get1(s: ConfigurationSection?): Section {
-            return AstraYamlParser.parser.configurationSectionToClass<Section>(s ?: return Section())!!
+            return AstraYamlParser.configurationSectionToClass<Section>(s ?: return Section())!!
         }
 
         fun get2(s: ConfigurationSection?): Section {
@@ -50,7 +50,7 @@ data class EmpireConfig(
          */
         fun new1(): EmpireConfig {
             val config =
-                AstraYamlParser.parser.fileConfigurationToClass<EmpireConfig>(AstraTemplate.empireFiles.configFile.getConfig())!!
+                AstraYamlParser.fileConfigurationToClass<EmpireConfig>(AstraTemplate.empireFiles.configFile.getConfig())!!
             Logger.log("$config","EmpireConfig")
             return config
         }

@@ -1,12 +1,12 @@
 package com.astrainteractive.astratemplate.sqldatabase
 
 import com.astrainteractive.astralibs.Logger
+import com.astrainteractive.astralibs.async.AsyncHelper
 import com.astrainteractive.astralibs.catching
 import com.astrainteractive.astratemplate.AstraTemplate
 import com.astrainteractive.astratemplate.sqldatabase.entities.User
-import com.astrainteractive.astratemplate.utils.AsyncTask
+import com.astrainteractive.astratemplate.utils.PluginTranslation
 import com.astrainteractive.astratemplate.utils.Translation
-import com.astrainteractive.astratemplate.utils.callbackCatching
 import kotlinx.coroutines.launch
 import java.io.File
 import java.lang.Exception
@@ -18,7 +18,7 @@ import kotlin.random.Random
 /**
  * Database for plugin
  */
-class Database : AsyncTask {
+class Database {
     /**
      * Path for your plugin database
      */
@@ -49,26 +49,22 @@ class Database : AsyncTask {
      * Also the [Callback] implementation
      */
     fun onEnable() {
-        launch {
+        AsyncHelper.launch {
             connectDatabase()
             if (isInitialized)
-                Logger.log(Translation.instance.dbSuccess, "Database")
+                Logger.log(Translation.dbSuccess, "Database")
             else {
-                Logger.error(Translation.instance.dbFail, "Database")
+                Logger.error(Translation.dbFail, "Database")
                 return@launch
             }
-            Repository.createUserTable(object : Callback() {
-                override suspend fun <T> onSuccess(result: T?) {
-                    val user = User("id${Random.nextInt(20000)}", "mine${Random.nextInt(5000)}")
-                    Repository.insertUser(user)
-                    val users = Repository.getAllUsers()
-                    Logger.log("Users: ${users}", "Database")
-                }
-
-                override suspend fun onFailure(e: Exception) {
-                    Logger.warn("${e.message}", "Database")
-                }
-            })
+            val result = Repository.createUserTable()
+            if (result != null) {
+                val user = User("id${Random.nextInt(20000)}", "mine${Random.nextInt(5000)}")
+                Repository.insertUser(user)
+                val users = Repository.getAllUsers()
+                Logger.log("Users: ${users}", "Database")
+            } else
+                Logger.warn("Could not create table", "Database")
 
         }
     }

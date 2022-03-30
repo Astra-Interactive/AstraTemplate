@@ -1,6 +1,6 @@
 package com.astrainteractive.astratemplate.utils
 
-import com.astrainteractive.astratemplate.sqldatabase.Callback
+import com.astrainteractive.astralibs.catching
 import com.astrainteractive.astratemplate.sqldatabase.Database
 import java.lang.Exception
 import java.sql.ResultSet
@@ -40,12 +40,8 @@ public inline fun <R : Any, C : MutableCollection<in R>> ResultSet.mapNotNullTo(
  * @param callback Callback of section
  * @return T?
  */
-public suspend inline fun <T> callbackCatching(callback: Callback? = null, block: () -> T?): T? = try {
+public suspend inline fun <T> callbackCatching(block: () -> T?): T? = catching {
     if (!Database.isInitialized)
         throw Exception("Database not initialized")
-    block.invoke()
-} catch (e: Exception) {
-    e.printStackTrace()
-    callback?.onFailure(e)
-    null
+    return@catching block.invoke()
 }

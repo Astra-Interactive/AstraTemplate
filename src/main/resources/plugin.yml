@@ -1,8 +1,8 @@
 main: com.astrainteractive.astratemplate.AstraTemplate
-name: AstraTemplate
 prefix: AstraTemplate
-description: Template plugin from AstraInteractive
-version: '${project.version}'
+description: '${description}'
+name: '${name}'
+version: '${version}'
 authors: [ MakeevRoman ]
 author: MakeevRoman
 website: AstraInteractive.ru

@@ -30,3 +30,6 @@ build/
 out/
 .git/
 target/
+astra.properties
+.gradle
+libs

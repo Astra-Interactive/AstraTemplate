@@ -10,14 +10,21 @@ import com.astrainteractive.astratemplate.api.Api
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
 import org.bukkit.Material
+import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.inventory.InventoryCloseEvent
 import org.bukkit.inventory.ItemStack
 
-class AstraGui(override val playerMenuUtility: AstraPlayerMenuUtility) : PaginatedMenu(), Listener, LifecycleOwner {
+class AstraGui(
+    override val playerMenuUtility: AstraPlayerMenuUtility,
+) : PaginatedMenu(), Listener, LifecycleOwner {
+    constructor(player: Player) : this(AstraPlayerMenuUtility(player))
 
+    override val backButtonIndex: Int = 48
+    override val nextButtonIndex: Int = 53
+    override val prevButtonIndex: Int = 44
     override var menuName: String = "Меню"
     override val menuSize: AstraMenuSize = AstraMenuSize.XL
     override val backPageButton: ItemStack = ItemStack(Material.PAPER).apply {

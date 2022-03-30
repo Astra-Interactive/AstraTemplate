@@ -3,9 +3,9 @@ package com.astrainteractive.astratemplate.commands
 import com.astrainteractive.astralibs.AstraLibs
 import com.astrainteractive.astralibs.registerCommand
 import com.astrainteractive.astralibs.registerTabCompleter
-import com.astrainteractive.astratemplate.AstraTemplate
 import com.astrainteractive.astratemplate.commands.Damage.Arguments.Companion.getArgumentString
 import com.astrainteractive.astratemplate.utils.EmpirePermissions
+import com.astrainteractive.astratemplate.utils.PluginTranslation
 import com.astrainteractive.astratemplate.utils.Translation
 import org.bukkit.Bukkit
 
@@ -30,7 +30,7 @@ class Damage {
         return@registerTabCompleter when (args.size) {
             0 -> listOf("adamage")
             1-> Bukkit.getOnlinePlayers().map { it.name }
-            2-> listOf(Translation.instance.damageHint)
+            2-> listOf(Translation.damageHint)
             else -> Bukkit.getOnlinePlayers().map { it.name }
         }
 
@@ -38,22 +38,22 @@ class Damage {
 
     private val onCommand = AstraLibs.registerCommand("adamage") { sender, args ->
         if (!sender.hasPermission(EmpirePermissions.damage)) {
-            sender.sendMessage(Translation.instance.noPermission)
+            sender.sendMessage(Translation.noPermission)
             return@registerCommand
         }
         val playerName = args.getArgumentString(Arguments.playerName)
         if (playerName == null) {
-            sender.sendMessage(Translation.instance.noPlayerName)
+            sender.sendMessage(Translation.noPlayerName)
             return@registerCommand
         }
         val damage = args.getArgumentString(Arguments.damage)?.toIntOrNull() ?: 1
         val player = Bukkit.getPlayer(playerName)
         if (player == null) {
-            sender.sendMessage(Translation.instance.noPlayerName)
+            sender.sendMessage(Translation.noPlayerName)
             return@registerCommand
         }
         player.damage(damage.toDouble())
-        player.sendMessage(Translation.instance.damaged.replace("%player%", sender.name))
+        player.sendMessage(Translation.damaged.replace("%player%", sender.name))
     }
 
 }

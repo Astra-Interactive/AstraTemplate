@@ -4,6 +4,7 @@ import com.astrainteractive.astralibs.AstraLibs
 import com.astrainteractive.astralibs.registerCommand
 import com.astrainteractive.astratemplate.AstraTemplate
 import com.astrainteractive.astratemplate.utils.EmpirePermissions
+import com.astrainteractive.astratemplate.utils.PluginTranslation
 import com.astrainteractive.astratemplate.utils.Translation
 
 /**
@@ -18,7 +19,7 @@ class Reload {
      */
     private val onCommand = AstraLibs.registerCommand("atempreload") { sender, args ->
         if (!sender.hasPermission(EmpirePermissions.reload)) {
-            sender.sendMessage(Translation.instance.noPermission)
+            sender.sendMessage(Translation.noPermission)
             return@registerCommand
         }
         sender.sendMessage(AstraTemplate.translations.reload)

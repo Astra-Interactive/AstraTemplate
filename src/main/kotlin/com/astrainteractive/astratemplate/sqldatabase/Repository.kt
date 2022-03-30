@@ -22,19 +22,15 @@ object Repository {
      * @param callback Callback function
      * @return null or T
      */
-    suspend fun createUserTable(callback: Callback? = null) =
-        callbackCatching(callback) {
-            val result = connection.prepareStatement(
-                "CREATE TABLE IF NOT EXISTS ${User.table} " +
-                        "(" +
-                        "${User.id.name} ${User.id.type} PRIMARY KEY AUTOINCREMENT," +
-                        "${User.discordId.name} ${User.discordId.type} NOT NULL, " +
-                        "${User.minecraftUuid.name} ${User.minecraftUuid.type} NOT NULL" +
-                        ");"
-            ).execute()
-            callback?.onSuccess(result)
-            return@callbackCatching result
-        }
+    suspend fun createUserTable() = connection.prepareStatement(
+        "CREATE TABLE IF NOT EXISTS ${User.table} " +
+                "(" +
+                "${User.id.name} ${User.id.type} PRIMARY KEY AUTOINCREMENT," +
+                "${User.discordId.name} ${User.discordId.type} NOT NULL, " +
+                "${User.minecraftUuid.name} ${User.minecraftUuid.type} NOT NULL" +
+                ");"
+    ).execute()
+
     enum class SqlDataType(val size: Int? = null) {
         BIT(64), TINYINT(255), BOOL, BOOLEAN, SMALLINT(255);
 
@@ -50,24 +46,18 @@ object Repository {
     /**
      * Same as [createUserTable]
      */
-    suspend fun insertUser(user: User, callback: Callback? = null) =
-        callbackCatching(callback) {
-            val query = "INSERT INTO ${User.table} " +
-                    "(${User.discordId.name}, ${User.minecraftUuid.name}) " +
-                    "VALUES(\'${user.discordId}\', \'${user.minecraftUuid}\');"
-            val result = connection.prepareStatement(query).executeUpdate()
-            callback?.onSuccess(result)
-            return@callbackCatching result
-        }
+    suspend fun insertUser(user: User): Int {
+        val query = "INSERT INTO ${User.table} " +
+                "(${User.discordId.name}, ${User.minecraftUuid.name}) " +
+                "VALUES(\'${user.discordId}\', \'${user.minecraftUuid}\');"
+        return connection.prepareStatement(query).executeUpdate()
+    }
 
     /**
      * Same as [createUserTable]
      */
-    suspend fun getAllUsers(callback: Callback? = null) =
-        callbackCatching(callback) {
+    suspend fun getAllUsers(): List<User> {
             val rs = connection.createStatement().executeQuery("SELECT * FROM ${User.table}")
-            val result = rs.mapNotNull { User.fromResultSet(it) }
-            callback?.onSuccess(result)
-            return@callbackCatching result
+            return rs.mapNotNull { User.fromResultSet(it) }
         }
 }

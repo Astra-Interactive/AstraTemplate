@@ -7,7 +7,7 @@ import com.astrainteractive.astralibs.ServerVersion
 import com.astrainteractive.astratemplate.api.Api
 import com.astrainteractive.astratemplate.events.EventHandler
 import com.astrainteractive.astratemplate.sqldatabase.Database
-import com.astrainteractive.astratemplate.utils.Translation
+import com.astrainteractive.astratemplate.utils.PluginTranslation
 import com.astrainteractive.astratemplate.utils.Files
 import com.astrainteractive.astratemplate.utils.config.EmpireConfig
 import org.bukkit.event.HandlerList
@@ -24,7 +24,7 @@ class AstraTemplate : JavaPlugin() {
     companion object {
         lateinit var instance: AstraTemplate
             private set
-        lateinit var translations: Translation
+        lateinit var translations: PluginTranslation
             private set
         lateinit var empireFiles: Files
             private set
@@ -52,16 +52,15 @@ class AstraTemplate : JavaPlugin() {
      */
     override fun onEnable() {
         AstraLibs.create(this)
-        Logger.init("AstraTemplate")
+        Logger.prefix = "AstraTemplate"
         instance = this
-        translations = Translation()
+        translations = PluginTranslation()
         empireFiles = Files()
         eventHandler = EventHandler()
         commandManager = CommandManager()
         pluginConfig = EmpireConfig.new2()
         Logger.log("$pluginConfig", tag = "EmpireConfig")
         database = Database().apply { onEnable() }
-        Logger.init("AstraTemplate")
         Logger.log("Logger enabled", "AstraTemplate")
         Logger.warn("Warn message from logger", "AstraTemplate")
         Logger.error("Error message", "AstraTemplate")
