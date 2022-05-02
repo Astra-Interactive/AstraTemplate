@@ -6,6 +6,7 @@ import com.astrainteractive.astralibs.Logger
 import com.astrainteractive.astralibs.ServerVersion
 import com.astrainteractive.astratemplate.api.Api
 import com.astrainteractive.astratemplate.events.EventHandler
+import com.astrainteractive.astratemplate.events.TestEvents
 import com.astrainteractive.astratemplate.sqldatabase.Database
 import com.astrainteractive.astratemplate.utils.PluginTranslation
 import com.astrainteractive.astratemplate.utils.Files
@@ -60,7 +61,7 @@ class AstraTemplate : JavaPlugin() {
         commandManager = CommandManager()
         pluginConfig = EmpireConfig.new2()
         Logger.log("$pluginConfig", tag = "EmpireConfig")
-        database = Database().apply { onEnable() }
+//        database = Database().apply { onEnable() }
         Logger.log("Logger enabled", "AstraTemplate")
         Logger.warn("Warn message from logger", "AstraTemplate")
         Logger.error("Error message", "AstraTemplate")
@@ -73,7 +74,7 @@ class AstraTemplate : JavaPlugin() {
             )
 
         Api.onEnable()
-
+        TestEvents.init()
     }
 
     /**
@@ -81,7 +82,7 @@ class AstraTemplate : JavaPlugin() {
      */
     override fun onDisable() {
         eventHandler.onDisable()
-        database.onDisable()
+//        database.onDisable()
         HandlerList.unregisterAll(this)
         Api.onDisable()
     }

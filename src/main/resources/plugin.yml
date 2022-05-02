@@ -1,8 +1,11 @@
 main: com.astrainteractive.astratemplate.AstraTemplate
 prefix: AstraTemplate
-description: '${description}'
-name: '${name}'
-version: '${version}'
+#description: '${description}'
+#name: '${name}'
+#version: '${version}'
+description: 'AstraTemplate'
+name: 'AstraTemplate'
+version: 'AstraTemplate'
 authors: [ MakeevRoman ]
 author: MakeevRoman
 website: AstraInteractive.ru

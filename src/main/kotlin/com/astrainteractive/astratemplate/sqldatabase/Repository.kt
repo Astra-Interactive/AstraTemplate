@@ -8,6 +8,7 @@ import com.astrainteractive.astratemplate.utils.mapNotNull
 import java.sql.Connection
 import java.sql.ResultSet
 
+
 /**
  * Repository with all SQL commands
  */
@@ -57,7 +58,7 @@ object Repository {
      * Same as [createUserTable]
      */
     suspend fun getAllUsers(): List<User> {
-            val rs = connection.createStatement().executeQuery("SELECT * FROM ${User.table}")
-            return rs.mapNotNull { User.fromResultSet(it) }
-        }
+        val rs = connection.createStatement().executeQuery("SELECT * FROM ${User.table}")
+        return rs.mapNotNull { User.fromResultSet(it) }
+    }
 }
