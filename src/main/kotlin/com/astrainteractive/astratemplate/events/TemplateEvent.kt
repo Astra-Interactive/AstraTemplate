@@ -1,11 +1,12 @@
 package com.astrainteractive.astratemplate.events
 
-import com.astrainteractive.astralibs.EventListener
+import com.astrainteractive.astralibs.events.EventListener
 import com.astrainteractive.astratemplate.AstraTemplate
 import com.astrainteractive.astratemplate.utils.PluginTranslation
 import com.astrainteractive.astratemplate.utils.Translation
 import org.bukkit.event.EventHandler
 import org.bukkit.event.HandlerList
+import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.block.BlockPlaceEvent
 
 

@@ -2,10 +2,7 @@ import com.astrainteractive.astralibs.AstraLibs
 import com.astrainteractive.astralibs.registerTabCompleter
 import com.astrainteractive.astralibs.withEntry
 import com.astrainteractive.astratemplate.AstraTemplate
-import com.astrainteractive.astratemplate.commands.Damage
-import com.astrainteractive.astratemplate.commands.EmpireTabCompleter
-import com.astrainteractive.astratemplate.commands.Gui
-import com.astrainteractive.astratemplate.commands.Reload
+import com.astrainteractive.astratemplate.commands.*
 
 
 /**
@@ -24,6 +21,7 @@ class CommandManager {
     init {
         EmpireTabCompleter()
         Reload()
+        AddCommand()
         Gui()
         Damage()
     }

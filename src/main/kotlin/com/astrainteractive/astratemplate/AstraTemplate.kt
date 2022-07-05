@@ -4,9 +4,9 @@ import CommandManager
 import com.astrainteractive.astralibs.AstraLibs
 import com.astrainteractive.astralibs.Logger
 import com.astrainteractive.astralibs.ServerVersion
+import com.astrainteractive.astralibs.events.GlobalEventManager
 import com.astrainteractive.astratemplate.api.Api
 import com.astrainteractive.astratemplate.events.EventHandler
-import com.astrainteractive.astratemplate.events.TestEvents
 import com.astrainteractive.astratemplate.sqldatabase.Database
 import com.astrainteractive.astratemplate.utils.PluginTranslation
 import com.astrainteractive.astratemplate.utils.Files
@@ -52,7 +52,7 @@ class AstraTemplate : JavaPlugin() {
      * This method called when server starts or PlugMan load plugin.
      */
     override fun onEnable() {
-        AstraLibs.create(this)
+        AstraLibs.rememberPlugin(this)
         Logger.prefix = "AstraTemplate"
         instance = this
         translations = PluginTranslation()
@@ -74,7 +74,6 @@ class AstraTemplate : JavaPlugin() {
             )
 
         Api.onEnable()
-        TestEvents.init()
     }
 
     /**
@@ -83,8 +82,9 @@ class AstraTemplate : JavaPlugin() {
     override fun onDisable() {
         eventHandler.onDisable()
 //        database.onDisable()
-        HandlerList.unregisterAll(this)
+//        HandlerList.unregisterAll(this)
         Api.onDisable()
+        GlobalEventManager.onDisable()
     }
 
     /**

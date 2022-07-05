@@ -23,15 +23,15 @@ class Reload {
      *
      * Here you should also check for permission
      */
-    private val onCommand = AstraLibs.registerCommand("atempreload") { sender, args ->
-        if (!sender.hasPermission(EmpirePermissions.reload)) {
+    private val reload = AstraDSLCommand.command("atempreload") {
+        this.noPermission(EmpirePermissions.reload) {
             sender.sendMessage(Translation.noPermission)
-            return@registerCommand
-        }
+        } ?: return@command
         sender.sendMessage(AstraTemplate.translations.reload)
         AstraTemplate.instance.reloadPlugin()
         sender.sendMessage(AstraTemplate.translations.reloadComplete)
     }
+
 
 }
 
