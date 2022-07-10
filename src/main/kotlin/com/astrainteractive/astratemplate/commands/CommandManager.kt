@@ -19,11 +19,13 @@ class CommandManager {
      * etemp has TabCompleter
      */
     init {
-        EmpireTabCompleter()
-        Reload()
-        AddCommand()
-        Gui()
-        Damage()
+        tabCompleter()
+        addCommandCompleter()
+        addCommand()
+        damageCompleter()
+        damageCommand()
+        tempGUI()
+        reload()
     }
 
 

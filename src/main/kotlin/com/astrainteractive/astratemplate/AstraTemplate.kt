@@ -5,12 +5,13 @@ import com.astrainteractive.astralibs.AstraLibs
 import com.astrainteractive.astralibs.Logger
 import com.astrainteractive.astralibs.ServerVersion
 import com.astrainteractive.astralibs.events.GlobalEventManager
-import com.astrainteractive.astratemplate.api.Api
+import com.astrainteractive.astratemplate.api.TemplateApi
 import com.astrainteractive.astratemplate.events.EventHandler
 import com.astrainteractive.astratemplate.sqldatabase.Database
 import com.astrainteractive.astratemplate.utils.PluginTranslation
-import com.astrainteractive.astratemplate.utils.Files
-import com.astrainteractive.astratemplate.utils.config.EmpireConfig
+import com.astrainteractive.astratemplate.utils._Files
+import com.astrainteractive.astratemplate.utils.EmpireConfig
+import kotlinx.coroutines.runBlocking
 import org.bukkit.event.HandlerList
 import org.bukkit.plugin.java.JavaPlugin
 
@@ -18,21 +19,13 @@ import org.bukkit.plugin.java.JavaPlugin
  * Initial class for your plugin
  */
 class AstraTemplate : JavaPlugin() {
-
-    /**
-     * Static objects of this class
-     */
-    companion object {
-        lateinit var instance: AstraTemplate
-            private set
-        lateinit var translations: PluginTranslation
-            private set
-        lateinit var empireFiles: Files
-            private set
-        lateinit var pluginConfig: EmpireConfig
-            private set
-        lateinit var database: Database
-            private set
+    lateinit var database: Database
+        private set
+    companion object{
+        lateinit var instance:AstraTemplate
+    }
+    init {
+        instance = this
     }
 
     /**
@@ -54,14 +47,12 @@ class AstraTemplate : JavaPlugin() {
     override fun onEnable() {
         AstraLibs.rememberPlugin(this)
         Logger.prefix = "AstraTemplate"
-        instance = this
-        translations = PluginTranslation()
-        empireFiles = Files()
+        PluginTranslation()
+        _Files()
         eventHandler = EventHandler()
         commandManager = CommandManager()
-        pluginConfig = EmpireConfig.new2()
-        Logger.log("$pluginConfig", tag = "EmpireConfig")
-//        database = Database().apply { onEnable() }
+        EmpireConfig.create()
+        database = Database().apply { runBlocking { onEnable() } }
         Logger.log("Logger enabled", "AstraTemplate")
         Logger.warn("Warn message from logger", "AstraTemplate")
         Logger.error("Error message", "AstraTemplate")
@@ -72,8 +63,7 @@ class AstraTemplate : JavaPlugin() {
                 "Your server version is: ${ServerVersion.getServerVersion()}. This version is supported!",
                 "AstraTemplate"
             )
-
-        Api.onEnable()
+        TemplateApi.onEnable()
     }
 
     /**
@@ -81,9 +71,9 @@ class AstraTemplate : JavaPlugin() {
      */
     override fun onDisable() {
         eventHandler.onDisable()
-//        database.onDisable()
-//        HandlerList.unregisterAll(this)
-        Api.onDisable()
+        runBlocking { database.onDisable() }
+        HandlerList.unregisterAll(this)
+        TemplateApi.onDisable()
         GlobalEventManager.onDisable()
     }
 

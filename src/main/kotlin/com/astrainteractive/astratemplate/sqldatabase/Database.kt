@@ -5,11 +5,9 @@ import com.astrainteractive.astralibs.async.AsyncHelper
 import com.astrainteractive.astralibs.catching
 import com.astrainteractive.astratemplate.AstraTemplate
 import com.astrainteractive.astratemplate.sqldatabase.entities.User
-import com.astrainteractive.astratemplate.utils.PluginTranslation
 import com.astrainteractive.astratemplate.utils.Translation
 import kotlinx.coroutines.launch
 import java.io.File
-import java.lang.Exception
 import java.sql.Connection
 import java.sql.DriverManager
 import kotlin.random.Random
@@ -48,7 +46,7 @@ class Database {
      *
      * Also the [Callback] implementation
      */
-    fun onEnable() {
+    suspend fun onEnable() {
         AsyncHelper.launch {
             connectDatabase()
             if (isInitialized)
@@ -57,11 +55,11 @@ class Database {
                 Logger.error(Translation.dbFail, "Database")
                 return@launch
             }
-            val result = Repository.createUserTable()
+            val result = DatabaseApi.createUserTable()
             if (result != null) {
                 val user = User("id${Random.nextInt(20000)}", "mine${Random.nextInt(5000)}")
-                Repository.insertUser(user)
-                val users = Repository.getAllUsers()
+                DatabaseApi.insertUser(user)
+                val users = DatabaseApi.getAllUsers()
                 Logger.log("Users: ${users}", "Database")
             } else
                 Logger.warn("Could not create table", "Database")
@@ -70,7 +68,7 @@ class Database {
     }
 
 
-    public fun onDisable() {
+    public suspend fun onDisable() {
         connection.close()
     }
 

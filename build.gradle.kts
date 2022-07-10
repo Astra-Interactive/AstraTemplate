@@ -1,5 +1,3 @@
-import java.util.Properties
-import java.io.FileInputStream
 object Kotlin {
     const val version = "1.7.0"
     const val coroutines = "1.6.3"
@@ -20,7 +18,7 @@ object Spigot {
 }
 
 group = "com.astrainteractive"
-version = "2.1.0"
+version = "2.2.0"
 val name = "AstraTemplate"
 description = "Template plugin from AstraInteractive"
 
@@ -75,13 +73,18 @@ dependencies {
     implementation("com.charleskorn.kaml:kaml:${Kotlin.kaml}")
     // AstraLibs
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
-
-
+    // Test
+    testImplementation("org.jetbrains.kotlin:kotlin-test-junit:1.5.20")
+    testImplementation("junit:junit:4.13.2")
+    testImplementation("com.github.seeseemelk:MockBukkit-v1.18:2.26.0")
+    testImplementation("io.kotest:kotest-runner-junit5:5.3.1")
+    testImplementation("io.kotest:kotest-assertions-core:5.3.1")
+    testImplementation(kotlin("test"))
     // Spigot dependencies
     compileOnly("net.essentialsx:EssentialsX:${Spigot.essentials}")
     compileOnly("io.papermc.paper:paper-api:${Spigot.version}")
-    compileOnly("org.spigotmc:spigot-api:${Spigot.version}")
-    compileOnly("org.spigotmc:spigot:${Spigot.version}")
+//    compileOnly("org.spigotmc:spigot-api:${Spigot.version}")
+//    compileOnly("org.spigotmc:spigot:${Spigot.version}")
     compileOnly("com.comphenix.protocol:ProtocolLib:${Spigot.protocolLib}")
     compileOnly("me.clip:placeholderapi:${Spigot.placeholderAPI}")
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:${Spigot.worldGuard}")
@@ -89,15 +92,7 @@ dependencies {
     compileOnly("com.github.MilkBowl:VaultAPI:${Spigot.vault}")
     compileOnly("net.coreprotect:coreprotect:${Spigot.coreProtect}")
     compileOnly("com.ticxo.modelengine:api:${Spigot.modelEngine}")
-    // Test
-    testImplementation("junit:junit:4.13.1")
-    testImplementation("com.github.seeseemelk:MockBukkit-v1.18:1.24.1")
-    testImplementation("io.kotest:kotest-runner-junit5:latest.release")
-    testImplementation("io.kotest:kotest-assertions-core:latest.release")
-    testImplementation(kotlin("test"))
 }
-
-
 
 tasks {
     withType<JavaCompile>() {
@@ -153,4 +148,5 @@ tasks.shadowJar {
     from(project.configurations.runtimeClasspath)
     minimize()
     destinationDirectory.set(File("D:\\Minecraft Servers\\TEST_SERVER\\plugins"))
+//    destinationDirectory.set(File("/media/makeevrserg/Новый том/Servers/Server/plugins"))
 }

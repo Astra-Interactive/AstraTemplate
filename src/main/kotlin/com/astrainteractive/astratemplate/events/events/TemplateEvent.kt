@@ -1,4 +1,4 @@
-package com.astrainteractive.astratemplate.events
+package com.astrainteractive.astratemplate.events.events
 
 import com.astrainteractive.astralibs.events.EventListener
 import com.astrainteractive.astratemplate.AstraTemplate

@@ -4,7 +4,8 @@ import com.astrainteractive.astralibs.FileManager
 import com.astrainteractive.astralibs.HEX
 import com.astrainteractive.astralibs.getHEXString
 
-
+val Translation: PluginTranslation
+    get() = PluginTranslation.instance
 
 /**
  * All translation stored here
@@ -16,10 +17,8 @@ class PluginTranslation {
     companion object {
         internal lateinit var instance: PluginTranslation
     }
-
     init {
         instance = this
-
     }
 
     /**
@@ -46,6 +45,8 @@ class PluginTranslation {
         getHEXString("general.no_permission") ?: "#db2c18У вас нет прав!".HEX()
 
     //Menu
+    val menuTitle: String = getHEXString("menu.title") ?: "#18dbd1Меню".HEX()
+    val menuAddPlayer: String = getHEXString("menu.add_player") ?: "#18dbd1Добавить игрока".HEX()
     val menuFirstPage: String = getHEXString("menu.first_page") ?: "#dbbb18Вы на первой странице".HEX()
     val menuLastPage: String = getHEXString("menu.last_page") ?: "#dbbb18Вы на последней странице".HEX()
     val menuPrevPage: String = getHEXString("menu.prev_page") ?: "#18dbd1Пред. страницы".HEX()

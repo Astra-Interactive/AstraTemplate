@@ -1,47 +1,17 @@
 package com.astrainteractive.astratemplate.utils
 
-import com.astrainteractive.astralibs.catching
-import com.astrainteractive.astratemplate.sqldatabase.Database
-import java.lang.Exception
-import java.sql.ResultSet
-
-
-/**
- * For loop for [ResultSet]
- */
-inline fun ResultSet.forEach(rs: (ResultSet) -> Unit) {
-    while (this.next()) {
-        rs(this)
-    }
+inline fun <reified T : kotlin.Enum<T>> T.addIndex(offset: Int): T {
+    val values = T::class.java.enumConstants
+    var res = ordinal + offset
+    if (res <= -1) res = values.size-1
+    val index = res % values.size
+    return values[index]
 }
 
-/**
- * mapNotNull for [ResultSet]
- * @return List<R>
- */
-public inline fun <R : Any> ResultSet.mapNotNull(rs: (ResultSet) -> R?): List<R> {
-    return mapNotNullTo(ArrayList<R>(), rs)
+inline fun <reified T : kotlin.Enum<T>> T.next(): T {
+    return addIndex(1)
 }
 
-/**
- * Helper for [ResultSet.mapNotNull]
- */
-public inline fun <R : Any, C : MutableCollection<in R>> ResultSet.mapNotNullTo(
-    destination: C,
-    rs: (ResultSet) -> R?
-): C {
-    forEach { element -> rs(element)?.let { destination.add(it) } }
-    return destination
-}
-
-/**
- * Catching function with callback implementation
- * @param block Function with or without return type
- * @param callback Callback of section
- * @return T?
- */
-public suspend inline fun <T> callbackCatching(block: () -> T?): T? = catching {
-    if (!Database.isInitialized)
-        throw Exception("Database not initialized")
-    return@catching block.invoke()
+inline fun <reified T : kotlin.Enum<T>> T.prev(): T {
+    return addIndex(-1)
 }
