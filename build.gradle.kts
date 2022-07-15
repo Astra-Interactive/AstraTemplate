@@ -18,7 +18,7 @@ object Spigot {
 }
 
 group = "com.astrainteractive"
-version = "2.2.0"
+version = "2.3.0"
 val name = "AstraTemplate"
 description = "Template plugin from AstraInteractive"
 
