@@ -1,6 +1,4 @@
 import com.astrainteractive.astralibs.AstraLibs
-import com.astrainteractive.astralibs.registerTabCompleter
-import com.astrainteractive.astralibs.withEntry
 import com.astrainteractive.astratemplate.AstraTemplate
 import com.astrainteractive.astratemplate.commands.*
 

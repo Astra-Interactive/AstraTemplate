@@ -7,10 +7,11 @@ import com.astrainteractive.astralibs.ServerVersion
 import com.astrainteractive.astralibs.events.GlobalEventManager
 import com.astrainteractive.astratemplate.api.TemplateApi
 import com.astrainteractive.astratemplate.events.EventHandler
-import com.astrainteractive.astratemplate.sqldatabase.Database
+import com.astrainteractive.astratemplate.sqldatabase.SQLDatabase
 import com.astrainteractive.astratemplate.utils.PluginTranslation
 import com.astrainteractive.astratemplate.utils._Files
 import com.astrainteractive.astratemplate.utils.EmpireConfig
+import com.astrainteractive.astratemplate.utils._EmpireConfig
 import kotlinx.coroutines.runBlocking
 import org.bukkit.event.HandlerList
 import org.bukkit.plugin.java.JavaPlugin
@@ -19,8 +20,6 @@ import org.bukkit.plugin.java.JavaPlugin
  * Initial class for your plugin
  */
 class AstraTemplate : JavaPlugin() {
-    lateinit var database: Database
-        private set
     companion object{
         lateinit var instance:AstraTemplate
     }
@@ -51,8 +50,8 @@ class AstraTemplate : JavaPlugin() {
         _Files()
         eventHandler = EventHandler()
         commandManager = CommandManager()
-        EmpireConfig.create()
-        database = Database().apply { runBlocking { onEnable() } }
+        _EmpireConfig.create()
+        runBlocking { SQLDatabase.onEnable() }
         Logger.log("Logger enabled", "AstraTemplate")
         Logger.warn("Warn message from logger", "AstraTemplate")
         Logger.error("Error message", "AstraTemplate")
@@ -71,7 +70,7 @@ class AstraTemplate : JavaPlugin() {
      */
     override fun onDisable() {
         eventHandler.onDisable()
-        runBlocking { database.onDisable() }
+        runBlocking { SQLDatabase.close() }
         HandlerList.unregisterAll(this)
         TemplateApi.onDisable()
         GlobalEventManager.onDisable()

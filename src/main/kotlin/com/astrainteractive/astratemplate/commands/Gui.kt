@@ -2,7 +2,7 @@ package com.astrainteractive.astratemplate.commands
 
 import CommandManager
 import com.astrainteractive.astralibs.AstraLibs
-import com.astrainteractive.astralibs.registerCommand
+import com.astrainteractive.astralibs.utils.registerCommand
 import com.astrainteractive.astratemplate.gui.SampleGUI
 import org.bukkit.entity.Player
 

@@ -2,7 +2,7 @@ package com.astrainteractive.astratemplate.commands
 
 import CommandManager
 import com.astrainteractive.astralibs.commands.AstraDSLCommand
-import com.astrainteractive.astralibs.withEntry
+import com.astrainteractive.astralibs.utils.withEntry
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.entity.Player

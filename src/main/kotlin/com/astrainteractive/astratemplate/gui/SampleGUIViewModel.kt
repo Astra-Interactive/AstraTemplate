@@ -2,7 +2,7 @@ package com.astrainteractive.astratemplate.gui
 
 import com.astrainteractive.astralibs.async.AsyncHelper
 import com.astrainteractive.astratemplate.api.TemplateApi
-import com.astrainteractive.astratemplate.sqldatabase.DatabaseApi
+import com.astrainteractive.astratemplate.api.DatabaseApi
 import com.astrainteractive.astratemplate.sqldatabase.entities.User
 import com.astrainteractive.astratemplate.utils.next
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -11,7 +11,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.bukkit.ChatColor
 import org.bukkit.inventory.ItemStack
-import java.util.UUID
 import kotlin.random.Random
 
 enum class Mode {

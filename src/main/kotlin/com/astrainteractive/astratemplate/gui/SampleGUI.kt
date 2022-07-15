@@ -98,25 +98,15 @@ class SampleGUI(override val playerMenuUtility: AstraPlayerMenuUtility) : Pagina
         }
     }
 
-
-    /**
-     * Handling current inventory closing
-     */
-    inner class CloseInventoryEventManager : EventManager {
-        override val handlers: MutableList<EventListener> = mutableListOf()
-        private val menuCloseHandler = DSLEvent.event(InventoryCloseEvent::class.java, this) {
-            if (it.player != playerMenuUtility.player) return@event
-            if (it.inventory.holder !is PaginatedMenu) return@event
-            Logger.log("SampleGUI closed", "SampleGUI")
-            viewModel.onDisable()
-            onDisable()
-            itemCollector.cancel()
-            modCollector.cancel()
-            usersCollector.cancel()
-        }
+    override fun onInventoryClose(it: InventoryCloseEvent, manager: EventManager) {
+        if(it.inventory!=inventory) return
+        Logger.log("SampleGUI closed", "SampleGUI")
+        viewModel.onDisable()
+        manager.onDisable()
+        itemCollector.cancel()
+        modCollector.cancel()
+        usersCollector.cancel()
     }
-
-    private val innerClassHolder = CloseInventoryEventManager()
 
     override fun setMenuItems() {
         inventory.clear()

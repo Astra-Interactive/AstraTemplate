@@ -2,8 +2,8 @@ package com.astrainteractive.astratemplate.commands
 
 import CommandManager
 import com.astrainteractive.astralibs.AstraLibs
-import com.astrainteractive.astralibs.registerCommand
-import com.astrainteractive.astralibs.registerTabCompleter
+import com.astrainteractive.astralibs.utils.registerCommand
+import com.astrainteractive.astralibs.utils.registerTabCompleter
 import com.astrainteractive.astratemplate.commands.Arguments.Companion.getArgumentString
 import com.astrainteractive.astratemplate.utils.EmpirePermissions
 import com.astrainteractive.astratemplate.utils.Translation

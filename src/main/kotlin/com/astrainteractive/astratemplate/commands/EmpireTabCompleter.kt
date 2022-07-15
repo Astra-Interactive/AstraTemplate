@@ -3,8 +3,8 @@ package com.astrainteractive.astratemplate.commands
 
 import CommandManager
 import com.astrainteractive.astralibs.AstraLibs
-import com.astrainteractive.astralibs.registerTabCompleter
-import com.astrainteractive.astralibs.withEntry
+import com.astrainteractive.astralibs.utils.registerTabCompleter
+import com.astrainteractive.astralibs.utils.withEntry
 
 /**
  * Tab completer for your plugin which is called when player typing commands

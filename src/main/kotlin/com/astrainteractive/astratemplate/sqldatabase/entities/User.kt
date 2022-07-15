@@ -1,7 +1,7 @@
 package com.astrainteractive.astratemplate.sqldatabase.entities
 
 
-import com.astrainteractive.astralibs.catching
+import com.astrainteractive.astralibs.utils.catching
 import java.sql.ResultSet
 import kotlin.math.min
 
@@ -37,7 +37,9 @@ data class User(
         val minecraftUuid: EntityInfo
             get() = EntityInfo("minecraft_uuid", "varchar(16)")
         val id: EntityInfo
-            get() = EntityInfo("id", "INTEGER")
+            get() = EntityInfo("id", "INTEGER",primaryKey = true,autoIncrement = true)
+        val entities: List<EntityInfo>
+            get() = listOf(id, discordId, minecraftUuid)
     }
 }
 
