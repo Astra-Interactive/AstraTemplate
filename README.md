@@ -40,4 +40,4 @@ Astra template has everything(probably) you need including:
 - [x] Error catching
 - [x] Enum extensions
 
-More you can see on [AstraLibs](https://github.com/Asrta-Interactive/AstraTemplate/wiki/AstraLibs) page. It has a lot of useful functions
+Also, checkout [AstraLearner](https://play.google.com/store/apps/details?id=com.makeevrserg.astralearner) - it will help you to learn foreign words easily!
