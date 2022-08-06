@@ -28,6 +28,8 @@ abstract class DatabaseCore() {
     inline fun <reified T> select(where: String = "") = select(T::class.java, where)
     inline fun <reified T> insert(instance: T) = insert(T::class.java, instance)
     inline fun <reified T> createTable() = createTable(T::class.java)
+    inline fun <reified T> querySelect(query: String, noinline rsBuilder: (ResultSet) -> T?) =
+        querySelect(T::class.java, query, rsBuilder)
     fun <T> update(clazz: Class<out T>, instance: T): Boolean? {
         val info = AnnotationUtils.EntityInfo.create(clazz, instance)
         val primaryKeyInfo =
@@ -60,6 +62,14 @@ abstract class DatabaseCore() {
         println(query)
         return connection?.createStatement()?.executeQuery(query)?.mapNotNull { rs ->
             fromResultSet(clazz, info, rs)
+        }
+    }
+
+
+
+    fun <T> querySelect(clazz: Class<out T>, query: String = "", rsBuilder: (ResultSet) -> T?): List<T>? {
+        return connection?.createStatement()?.executeQuery(query)?.mapNotNull { rs ->
+            rsBuilder.invoke(rs)
         }
     }
 

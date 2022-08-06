@@ -20,11 +20,11 @@ object DatabaseApi {
      * @return null or T
      */
     suspend fun createUserTable() = catching {
-        SQLDatabase.createTable(User::class.java)
+        SQLDatabase.createTable<User>()
     }
 
     suspend fun createRatingTable() = catching {
-        SQLDatabase.createTable(RatingRelation::class.java)
+        SQLDatabase.createTable<RatingRelation>()
     }
 
     /**
