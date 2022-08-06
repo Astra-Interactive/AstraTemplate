@@ -1,4 +1,4 @@
-package com.astrainteractive.astratemplate.sqldatabase
+package com.astrainteractive.astratemplate.sqldatabase.lib
 
 import com.astrainteractive.astralibs.utils.catching
 import com.astrainteractive.astralibs.utils.mapNotNull
@@ -16,14 +16,6 @@ abstract class DatabaseCore() {
     abstract val connectionBuilder: () -> Connection?
     val connection by lazy { catching { connectionBuilder() } }
 
-    companion object {
-        /**
-         * In SQL we need to wrap string values in "", so you need to modify your string with this function
-         */
-        fun sqlString(value: String) = "\"$value\""
-        val String.sqlString: String
-            get() = sqlString(this)
-    }
 
     abstract suspend fun onEnable()
     suspend fun close() = catching {

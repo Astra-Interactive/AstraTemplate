@@ -2,7 +2,6 @@ package com.astrainteractive.astratemplate.sqldatabase.lib
 
 import com.astrainteractive.astralibs.utils.ReflectionUtil
 import com.astrainteractive.astralibs.utils.catching
-import com.astrainteractive.astratemplate.sqldatabase.DatabaseCore.Companion.sqlString
 import java.lang.reflect.AccessibleObject
 import java.lang.reflect.Field
 import java.lang.reflect.Parameter
@@ -68,7 +67,7 @@ object AnnotationUtils {
         ) {
             val sqlFieldValue: String?
                 get() = fieldValue?.let {
-                    (it as? String)?.sqlString ?: it.toString()
+                    (it as? String)?.let { "\"$it\"" } ?: it.toString()
                 }
         }
 

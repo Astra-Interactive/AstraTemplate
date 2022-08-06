@@ -3,6 +3,8 @@ package com.astrainteractive.astratemplate.sqldatabase
 import com.astrainteractive.astralibs.AstraLibs
 import com.astrainteractive.astralibs.Logger
 import com.astrainteractive.astratemplate.api.DatabaseApi
+import com.astrainteractive.astratemplate.sqldatabase.lib.DatabaseCore
+import com.astrainteractive.astratemplate.sqldatabase.lib.isConnected
 import com.astrainteractive.astratemplate.utils.Translation
 import java.io.File
 import java.sql.Connection
