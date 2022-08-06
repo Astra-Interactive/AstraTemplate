@@ -5,9 +5,13 @@ import com.astrainteractive.astralibs.AstraLibs
 import com.astrainteractive.astralibs.Logger
 import com.astrainteractive.astralibs.ServerVersion
 import com.astrainteractive.astralibs.events.GlobalEventManager
+import com.astrainteractive.astralibs.rest.RestRequester
+import com.astrainteractive.astralibs.utils.catching
 import com.astrainteractive.astratemplate.api.TemplateApi
 import com.astrainteractive.astratemplate.events.EventHandler
+import com.astrainteractive.astratemplate.rest.RestApi
 import com.astrainteractive.astratemplate.sqldatabase.SQLDatabase
+import com.astrainteractive.astratemplate.sqldatabase.entities.User
 import com.astrainteractive.astratemplate.utils.PluginTranslation
 import com.astrainteractive.astratemplate.utils._Files
 import com.astrainteractive.astratemplate.utils.EmpireConfig
@@ -15,14 +19,25 @@ import com.astrainteractive.astratemplate.utils._EmpireConfig
 import kotlinx.coroutines.runBlocking
 import org.bukkit.event.HandlerList
 import org.bukkit.plugin.java.JavaPlugin
+import org.jetbrains.kotlin.com.google.gson.Gson
 
 /**
  * Initial class for your plugin
  */
 class AstraTemplate : JavaPlugin() {
-    companion object{
-        lateinit var instance:AstraTemplate
+    companion object {
+        lateinit var instance: AstraTemplate
+        val api by lazy {
+            RestRequester{
+                this.baseUrl = "https://rickandmortyapi.com/"
+                this.converterFactory = { json, clazz ->
+                    json?.let { Gson().fromJson(json, clazz) }
+                }
+                this.decoderFactory = Gson()::toJson
+            }.create(RestApi::class.java)
+        }
     }
+
     init {
         instance = this
     }

@@ -15,6 +15,7 @@ depend: [ ]
 loadbefore: [ ]
 commands:
   add:
+  rickandmorty:
   atempreload:
     description: Reload plugin
     permission: astra_template.reload

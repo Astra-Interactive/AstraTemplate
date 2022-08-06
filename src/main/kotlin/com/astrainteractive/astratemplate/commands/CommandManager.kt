@@ -24,6 +24,7 @@ class CommandManager {
         damageCommand()
         tempGUI()
         reload()
+        RandomRickAndMortyCharacter()
     }
 
 

@@ -92,6 +92,7 @@ dependencies {
     compileOnly("com.github.MilkBowl:VaultAPI:${Spigot.vault}")
     compileOnly("net.coreprotect:coreprotect:${Spigot.coreProtect}")
     compileOnly("com.ticxo.modelengine:api:${Spigot.modelEngine}")
+    implementation("org.xerial:sqlite-jdbc:3.23.1")
 }
 
 tasks {
