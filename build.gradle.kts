@@ -18,7 +18,7 @@ object Spigot {
 }
 
 group = "com.astrainteractive"
-version = "2.3.0"
+version = "2.4.0"
 val name = "AstraTemplate"
 description = "Template plugin from AstraInteractive"
 
@@ -92,7 +92,7 @@ dependencies {
     compileOnly("com.github.MilkBowl:VaultAPI:${Spigot.vault}")
     compileOnly("net.coreprotect:coreprotect:${Spigot.coreProtect}")
     compileOnly("com.ticxo.modelengine:api:${Spigot.modelEngine}")
-    implementation("org.xerial:sqlite-jdbc:3.23.1")
+//    implementation("org.xerial:sqlite-jdbc:3.23.1")
 }
 
 tasks {
