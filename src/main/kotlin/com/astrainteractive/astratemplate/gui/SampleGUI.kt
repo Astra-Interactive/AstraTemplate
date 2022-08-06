@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.bukkit.Material
 import org.bukkit.entity.Player
+import org.bukkit.event.inventory.ClickType
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.inventory.InventoryCloseEvent
 import org.bukkit.inventory.ItemStack
@@ -66,7 +67,7 @@ class SampleGUI(override val playerMenuUtility: AstraPlayerMenuUtility) : Pagina
     override fun handleMenu(e: InventoryClickEvent) {
         super.handleMenu(e)
         if (IntRange(0, maxItemsPerPage).contains(e.slot))
-            viewModel.onItemClicked(e.slot)
+            viewModel.onItemClicked(e.slot,e.click)
         else if (e.slot == changeModeIndex)
             viewModel.onModeChange()
         else if (e.slot == addUserIndex)
@@ -132,7 +133,9 @@ class SampleGUI(override val playerMenuUtility: AstraPlayerMenuUtility) : Pagina
                     it.lore = listOf(
                         "${viewModel.randomColor}discordID: ${user.discordId}",
                         "${viewModel.randomColor}minecraftUUID: ${user.minecraftUuid}",
-                        "${viewModel.randomColor}Press to delete user"
+                        "${viewModel.randomColor}Press LeftClick to delete user",
+                        "${viewModel.randomColor}Press MiddleClick to delete user",
+                        "${viewModel.randomColor}Press RightClick to Add Relation"
                     )
                 }
             }

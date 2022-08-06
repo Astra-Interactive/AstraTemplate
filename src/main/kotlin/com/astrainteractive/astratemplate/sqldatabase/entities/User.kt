@@ -1,45 +1,37 @@
 package com.astrainteractive.astratemplate.sqldatabase.entities
 
 
-import com.astrainteractive.astralibs.utils.catching
-import java.sql.ResultSet
-import kotlin.math.min
+import com.astrainteractive.astratemplate.sqldatabase.lib.ColumnInfo
+import com.astrainteractive.astratemplate.sqldatabase.lib.Entity
+import com.astrainteractive.astratemplate.sqldatabase.lib.PrimaryKey
 
+@Entity(User.TABLE)
 data class User(
+    @PrimaryKey(autoIncrement = true)
+    @ColumnInfo(name = "id")
     val id: Long,
+    @ColumnInfo(name = "discord_id")
     val discordId: String,
-    val minecraftUuid: String
+    @ColumnInfo(name = "minecraft_uuid")
+    val minecraftUuid: String,
 ) {
-    /**
-     * Constructor, which allows you to pass [id]
-     */
-    constructor(discordId: String, minecraftUuid: String) : this(-1L, discordId, minecraftUuid)
-
     companion object {
-        /**
-         * This function parse values from [ResultSet]
-         */
-        fun fromResultSet(rs: ResultSet?) = catching {
-            rs?.let {
-                return@catching User(
-                    id = it.getLong(id.name),
-                    discordId = it.getString(discordId.name),
-                    minecraftUuid = it.getString(minecraftUuid.name)
-                )
-            }
+        const val TABLE: String = "users"
+    }
+}
 
-        }
-
-        val table: String
-            get() = "users"
-        val discordId: EntityInfo
-            get() = EntityInfo("discord_id", "varchar(16)")
-        val minecraftUuid: EntityInfo
-            get() = EntityInfo("minecraft_uuid", "varchar(16)")
-        val id: EntityInfo
-            get() = EntityInfo("id", "INTEGER",primaryKey = true,autoIncrement = true)
-        val entities: List<EntityInfo>
-            get() = listOf(id, discordId, minecraftUuid)
+@Entity(RatingRelation.TABLE)
+data class RatingRelation(
+    @PrimaryKey(autoIncrement = true)
+    @ColumnInfo(name = "id")
+    val id: Long,
+    @ColumnInfo(name = "user_id")
+    val userID: Long,
+    @ColumnInfo(name = "reason")
+    val reason: String,
+) {
+    companion object {
+        const val TABLE: String = "rating"
     }
 }
 

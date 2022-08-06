@@ -1,17 +1,20 @@
 package com.astrainteractive.astratemplate.sqldatabase
 
-import com.astrainteractive.astralibs.utils.AstraLibsExtensions.then
 import com.astrainteractive.astralibs.utils.catching
 import com.astrainteractive.astralibs.utils.mapNotNull
-import com.astrainteractive.astratemplate.sqldatabase.entities.EntityInfo
+import com.astrainteractive.astratemplate.sqldatabase.lib.AnnotationUtils
+import com.astrainteractive.astratemplate.sqldatabase.lib.create
+import com.astrainteractive.astratemplate.sqldatabase.lib.fromResultSet
 import java.sql.Connection
 import java.sql.ResultSet
 import java.sql.Statement
 
-abstract class DatabaseCore {
-    var connection: Connection? = null
-    val isInitialized: Boolean
-        get() = connection?.isClosed != true
+val Connection?.isConnected: Boolean
+    get() = this?.isClosed != true
+
+abstract class DatabaseCore() {
+    abstract val connectionBuilder: () -> Connection?
+    val connection by lazy { catching { connectionBuilder() } }
 
     companion object {
         /**
@@ -22,60 +25,91 @@ abstract class DatabaseCore {
             get() = sqlString(this)
     }
 
-    abstract suspend fun createConnection()
     abstract suspend fun onEnable()
     suspend fun close() = catching {
         connection?.close()
+        connection?.close()
     }
 
-    suspend fun createTable(table: String, entites: List<EntityInfo>) = catching(true) {
-        val query = "CREATE TABLE IF NOT EXISTS $table (" + entites.joinToString(",") {
-            mutableListOf<String>().apply {
-                add("${it.name} ${it.type}")
-                if (it.primaryKey) add("PRIMARY KEY")
-                if (it.autoIncrement) add("AUTOINCREMENT")
-                if (!it.nullable) add("NOT NULL")
-                if (it.unique) add("UNIQUE")
-            }.joinToString(" ")
-        } + "); "
-        return@catching connection?.prepareStatement(query)?.execute()
+    inline fun <reified T> update(instance: T) = update(T::class.java, instance)
+    inline fun <reified T> delete(instance: T) = delete(T::class.java, instance)
+    inline fun <reified T> select(where: String = "") = select(T::class.java, where)
+    inline fun <reified T> insert(instance: T) = insert(T::class.java, instance)
+    inline fun <reified T> createTable() = createTable(T::class.java)
+    fun <T> update(clazz: Class<out T>, instance: T): Boolean? {
+        val info = AnnotationUtils.EntityInfo.create(clazz, instance)
+        val primaryKeyInfo =
+            info?.columns?.firstOrNull { it.primaryKey != null } ?: throw Exception("Primary key not found")
+
+        val entries = info?.columns?.mapNotNull {
+            if (it.primaryKey != null) null
+            else "${it.columnInfo.name}=${it.sqlFieldValue}"
+        }?.joinToString(", ")
+
+        val query =
+            "UPDATE ${info?.entity?.tableName} SET $entries WHERE ${primaryKeyInfo.columnInfo.name}=${primaryKeyInfo.sqlFieldValue}"
+        println(query)
+        return connection?.prepareStatement(query)?.execute()
     }
 
-    suspend fun insert(table: String, vararg entry: Pair<EntityInfo, Any>): Long? = catching(true) {
-        val names = "(" + entry.map { it.first.name }.joinToString(",") + ") "
-        val values = "VALUES(" + entry.map { if (it.second is String) (it.second as String).sqlString else it.second }
-            .joinToString(",") + ");"
-        val query = "INSERT INTO $table $names $values"
+    fun <T> delete(clazz: Class<out T>, instance: T): Boolean? {
+        val info = AnnotationUtils.EntityInfo.create(clazz, instance)
+        val primaryKeyInfo =
+            info?.columns?.firstOrNull { it.primaryKey != null } ?: throw Exception("Primary key not found")
+        val query =
+            "DELETE FROM ${info?.entity?.tableName} WHERE ${primaryKeyInfo.columnInfo.name}=${primaryKeyInfo.sqlFieldValue}"
+        println(query)
+        return connection?.prepareStatement(query)?.execute()
+    }
+
+    fun <T> select(clazz: Class<out T>, where: String = ""): List<T>? {
+        val info = AnnotationUtils.EntityInfo.create(clazz)
+        val query = "SELECT * FROM ${info?.entity?.tableName} $where"
+        println(query)
+        return connection?.createStatement()?.executeQuery(query)?.mapNotNull { rs ->
+            fromResultSet(clazz, info, rs)
+        }
+    }
+
+
+    fun <T> insert(clazz: Class<out T>, instance: T): Long? {
+        val info = AnnotationUtils.EntityInfo.create(clazz, instance)
+        val keys = info?.columns?.mapNotNull {
+            if (it.primaryKey != null) null
+            else it.columnInfo.name
+        }?.joinToString(", ", "(", ")")
+
+        val values = info?.columns?.mapNotNull {
+            if (it.primaryKey != null) null
+            else it.sqlFieldValue
+        }?.joinToString(", ", "(", ")")
+
+        val query = "INSERT INTO ${info?.entity?.tableName} $keys VALUES $values"
+        println(query)
+
         val prepared =
             connection?.prepareStatement(query, Statement.RETURN_GENERATED_KEYS).apply { this?.executeUpdate() }
-        return@catching prepared?.generatedKeys?.getLong(1)
+        return prepared?.generatedKeys?.getLong(1)
     }
 
-    suspend fun <T, K> selectEntryByID(table: String, idName: String, id: K, builder: (ResultSet) -> T?): T? =
-        catching(true) {
-            val id = (id is String).then((id as String).sqlString) ?: id
-            val query = "SELECT * FROM $table WHERE $idName=$id"
-            val rs = connection?.createStatement()?.executeQuery(query)
-            return@catching rs?.mapNotNull { builder(it) }?.firstOrNull()
+
+    fun <T> createTable(clazz: Class<out T>): Boolean? {
+        val info = AnnotationUtils.EntityInfo.create(clazz)
+        val keys = info?.columns?.joinToString(",", "(", ")") {
+            buildList {
+                add("${it.columnInfo.name} ${AnnotationUtils.resolveType(it.parameter)}")
+                it.primaryKey?.let {
+                    add("PRIMARY KEY")
+                    if (it.autoIncrement)
+                        add("AUTOINCREMENT")
+                }
+                if (!it.columnInfo.nullable) add("NOT NULL")
+                if (it.columnInfo.unique) add("UNIQUE")
+            }.joinToString(" ")
         }
-
-    suspend fun <T> select(table: String, builder: (ResultSet) -> T?): List<T>? = catching {
-        val rs = connection?.createStatement()?.executeQuery("SELECT * FROM $table")
-        return@catching rs?.mapNotNull { builder(it) }
-    }
-
-    suspend fun <T> updateByID(table: String, idName: String, id: T, vararg entry: Pair<EntityInfo, Any>): Boolean? =
-        catching(true) {
-            val id = (id is String).then((id as String).sqlString) ?: id
-            val entries = entry.map { it.first.name + "=" + it.second }.joinToString(", ")
-            val query = "UPDATE $table SET $entries WHERE $idName=$id"
-            return@catching connection?.prepareStatement(query)?.execute()
-        }
-
-    suspend fun <T> deleteEntryByID(table: String, idName: String, id: T): Boolean? = catching(true) {
-        val id = (id is String).then((id as String).sqlString) ?: id
-        val query = "DELETE FROM $table WHERE $idName=$id"
-        return@catching connection?.prepareStatement(query)?.execute()
+        val query = "CREATE TABLE IF NOT EXISTS ${info?.entity?.tableName} $keys"
+        println(query)
+        return connection?.prepareStatement(query)?.execute()
     }
 }
 

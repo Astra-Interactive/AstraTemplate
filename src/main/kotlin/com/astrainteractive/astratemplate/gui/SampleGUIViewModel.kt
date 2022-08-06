@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.bukkit.ChatColor
+import org.bukkit.event.inventory.ClickType
 import org.bukkit.inventory.ItemStack
 import kotlin.random.Random
 
@@ -39,23 +40,31 @@ class SampleGUIViewModel {
         _mode.value = mode.value.next()
     }
 
-    fun onItemClicked(slot: Int) {
+    fun onItemClicked(slot: Int, clickType:ClickType) {
         if (mode.value == Mode.ITEMS)
             onItemStackClicked(slot)
-        else onPlayerHeadClicked(slot)
+        else onPlayerHeadClicked(slot,clickType)
     }
 
     fun onAddUserClicked() {
         AsyncHelper.launch {
-            DatabaseApi.insertUser(User("id${Random.nextInt(20000)}", "mine${Random.nextInt(5000)}"))
+            DatabaseApi.insertUser(User(-1,"id${Random.nextInt(20000)}", "mine${Random.nextInt(5000)}"))
             _users.value = DatabaseApi.getAllUsers() ?: emptyList()
         }
     }
 
-    private fun onPlayerHeadClicked(slot: Int) {
+
+    private fun onPlayerHeadClicked(slot: Int,clickType: ClickType) {
         val user = users.value[slot]
         AsyncHelper.launch {
-            DatabaseApi.deleteUser(user)
+            when (clickType) {
+                ClickType.MIDDLE -> DatabaseApi.updateUser(user)
+                ClickType.LEFT -> DatabaseApi.deleteUser(user)
+                else -> {
+                    println(DatabaseApi.selectRating(user))
+                    DatabaseApi.insertRating(user)
+                }
+            }
             _users.value = DatabaseApi.getAllUsers() ?: emptyList()
         }
     }
