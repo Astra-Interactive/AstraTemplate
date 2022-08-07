@@ -1,16 +1,15 @@
-package com.astrainteractive.astratemplate.sqldatabase
+package com.astrainteractive.astratemplate.api.local
 
 import com.astrainteractive.astralibs.AstraLibs
 import com.astrainteractive.astralibs.Logger
 import com.astrainteractive.astralibs.database.DatabaseCore
 import com.astrainteractive.astralibs.database.isConnected
-import com.astrainteractive.astratemplate.api.DatabaseApi
 import com.astrainteractive.astratemplate.utils.Translation
 import java.io.File
 import java.sql.Connection
 import java.sql.DriverManager
 
-object SQLDatabase : DatabaseCore() {
+class SQLDatabase : DatabaseCore() {
     override val connectionBuilder: () -> Connection? = {
         val _dbPath = "${AstraLibs.instance.dataFolder}${File.separator}data.db"
         DriverManager.getConnection(("jdbc:sqlite:$_dbPath"))
@@ -23,7 +22,7 @@ object SQLDatabase : DatabaseCore() {
             Logger.error(Translation.dbFail, "Database")
             return
         }
-        DatabaseApi.createUserTable()
-        DatabaseApi.createRatingTable()
+        createTable<User>()
+        createTable<RatingRelation>()
     }
 }

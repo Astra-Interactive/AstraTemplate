@@ -6,10 +6,14 @@ import com.astrainteractive.astralibs.Logger
 import com.astrainteractive.astralibs.ServerVersion
 import com.astrainteractive.astralibs.events.GlobalEventManager
 import com.astrainteractive.astralibs.rest.RestRequester
+import com.astrainteractive.astralibs.utils.Injector.inject
+import com.astrainteractive.astralibs.utils.Injector.remember
+import com.astrainteractive.astratemplate.api.Repository
 import com.astrainteractive.astratemplate.api.TemplateApi
 import com.astrainteractive.astratemplate.events.EventHandler
-import com.astrainteractive.astratemplate.rest.RestApi
-import com.astrainteractive.astratemplate.sqldatabase.SQLDatabase
+import com.astrainteractive.astratemplate.api.remote.RestApi
+import com.astrainteractive.astratemplate.api.local.SQLDatabase
+import com.astrainteractive.astratemplate.api.remote.RestBuilder
 import com.astrainteractive.astratemplate.utils.PluginTranslation
 import com.astrainteractive.astratemplate.utils._Files
 import com.astrainteractive.astratemplate.utils._EmpireConfig
@@ -24,15 +28,6 @@ import org.jetbrains.kotlin.com.google.gson.Gson
 class AstraTemplate : JavaPlugin() {
     companion object {
         lateinit var instance: AstraTemplate
-        val api by lazy {
-            RestRequester{
-                this.baseUrl = "https://rickandmortyapi.com/"
-                this.converterFactory = { json, clazz ->
-                    json?.let { Gson().fromJson(json, clazz) }
-                }
-                this.decoderFactory = Gson()::toJson
-            }.create(RestApi::class.java)
-        }
     }
 
     init {
@@ -60,10 +55,14 @@ class AstraTemplate : JavaPlugin() {
         Logger.prefix = "AstraTemplate"
         PluginTranslation()
         _Files()
+
+        remember(runBlocking { SQLDatabase().apply { onEnable() } })
+        remember(Repository(restDataSource = RestBuilder.build()))
+
+
         eventHandler = EventHandler()
         commandManager = CommandManager()
         _EmpireConfig.create()
-        runBlocking { SQLDatabase.onEnable() }
         Logger.log("Logger enabled", "AstraTemplate")
         Logger.warn("Warn message from logger", "AstraTemplate")
         Logger.error("Error message", "AstraTemplate")
@@ -82,7 +81,7 @@ class AstraTemplate : JavaPlugin() {
      */
     override fun onDisable() {
         eventHandler.onDisable()
-        runBlocking { SQLDatabase.close() }
+        runBlocking { inject<SQLDatabase>()?.close() }
         HandlerList.unregisterAll(this)
         TemplateApi.onDisable()
         GlobalEventManager.onDisable()

@@ -1,10 +1,11 @@
 package com.astrainteractive.astratemplate.gui
 
 import com.astrainteractive.astralibs.async.AsyncHelper
+import com.astrainteractive.astralibs.utils.Injector.inject
 import com.astrainteractive.astralibs.utils.next
 import com.astrainteractive.astratemplate.api.TemplateApi
-import com.astrainteractive.astratemplate.api.DatabaseApi
-import com.astrainteractive.astratemplate.sqldatabase.User
+import com.astrainteractive.astratemplate.api.Repository
+import com.astrainteractive.astratemplate.api.local.User
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -21,14 +22,14 @@ enum class Mode {
 /**
  * MVVM technique
  */
-class SampleGUIViewModel {
+class SampleGUIViewModel(private val repository: Repository? = inject()) {
     private val _items = MutableStateFlow(TemplateApi.randomItemStackList())
     val items: StateFlow<List<ItemStack>>
         get() = _items
     private val _mode = MutableStateFlow(Mode.ITEMS)
     val mode: StateFlow<Mode>
         get() = _mode
-    private val _users = MutableStateFlow(runBlocking { DatabaseApi.getAllUsers() ?: emptyList() })
+    private val _users = MutableStateFlow(runBlocking { repository?.getAllUsers() ?: emptyList() })
     val users: StateFlow<List<User>>
         get() = _users
 
@@ -48,8 +49,8 @@ class SampleGUIViewModel {
 
     fun onAddUserClicked() {
         AsyncHelper.launch {
-            DatabaseApi.insertUser(User(-1,"id${Random.nextInt(20000)}", "mine${Random.nextInt(5000)}"))
-            _users.value = DatabaseApi.getAllUsers() ?: emptyList()
+            repository?.insertUser(User(-1,"id${Random.nextInt(20000)}", "mine${Random.nextInt(5000)}"))
+            _users.value = repository?.getAllUsers() ?: emptyList()
         }
     }
 
@@ -58,14 +59,14 @@ class SampleGUIViewModel {
         val user = users.value[slot]
         AsyncHelper.launch {
             when (clickType) {
-                ClickType.MIDDLE -> DatabaseApi.updateUser(user)
-                ClickType.LEFT -> DatabaseApi.deleteUser(user)
+                ClickType.MIDDLE -> repository?.updateUser(user)
+                ClickType.LEFT -> repository?.deleteUser(user)
                 else -> {
-                    println(DatabaseApi.selectRating(user))
-                    DatabaseApi.insertRating(user)
+                    println(repository?.selectRating(user))
+                    repository?.insertRating(user)
                 }
             }
-            _users.value = DatabaseApi.getAllUsers() ?: emptyList()
+            _users.value = repository?.getAllUsers() ?: emptyList()
         }
     }
 

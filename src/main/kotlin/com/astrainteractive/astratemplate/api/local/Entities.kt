@@ -1,4 +1,4 @@
-package com.astrainteractive.astratemplate.sqldatabase
+package com.astrainteractive.astratemplate.api.local
 
 
 import com.astrainteractive.astralibs.database.ColumnInfo
