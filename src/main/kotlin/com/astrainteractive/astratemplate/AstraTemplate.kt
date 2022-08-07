@@ -6,15 +6,12 @@ import com.astrainteractive.astralibs.Logger
 import com.astrainteractive.astralibs.ServerVersion
 import com.astrainteractive.astralibs.events.GlobalEventManager
 import com.astrainteractive.astralibs.rest.RestRequester
-import com.astrainteractive.astralibs.utils.catching
 import com.astrainteractive.astratemplate.api.TemplateApi
 import com.astrainteractive.astratemplate.events.EventHandler
 import com.astrainteractive.astratemplate.rest.RestApi
 import com.astrainteractive.astratemplate.sqldatabase.SQLDatabase
-import com.astrainteractive.astratemplate.sqldatabase.entities.User
 import com.astrainteractive.astratemplate.utils.PluginTranslation
 import com.astrainteractive.astratemplate.utils._Files
-import com.astrainteractive.astratemplate.utils.EmpireConfig
 import com.astrainteractive.astratemplate.utils._EmpireConfig
 import kotlinx.coroutines.runBlocking
 import org.bukkit.event.HandlerList

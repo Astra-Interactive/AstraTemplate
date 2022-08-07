@@ -1,9 +1,9 @@
-package com.astrainteractive.astratemplate.sqldatabase.entities
+package com.astrainteractive.astratemplate.sqldatabase
 
 
-import com.astrainteractive.astratemplate.sqldatabase.lib.ColumnInfo
-import com.astrainteractive.astratemplate.sqldatabase.lib.Entity
-import com.astrainteractive.astratemplate.sqldatabase.lib.PrimaryKey
+import com.astrainteractive.astralibs.database.ColumnInfo
+import com.astrainteractive.astralibs.database.Entity
+import com.astrainteractive.astralibs.database.PrimaryKey
 
 @Entity(User.TABLE)
 data class User(

@@ -1,10 +1,10 @@
 package com.astrainteractive.astratemplate.gui
 
 import com.astrainteractive.astralibs.async.AsyncHelper
+import com.astrainteractive.astralibs.utils.next
 import com.astrainteractive.astratemplate.api.TemplateApi
 import com.astrainteractive.astratemplate.api.DatabaseApi
-import com.astrainteractive.astratemplate.sqldatabase.entities.User
-import com.astrainteractive.astratemplate.utils.next
+import com.astrainteractive.astratemplate.sqldatabase.User
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch

@@ -2,8 +2,8 @@ package com.astrainteractive.astratemplate.api
 
 import com.astrainteractive.astralibs.utils.catching
 import com.astrainteractive.astratemplate.sqldatabase.SQLDatabase
-import com.astrainteractive.astratemplate.sqldatabase.entities.RatingRelation
-import com.astrainteractive.astratemplate.sqldatabase.entities.User
+import com.astrainteractive.astratemplate.sqldatabase.RatingRelation
+import com.astrainteractive.astratemplate.sqldatabase.User
 import java.sql.Connection
 import java.util.*
 
