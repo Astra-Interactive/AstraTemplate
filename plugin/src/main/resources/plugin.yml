@@ -1,0 +1,31 @@
+main: AstraTemplate
+prefix: AstraTemplate
+#description: '${description}'
+#name: '${name}'
+#version: '${version}'
+description: 'AstraTemplate'
+name: 'AstraTemplate'
+version: 'AstraTemplate'
+authors: [ MakeevRoman ]
+author: MakeevRoman
+website: AstraInteractive.ru
+api-version: 1.18
+softdepend: [ ]
+depend: [ ]
+loadbefore: [ ]
+commands:
+  add:
+  rickandmorty:
+  atempreload:
+    description: Reload plugin
+    permission: astra_template.reload
+    permission-message: You do not have permission!
+    usage: /<command>
+  adamage:
+    description: Damage player
+    permission: astra_template.damage
+    permission-message: You do not have permission!
+    usage: /<command> <player> amount
+  atempgui:
+    description: Shows template gui
+    usage: /<command>
