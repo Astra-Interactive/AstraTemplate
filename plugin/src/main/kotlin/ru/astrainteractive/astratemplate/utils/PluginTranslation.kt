@@ -2,6 +2,7 @@ package ru.astrainteractive.astratemplate.utils
 
 import org.bukkit.configuration.file.FileConfiguration
 import ru.astrainteractive.astralibs.file_manager.FileManager
+import ru.astrainteractive.astralibs.utils.BaseTranslation
 import ru.astrainteractive.astralibs.utils.HEX
 import ru.astrainteractive.astralibs.utils.getHEXString
 import kotlin.reflect.KProperty
