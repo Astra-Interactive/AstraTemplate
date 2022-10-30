@@ -36,8 +36,14 @@ Astra template has everything(probably) you need including:
 - [x] GSON-like YML loader using GSON or kotlinx.serialization
 - [x] Logger, which can be logged in file
 - [x] Readable code
-- [x] Everything is commented
+- [x] (almost) Everything is commented
 - [x] Error catching
 - [x] Enum extensions
+- [x] DTO And domain structure
+- [x] Multimodules structure
+- [x] DSL Database
+- [x] Easy DI aka Dependency Injection
+- [x] MVI GUI example
+- [x] And more other stuff - better look by yourself
 
 Also, checkout [AstraLearner](https://play.google.com/store/apps/details?id=com.makeevrserg.astralearner) - it will help you to learn foreign words easily!
