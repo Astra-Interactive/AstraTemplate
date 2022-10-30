@@ -57,7 +57,7 @@ class AstraTemplate : JavaPlugin() {
      */
     override fun onDisable() {
         eventHandler?.onDisable()
-        runBlocking { SQLDatabaseModule.value.close() }
+        runBlocking { SQLDatabaseModule.value.closeConnection() }
         HandlerList.unregisterAll(this)
         GlobalEventManager.onDisable()
     }

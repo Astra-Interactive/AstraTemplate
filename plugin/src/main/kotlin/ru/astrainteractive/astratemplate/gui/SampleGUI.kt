@@ -1,14 +1,22 @@
 package ru.astrainteractive.astratemplate.gui
 
+import com.astrainteractive.astratemplate.domain.local.dto.UserDTO
 import com.astrainteractive.astratemplate.domain.local.entities.User
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.inventory.InventoryCloseEvent
 import org.bukkit.inventory.ItemStack
 import ru.astrainteractive.astralibs.Logger
+import ru.astrainteractive.astralibs.async.BukkitMain
 import ru.astrainteractive.astralibs.di.getValue
 import ru.astrainteractive.astralibs.menu.*
+import ru.astrainteractive.astratemplate.api.ItemStackSpigotAPI
+import ru.astrainteractive.astratemplate.modules.RepositoryModule
 import ru.astrainteractive.astratemplate.modules.SampleGuiViewModelFactory
 import ru.astrainteractive.astratemplate.modules.TranslationProvider
 
@@ -16,7 +24,7 @@ import ru.astrainteractive.astratemplate.modules.TranslationProvider
 class SampleGUI(player: Player) : PaginatedMenu() {
     private val translation by TranslationProvider
 
-    private val viewModel by SampleGuiViewModelFactory
+    private val viewModel = SampleGuiViewModelFactory.provide()
 
     fun createItemStackWithName(material: Material, name: String) = ItemStack(material).apply {
         val meta = itemMeta
@@ -108,10 +116,12 @@ class SampleGUI(player: Player) : PaginatedMenu() {
     }
 
     override fun onCreated() {
-        viewModel.inventoryState.collectOn {
-            onStateChanged(it)
-        }
         viewModel.onUiCreated()
+        lifecycleScope.launch(Dispatchers.BukkitMain) {
+            viewModel.inventoryState.collectLatest {
+                onStateChanged(it)
+            }
+        }
     }
 
     fun onStateChanged(state: InventoryState = viewModel.inventoryState.value) {
@@ -133,7 +143,7 @@ class SampleGUI(player: Player) : PaginatedMenu() {
         }
     }
 
-    private fun setUsers(list: List<User>) {
+    private fun setUsers(list: List<UserDTO>) {
         for (i in 0 until maxItemsPerPage) {
             val index = maxItemsPerPage * page + i
             if (index >= list.size)
@@ -144,7 +154,7 @@ class SampleGUI(player: Player) : PaginatedMenu() {
                     it.setDisplayName(user.id.toString())
                     it.lore = listOf(
                         "${viewModel.randomColor}discordID: ${user.discordId}",
-                        "${viewModel.randomColor}minecraftUUID: ${user.minecraftUuid}",
+                        "${viewModel.randomColor}minecraftUUID: ${user.minecraftUUID}",
                         "${viewModel.randomColor}Press LeftClick to delete user",
                         "${viewModel.randomColor}Press MiddleClick to delete user",
                         "${viewModel.randomColor}Press RightClick to Add Relation"

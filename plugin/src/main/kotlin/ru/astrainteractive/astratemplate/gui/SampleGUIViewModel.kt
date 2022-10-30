@@ -2,14 +2,17 @@ package ru.astrainteractive.astratemplate.gui
 
 import ru.astrainteractive.astratemplate.api.ItemStackSpigotAPI
 import com.astrainteractive.astratemplate.domain.Repository
+import com.astrainteractive.astratemplate.domain.local.dto.UserDTO
 import com.astrainteractive.astratemplate.domain.local.entities.User
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.bukkit.ChatColor
 import org.bukkit.event.inventory.ClickType
 import org.bukkit.inventory.ItemStack
+import ru.astrainteractive.astralibs.Logger
 import ru.astrainteractive.astralibs.architecture.ViewModel
 import kotlin.random.Random
 
@@ -48,7 +51,7 @@ class SampleGUIViewModel(
 
     fun onAddUserClicked() {
         viewModelScope.launch(Dispatchers.IO) {
-            repository?.insertUser(User(-1, "id${Random.nextInt(20000)}", "mine${Random.nextInt(5000)}"))
+            repository?.insertUser(UserDTO(-1, "id${Random.nextInt(20000)}", "mine${Random.nextInt(5000)}"))
             loadUsersState()
         }
     }
@@ -87,18 +90,16 @@ class SampleGUIViewModel(
     }
 
     suspend fun loadItemsState() {
-        inventoryState.update {
-            InventoryState.Items(itemStackSpigotAPi.randomItemStackList())
-        }
+        inventoryState.value = InventoryState.Items(itemStackSpigotAPi.randomItemStackList())
     }
 
     suspend fun loadUsersState() {
-        inventoryState.update {
-            InventoryState.Users(repository.getAllUsers() ?: emptyList())
-        }
+        inventoryState.value = InventoryState.Users(repository.getAllUsers() ?: emptyList())
     }
 
     fun onUiCreated() = viewModelScope.launch(Dispatchers.IO) {
+        Logger.log("onUiCreated")
+        delay(1000)
         loadItemsState()
     }
 }
