@@ -1,6 +1,6 @@
 group = Dependencies.group
 version = Dependencies.version
-val name = "AstraTemplate"
+val pluginName = "AstraTemplate"
 description = "Template plugin from AstraInteractive"
 
 plugins {
@@ -97,7 +97,7 @@ tasks {
         from(sourceSets.main.get().resources.srcDirs) {
             filesMatching("plugin.yml") {
                 expand(
-                    "name" to project.name,
+                    "name" to pluginName,
                     "version" to project.version,
                     "description" to project.description
                 )
@@ -127,5 +127,6 @@ tasks.shadowJar {
     from(sourceSets.main.get().output)
     from(project.configurations.runtimeClasspath)
     minimize()
+    archiveBaseName.set(pluginName)
     destinationDirectory.set(File(Dependencies.destinationDirectoryPath))
 }

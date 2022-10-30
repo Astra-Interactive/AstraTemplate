@@ -1,11 +1,8 @@
-main: AstraTemplate
+main: ru.astrainteractive.astratemplate.AstraTemplate
 prefix: AstraTemplate
-#description: '${description}'
-#name: '${name}'
-#version: '${version}'
-description: 'AstraTemplate'
-name: 'AstraTemplate'
-version: 'AstraTemplate'
+description: '${description}'
+version: '${version}'
+name: '${name}'
 authors: [ MakeevRoman ]
 author: MakeevRoman
 website: AstraInteractive.ru
@@ -29,3 +26,4 @@ commands:
   atempgui:
     description: Shows template gui
     usage: /<command>
+  translation:

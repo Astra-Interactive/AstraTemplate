@@ -17,7 +17,7 @@ object Dependencies {
         const val kaml = "0.46.0"
         const val exposed = "0.38.1"
         const val jdbc = "3.36.0.3"
-        const val astraLibs = "2.0.1"
+        const val astraLibs = "2.0.5"
         const val shadow = "7.1.2"
         const val mysqlDriver = "8.0.20"
         const val orgTesting = "7.1.0"

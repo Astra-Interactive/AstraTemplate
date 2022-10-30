@@ -10,6 +10,7 @@ plugins {
     kotlin("plugin.serialization") version Dependencies.Kotlin.version
     id("com.github.johnrengelman.shadow") version Dependencies.Kotlin.shadow
 }
+
 java {
     withSourcesJar()
     withJavadocJar()
