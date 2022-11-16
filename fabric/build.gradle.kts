@@ -1,3 +1,5 @@
+import net.fabricmc.loom.task.RemapJarTask
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 plugins {
     kotlin("jvm")
     id("fabric-loom")
@@ -10,8 +12,9 @@ group = Dependencies.group
 version = Dependencies.version
 
 dependencies {
-    minecraft("com.mojang:minecraft:${Dependencies.Fabric.minecraftVersion}")
     mappings("net.fabricmc:yarn:${Dependencies.Fabric.yarn}")
+    minecraft("com.mojang:minecraft:${Dependencies.Fabric.minecraftVersion}")
+    modImplementation("net.fabricmc:fabric-language-kotlin:${Dependencies.Fabric.kotlin}")
     modImplementation("net.fabricmc:fabric-loader:${Dependencies.Fabric.fabricLoader}")
     modImplementation("net.fabricmc.fabric-api:fabric-api:${Dependencies.Fabric.fabricApi}")
 }
@@ -41,17 +44,28 @@ java {
 
 
 
-tasks.shadowJar {
+val shadowJar by tasks.getting(ShadowJar::class) {
     dependencies {
         // Kotlin
         include(dependency(Dependencies.Libraries.kotlinGradlePlugin))
     }
+    exclude("mappings")
+    exclude("mappings/")
+    exclude("./mappings")
     isReproducibleFileOrder = true
     mergeServiceFiles()
     dependsOn(configurations)
     archiveClassifier.set(null as String?)
-    from(sourceSets.main.get().output)
-    minimize()
+    archiveBaseName.set("AstraTemplate")
+    destinationDirectory.set(File(Dependencies.destinationDirectoryFabricPath))
+}
+
+val remapJar = tasks.getByName<RemapJarTask>("remapJar") {
+    (this as Task)
+    dependsOn(shadowJar)
+    mustRunAfter(shadowJar)
+    this.nestedJars.setFrom(shadowJar.archivePath)
+    this.nestedJars.setBuiltBy(listOf(shadowJar))
     archiveBaseName.set("AstraTemplate")
     destinationDirectory.set(File(Dependencies.destinationDirectoryFabricPath))
 }

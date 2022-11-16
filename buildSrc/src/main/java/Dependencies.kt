@@ -34,6 +34,7 @@ object Dependencies {
     object Fabric {
         const val fabricLoom = "1.0-SNAPSHOT"
         const val minecraftVersion = "1.19.2"
+        const val kotlin = "1.8.1+kotlin.${Kotlin.version}"
         const val fabricLoader = "0.14.9"
         const val yarn = "$minecraftVersion+build.8:v2"
         const val fabricApi = "0.60.0+$minecraftVersion"
