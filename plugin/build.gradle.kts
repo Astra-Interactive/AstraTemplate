@@ -7,9 +7,9 @@ plugins {
     java
     `maven-publish`
     `java-library`
-    kotlin("jvm") version Dependencies.Kotlin.version
-    kotlin("plugin.serialization") version Dependencies.Kotlin.version
-    id("com.github.johnrengelman.shadow") version Dependencies.Kotlin.shadow
+    kotlin("jvm")
+    kotlin("plugin.serialization")
+    id("com.github.johnrengelman.shadow")
 }
 java {
     withSourcesJar()

@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "ru.astrainteractive.astratemplate.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+  ],
+  "client": [
+    "FabricMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

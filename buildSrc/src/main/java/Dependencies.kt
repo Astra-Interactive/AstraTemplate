@@ -9,6 +9,7 @@ object Dependencies {
     const val version = "3.0.0"
     const val group = "com.astrainteractive"
     const val destinationDirectoryPath = "D:\\Minecraft Servers\\TEST_SERVER\\plugins"
+    const val destinationDirectoryFabricPath = "C:\\Users\\makee\\Desktop\\server\\mods"
 
     object Kotlin {
         const val version = "1.7.0"
@@ -23,6 +24,13 @@ object Dependencies {
         const val orgTesting = "7.1.0"
     }
 
+    object Fabric{
+        const val fabricLoom = "1.0-SNAPSHOT"
+        const val minecraftVersion = "1.19.2"
+        const val fabricLoader = "0.14.9"
+        const val yarn = "$minecraftVersion+build.8:v2"
+        const val fabricApi = "0.60.0+$minecraftVersion"
+    }
     object Spigot {
         const val velocity = "3.1.1"
         const val version = "1.19-R0.1-SNAPSHOT"
