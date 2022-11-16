@@ -46,4 +46,22 @@ Astra template has everything(probably) you need including:
 - [x] MVI GUI example
 - [x] And more other stuff - better look by yourself
 
+# Platforms
+
+- [x] Spigot/Paper
+- [x] Fabric
+- [ ] Velocity/Bungee
+- [ ] Forge
+
 Also, checkout [AstraLearner](https://play.google.com/store/apps/details?id=com.makeevrserg.astralearner) - it will help you to learn foreign words easily!
+
+## Directory structure
+    
+    ├── domain              # Shared module between fabric/spigot/forge
+    ├── buildSrc            # Build components
+    ├── fabric              # Fabric template mod
+    └── plugin              # Spigot template mod
+    
+## Build jar executables
+    $ ./gradlew :plugin:shadowJar          # assemble the plugin .jar
+    $ ./gradlew :fabric:shadowJar          # assemble the Fabric .jar
