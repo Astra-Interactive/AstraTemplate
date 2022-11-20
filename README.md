@@ -49,9 +49,9 @@ Astra template has everything(probably) you need including:
 # Platforms
 
 - [x] Spigot/Paper
-- [x] Fabric
+- [x] Fabric - Pre Alpha state
 - [ ] Velocity/Bungee
-- [ ] Forge
+- [x] Forge - Pre-Alpha state
 
 Also, checkout [AstraLearner](https://play.google.com/store/apps/details?id=com.makeevrserg.astralearner) - it will help you to learn foreign words easily!
 
