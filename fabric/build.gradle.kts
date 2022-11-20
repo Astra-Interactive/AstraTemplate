@@ -1,5 +1,6 @@
 import net.fabricmc.loom.task.RemapJarTask
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+import org.jetbrains.kotlin.ir.backend.js.compile
 
 plugins {
     kotlin("jvm")
@@ -17,6 +18,7 @@ dependencies {
     modImplementation("net.fabricmc:fabric-language-kotlin:${Dependencies.Fabric.kotlin}")
     modImplementation("net.fabricmc:fabric-loader:${Dependencies.Fabric.fabricLoader}")
     modImplementation("net.fabricmc.fabric-api:fabric-api:${Dependencies.Fabric.fabricApi}")
+
     // AstraLibs
     implementation(Dependencies.Libraries.astraLibsKtxCore)
 }
@@ -38,33 +40,42 @@ tasks {
         kotlinOptions.jvmTarget = "17"
     }
 
+
 }
 
 java {
     withSourcesJar()
 }
-val remapJar = tasks.getByName<RemapJarTask>("remapJar") {
-//    dependsOn(shadowJar)
-//    mustRunAfter(shadowJar)
-//    this.nestedJars.setBuiltBy(listOf(shadowJar))
-//    this.from(shadowJar.source)
-    archiveBaseName.set("AstraTemplate")
-    destinationDirectory.set(File(Dependencies.destinationDirectoryFabricPath))
-}
 val shadowJar by tasks.getting(ShadowJar::class) {
-    dependsOn(remapJar)
-    mustRunAfter(remapJar)
-
     dependencies {
         // Kotlin
         include(dependency(Dependencies.Libraries.kotlinGradlePlugin))
         include(dependency(Dependencies.Libraries.astraLibsKtxCore))
     }
     exclude("mappings/")
-    isReproducibleFileOrder = true
+    dependsOn(configurations)
+    println("sourceSets: ${sourceSets.names}")
+    from(sourceSets.main.get().allSource)
     mergeServiceFiles()
-//    dependsOn(configurations)
+    minimize()
+    isReproducibleFileOrder = true
     archiveClassifier.set(null as String?)
     archiveBaseName.set("AstraTemplate")
+}
+
+val remapJar = tasks.getByName<RemapJarTask>("remapJar") {
+    dependsOn(shadowJar)
+    mustRunAfter(shadowJar)
+    this.input.set(shadowJar.archiveFile)
+    addNestedDependencies.set(true)
+    archiveBaseName.set("AstraTemplate")
     destinationDirectory.set(File(Dependencies.destinationDirectoryFabricPath))
+}
+tasks.assemble {
+    dependsOn(remapJar)
+}
+
+artifacts {
+    archives(remapJar)
+    shadow(shadowJar)
 }

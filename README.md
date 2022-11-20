@@ -64,4 +64,4 @@ Also, checkout [AstraLearner](https://play.google.com/store/apps/details?id=com.
     
 ## Build jar executables
     $ ./gradlew :plugin:shadowJar          # assemble the plugin .jar
-    $ ./gradlew :fabric:shadowJar          # assemble the Fabric .jar
+    $ ./gradlew :fabric:build              # assemble the Fabric .jar
