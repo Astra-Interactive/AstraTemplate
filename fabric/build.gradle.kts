@@ -21,6 +21,8 @@ dependencies {
 
     // AstraLibs
     implementation(Dependencies.Libraries.astraLibsKtxCore)
+    implementation("org.xerial:sqlite-jdbc:3.34.0")
+    implementation(project(":domain"))
 }
 
 tasks {
@@ -51,13 +53,14 @@ val shadowJar by tasks.getting(ShadowJar::class) {
         // Kotlin
         include(dependency(Dependencies.Libraries.kotlinGradlePlugin))
         include(dependency(Dependencies.Libraries.astraLibsKtxCore))
+        include(dependency(":domain"))
+        include(dependency("org.xerial:sqlite-jdbc:3.34.0"))
     }
     exclude("mappings/")
     dependsOn(configurations)
-    println("sourceSets: ${sourceSets.names}")
     from(sourceSets.main.get().allSource)
     mergeServiceFiles()
-    minimize()
+//    minimize()
     isReproducibleFileOrder = true
     archiveClassifier.set(null as String?)
     archiveBaseName.set("AstraTemplate")
