@@ -15,5 +15,5 @@ tasks.shadowJar {
     from(project.configurations.runtimeClasspath)
     minimize()
     archiveBaseName.set(libs.versions.name.get())
-    destinationDirectory.set(File("./build/output/"))
+    destinationDirectory.set(File(libs.versions.destinationDirectoryPath.get()))
 }
