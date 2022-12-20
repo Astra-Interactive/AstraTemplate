@@ -2,7 +2,7 @@ import ru.astrainteractive.astralibs.AstraLibs
 import ru.astrainteractive.astralibs.di.getValue
 import ru.astrainteractive.astralibs.utils.registerCommand
 import ru.astrainteractive.astratemplate.commands.*
-import ru.astrainteractive.astratemplate.modules.TranslationProvider
+import ru.astrainteractive.astratemplate.modules.TranslationModule
 
 
 /**
@@ -11,7 +11,7 @@ import ru.astrainteractive.astratemplate.modules.TranslationProvider
  * @see Reload
  */
 class CommandManager {
-    val translation by TranslationProvider
+    val translation by TranslationModule
 
     /**
      * Here you should declare commands for your plugin

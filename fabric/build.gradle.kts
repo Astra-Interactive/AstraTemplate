@@ -3,58 +3,30 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import org.jetbrains.kotlin.ir.backend.js.compile
 
 plugins {
-    kotlin("jvm")
     id("fabric-loom")
-    `maven-publish`
-    java
     id("com.github.johnrengelman.shadow")
+    id("fabric-resource-processor")
+    id("basic-java")
 }
-
-group = Dependencies.group
-version = Dependencies.version
 dependencies {
-    mappings("net.fabricmc:yarn:${Dependencies.Fabric.yarn}")
-    minecraft("com.mojang:minecraft:${Dependencies.Fabric.minecraftVersion}")
-    modImplementation("net.fabricmc:fabric-language-kotlin:${Dependencies.Fabric.kotlin}")
-    modImplementation("net.fabricmc:fabric-loader:${Dependencies.Fabric.fabricLoader}")
-    modImplementation("net.fabricmc.fabric-api:fabric-api:${Dependencies.Fabric.fabricApi}")
-
+    mappings("net.fabricmc:yarn:1.19.2+build.8:v2")
+    minecraft(libs.mojangMinecraft.get())
+    modImplementation(libs.fabric.kotlin.get())
+    modImplementation(libs.fabric.loader.get())
+    modImplementation(libs.fabric.api.get())
     // AstraLibs
-    implementation(Dependencies.Libraries.astraLibsKtxCore)
-    implementation("org.xerial:sqlite-jdbc:3.34.0")
+    implementation(libs.astralibs.ktxCore)
+    implementation(libs.xerialSqliteJdbcLib)
     implementation(project(":domain"))
 }
 
-tasks {
-
-    processResources {
-        inputs.property("version", project.version)
-        filesMatching("fabric.mod.json") {
-            expand(mutableMapOf("version" to project.version))
-        }
-    }
-
-    jar {
-        from("LICENSE")
-    }
-
-    compileKotlin {
-        kotlinOptions.jvmTarget = "17"
-    }
-
-
-}
-
-java {
-    withSourcesJar()
-}
 val shadowJar by tasks.getting(ShadowJar::class) {
     dependencies {
         // Kotlin
-        include(dependency(Dependencies.Libraries.kotlinGradlePlugin))
-        include(dependency(Dependencies.Libraries.astraLibsKtxCore))
+        include(dependency(libs.kotlinGradlePlugin.get()))
+        include(dependency(libs.astralibs.ktxCore.get()))
+        include(dependency(libs.xerialSqliteJdbcLib.get()))
         include(dependency(":domain"))
-        include(dependency("org.xerial:sqlite-jdbc:3.34.0"))
     }
     exclude("mappings/")
     dependsOn(configurations)
@@ -72,7 +44,7 @@ val remapJar = tasks.getByName<RemapJarTask>("remapJar") {
     this.input.set(shadowJar.archiveFile)
     addNestedDependencies.set(true)
     archiveBaseName.set("AstraTemplate")
-    destinationDirectory.set(File(Dependencies.destinationDirectoryFabricPath))
+    destinationDirectory.set(File(libs.versions.destinationDirectoryFabricPath.get()))
 }
 tasks.assemble {
     dependsOn(remapJar)

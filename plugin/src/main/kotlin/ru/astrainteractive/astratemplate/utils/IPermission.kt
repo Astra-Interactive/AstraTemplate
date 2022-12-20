@@ -3,9 +3,8 @@ package ru.astrainteractive.astratemplate.utils
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 
-sealed class AstraPermission(val value: String) {
-    object Reload : AstraPermission("astra_template.reload")
-    object Damage : AstraPermission("astra_template.damage")
+interface IPermission {
+    val value: String
     fun hasPermission(player: CommandSender) = player.hasPermission(value)
 
     /**

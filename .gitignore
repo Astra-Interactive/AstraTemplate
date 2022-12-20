@@ -25,11 +25,14 @@ hs_err_pid*
 
 .idea/
 .gradle/
-gradle/
+gradle/wrapper
 build/
 out/
 .git/
 target/
+build-logic/.gradle
+build-logic/build
+build-logic/plugins/convention/build
 astra.properties
 .gradle
 libs

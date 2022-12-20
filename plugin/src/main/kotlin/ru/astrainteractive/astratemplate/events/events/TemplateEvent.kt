@@ -1,7 +1,7 @@
 package ru.astrainteractive.astratemplate.events.events
 
 import ru.astrainteractive.astratemplate.AstraTemplate
-import ru.astrainteractive.astratemplate.modules.TranslationProvider
+import ru.astrainteractive.astratemplate.modules.TranslationModule
 import org.bukkit.event.EventHandler
 import org.bukkit.event.HandlerList
 import org.bukkit.event.block.BlockPlaceEvent
@@ -19,7 +19,7 @@ class TemplateEvent : EventListener {
      */
     @EventHandler
     public fun blockPlaceEvent(e: BlockPlaceEvent) {
-        e.player.sendMessage(TranslationProvider.value.blockPlaced)
+        e.player.sendMessage(TranslationModule.value.blockPlaced)
         return
     }
 

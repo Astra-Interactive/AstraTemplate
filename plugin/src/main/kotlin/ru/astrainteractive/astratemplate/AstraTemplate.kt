@@ -2,7 +2,7 @@ package ru.astrainteractive.astratemplate
 
 import CommandManager
 import ru.astrainteractive.astratemplate.modules.SQLDatabaseModule
-import ru.astrainteractive.astratemplate.modules.TranslationProvider
+import ru.astrainteractive.astratemplate.modules.TranslationModule
 import kotlinx.coroutines.runBlocking
 import org.bukkit.event.HandlerList
 import org.bukkit.plugin.java.JavaPlugin
@@ -11,7 +11,7 @@ import ru.astrainteractive.astralibs.Logger
 import ru.astrainteractive.astralibs.ServerVersion
 import ru.astrainteractive.astralibs.events.GlobalEventManager
 import ru.astrainteractive.astratemplate.events.EventHandler
-import ru.astrainteractive.astratemplate.modules.PluginConfigProvider
+import ru.astrainteractive.astratemplate.modules.PluginConfigModule
 import ru.astrainteractive.astratemplate.utils.Files
 
 /**
@@ -43,13 +43,6 @@ class AstraTemplate : JavaPlugin() {
         Logger.log("Logger enabled", "AstraTemplate")
         Logger.warn("Warn message from logger", "AstraTemplate")
         Logger.error("Error message", "AstraTemplate")
-        if (ServerVersion.version == ServerVersion.UNMAINTAINED)
-            Logger.warn("Your server version is not maintained and might be not fully functional!", "AstraTemplate")
-        else
-            Logger.log(
-                "Your server version is: ${ServerVersion.getServerVersion()}. This version is supported!",
-                "AstraTemplate"
-            )
     }
 
     /**
@@ -67,8 +60,8 @@ class AstraTemplate : JavaPlugin() {
      */
     fun reloadPlugin() {
         Files.configFile.reload()
-        PluginConfigProvider.reload()
-        TranslationProvider.reload()
+        PluginConfigModule.reload()
+        TranslationModule.reload()
     }
 
 }

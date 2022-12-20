@@ -1,9 +1,7 @@
 package ru.astrainteractive.astratemplate.gui
 
 import com.astrainteractive.astratemplate.domain.local.dto.UserDTO
-import com.astrainteractive.astratemplate.domain.local.entities.User
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.bukkit.Material
@@ -15,16 +13,14 @@ import ru.astrainteractive.astralibs.Logger
 import ru.astrainteractive.astralibs.async.BukkitMain
 import ru.astrainteractive.astralibs.di.getValue
 import ru.astrainteractive.astralibs.menu.*
-import ru.astrainteractive.astratemplate.api.ItemStackSpigotAPI
-import ru.astrainteractive.astratemplate.modules.RepositoryModule
 import ru.astrainteractive.astratemplate.modules.SampleGuiViewModelFactory
-import ru.astrainteractive.astratemplate.modules.TranslationProvider
+import ru.astrainteractive.astratemplate.modules.TranslationModule
 
 
 class SampleGUI(player: Player) : PaginatedMenu() {
-    private val translation by TranslationProvider
+    private val translation by TranslationModule
 
-    private val viewModel = SampleGuiViewModelFactory.provide()
+    private val viewModel = SampleGuiViewModelFactory.value
 
     fun createItemStackWithName(material: Material, name: String) = ItemStack(material).apply {
         val meta = itemMeta
@@ -59,36 +55,22 @@ class SampleGUI(player: Player) : PaginatedMenu() {
             viewModel.onModeChange()
         }
     }
-
-    private val addUserButton = object : IInventoryButton {
-        override val onClick: (e: InventoryClickEvent) -> Unit = {
-            viewModel.onAddUserClicked()
-        }
-        override val index: Int = 48
-        override val item: ItemStack = createItemStackWithName(Material.EMERALD, translation.menuAddPlayer)
+    fun button(index: Int, item: ItemStack, onClick: (e: InventoryClickEvent) -> Unit) = object : IInventoryButton {
+        override val onClick: (e: InventoryClickEvent) -> Unit = onClick
+        override val index: Int = index
+        override val item: ItemStack = item
     }
-
-
-    override val backPageButton = object : IInventoryButton {
-        override val index: Int = 49
-        override val item: ItemStack = createItemStackWithName(Material.PAPER, translation.menuClose)
-        override val onClick: (e: InventoryClickEvent) -> Unit = {
-            inventory.close()
-        }
+    private val addUserButton = button(48, createItemStackWithName(Material.EMERALD, translation.menuAddPlayer)) {
+        viewModel.onAddUserClicked()
     }
-    override val nextPageButton = object : IInventoryButton {
-        override val index: Int = 53
-        override val item: ItemStack = createItemStackWithName(Material.PAPER, translation.menuNextPage)
-        override val onClick: (e: InventoryClickEvent) -> Unit = {
-            loadPage(page + 1)
-        }
+    override val backPageButton = button(49, createItemStackWithName(Material.PAPER, translation.menuClose)) {
+        inventory.close()
     }
-    override val prevPageButton = object : IInventoryButton {
-        override val index: Int = 45
-        override val item: ItemStack = createItemStackWithName(Material.PAPER, translation.menuPrevPage)
-        override val onClick: (e: InventoryClickEvent) -> Unit = {
-            loadPage(page - 1)
-        }
+    override val nextPageButton = button(53, createItemStackWithName(Material.PAPER, translation.menuNextPage)) {
+        loadPage(page + 1)
+    }
+    override val prevPageButton = button(45, createItemStackWithName(Material.PAPER, translation.menuPrevPage)) {
+        loadPage(page - 1)
     }
 
     override fun onInventoryClose(it: InventoryCloseEvent) {
@@ -117,17 +99,14 @@ class SampleGUI(player: Player) : PaginatedMenu() {
 
     override fun onCreated() {
         viewModel.onUiCreated()
-        lifecycleScope.launch(Dispatchers.BukkitMain) {
-            viewModel.inventoryState.collectLatest {
-                onStateChanged(it)
-            }
-        }
+        viewModel.inventoryState.collectOn(block=::onStateChanged)
     }
 
-    fun onStateChanged(state: InventoryState = viewModel.inventoryState.value) {
+    private fun onStateChanged(state: InventoryState = viewModel.inventoryState.value) {
         inventory.clear()
         setManageButtons()
         changeModeButton.setInventoryButton()
+
 
         when (state) {
             is InventoryState.Items -> {

@@ -1,12 +1,12 @@
-group = Dependencies.group
-version = Dependencies.version
+group = libs.versions.group
+version = libs.versions.plugin
 plugins {
     java
     `maven-publish`
     `java-library`
-    kotlin("jvm") version Dependencies.Kotlin.version apply false
-    kotlin("plugin.serialization") version Dependencies.Kotlin.version apply false
-    id("com.github.johnrengelman.shadow") version Dependencies.Kotlin.shadow apply false
-    id("fabric-loom") version Dependencies.Fabric.fabricLoom apply false
-    id("net.minecraftforge.gradle") apply false
+    alias(libs.plugins.kotlin.jvm) apply false
+    alias(libs.plugins.kotlin.serialization) apply false
+    alias(libs.plugins.shadow) apply false
+    alias(libs.plugins.fabricLoom) apply false
+    alias(libs.plugins.netMinecraftForge) apply false
 }

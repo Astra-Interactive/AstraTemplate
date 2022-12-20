@@ -1,5 +1,7 @@
+enableFeaturePreview("STABLE_CONFIGURATION_CACHE")
+enableFeaturePreview("VERSION_CATALOGS")
+
 pluginManagement {
-    includeBuild("build-logic")
     repositories {
         maven("https://maven.fabricmc.net/") { name = "Fabric" }
         maven("https://files.minecraftforge.net/maven")
@@ -20,7 +22,6 @@ buildscript {
         maven("https://plugins.gradle.org/m2/")
     }
 }
-
 dependencyResolutionManagement {
     repositories {
         gradlePluginPortal()
@@ -40,15 +41,11 @@ dependencyResolutionManagement {
         maven("https://maven.playpro.com")
         maven("https://jitpack.io")
     }
+    versionCatalogs { create("libs") { from(files("../gradle/libs.versions.toml")) } }
+
 }
+rootProject.name = "build-logic"
 
-rootProject.name = "AstraTemplate"
-
-// Shared
-include("domain")
-// Spigot
-include("plugin")
-// Fabric
-include("fabric")
-// Forge
-include("forge")
+include(
+    ":plugins:convention"
+)

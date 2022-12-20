@@ -2,10 +2,8 @@ package ru.astrainteractive.astratemplate.commands
 
 import CommandManager
 import ru.astrainteractive.astratemplate.commands.Arguments.Companion.getArgumentString
-import ru.astrainteractive.astratemplate.modules.TranslationProvider
 import org.bukkit.Bukkit
 import ru.astrainteractive.astralibs.AstraLibs
-import ru.astrainteractive.astralibs.di.getValue
 import ru.astrainteractive.astralibs.utils.registerCommand
 import ru.astrainteractive.astralibs.utils.registerTabCompleter
 import ru.astrainteractive.astratemplate.utils.AstraPermission
