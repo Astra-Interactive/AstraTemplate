@@ -1,7 +1,6 @@
 plugins {
     id("basic-java")
 }
-
 dependencies {
     // Kotlin
     implementation(libs.kotlinGradlePlugin)

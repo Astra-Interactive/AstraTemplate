@@ -1,6 +1,7 @@
 package ru.astrainteractive.astratemplate
 
 import CommandManager
+import kotlinx.coroutines.cancel
 import ru.astrainteractive.astratemplate.modules.SQLDatabaseModule
 import ru.astrainteractive.astratemplate.modules.TranslationModule
 import kotlinx.coroutines.runBlocking
@@ -8,7 +9,7 @@ import org.bukkit.event.HandlerList
 import org.bukkit.plugin.java.JavaPlugin
 import ru.astrainteractive.astralibs.AstraLibs
 import ru.astrainteractive.astralibs.Logger
-import ru.astrainteractive.astralibs.ServerVersion
+import ru.astrainteractive.astralibs.async.PluginScope
 import ru.astrainteractive.astralibs.events.GlobalEventManager
 import ru.astrainteractive.astratemplate.events.EventHandler
 import ru.astrainteractive.astratemplate.modules.PluginConfigModule
@@ -53,6 +54,7 @@ class AstraTemplate : JavaPlugin() {
         runBlocking { SQLDatabaseModule.value.closeConnection() }
         HandlerList.unregisterAll(this)
         GlobalEventManager.onDisable()
+        PluginScope.cancel()
     }
 
     /**

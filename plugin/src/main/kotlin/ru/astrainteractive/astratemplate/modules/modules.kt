@@ -14,6 +14,7 @@ import ru.astrainteractive.astralibs.di.module
 import ru.astrainteractive.astralibs.di.reloadable
 import ru.astrainteractive.astralibs.di.value
 import ru.astrainteractive.astralibs.rest.RestRequester
+import ru.astrainteractive.astralibs.utils.toClass
 import ru.astrainteractive.astratemplate.api.ItemStackSpigotAPI
 import ru.astrainteractive.astratemplate.gui.SampleGUIViewModel
 import ru.astrainteractive.astratemplate.utils.Files

@@ -1,5 +1,5 @@
 main: ru.astrainteractive.astratemplate.AstraTemplate
-prefix: AstraTemplate
+prefix: '${name}'
 description: '${description}'
 version: '${version}'
 name: '${name}'

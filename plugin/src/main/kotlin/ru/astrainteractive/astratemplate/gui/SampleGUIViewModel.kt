@@ -98,7 +98,7 @@ class SampleGUIViewModel(
     }
 
     fun onUiCreated() = viewModelScope.launch(Dispatchers.IO) {
-        Logger.log("onUiCreated")
+        Logger.log("SampleGuiViewModel","onUiCreated")
         delay(1000)
         loadItemsState()
     }

@@ -83,8 +83,8 @@ class SampleGUI(player: Player) : PaginatedMenu() {
     }
 
     override fun onInventoryClicked(e: InventoryClickEvent) {
-        super.onInventoryClicked(e)
         e.isCancelled = true
+        handleChangePageClick(e.slot)
         if (e.slot == addUserButton.index)
             addUserButton.onClick(e)
 
