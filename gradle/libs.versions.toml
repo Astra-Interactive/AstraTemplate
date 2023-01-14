@@ -1,6 +1,6 @@
 [versions]
 # Plugin/Mod core
-plugin = "4.1.0"
+plugin = "4.2.0"
 name = "AstraTemplate"
 group = "com.astrainteractive"
 description = "Template plugin for EmpireProjekt"
@@ -14,7 +14,7 @@ json = "1.3.3"
 kaml = "0.46.0"
 exposed = "0.38.1"
 jdbc = "3.36.0.3"
-astraLibs = "2.0.17"
+astraLibs = "2.1.1"
 mysqlDriver = "8.0.20"
 xerialSqliteJdbcVersion = "3.34.0"
 # Build
@@ -60,6 +60,8 @@ kotlin-serialization = { module = "org.jetbrains.kotlin:kotlin-serialization", v
 kotlin-serializationJson = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "json" }
 kotlin-serializationKaml = { module = "com.charleskorn.kaml:kaml", version.ref = "kaml" }
 astralibs-ktxCore = { module = "ru.astrainteractive.astralibs:ktx-core", version.ref = "astraLibs" }
+astralibs-orm = { module = "ru.astrainteractive.astralibs:orm", version.ref = "astraLibs" }
+astralibs-spigotGui = { module = "ru.astrainteractive.astralibs:spigot-gui", version.ref = "astraLibs" }
 astralibs-spigotCore = { module = "ru.astrainteractive.astralibs:spigot-core", version.ref = "astraLibs" }
 junit-bom = { module = "org.junit:junit-bom", version.ref = "junit-bom" }
 xerial-sqlite-jdbc = { module = "org.xerial:sqlite-jdbc", version.ref = "jdbc" }

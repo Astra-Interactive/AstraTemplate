@@ -1,6 +1,5 @@
 package com.astrainteractive.astratemplate.domain
 
-import com.astrainteractive.astratemplate.domain.local.dto.RatingDTO
 import com.astrainteractive.astratemplate.domain.local.dto.UserDTO
 import com.astrainteractive.astratemplate.domain.local.dto.mapping.UserMapper
 import com.astrainteractive.astratemplate.domain.local.entities.RatingRelationTable
@@ -8,7 +7,7 @@ import com.astrainteractive.astratemplate.domain.local.entities.User
 import com.astrainteractive.astratemplate.domain.local.entities.UserRating
 import com.astrainteractive.astratemplate.domain.local.entities.UserTable
 import com.astrainteractive.astratemplate.domain.remote.RestApi
-import ru.astrainteractive.astralibs.database_v2.Database
+import ru.astrainteractive.astralibs.orm.Database
 import java.util.*
 import kotlin.random.Random
 
@@ -39,13 +38,13 @@ class Repository(
     }
 
     suspend fun selectRating(user: UserDTO): List<UserRating>? {
-        return RatingRelationTable.find(databaseDataSource, ::UserRating) {
+        return RatingRelationTable.find(databaseDataSource, UserRating) {
             RatingRelationTable.userID.eq(user.id)
         }
     }
 
     suspend fun updateUser(user: UserDTO) {
-        UserTable.find(constructor = ::User) {
+        UserTable.find(constructor = User) {
             UserTable.id.eq(user.id)
         }.firstOrNull()?.apply {
             this.minecraftUuid = user.minecraftUUID
@@ -64,7 +63,7 @@ class Repository(
      * Same as [createUserTable]
      */
     suspend fun getAllUsers(): List<UserDTO>? {
-        return UserTable.all(databaseDataSource, ::User).map(UserMapper::toDTO)
+        return UserTable.all(databaseDataSource, User).map(UserMapper::toDTO)
     }
 }
 

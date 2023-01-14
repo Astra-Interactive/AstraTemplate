@@ -15,7 +15,7 @@ class EventHandler : EventManager {
     private val handler: EventHandler = this
     val templateEvent = TemplateEvent().apply { onEnable(handler) }
 
-    init {
+    fun onEnable(){
         MultipleEventsDSL()
         BetterAnotherEvent().onEnable(this)
     }

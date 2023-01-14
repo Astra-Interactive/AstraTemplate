@@ -6,9 +6,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ru.astrainteractive.astralibs.AstraLibs
 import ru.astrainteractive.astralibs.async.PluginScope
-import ru.astrainteractive.astralibs.utils.registerCommand
+import ru.astrainteractive.astralibs.commands.registerCommand
+import ru.astrainteractive.astratemplate.AstraTemplate
 
-fun CommandManager.RandomRickAndMortyCharacter() = AstraLibs.registerCommand("rickandmorty") { sender, args ->
+fun CommandManager.RandomRickAndMortyCharacter() = AstraTemplate.instance.registerCommand("rickandmorty") {
     sender.sendMessage("Working on that...")
     val repository = RepositoryModule.value
     PluginScope.launch(Dispatchers.IO) {

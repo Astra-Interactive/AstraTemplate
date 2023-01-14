@@ -4,8 +4,9 @@ import CommandManager
 import ru.astrainteractive.astratemplate.commands.Arguments.Companion.getArgumentString
 import org.bukkit.Bukkit
 import ru.astrainteractive.astralibs.AstraLibs
-import ru.astrainteractive.astralibs.utils.registerCommand
-import ru.astrainteractive.astralibs.utils.registerTabCompleter
+import ru.astrainteractive.astralibs.commands.registerCommand
+import ru.astrainteractive.astralibs.commands.registerTabCompleter
+import ru.astrainteractive.astratemplate.AstraTemplate
 import ru.astrainteractive.astratemplate.utils.AstraPermission
 
 /**
@@ -25,7 +26,7 @@ private class Arguments {
 }
 
 
-fun CommandManager.damageCompleter() = AstraLibs.registerTabCompleter("adamage") { sender, args ->
+fun CommandManager.damageCompleter() = AstraTemplate.instance.registerTabCompleter("adamage") {
     return@registerTabCompleter when (args.size) {
         0 -> listOf("adamage")
         1 -> Bukkit.getOnlinePlayers().map { it.name }
@@ -35,7 +36,7 @@ fun CommandManager.damageCompleter() = AstraLibs.registerTabCompleter("adamage")
 
 }
 
-fun CommandManager.damageCommand() = AstraLibs.registerCommand("adamage") { sender, args ->
+fun CommandManager.damageCommand() = AstraTemplate.instance.registerCommand("adamage") {
     if (!AstraPermission.Damage.hasPermission(sender)) {
         sender.sendMessage(translation.noPermission)
         return@registerCommand

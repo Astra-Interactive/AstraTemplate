@@ -12,7 +12,7 @@ interface IUserMapper : IMapper<User, UserDTO>
 
 object UserMapper : IUserMapper {
     override fun fromDTO(it: UserDTO): User {
-        return UserTable.find(constructor = ::User) {
+        return UserTable.find(constructor = User) {
             UserTable.id.eq(it.id)
         }.firstOrNull()!!
     }

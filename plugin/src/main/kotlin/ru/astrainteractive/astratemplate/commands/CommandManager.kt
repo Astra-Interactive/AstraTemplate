@@ -1,6 +1,7 @@
 import ru.astrainteractive.astralibs.AstraLibs
+import ru.astrainteractive.astralibs.commands.registerCommand
 import ru.astrainteractive.astralibs.di.getValue
-import ru.astrainteractive.astralibs.utils.registerCommand
+import ru.astrainteractive.astratemplate.AstraTemplate
 import ru.astrainteractive.astratemplate.commands.*
 import ru.astrainteractive.astratemplate.modules.TranslationModule
 
@@ -31,7 +32,7 @@ class CommandManager {
         RandomRickAndMortyCharacter()
 
         // It shows that [val XXX by IReloadable] is actually affected by reloading
-        AstraLibs.registerCommand("translation") { sender, _ ->
+        AstraTemplate.instance.registerCommand("translation") {
             sender.sendMessage(translation.getByByCheck)
         }
     }

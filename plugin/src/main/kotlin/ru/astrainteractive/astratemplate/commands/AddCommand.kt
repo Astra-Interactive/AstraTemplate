@@ -6,13 +6,15 @@ import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import ru.astrainteractive.astralibs.AstraLibs
-import ru.astrainteractive.astralibs.utils.registerCommand
-import ru.astrainteractive.astralibs.utils.registerTabCompleter
+import ru.astrainteractive.astralibs.commands.registerCommand
+import ru.astrainteractive.astralibs.commands.registerTabCompleter
 import ru.astrainteractive.astralibs.utils.withEntry
+import ru.astrainteractive.astratemplate.AstraTemplate
 
 
-fun CommandManager.addCommandCompleter() = AstraLibs.registerTabCompleter("add") { sender, args ->
-    if (args.size == 0)
+
+fun CommandManager.addCommandCompleter() = AstraTemplate.instance.registerTabCompleter("add") {
+    if (args.isEmpty())
         return@registerTabCompleter Bukkit.getOnlinePlayers().map { it.name }.withEntry(args.last())
 
     if (args.size == 1)
@@ -27,7 +29,7 @@ fun CommandManager.addCommandCompleter() = AstraLibs.registerTabCompleter("add")
 /**
  * Add {PLAYER} {ITEM} [AMOUNT]
  */
-fun CommandManager.addCommand() = AstraLibs.registerCommand("add") { sender, args ->
+fun CommandManager.addCommand() = AstraTemplate.instance.registerCommand("add") {
     if (sender !is Player) {
         sender.sendMessage("Sender should be player")
         return@registerCommand

@@ -16,6 +16,7 @@ dependencies {
     modImplementation(libs.fabric.api.get())
     // AstraLibs
     implementation(libs.astralibs.ktxCore)
+    implementation(libs.astralibs.orm)
     implementation(libs.xerialSqliteJdbcLib)
     implementation(project(":domain"))
 }

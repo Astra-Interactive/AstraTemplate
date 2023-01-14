@@ -1,9 +1,7 @@
 package ru.astrainteractive.astratemplate.gui
 
-import ru.astrainteractive.astratemplate.api.ItemStackSpigotAPI
 import com.astrainteractive.astratemplate.domain.Repository
 import com.astrainteractive.astratemplate.domain.local.dto.UserDTO
-import com.astrainteractive.astratemplate.domain.local.entities.User
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -11,9 +9,9 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.bukkit.ChatColor
 import org.bukkit.event.inventory.ClickType
-import org.bukkit.inventory.ItemStack
 import ru.astrainteractive.astralibs.Logger
-import ru.astrainteractive.astralibs.architecture.ViewModel
+import ru.astrainteractive.astralibs.async.AsyncComponent
+import ru.astrainteractive.astratemplate.api.ItemStackSpigotAPI
 import kotlin.random.Random
 
 
@@ -23,14 +21,14 @@ import kotlin.random.Random
 class SampleGUIViewModel(
     private val repository: Repository,
     private val itemStackSpigotAPi: ItemStackSpigotAPI
-) : ViewModel() {
+) : AsyncComponent() {
 
     val inventoryState = MutableStateFlow<InventoryState>(InventoryState.Loading)
 
     val randomColor: ChatColor
         get() = ChatColor.values()[Random.nextInt(ChatColor.values().size)]
 
-    fun onModeChange() = viewModelScope.launch(Dispatchers.IO) {
+    fun onModeChange() = componentScope.launch(Dispatchers.IO) {
         when (inventoryState.value) {
             InventoryState.Loading -> return@launch
             is InventoryState.Items -> loadUsersState()
@@ -50,7 +48,7 @@ class SampleGUIViewModel(
     }
 
     fun onAddUserClicked() {
-        viewModelScope.launch(Dispatchers.IO) {
+        componentScope.launch(Dispatchers.IO) {
             repository?.insertUser(UserDTO(-1, "id${Random.nextInt(20000)}", "mine${Random.nextInt(5000)}"))
             loadUsersState()
         }
@@ -61,7 +59,7 @@ class SampleGUIViewModel(
         val state = inventoryState.value as? InventoryState.Users ?: return
         val users = state.users
         val user = users.getOrNull(slot) ?: return
-        viewModelScope.launch(Dispatchers.IO) {
+        componentScope.launch(Dispatchers.IO) {
             when (clickType) {
                 ClickType.MIDDLE -> repository?.updateUser(user)
                 ClickType.LEFT -> repository?.deleteUser(user)
@@ -97,7 +95,7 @@ class SampleGUIViewModel(
         inventoryState.value = InventoryState.Users(repository.getAllUsers() ?: emptyList())
     }
 
-    fun onUiCreated() = viewModelScope.launch(Dispatchers.IO) {
+    fun onUiCreated() = componentScope.launch(Dispatchers.IO) {
         Logger.log("SampleGuiViewModel","onUiCreated")
         delay(1000)
         loadItemsState()

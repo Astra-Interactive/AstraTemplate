@@ -13,6 +13,7 @@ dependencies {
     implementation(libs.kotlin.serializationKaml)
     // AstraLibs
     implementation(libs.astralibs.ktxCore)
+    implementation(libs.astralibs.orm)
     // Test
     testImplementation(kotlin("test"))
     testImplementation(libs.orgTesting)

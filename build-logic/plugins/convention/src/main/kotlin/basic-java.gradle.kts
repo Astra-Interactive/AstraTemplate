@@ -27,14 +27,11 @@ tasks {
     withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
         kotlinOptions.jvmTarget = "17"
     }
-    withType<Jar> {
-        archiveClassifier.set("min")
-    }
     compileJava {
         options.encoding = "UTF-8"
     }
     test {
-        useJUnit()
+        useJUnitPlatform()
         testLogging {
             events("passed", "skipped", "failed")
             this.showStandardStreams = true

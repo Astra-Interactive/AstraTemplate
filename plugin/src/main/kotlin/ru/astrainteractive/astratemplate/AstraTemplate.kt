@@ -10,18 +10,20 @@ import org.bukkit.plugin.java.JavaPlugin
 import ru.astrainteractive.astralibs.AstraLibs
 import ru.astrainteractive.astralibs.Logger
 import ru.astrainteractive.astralibs.async.PluginScope
+import ru.astrainteractive.astralibs.di.getValue
 import ru.astrainteractive.astralibs.events.GlobalEventManager
+import ru.astrainteractive.astralibs.menu.SharedInventoryClickEvent
 import ru.astrainteractive.astratemplate.events.EventHandler
 import ru.astrainteractive.astratemplate.modules.PluginConfigModule
+import ru.astrainteractive.astratemplate.modules.eventHandlerModule
 import ru.astrainteractive.astratemplate.utils.Files
+import ru.astrainteractive.astratemplate.utils.Singleton
 
 /**
  * Initial class for your plugin
  */
 class AstraTemplate : JavaPlugin() {
-    companion object {
-        lateinit var instance: AstraTemplate
-    }
+    companion object : Singleton<AstraTemplate>()
 
     init {
         instance = this
@@ -30,7 +32,8 @@ class AstraTemplate : JavaPlugin() {
     /**
      * Class for handling all of your events
      */
-    private var eventHandler: EventHandler? = null
+    private val eventHandler: EventHandler by eventHandlerModule
+
 
 
     /**
@@ -39,8 +42,9 @@ class AstraTemplate : JavaPlugin() {
     override fun onEnable() {
         AstraLibs.rememberPlugin(this)
         Logger.prefix = "AstraTemplate"
-        eventHandler = EventHandler()
+        eventHandler.onEnable()
         CommandManager()
+        SharedInventoryClickEvent.onEnable(GlobalEventManager)
         Logger.log("Logger enabled", "AstraTemplate")
         Logger.warn("Warn message from logger", "AstraTemplate")
         Logger.error("Error message", "AstraTemplate")
@@ -50,7 +54,7 @@ class AstraTemplate : JavaPlugin() {
      * This method called when server is shutting down or when PlugMan disable plugin.
      */
     override fun onDisable() {
-        eventHandler?.onDisable()
+        eventHandler.onDisable()
         runBlocking { SQLDatabaseModule.value.closeConnection() }
         HandlerList.unregisterAll(this)
         GlobalEventManager.onDisable()

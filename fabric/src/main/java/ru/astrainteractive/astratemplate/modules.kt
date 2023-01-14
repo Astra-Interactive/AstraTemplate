@@ -6,15 +6,16 @@ import com.astrainteractive.astratemplate.domain.local.entities.UserTable
 import com.astrainteractive.astratemplate.domain.remote.RestApi
 import com.google.gson.Gson
 import kotlinx.coroutines.runBlocking
-import ru.astrainteractive.astralibs.database_v2.Database
 import ru.astrainteractive.astralibs.di.module
+import ru.astrainteractive.astralibs.orm.DBConnection
+import ru.astrainteractive.astralibs.orm.Database
 import ru.astrainteractive.astralibs.rest.RestRequester
 import java.io.File
 
 val sqlModule = module {
     runBlocking {
         val database = Database()
-        database.openConnection("jdbc:sqlite:data.db", "org.sqlite.JDBC")
+        database.openConnection("data.db", DBConnection.SQLite)
         UserTable.create(database)
         RatingRelationTable.create(database)
         database

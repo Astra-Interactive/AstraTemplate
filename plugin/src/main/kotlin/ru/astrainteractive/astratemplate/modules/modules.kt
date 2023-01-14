@@ -8,14 +8,16 @@ import kotlinx.coroutines.runBlocking
 import org.jetbrains.kotlin.com.google.gson.Gson
 import ru.astrainteractive.astralibs.AstraLibs
 import ru.astrainteractive.astralibs.EmpireSerializer
-import ru.astrainteractive.astralibs.database_v2.Database
 import ru.astrainteractive.astralibs.di.getValue
 import ru.astrainteractive.astralibs.di.module
 import ru.astrainteractive.astralibs.di.reloadable
 import ru.astrainteractive.astralibs.di.value
+import ru.astrainteractive.astralibs.orm.DBConnection
+import ru.astrainteractive.astralibs.orm.Database
 import ru.astrainteractive.astralibs.rest.RestRequester
 import ru.astrainteractive.astralibs.utils.toClass
 import ru.astrainteractive.astratemplate.api.ItemStackSpigotAPI
+import ru.astrainteractive.astratemplate.events.EventHandler
 import ru.astrainteractive.astratemplate.gui.SampleGUIViewModel
 import ru.astrainteractive.astratemplate.utils.Files
 import ru.astrainteractive.astratemplate.utils.PluginConfig
@@ -46,9 +48,7 @@ val RestApiModule = module {
 val SQLDatabaseModule = module {
     runBlocking {
         val database = Database()
-        database.openConnection(
-            "jdbc:sqlite:${AstraLibs.instance.dataFolder}${File.separator}data.db", "org.sqlite.JDBC"
-        )
+        database.openConnection("${AstraLibs.instance.dataFolder}${File.separator}data.db", DBConnection.SQLite)
         UserTable.create(database)
         RatingRelationTable.create(database)
         database
@@ -64,4 +64,7 @@ val RepositoryModule = module {
 val SampleGuiViewModelFactory = value {
     val repository by RepositoryModule
     SampleGUIViewModel(repository, ItemStackSpigotAPI)
+}
+val eventHandlerModule = module {
+    EventHandler()
 }

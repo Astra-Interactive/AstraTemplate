@@ -30,9 +30,9 @@ class SampleGUI(player: Player) : PaginatedMenu() {
 
 
 
-    override val playerMenuUtility: IPlayerHolder = DefaultPlayerHolder(player)
+    override val playerMenuUtility: IPlayerHolder = PlayerHolder(player)
     override var menuTitle: String = translation.menuTitle
-    override val menuSize: AstraMenuSize = AstraMenuSize.XL
+    override val menuSize: MenuSize = MenuSize.XL
     override var maxItemsPerPage: Int = 45
     override var page: Int = 0
     override val maxItemsAmount: Int
@@ -75,7 +75,7 @@ class SampleGUI(player: Player) : PaginatedMenu() {
 
     override fun onInventoryClose(it: InventoryCloseEvent) {
         Logger.log("SampleGUI closed", "SampleGUI")
-        viewModel.clear()
+        viewModel.close()
     }
 
     override fun onPageChanged() {

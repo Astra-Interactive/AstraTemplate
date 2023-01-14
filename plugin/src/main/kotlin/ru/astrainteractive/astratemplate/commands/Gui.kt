@@ -7,9 +7,10 @@ import kotlinx.coroutines.launch
 import org.bukkit.entity.Player
 import ru.astrainteractive.astralibs.AstraLibs
 import ru.astrainteractive.astralibs.async.PluginScope
-import ru.astrainteractive.astralibs.utils.registerCommand
+import ru.astrainteractive.astralibs.commands.registerCommand
+import ru.astrainteractive.astratemplate.AstraTemplate
 
-fun CommandManager.tempGUI() = AstraLibs.registerCommand("atempgui") { sender, args ->
+fun CommandManager.tempGUI() = AstraTemplate.instance.registerCommand("atempgui") {
     if (sender is Player)
-        PluginScope.launch(Dispatchers.IO) { SampleGUI(sender).open() }
+        PluginScope.launch(Dispatchers.IO) { SampleGUI(sender as Player).open() }
 }
