@@ -1,7 +1,6 @@
 package com.astrainteractive.astratemplate.domain.local.dto.mapping
 
 import com.astrainteractive.astratemplate.domain.local.dto.RatingDTO
-import com.astrainteractive.astratemplate.domain.local.entities.RatingRelationTable
 import com.astrainteractive.astratemplate.domain.local.entities.UserRating
 import ru.astrainteractive.astralibs.domain.mapping.Mapper
 

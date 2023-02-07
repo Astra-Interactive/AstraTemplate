@@ -5,12 +5,10 @@ import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
-import ru.astrainteractive.astralibs.AstraLibs
 import ru.astrainteractive.astralibs.commands.registerCommand
 import ru.astrainteractive.astralibs.commands.registerTabCompleter
 import ru.astrainteractive.astralibs.utils.withEntry
 import ru.astrainteractive.astratemplate.AstraTemplate
-
 
 fun CommandManager.addCommandCompleter() = AstraTemplate.instance.registerTabCompleter("add") {
     return@registerTabCompleter when (args.size) {

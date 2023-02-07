@@ -1,8 +1,6 @@
 package ru.astrainteractive.astratemplate
 
 import CommandManager
-import ru.astrainteractive.astratemplate.modules.SQLDatabaseModule
-import ru.astrainteractive.astratemplate.modules.TranslationModule
 import kotlinx.coroutines.runBlocking
 import org.bukkit.event.HandlerList
 import org.bukkit.plugin.java.JavaPlugin
@@ -16,6 +14,8 @@ import ru.astrainteractive.astralibs.utils.Singleton
 import ru.astrainteractive.astralibs.utils.setupWithSpigot
 import ru.astrainteractive.astratemplate.events.EventManager
 import ru.astrainteractive.astratemplate.modules.PluginConfigModule
+import ru.astrainteractive.astratemplate.modules.SQLDatabaseModule
+import ru.astrainteractive.astratemplate.modules.TranslationModule
 import ru.astrainteractive.astratemplate.modules.eventHandlerModule
 import ru.astrainteractive.astratemplate.utils.Files
 
@@ -34,14 +34,12 @@ class AstraTemplate : JavaPlugin() {
      */
     private val eventHandler: EventManager by eventHandlerModule
 
-
-
     /**
      * This method called when server starts or PlugMan load plugin.
      */
     override fun onEnable() {
         AstraLibs.rememberPlugin(this)
-        Logger.setupWithSpigot("AstraTemplate",this)
+        Logger.setupWithSpigot("AstraTemplate", this)
         eventHandler.onEnable(this)
         CommandManager()
         GlobalEventListener.onEnable(this)
@@ -71,7 +69,4 @@ class AstraTemplate : JavaPlugin() {
         PluginConfigModule.reload()
         TranslationModule.reload()
     }
-
 }
-
-

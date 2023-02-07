@@ -11,13 +11,11 @@ import ru.astrainteractive.astratemplate.HelloWorldModule
 import ru.astrainteractive.astratemplate.repositoryModule
 import java.util.UUID
 
-
 fun command(literal: String, block: (CommandContext<ServerCommandSource>) -> Unit) = object : ICommand(literal) {
     override fun onCommand(commandContext: CommandContext<ServerCommandSource>): Int {
         block(commandContext)
         return 1
     }
-
 }
 
 val HelloWorldCommand = command("helloworld") {

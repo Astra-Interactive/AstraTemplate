@@ -12,7 +12,4 @@ object ItemStackSpigotAPI {
         return ItemStack(values[i])
     }
     fun randomItemStackList(size: Int = 70) = IntRange(0, size).map { randomItemStack() }
-
-    fun onEnable() {
-    }
 }

@@ -1,8 +1,6 @@
 package ru.astrainteractive.astratemplate.commands
 
-
 import CommandManager
-import ru.astrainteractive.astralibs.AstraLibs
 import ru.astrainteractive.astralibs.commands.registerTabCompleter
 import ru.astrainteractive.astralibs.utils.withEntry
 import ru.astrainteractive.astratemplate.AstraTemplate
@@ -17,6 +15,3 @@ fun CommandManager.tabCompleter() = AstraTemplate.instance.registerTabCompleter(
         else -> emptyList()
     }
 }
-
-
-

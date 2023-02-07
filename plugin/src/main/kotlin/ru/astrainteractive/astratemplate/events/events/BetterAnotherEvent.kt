@@ -2,7 +2,6 @@ package ru.astrainteractive.astratemplate.events.events
 
 import org.bukkit.event.block.BlockBreakEvent
 import ru.astrainteractive.astralibs.events.EventListener
-import ru.astrainteractive.astralibs.events.GlobalEventListener
 
 /**
  * This is a more convenient way with base class

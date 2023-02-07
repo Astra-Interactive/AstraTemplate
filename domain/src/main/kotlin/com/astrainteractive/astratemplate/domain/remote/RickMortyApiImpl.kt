@@ -10,5 +10,4 @@ class RickMortyApiImpl(
         val json = client.get("https://rickandmortyapi.com/api/character/$id").getOrThrow()
         Gson().fromJson(json, RMResponse::class.java)
     }
-
 }

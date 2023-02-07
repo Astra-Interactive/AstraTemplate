@@ -12,8 +12,7 @@ class MultipleEventsDSL {
         println("DSLEvent: blockBreakEvent ${it.player.name}")
     }
 
-    val entityDamageEvent = DSLEvent.event<EntityDamageEvent>{
+    val entityDamageEvent = DSLEvent.event<EntityDamageEvent> {
         println("DSLEvent: entityDamageEvent ${it.entity.name}")
     }
 }
-

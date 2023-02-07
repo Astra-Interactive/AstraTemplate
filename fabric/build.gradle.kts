@@ -1,6 +1,5 @@
-import net.fabricmc.loom.task.RemapJarTask
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
-import org.jetbrains.kotlin.ir.backend.js.compile
+import net.fabricmc.loom.task.RemapJarTask
 
 plugins {
     id("fabric-loom")

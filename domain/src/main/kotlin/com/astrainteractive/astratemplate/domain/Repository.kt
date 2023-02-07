@@ -10,8 +10,6 @@ import com.astrainteractive.astratemplate.domain.remote.RMResponse
 import com.astrainteractive.astratemplate.domain.remote.RickMortyApi
 import ru.astrainteractive.astralibs.orm.Database
 import java.util.*
-import kotlin.random.Random
-
 
 /**
  * API with all SQL commands
@@ -31,7 +29,6 @@ class Repository(
         }
     }
 
-
     suspend fun insertRating(user: UserDTO): Int {
         return RatingRelationTable.insert(databaseDataSource) {
             this[RatingRelationTable.userID] = user.id
@@ -46,7 +43,7 @@ class Repository(
     }
 
     suspend fun updateUser(user: UserDTO) {
-        UserTable.find(databaseDataSource,User) {
+        UserTable.find(databaseDataSource, User) {
             UserTable.id.eq(user.id)
         }.firstOrNull()?.apply {
             this.minecraftUuid = user.minecraftUUID
@@ -67,6 +64,4 @@ class Repository(
     suspend fun getAllUsers(): List<UserDTO>? {
         return UserTable.all(databaseDataSource, User).map(UserMapper::toDTO)
     }
-
 }
-

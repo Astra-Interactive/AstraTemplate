@@ -1,13 +1,11 @@
 package ru.astrainteractive.astratemplate.events.events
 
-import ru.astrainteractive.astratemplate.AstraTemplate
-import ru.astrainteractive.astratemplate.modules.TranslationModule
 import org.bukkit.event.EventHandler
 import org.bukkit.event.HandlerList
 import org.bukkit.event.block.BlockPlaceEvent
 import ru.astrainteractive.astralibs.events.EventListener
-import ru.astrainteractive.astralibs.events.GlobalEventListener
-
+import ru.astrainteractive.astratemplate.AstraTemplate
+import ru.astrainteractive.astratemplate.modules.TranslationModule
 
 /**
  * Template event class

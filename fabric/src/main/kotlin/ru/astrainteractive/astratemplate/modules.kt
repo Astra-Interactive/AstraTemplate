@@ -5,13 +5,9 @@ import com.astrainteractive.astratemplate.domain.local.entities.RatingRelationTa
 import com.astrainteractive.astratemplate.domain.local.entities.UserTable
 import com.astrainteractive.astratemplate.domain.remote.RickMortyApi
 import com.astrainteractive.astratemplate.domain.remote.RickMortyApiImpl
-import com.google.gson.Gson
 import kotlinx.coroutines.runBlocking
 import ru.astrainteractive.astralibs.di.module
 import ru.astrainteractive.astralibs.orm.DBConnection
-import ru.astrainteractive.astralibs.orm.Database
-import ru.astrainteractive.astralibs.rest.RestRequester
-import java.io.File
 
 val sqlModule = module {
     runBlocking {

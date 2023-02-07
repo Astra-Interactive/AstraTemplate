@@ -1,7 +1,6 @@
 package ru.astrainteractive.astratemplate.gui
 
 import com.astrainteractive.astratemplate.domain.local.dto.UserDTO
-import com.astrainteractive.astratemplate.domain.local.entities.User
 import org.bukkit.inventory.ItemStack
 
 sealed interface InventoryState {
@@ -14,5 +13,4 @@ sealed interface InventoryState {
     ) : InventoryState
 
     object Loading : InventoryState
-
 }

@@ -18,7 +18,6 @@ fun CommandManager.damageCompleter() = AstraTemplate.instance.registerTabComplet
         2 -> listOf(translation.damageHint)
         else -> Bukkit.getOnlinePlayers().map { it.name }
     }
-
 }
 
 fun CommandManager.damageCommand() = AstraTemplate.instance.registerCommand("adamage") {
@@ -33,4 +32,3 @@ fun CommandManager.damageCommand() = AstraTemplate.instance.registerCommand("ada
     player.damage(damage.toDouble())
     player.sendMessage(translation.damaged.replace("%player%", sender.name))
 }
-

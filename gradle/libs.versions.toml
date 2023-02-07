@@ -50,7 +50,15 @@ fabric-api = "0.60.0+1.19.2"
 netMinecraftForge = "5.1.+"
 forge-version = "1.19-41.0.35"
 junit-bom = "5.7.0"
+# Linter
+detekt = "1.22.0"
+detekt-ruleset-compiler = "0.0.2"
+detekt-ruleset-ktlint = "0.48.0"
 [libraries]
+# Linter
+detekt-gradle = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "detekt" }
+detekt-ruleset-compiler = { module = "com.braisgabin.detekt:kotlin-compiler-wrapper", version.ref = "detekt-ruleset-compiler" }
+detekt-ruleset-ktlint = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
 # Core
 kotlinGradlePlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
@@ -101,3 +109,4 @@ kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", versi
 shadow = { id = "com.github.johnrengelman.shadow", version.ref = "shadow" }
 fabricLoom = { id = "fabric-loom", version.ref = "fabricLoom" }
 netMinecraftForge = { id = "net.minecraftforge.gradle", version.ref = "netMinecraftForge" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }

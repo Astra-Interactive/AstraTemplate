@@ -1,11 +1,10 @@
 package ru.astrainteractive.astratemplate.commands
 
 import CommandManager
-import ru.astrainteractive.astratemplate.AstraTemplate
-import ru.astrainteractive.astratemplate.modules.TranslationModule
-import ru.astrainteractive.astralibs.AstraLibs
 import ru.astrainteractive.astralibs.commands.registerCommand
 import ru.astrainteractive.astralibs.di.getValue
+import ru.astrainteractive.astratemplate.AstraTemplate
+import ru.astrainteractive.astratemplate.modules.TranslationModule
 import ru.astrainteractive.astratemplate.utils.AstraPermission
 
 /**
@@ -27,9 +26,3 @@ fun CommandManager.reload() = AstraTemplate.instance.registerCommand("atempreloa
     AstraTemplate.instance.reloadPlugin()
     sender.sendMessage(translation.reloadComplete)
 }
-
-
-
-
-
-

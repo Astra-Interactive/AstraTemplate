@@ -14,7 +14,6 @@ import ru.astrainteractive.astralibs.async.AsyncComponent
 import ru.astrainteractive.astratemplate.api.ItemStackSpigotAPI
 import kotlin.random.Random
 
-
 /**
  * MVVM/MVI technique
  */
@@ -50,11 +49,10 @@ class SampleGUIViewModel(
 
     fun onAddUserClicked() {
         componentScope.launch(Dispatchers.IO) {
-            repository?.insertUser(UserDTO(-1, "id${Random.nextInt(20000)}", "mine${Random.nextInt(5000)}"))
+            repository.insertUser(UserDTO(-1, "id${Random.nextInt(20000)}", "mine${Random.nextInt(5000)}"))
             loadUsersState()
         }
     }
-
 
     private fun onPlayerHeadClicked(slot: Int, clickType: ClickType) {
         val state = inventoryState.value as? InventoryState.Users ?: return
@@ -62,11 +60,11 @@ class SampleGUIViewModel(
         val user = users.getOrNull(slot) ?: return
         componentScope.launch(Dispatchers.IO) {
             when (clickType) {
-                ClickType.MIDDLE -> repository?.updateUser(user)
-                ClickType.LEFT -> repository?.deleteUser(user)
+                ClickType.MIDDLE -> repository.updateUser(user)
+                ClickType.LEFT -> repository.deleteUser(user)
                 else -> {
-                    println(repository?.selectRating(user))
-                    repository?.insertRating(user)
+                    println(repository.selectRating(user))
+                    repository.insertRating(user)
                 }
             }
             loadUsersState()
@@ -97,7 +95,7 @@ class SampleGUIViewModel(
     }
 
     fun onUiCreated() = componentScope.launch(Dispatchers.IO) {
-        Logger.log("SampleGuiViewModel","onUiCreated")
+        Logger.log("SampleGuiViewModel", "onUiCreated")
         delay(1000)
         loadItemsState()
     }
