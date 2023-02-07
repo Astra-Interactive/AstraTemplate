@@ -3,14 +3,12 @@ package com.astrainteractive.astratemplate.domain.local.dto.mapping
 import com.astrainteractive.astratemplate.domain.local.dto.RatingDTO
 import com.astrainteractive.astratemplate.domain.local.entities.RatingRelationTable
 import com.astrainteractive.astratemplate.domain.local.entities.UserRating
-import ru.astrainteractive.astralibs.domain.mapping.IMapper
+import ru.astrainteractive.astralibs.domain.mapping.Mapper
 
-interface IRatingMapper : IMapper<UserRating, RatingDTO>
+interface IRatingMapper : Mapper<UserRating, RatingDTO>
 object RatingMapper : IRatingMapper {
     override fun fromDTO(it: RatingDTO): UserRating {
-        return RatingRelationTable.find(constructor = UserRating) {
-            RatingRelationTable.id.eq(it.id)
-        }.firstOrNull()!!
+        throw NotImplementedError()
     }
 
     override fun toDTO(it: UserRating): RatingDTO = RatingDTO(

@@ -1,9 +1,7 @@
 package ru.astrainteractive.astratemplate.commands
 
 import CommandManager
-import ru.astrainteractive.astratemplate.commands.Arguments.Companion.getArgumentString
 import org.bukkit.Bukkit
-import ru.astrainteractive.astralibs.AstraLibs
 import ru.astrainteractive.astralibs.commands.registerCommand
 import ru.astrainteractive.astralibs.commands.registerTabCompleter
 import ru.astrainteractive.astratemplate.AstraTemplate
@@ -12,19 +10,6 @@ import ru.astrainteractive.astratemplate.utils.AstraPermission
 /**
  * Damage player command
  */
-
-private class Arguments {
-    companion object {
-        val playerName: Pair<String, Int>
-            get() = "playerName" to 0
-        val damage: Pair<String, Int>
-            get() = "damage" to 1
-
-        fun get(argument: Pair<String, Int>, args: Array<out String>): String? = args.getOrNull(argument.second)
-        fun Array<out String>.getArgumentString(argument: Pair<String, Int>) = getOrNull(argument.second)
-    }
-}
-
 
 fun CommandManager.damageCompleter() = AstraTemplate.instance.registerTabCompleter("adamage") {
     return@registerTabCompleter when (args.size) {
@@ -41,17 +26,10 @@ fun CommandManager.damageCommand() = AstraTemplate.instance.registerCommand("ada
         sender.sendMessage(translation.noPermission)
         return@registerCommand
     }
-    val playerName = args.getArgumentString(Arguments.playerName)
-    if (playerName == null) {
-        sender.sendMessage(translation.noPlayerName)
-        return@registerCommand
-    }
-    val damage = args.getArgumentString(Arguments.damage)?.toIntOrNull() ?: 1
-    val player = Bukkit.getPlayer(playerName)
-    if (player == null) {
-        sender.sendMessage(translation.noPlayerName)
-        return@registerCommand
-    }
+    val player = argument(0) {
+        it?.let(Bukkit::getPlayer)
+    }.onFailure { sender.sendMessage(translation.noPlayerName) }.successOrNull()?.value ?: return@registerCommand
+    val damage = argument(1) { it?.toIntOrNull() ?: 1 }.successOrNull()?.value!!
     player.damage(damage.toDouble())
     player.sendMessage(translation.damaged.replace("%player%", sender.name))
 }

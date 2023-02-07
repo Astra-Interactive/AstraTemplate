@@ -1,26 +1,33 @@
 package ru.astrainteractive.astratemplate.gui
 
 import com.astrainteractive.astratemplate.domain.local.dto.UserDTO
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.inventory.InventoryCloseEvent
 import org.bukkit.inventory.ItemStack
 import ru.astrainteractive.astralibs.Logger
-import ru.astrainteractive.astralibs.async.BukkitMain
 import ru.astrainteractive.astralibs.di.getValue
 import ru.astrainteractive.astralibs.menu.*
+import ru.astrainteractive.astralibs.menu.holder.DefaultPlayerHolder
+import ru.astrainteractive.astralibs.menu.holder.PlayerHolder
+import ru.astrainteractive.astralibs.menu.menu.PaginatedMenu
+import ru.astrainteractive.astralibs.menu.utils.InventoryButton
+import ru.astrainteractive.astralibs.menu.utils.ItemStackButtonBuilder
+import ru.astrainteractive.astralibs.menu.utils.MenuSize
+import ru.astrainteractive.astralibs.menu.utils.click.ClickListener
+import ru.astrainteractive.astralibs.menu.utils.click.MenuClickListener
 import ru.astrainteractive.astratemplate.modules.SampleGuiViewModelFactory
 import ru.astrainteractive.astratemplate.modules.TranslationModule
 
 
-class SampleGUI(player: Player) : PaginatedMenu() {
+class SampleGUI(
+    player: Player
+) : PaginatedMenu() {
     private val translation by TranslationModule
 
     private val viewModel = SampleGuiViewModelFactory.value
+    private val clickListener = MenuClickListener()
 
     fun createItemStackWithName(material: Material, name: String) = ItemStack(material).apply {
         val meta = itemMeta
@@ -29,8 +36,7 @@ class SampleGUI(player: Player) : PaginatedMenu() {
     }
 
 
-
-    override val playerMenuUtility: IPlayerHolder = PlayerHolder(player)
+    override val playerHolder: PlayerHolder = DefaultPlayerHolder(player)
     override var menuTitle: String = translation.menuTitle
     override val menuSize: MenuSize = MenuSize.XL
     override var maxItemsPerPage: Int = 45
@@ -42,24 +48,30 @@ class SampleGUI(player: Player) : PaginatedMenu() {
             InventoryState.Loading -> 0
         }
 
+    private fun button(
+        index: Int,
+        item: ItemStack,
+        onClick: (e: InventoryClickEvent) -> Unit
+    ) = ItemStackButtonBuilder {
+        this.index = index
+        this.onClick = onClick
+        itemStack = item
+    }
 
-    private val changeModeButton = object : IInventoryButton {
-        override val index: Int = 50
-        override val item: ItemStack
-            get() = when (viewModel.inventoryState.value) {
+    private val changeModeButton: InventoryButton
+        get() = ItemStackButtonBuilder {
+            index = 50
+            onClick = {
+                viewModel.onModeChange()
+            }
+            itemStack = when (viewModel.inventoryState.value) {
                 is InventoryState.Items -> createItemStackWithName(Material.SUNFLOWER, "Items")
                 InventoryState.Loading -> createItemStackWithName(Material.SUNFLOWER, "Loading")
                 is InventoryState.Users -> createItemStackWithName(Material.SUNFLOWER, "Users")
             }
-        override val onClick: (e: InventoryClickEvent) -> Unit = {
-            viewModel.onModeChange()
         }
-    }
-    fun button(index: Int, item: ItemStack, onClick: (e: InventoryClickEvent) -> Unit) = object : IInventoryButton {
-        override val onClick: (e: InventoryClickEvent) -> Unit = onClick
-        override val index: Int = index
-        override val item: ItemStack = item
-    }
+
+
     private val addUserButton = button(48, createItemStackWithName(Material.EMERALD, translation.menuAddPlayer)) {
         viewModel.onAddUserClicked()
     }
@@ -67,14 +79,13 @@ class SampleGUI(player: Player) : PaginatedMenu() {
         inventory.close()
     }
     override val nextPageButton = button(53, createItemStackWithName(Material.PAPER, translation.menuNextPage)) {
-        loadPage(page + 1)
+        showPage(page + 1)
     }
     override val prevPageButton = button(45, createItemStackWithName(Material.PAPER, translation.menuPrevPage)) {
-        loadPage(page - 1)
+        showPage(page - 1)
     }
 
     override fun onInventoryClose(it: InventoryCloseEvent) {
-        Logger.log("SampleGUI closed", "SampleGUI")
         viewModel.close()
     }
 
@@ -84,28 +95,23 @@ class SampleGUI(player: Player) : PaginatedMenu() {
 
     override fun onInventoryClicked(e: InventoryClickEvent) {
         e.isCancelled = true
-        handleChangePageClick(e.slot)
-        if (e.slot == addUserButton.index)
-            addUserButton.onClick(e)
-
-        if (e.slot == changeModeButton.index)
-            changeModeButton.onClick(e)
-
-        if (IntRange(0, maxItemsPerPage).contains(e.slot))
-            viewModel.onItemClicked(e.slot, e.click)
-        else if (e.slot == backPageButton.index)
-            inventory.close()
+        clickListener.onClick(e)
     }
 
     override fun onCreated() {
         viewModel.onUiCreated()
-        viewModel.inventoryState.collectOn(block=::onStateChanged)
+        viewModel.inventoryState.collectOn(block = ::onStateChanged)
     }
 
     private fun onStateChanged(state: InventoryState = viewModel.inventoryState.value) {
         inventory.clear()
-        setManageButtons()
-        changeModeButton.setInventoryButton()
+        clickListener.clearClickListener()
+        changeModeButton.apply {
+            clickListener.remember(this)
+            setInventoryButton()
+        }
+
+        setManageButtons(clickListener)
 
 
         when (state) {
@@ -115,6 +121,7 @@ class SampleGUI(player: Player) : PaginatedMenu() {
 
             is InventoryState.Users -> {
                 addUserButton.setInventoryButton()
+                clickListener.remember(addUserButton)
                 setUsers(state.users)
             }
 
@@ -128,19 +135,27 @@ class SampleGUI(player: Player) : PaginatedMenu() {
             if (index >= list.size)
                 continue
             val user = list[index]
-            val itemStack = ItemStack(Material.PLAYER_HEAD).apply {
-                editMeta {
-                    it.setDisplayName(user.id.toString())
-                    it.lore = listOf(
-                        "${viewModel.randomColor}discordID: ${user.discordId}",
-                        "${viewModel.randomColor}minecraftUUID: ${user.minecraftUUID}",
-                        "${viewModel.randomColor}Press LeftClick to delete user",
-                        "${viewModel.randomColor}Press MiddleClick to delete user",
-                        "${viewModel.randomColor}Press RightClick to Add Relation"
-                    )
+            val button = ItemStackButtonBuilder {
+                this.index = i
+                this.onClick = {
+                    viewModel.onItemClicked(i, it.click)
+                }
+                itemStack {
+                    this.type = Material.PLAYER_HEAD
+                    editMeta {
+                        it.setDisplayName(user.id.toString())
+                        it.lore = listOf(
+                            "${viewModel.randomColor}discordID: ${user.discordId}",
+                            "${viewModel.randomColor}minecraftUUID: ${user.minecraftUUID}",
+                            "${viewModel.randomColor}Press LeftClick to delete user",
+                            "${viewModel.randomColor}Press MiddleClick to delete user",
+                            "${viewModel.randomColor}Press RightClick to Add Relation"
+                        )
+                    }
                 }
             }
-            inventory.setItem(i, itemStack)
+            clickListener.remember(button)
+            button.setInventoryButton()
         }
     }
 
@@ -150,7 +165,15 @@ class SampleGUI(player: Player) : PaginatedMenu() {
             if (index >= list.size)
                 continue
             val itemStack = list[index]
-            inventory.setItem(i, itemStack)
+            val button = ItemStackButtonBuilder {
+                this.index = i
+                this.itemStack = itemStack
+                this.onClick = {
+                    viewModel.onItemClicked(i, it.click)
+                }
+            }
+            clickListener.remember(button)
+            button.setInventoryButton()
         }
     }
 

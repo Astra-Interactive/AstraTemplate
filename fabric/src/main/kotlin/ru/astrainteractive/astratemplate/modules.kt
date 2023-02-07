@@ -3,7 +3,8 @@ package ru.astrainteractive.astratemplate
 import com.astrainteractive.astratemplate.domain.Repository
 import com.astrainteractive.astratemplate.domain.local.entities.RatingRelationTable
 import com.astrainteractive.astratemplate.domain.local.entities.UserTable
-import com.astrainteractive.astratemplate.domain.remote.RestApi
+import com.astrainteractive.astratemplate.domain.remote.RickMortyApi
+import com.astrainteractive.astratemplate.domain.remote.RickMortyApiImpl
 import com.google.gson.Gson
 import kotlinx.coroutines.runBlocking
 import ru.astrainteractive.astralibs.di.module
@@ -14,24 +15,17 @@ import java.io.File
 
 val sqlModule = module {
     runBlocking {
-        val database = Database()
-        database.openConnection("data.db", DBConnection.SQLite)
-        UserTable.create(database)
-        RatingRelationTable.create(database)
-        database
-    }
-}
-val restRequestorModule = module {
-    RestRequester {
-        this.baseUrl = "https://rickandmortyapi.com/"
-        this.converterFactory = { json, clazz ->
-            json?.let { Gson().fromJson(json, clazz) }
+        val connection = DBConnection.SQLite("data.db")
+        DefaultDatabase(connection, DBSyntax.SQLite).also {
+            it.openConnection()
+            UserTable.create(it)
+            RatingRelationTable.create(it)
         }
-        this.decoderFactory = Gson()::toJson
     }
 }
+
 val restModule = module {
-    restRequestorModule.value.create(RestApi::class.java)
+    RickMortyApiImpl() as RickMortyApi
 }
 val repositoryModule = module {
     Repository(sqlModule.value, restModule.value)

@@ -1,6 +1,6 @@
 [versions]
 # Plugin/Mod core
-plugin = "4.2.0"
+plugin = "4.3.0-RC1"
 name = "AstraTemplate"
 group = "com.astrainteractive"
 description = "Template plugin for EmpireProjekt"
@@ -10,11 +10,11 @@ destinationDirectoryForgePath = "C:\\Users\\makee\\Desktop\\Forge\\mods"
 # Core
 kotlin = "1.7.0"
 coroutines = "1.6.3"
-json = "1.3.3"
-kaml = "0.46.0"
+json = "1.5.0-RC"
+kaml = "0.50.0"
 exposed = "0.38.1"
 jdbc = "3.36.0.3"
-astraLibs = "2.1.1"
+astraLibs = "2.3.0-RC2"
 mysqlDriver = "8.0.20"
 xerialSqliteJdbcVersion = "3.34.0"
 # Build

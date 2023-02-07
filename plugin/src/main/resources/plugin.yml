@@ -6,7 +6,7 @@ name: '${name}'
 authors: [ MakeevRoman ]
 author: MakeevRoman
 website: AstraInteractive.ru
-api-version: 1.18
+api-version: 1.16
 softdepend: [ ]
 depend: [ ]
 loadbefore: [ ]

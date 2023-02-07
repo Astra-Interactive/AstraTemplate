@@ -18,6 +18,8 @@ buildscript {
         maven("https://files.minecraftforge.net/maven")
         maven("https://dist.creeper.host/Sponge/maven")
         maven("https://plugins.gradle.org/m2/")
+        mavenCentral()
+        mavenLocal()
     }
 }
 

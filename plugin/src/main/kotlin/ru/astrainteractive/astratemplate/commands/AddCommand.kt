@@ -12,18 +12,12 @@ import ru.astrainteractive.astralibs.utils.withEntry
 import ru.astrainteractive.astratemplate.AstraTemplate
 
 
-
 fun CommandManager.addCommandCompleter() = AstraTemplate.instance.registerTabCompleter("add") {
-    if (args.isEmpty())
-        return@registerTabCompleter Bukkit.getOnlinePlayers().map { it.name }.withEntry(args.last())
-
-    if (args.size == 1)
-        return@registerTabCompleter Material.values().map { it.name }.withEntry(args.last())
-
-    if (args.size == 2)
-        return@registerTabCompleter IntRange(1, 64).map { it.toString() }.withEntry(args.last())
-
-    return@registerTabCompleter listOf()
+    return@registerTabCompleter when (args.size) {
+        2 -> Material.values().map { it.name }.withEntry(args.last())
+        3 -> IntRange(1, 64).map { it.toString() }.withEntry(args.last())
+        else -> Bukkit.getOnlinePlayers().map { it.name }.withEntry(args.last())
+    }
 }
 
 /**
@@ -34,15 +28,16 @@ fun CommandManager.addCommand() = AstraTemplate.instance.registerCommand("add") 
         sender.sendMessage("Sender should be player")
         return@registerCommand
     }
+    val player = argument(0) {
+        it?.let(Bukkit::getPlayer)
+    }.onFailure { sender.sendMessage("Player not exists") }.successOrNull()?.value ?: return@registerCommand
 
-    val player = Bukkit.getPlayer(args.getOrNull(0) ?: "") ?: run {
-        sender.sendMessage("Plater not exists")
-        return@registerCommand
-    }
-    val amount = args.getOrNull(2)?.toIntOrNull() ?: 1
-    val item = args.getOrNull(1)?.let(Material::getMaterial)?.let { ItemStack(it, amount) } ?: run {
-        sender.sendMessage("Item not found")
-        return@registerCommand
-    }
+    val amount = argument(2) { it?.toIntOrNull() ?: 1 }.successOrNull()?.value!!
+
+    val item = argument(1) {
+        val material = it?.let(Material::getMaterial)
+        material?.let { ItemStack(it, amount) }
+    }.onFailure { sender.sendMessage("Item not found") }.successOrNull()?.value ?: return@registerCommand
+
     player.inventory.addItem(item)
 }

@@ -6,6 +6,7 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.HandlerList
 import org.bukkit.event.block.BlockPlaceEvent
 import ru.astrainteractive.astralibs.events.EventListener
+import ru.astrainteractive.astralibs.events.GlobalEventListener
 
 
 /**
@@ -29,6 +30,7 @@ class TemplateEvent : EventListener {
      * It's okay to not write anything here, since you call [HandlerList.unregister] in [AstraTemplate.onDisable]
      */
     public override fun onDisable() {
+        super.onDisable()
         BlockPlaceEvent.getHandlerList().unregister(this)
     }
 }

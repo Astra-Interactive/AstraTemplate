@@ -9,11 +9,11 @@ import ru.astrainteractive.astralibs.events.DSLEvent
  */
 class MultipleEventsDSL {
     val blockBreakEvent = DSLEvent.event<BlockBreakEvent> {
-        println("blockBreakEvent ${it.player.name}")
+        println("DSLEvent: blockBreakEvent ${it.player.name}")
     }
 
     val entityDamageEvent = DSLEvent.event<EntityDamageEvent>{
-        println("entityDamageEvent ${it.entity.name}")
+        println("DSLEvent: entityDamageEvent ${it.entity.name}")
     }
 }
 

@@ -29,6 +29,7 @@ class SampleGUIViewModel(
         get() = ChatColor.values()[Random.nextInt(ChatColor.values().size)]
 
     fun onModeChange() = componentScope.launch(Dispatchers.IO) {
+        println("OnModeChanged")
         when (inventoryState.value) {
             InventoryState.Loading -> return@launch
             is InventoryState.Items -> loadUsersState()

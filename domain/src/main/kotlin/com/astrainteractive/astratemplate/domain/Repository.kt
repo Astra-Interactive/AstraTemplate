@@ -6,7 +6,8 @@ import com.astrainteractive.astratemplate.domain.local.entities.RatingRelationTa
 import com.astrainteractive.astratemplate.domain.local.entities.User
 import com.astrainteractive.astratemplate.domain.local.entities.UserRating
 import com.astrainteractive.astratemplate.domain.local.entities.UserTable
-import com.astrainteractive.astratemplate.domain.remote.RestApi
+import com.astrainteractive.astratemplate.domain.remote.RMResponse
+import com.astrainteractive.astratemplate.domain.remote.RickMortyApi
 import ru.astrainteractive.astralibs.orm.Database
 import java.util.*
 import kotlin.random.Random
@@ -17,13 +18,14 @@ import kotlin.random.Random
  */
 class Repository(
     private val databaseDataSource: Database,
-    private val restDataSource: RestApi,
+    private val restDataSource: RickMortyApi,
 ) {
-    suspend fun getRandomCharacter(id: Int = Random.nextInt(1, 30)) =
-        restDataSource.getRandomCharacter(id)?.await?.invoke()
+    suspend fun getRandomCharacter(id: Int): Result<RMResponse> {
+        return restDataSource.getRandomCharacter(id)
+    }
 
     suspend fun insertUser(user: UserDTO): Int {
-        return UserTable.insert {
+        return UserTable.insert(databaseDataSource) {
             this[UserTable.discordId] = user.discordId
             this[UserTable.minecraftUuid] = user.minecraftUUID
         }
@@ -31,7 +33,7 @@ class Repository(
 
 
     suspend fun insertRating(user: UserDTO): Int {
-        return RatingRelationTable.insert {
+        return RatingRelationTable.insert(databaseDataSource) {
             this[RatingRelationTable.userID] = user.id
             this[RatingRelationTable.reason] = UUID.randomUUID().toString()
         }
@@ -44,7 +46,7 @@ class Repository(
     }
 
     suspend fun updateUser(user: UserDTO) {
-        UserTable.find(constructor = User) {
+        UserTable.find(databaseDataSource,User) {
             UserTable.id.eq(user.id)
         }.firstOrNull()?.apply {
             this.minecraftUuid = user.minecraftUUID
@@ -54,7 +56,7 @@ class Repository(
     }
 
     suspend fun deleteUser(user: UserDTO) {
-        UserTable.delete<User> {
+        UserTable.delete<User>(databaseDataSource) {
             UserTable.id.eq(user.id)
         }
     }
@@ -65,5 +67,6 @@ class Repository(
     suspend fun getAllUsers(): List<UserDTO>? {
         return UserTable.all(databaseDataSource, User).map(UserMapper::toDTO)
     }
+
 }
 
