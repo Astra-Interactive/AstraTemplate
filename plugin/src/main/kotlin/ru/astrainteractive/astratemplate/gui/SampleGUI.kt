@@ -6,6 +6,7 @@ import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.inventory.InventoryCloseEvent
 import org.bukkit.inventory.ItemStack
+import ru.astrainteractive.astralibs.di.Dependency
 import ru.astrainteractive.astralibs.di.getValue
 import ru.astrainteractive.astralibs.menu.holder.DefaultPlayerHolder
 import ru.astrainteractive.astralibs.menu.holder.PlayerHolder
@@ -14,15 +15,15 @@ import ru.astrainteractive.astralibs.menu.utils.InventoryButton
 import ru.astrainteractive.astralibs.menu.utils.ItemStackButtonBuilder
 import ru.astrainteractive.astralibs.menu.utils.MenuSize
 import ru.astrainteractive.astralibs.menu.utils.click.MenuClickListener
-import ru.astrainteractive.astratemplate.modules.SampleGuiViewModelFactory
-import ru.astrainteractive.astratemplate.modules.TranslationModule
+import ru.astrainteractive.astratemplate.plugin.Translation
 
 class SampleGUI(
-    player: Player
+    player: Player,
+    translationModule: Dependency<Translation>,
+    private val viewModel: SampleGUIViewModel
 ) : PaginatedMenu() {
-    private val translation by TranslationModule
+    private val translation by translationModule
 
-    private val viewModel = SampleGuiViewModelFactory.value
     private val clickListener = MenuClickListener()
 
     fun createItemStackWithName(material: Material, name: String) = ItemStack(material).apply {

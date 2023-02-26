@@ -1,4 +1,4 @@
-package ru.astrainteractive.astratemplate.utils
+package ru.astrainteractive.astratemplate.plugin
 
 import kotlinx.serialization.SerialName
 
@@ -6,7 +6,7 @@ import kotlinx.serialization.SerialName
  * Example config file with 3 types of initialization
  */
 @kotlinx.serialization.Serializable
-data class PluginConfig(
+data class MainConfiguration(
     val config1: String = "NONE",
     val config2: Int = 0,
     val config3: Boolean = false,

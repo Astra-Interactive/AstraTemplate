@@ -1,18 +1,24 @@
 package ru.astrainteractive.astratemplate.events
 
 import org.bukkit.plugin.Plugin
+import ru.astrainteractive.astralibs.di.Dependency
 import ru.astrainteractive.astralibs.events.EventListener
 import ru.astrainteractive.astratemplate.events.events.BetterAnotherEvent
 import ru.astrainteractive.astratemplate.events.events.MultipleEventsDSL
 import ru.astrainteractive.astratemplate.events.events.TemplateEvent
+import ru.astrainteractive.astratemplate.plugin.Translation
 
 /**
  * Handler for all your events
  */
-class EventManager : EventListener {
+class EventManager(
+    translationModule: Dependency<Translation>
+) : EventListener {
     private val events = buildList {
-        add(TemplateEvent())
-        add(BetterAnotherEvent())
+        TemplateEvent(
+            translationModule = translationModule
+        ).also(::add)
+        BetterAnotherEvent().also(::add)
     }
 
     override fun onEnable(plugin: Plugin) {

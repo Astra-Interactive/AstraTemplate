@@ -8,6 +8,8 @@ import com.astrainteractive.astratemplate.domain.remote.RickMortyApiImpl
 import kotlinx.coroutines.runBlocking
 import ru.astrainteractive.astralibs.di.module
 import ru.astrainteractive.astralibs.orm.DBConnection
+import ru.astrainteractive.astralibs.orm.DBSyntax
+import ru.astrainteractive.astralibs.orm.DefaultDatabase
 
 val sqlModule = module {
     runBlocking {

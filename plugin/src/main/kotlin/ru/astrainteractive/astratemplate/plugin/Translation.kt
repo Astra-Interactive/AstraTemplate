@@ -1,4 +1,4 @@
-package ru.astrainteractive.astratemplate.utils
+package ru.astrainteractive.astratemplate.plugin
 
 import ru.astrainteractive.astralibs.file_manager.FileManager
 import ru.astrainteractive.astralibs.utils.BaseTranslation
@@ -6,7 +6,7 @@ import ru.astrainteractive.astralibs.utils.BaseTranslation
 /**
  * All translation stored here
  */
-class PluginTranslation : BaseTranslation() {
+class Translation : BaseTranslation() {
     /**
      * This is a default translation file. Don't forget to create translation.yml in resources of the plugin
      */

@@ -1,6 +1,5 @@
 package ru.astrainteractive.astratemplate
 
-import CommandManager
 import kotlinx.coroutines.runBlocking
 import org.bukkit.event.HandlerList
 import org.bukkit.plugin.java.JavaPlugin
@@ -13,11 +12,8 @@ import ru.astrainteractive.astralibs.menu.event.SharedInventoryClickEvent
 import ru.astrainteractive.astralibs.utils.Singleton
 import ru.astrainteractive.astralibs.utils.setupWithSpigot
 import ru.astrainteractive.astratemplate.events.EventManager
-import ru.astrainteractive.astratemplate.modules.PluginConfigModule
-import ru.astrainteractive.astratemplate.modules.SQLDatabaseModule
-import ru.astrainteractive.astratemplate.modules.TranslationModule
-import ru.astrainteractive.astratemplate.modules.eventHandlerModule
-import ru.astrainteractive.astratemplate.utils.Files
+import ru.astrainteractive.astratemplate.modules.ServiceLocator
+import ru.astrainteractive.astratemplate.plugin.Files
 
 /**
  * Initial class for your plugin
@@ -32,7 +28,8 @@ class AstraTemplate : JavaPlugin() {
     /**
      * Class for handling all of your events
      */
-    private val eventHandler: EventManager by eventHandlerModule
+    private val eventHandler: EventManager by ServiceLocator.eventHandlerModule
+    private val commandManager by ServiceLocator.commandManager
 
     /**
      * This method called when server starts or PlugMan load plugin.
@@ -41,7 +38,7 @@ class AstraTemplate : JavaPlugin() {
         AstraLibs.rememberPlugin(this)
         Logger.setupWithSpigot("AstraTemplate", this)
         eventHandler.onEnable(this)
-        CommandManager()
+        commandManager
         GlobalEventListener.onEnable(this)
         SharedInventoryClickEvent.onEnable(this)
         Logger.log("Logger enabled", "AstraTemplate")
@@ -54,7 +51,7 @@ class AstraTemplate : JavaPlugin() {
      */
     override fun onDisable() {
         eventHandler.onDisable()
-        runBlocking { SQLDatabaseModule.value.closeConnection() }
+        runBlocking { ServiceLocator.SQLDatabaseModule.value.closeConnection() }
         HandlerList.unregisterAll(this)
         GlobalEventListener.onDisable()
         SharedInventoryClickEvent.onDisable()
@@ -66,7 +63,7 @@ class AstraTemplate : JavaPlugin() {
      */
     fun reloadPlugin() {
         Files.configFile.reload()
-        PluginConfigModule.reload()
-        TranslationModule.reload()
+        ServiceLocator.PluginConfigModule.reload()
+        ServiceLocator.TranslationModule.reload()
     }
 }

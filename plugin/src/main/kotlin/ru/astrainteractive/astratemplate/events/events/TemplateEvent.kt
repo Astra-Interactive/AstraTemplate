@@ -3,22 +3,27 @@ package ru.astrainteractive.astratemplate.events.events
 import org.bukkit.event.EventHandler
 import org.bukkit.event.HandlerList
 import org.bukkit.event.block.BlockPlaceEvent
+import ru.astrainteractive.astralibs.di.Dependency
+import ru.astrainteractive.astralibs.di.getValue
 import ru.astrainteractive.astralibs.events.EventListener
 import ru.astrainteractive.astratemplate.AstraTemplate
-import ru.astrainteractive.astratemplate.modules.TranslationModule
+import ru.astrainteractive.astratemplate.plugin.Translation
 
 /**
  * Template event class
  * @see [MultipleEventsDSL]
  */
-class TemplateEvent : EventListener {
+class TemplateEvent(
+    translationModule: Dependency<Translation>
+) : EventListener {
+    private val translation by translationModule
 
     /**
      * Sample event which is called when Block is placed
      */
     @EventHandler
     public fun blockPlaceEvent(e: BlockPlaceEvent) {
-        e.player.sendMessage(TranslationModule.value.blockPlaced)
+        e.player.sendMessage(translation.blockPlaced)
         return
     }
 

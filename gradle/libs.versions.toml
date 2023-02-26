@@ -8,13 +8,13 @@ destinationDirectoryPath = "D:\\Minecraft Servers\\EmpireProjekt_remake\\smp\\pl
 destinationDirectoryFabricPath = "C:\\Users\\makee\\Desktop\\server\\mods"
 destinationDirectoryForgePath = "C:\\Users\\makee\\Desktop\\Forge\\mods"
 # Core
-kotlin = "1.7.0"
+kotlin = "1.8.10"
 coroutines = "1.6.3"
 json = "1.5.0-RC"
 kaml = "0.50.0"
 exposed = "0.38.1"
 jdbc = "3.36.0.3"
-astraLibs = "2.3.0-RC2"
+astraLibs = "2.3.0-RC3"
 mysqlDriver = "8.0.20"
 xerialSqliteJdbcVersion = "3.34.0"
 # Build

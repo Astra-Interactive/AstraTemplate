@@ -7,10 +7,15 @@ import org.bukkit.entity.Player
 import ru.astrainteractive.astralibs.async.PluginScope
 import ru.astrainteractive.astralibs.commands.registerCommand
 import ru.astrainteractive.astratemplate.AstraTemplate
-import ru.astrainteractive.astratemplate.gui.SampleGUI
+import ru.astrainteractive.astratemplate.modules.ServiceLocator
 
-fun CommandManager.tempGUI() = AstraTemplate.instance.registerCommand("atempgui") {
-    if (sender is Player) {
-        PluginScope.launch(Dispatchers.IO) { SampleGUI(sender as Player).open() }
+fun CommandManager.tempGUI(
+    guisFactories: ServiceLocator.Guis
+) = AstraTemplate.instance.registerCommand("atempgui") {
+    val player = sender as? Player ?: return@registerCommand
+
+    PluginScope.launch(Dispatchers.IO) {
+        val sampleGUI = guisFactories.sampleGuiFactory(player = player).value
+        sampleGUI.open()
     }
 }

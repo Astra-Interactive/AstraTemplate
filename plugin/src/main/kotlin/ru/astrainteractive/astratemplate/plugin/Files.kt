@@ -1,4 +1,4 @@
-package ru.astrainteractive.astratemplate.utils
+package ru.astrainteractive.astratemplate.plugin
 
 import ru.astrainteractive.astralibs.file_manager.FileManager
 

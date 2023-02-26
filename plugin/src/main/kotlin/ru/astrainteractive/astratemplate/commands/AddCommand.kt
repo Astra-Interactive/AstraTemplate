@@ -11,7 +11,7 @@ import ru.astrainteractive.astralibs.utils.withEntry
 import ru.astrainteractive.astratemplate.AstraTemplate
 
 fun CommandManager.addCommandCompleter() = AstraTemplate.instance.registerTabCompleter("add") {
-    return@registerTabCompleter when (args.size) {
+    when (args.size) {
         2 -> Material.values().map { it.name }.withEntry(args.last())
         3 -> IntRange(1, 64).map { it.toString() }.withEntry(args.last())
         else -> Bukkit.getOnlinePlayers().map { it.name }.withEntry(args.last())

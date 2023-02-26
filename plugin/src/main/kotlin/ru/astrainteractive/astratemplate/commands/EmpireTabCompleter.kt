@@ -9,7 +9,7 @@ import ru.astrainteractive.astratemplate.AstraTemplate
  * Tab completer for your plugin which is called when player typing commands
  */
 fun CommandManager.tabCompleter() = AstraTemplate.instance.registerTabCompleter("atemp") {
-    return@registerTabCompleter when {
+    when {
         args.isEmpty() -> listOf("atemp", "atempreload")
         args.size == 1 -> listOf("atemp", "atempreload").withEntry(args.last())
         else -> emptyList()
