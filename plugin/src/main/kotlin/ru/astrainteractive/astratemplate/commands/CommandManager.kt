@@ -1,3 +1,4 @@
+import com.astrainteractive.astratemplate.domain.Repository
 import ru.astrainteractive.astralibs.commands.registerCommand
 import ru.astrainteractive.astralibs.di.Dependency
 import ru.astrainteractive.astralibs.di.getValue
@@ -10,6 +11,7 @@ import ru.astrainteractive.astratemplate.commands.randomRickAndMortyCharacter
 import ru.astrainteractive.astratemplate.commands.reload
 import ru.astrainteractive.astratemplate.commands.tabCompleter
 import ru.astrainteractive.astratemplate.commands.tempGUI
+import ru.astrainteractive.astratemplate.modules.ServiceLocator
 import ru.astrainteractive.astratemplate.plugin.Translation
 
 /**
@@ -18,7 +20,9 @@ import ru.astrainteractive.astratemplate.plugin.Translation
  * @see Reload
  */
 class CommandManager(
-    translationModule: Dependency<Translation>
+    translationModule: Dependency<Translation>,
+    repositoryModule: Dependency<Repository>,
+    guiFactories: ServiceLocator.Guis
 ) {
     private val translation by translationModule
 
@@ -33,11 +37,21 @@ class CommandManager(
         tabCompleter()
         addCommandCompleter()
         addCommand()
-        damageCompleter()
-        damageCommand()
-        tempGUI()
-        reload()
-        randomRickAndMortyCharacter()
+        damageCompleter(
+            translationModule = translationModule
+        )
+        damageCommand(
+            translationModule = translationModule
+        )
+        tempGUI(
+            guisFactories = guiFactories
+        )
+        reload(
+            translationModule = translationModule
+        )
+        randomRickAndMortyCharacter(
+            repositoryModule = repositoryModule
+        )
 
         // It shows that [val XXX by IReloadable] is actually affected by reloading
         AstraTemplate.instance.registerCommand("translation") {

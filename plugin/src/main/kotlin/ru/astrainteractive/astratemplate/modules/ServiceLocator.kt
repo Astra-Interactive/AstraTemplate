@@ -61,7 +61,9 @@ object ServiceLocator {
     }
     val commandManager = module {
         CommandManager(
-            translationModule = TranslationModule
+            translationModule = TranslationModule,
+            repositoryModule = RepositoryModule,
+            guiFactories = Guis
         )
     }
 
