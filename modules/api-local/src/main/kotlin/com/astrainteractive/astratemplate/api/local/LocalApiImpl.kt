@@ -11,7 +11,6 @@ import com.astrainteractive.astratemplate.api.local.mapping.UserMapper
 import ru.astrainteractive.astralibs.orm.Database
 import java.util.*
 
-
 internal class LocalApiImpl(
     private val database: Database,
     private val ratingMapper: RatingMapper,
