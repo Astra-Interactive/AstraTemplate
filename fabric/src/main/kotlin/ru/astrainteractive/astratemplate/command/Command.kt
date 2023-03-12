@@ -7,7 +7,7 @@ import net.minecraft.command.CommandRegistryAccess
 import net.minecraft.server.command.CommandManager
 import net.minecraft.server.command.ServerCommandSource
 
-abstract class ICommand(val literal: String) : CommandRegistrationCallback {
+abstract class Command(val literal: String) : CommandRegistrationCallback {
 
     abstract fun onCommand(commandContext: CommandContext<ServerCommandSource>): Int
 

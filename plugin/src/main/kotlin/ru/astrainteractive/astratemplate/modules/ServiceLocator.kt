@@ -1,11 +1,9 @@
 package ru.astrainteractive.astratemplate.modules
 
 import CommandManager
+import com.astrainteractive.astratemplate.api.local.DatabaseFactory
 import com.astrainteractive.astratemplate.api.local.LocalApiFactory
-import com.astrainteractive.astratemplate.api.local.entities.UserRatingTable
-import com.astrainteractive.astratemplate.api.local.entities.UserTable
 import com.astrainteractive.astratemplate.api.remote.RickMortyApiFactory
-import kotlinx.coroutines.runBlocking
 import org.bukkit.entity.Player
 import ru.astrainteractive.astralibs.AstraLibs
 import ru.astrainteractive.astralibs.EmpireSerializer
@@ -13,9 +11,6 @@ import ru.astrainteractive.astralibs.di.factory
 import ru.astrainteractive.astralibs.di.getValue
 import ru.astrainteractive.astralibs.di.module
 import ru.astrainteractive.astralibs.di.reloadable
-import ru.astrainteractive.astralibs.orm.DBConnection
-import ru.astrainteractive.astralibs.orm.DBSyntax
-import ru.astrainteractive.astralibs.orm.DefaultDatabase
 import ru.astrainteractive.astralibs.utils.toClass
 import ru.astrainteractive.astratemplate.api.ItemStackSpigotAPI
 import ru.astrainteractive.astratemplate.events.EventManager
@@ -39,15 +34,9 @@ object ServiceLocator {
     }
 
     val databaseModule = module {
-        runBlocking {
-            val connection = DBConnection.SQLite("${AstraLibs.instance.dataFolder}${File.separator}data.db")
-            DefaultDatabase(connection, DBSyntax.SQLite).also {
-                it.openConnection()
-                UserTable.create(it)
-                UserRatingTable.create(it)
-            }
-        }
+        DatabaseFactory("${AstraLibs.instance.dataFolder}${File.separator}data.db").value
     }
+
     val localApiModule = module {
         val database by databaseModule
         LocalApiFactory(database).value
