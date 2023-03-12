@@ -17,7 +17,9 @@ dependencies {
     implementation(libs.astralibs.ktxCore)
     implementation(libs.astralibs.orm)
     implementation(libs.xerialSqliteJdbcLib)
-    implementation(project(":domain"))
+    implementation(project(":modules:api-local"))
+    implementation(project(":modules:api-remote"))
+    implementation(project(":modules:dto"))
 }
 
 val shadowJar by tasks.getting(ShadowJar::class) {

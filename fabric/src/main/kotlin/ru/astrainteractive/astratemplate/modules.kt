@@ -4,7 +4,6 @@ import com.astrainteractive.astratemplate.domain.Repository
 import com.astrainteractive.astratemplate.domain.local.entities.RatingRelationTable
 import com.astrainteractive.astratemplate.domain.local.entities.UserTable
 import com.astrainteractive.astratemplate.domain.remote.RickMortyApi
-import com.astrainteractive.astratemplate.domain.remote.RickMortyApiImpl
 import kotlinx.coroutines.runBlocking
 import ru.astrainteractive.astralibs.di.module
 import ru.astrainteractive.astralibs.orm.DBConnection

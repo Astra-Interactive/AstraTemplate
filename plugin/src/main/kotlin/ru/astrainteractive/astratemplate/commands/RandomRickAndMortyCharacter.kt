@@ -1,7 +1,7 @@
 package ru.astrainteractive.astratemplate.commands
 
 import CommandManager
-import com.astrainteractive.astratemplate.domain.Repository
+import com.astrainteractive.astratemplate.api.remote.RickMortyApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ru.astrainteractive.astralibs.async.PluginScope
@@ -11,13 +11,13 @@ import ru.astrainteractive.astralibs.di.getValue
 import ru.astrainteractive.astratemplate.AstraTemplate
 
 fun CommandManager.randomRickAndMortyCharacter(
-    repositoryModule: Dependency<Repository>
+    rmApiModule: Dependency<RickMortyApi>
 ) = AstraTemplate.instance.registerCommand("rickandmorty") {
-    val repository by repositoryModule
+    val rmApi by rmApiModule
 
     sender.sendMessage("Working on that...")
     PluginScope.launch(Dispatchers.IO) {
-        repository.getRandomCharacter(1).onSuccess {
+        rmApi.getRandomCharacter(1).onSuccess {
             sender.sendMessage("Got response: $it")
         }.onFailure {
             it.printStackTrace()

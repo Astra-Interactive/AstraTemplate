@@ -1,6 +1,6 @@
 [versions]
 # Plugin/Mod core
-plugin = "4.4.0"
+plugin = "5.0.0"
 name = "AstraTemplate"
 group = "com.astrainteractive"
 description = "Template plugin for EmpireProjekt"

@@ -1,7 +1,8 @@
 package ru.astrainteractive.astratemplate.gui
 
-import com.astrainteractive.astratemplate.domain.Repository
-import com.astrainteractive.astratemplate.domain.local.dto.UserDTO
+import com.astrainteractive.astratemplate.api.dto.UserDTO
+import com.astrainteractive.astratemplate.api.local.LocalApi
+import com.astrainteractive.astratemplate.api.remote.RickMortyApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,7 +19,8 @@ import kotlin.random.Random
  * MVVM/MVI technique
  */
 class SampleGUIViewModel(
-    private val repository: Repository,
+    private val rmApi: RickMortyApi,
+    private val localApi: LocalApi,
     private val itemStackSpigotAPi: ItemStackSpigotAPI
 ) : AsyncComponent() {
 
@@ -49,7 +51,7 @@ class SampleGUIViewModel(
 
     fun onAddUserClicked() {
         componentScope.launch(Dispatchers.IO) {
-            repository.insertUser(UserDTO(-1, "id${Random.nextInt(20000)}", "mine${Random.nextInt(5000)}"))
+            localApi.insertUser(UserDTO(-1, "id${Random.nextInt(20000)}", "mine${Random.nextInt(5000)}"))
             loadUsersState()
         }
     }
@@ -60,11 +62,11 @@ class SampleGUIViewModel(
         val user = users.getOrNull(slot) ?: return
         componentScope.launch(Dispatchers.IO) {
             when (clickType) {
-                ClickType.MIDDLE -> repository.updateUser(user)
-                ClickType.LEFT -> repository.deleteUser(user)
+                ClickType.MIDDLE -> localApi.updateUser(user)
+                ClickType.LEFT -> localApi.deleteUser(user)
                 else -> {
-                    println(repository.selectRating(user))
-                    repository.insertRating(user)
+                    println(localApi.selectRating(user))
+                    localApi.insertRating(user)
                 }
             }
             loadUsersState()
@@ -91,7 +93,7 @@ class SampleGUIViewModel(
     }
 
     suspend fun loadUsersState() {
-        inventoryState.value = InventoryState.Users(repository.getAllUsers() ?: emptyList())
+        inventoryState.value = InventoryState.Users(localApi.getAllUsers() ?: emptyList())
     }
 
     fun onUiCreated() = componentScope.launch(Dispatchers.IO) {

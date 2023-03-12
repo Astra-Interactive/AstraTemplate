@@ -51,7 +51,7 @@ class AstraTemplate : JavaPlugin() {
      */
     override fun onDisable() {
         eventHandler.onDisable()
-        runBlocking { ServiceLocator.SQLDatabaseModule.value.closeConnection() }
+        runBlocking { ServiceLocator.databaseModule.value.closeConnection() }
         HandlerList.unregisterAll(this)
         GlobalEventListener.onDisable()
         SharedInventoryClickEvent.onDisable()
@@ -63,7 +63,7 @@ class AstraTemplate : JavaPlugin() {
      */
     fun reloadPlugin() {
         Files.configFile.reload()
-        ServiceLocator.PluginConfigModule.reload()
-        ServiceLocator.TranslationModule.reload()
+        ServiceLocator.configurationModule.reload()
+        ServiceLocator.translationModule.reload()
     }
 }

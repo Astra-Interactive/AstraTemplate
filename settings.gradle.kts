@@ -47,7 +47,9 @@ dependencyResolutionManagement {
 rootProject.name = "AstraTemplate"
 
 // Shared
-include("domain")
+include("modules:dto")
+include("modules:api-remote")
+include("modules:api-local")
 // Spigot
 include("plugin")
 // Fabric

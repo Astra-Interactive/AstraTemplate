@@ -34,5 +34,7 @@ dependencies {
     testImplementation(libs.coroutines.coreJvm)
     testImplementation(libs.xerial.sqlite.jdbc)
     // Local
-    implementation(project(":domain"))
+    implementation(project(":modules:api-local"))
+    implementation(project(":modules:api-remote"))
+    implementation(project(":modules:dto"))
 }

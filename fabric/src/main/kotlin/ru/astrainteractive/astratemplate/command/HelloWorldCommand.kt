@@ -1,6 +1,5 @@
 package ru.astrainteractive.astratemplate.command
 
-import com.astrainteractive.astratemplate.domain.local.dto.UserDTO
 import com.mojang.brigadier.context.CommandContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

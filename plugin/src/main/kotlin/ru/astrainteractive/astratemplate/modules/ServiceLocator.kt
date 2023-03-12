@@ -1,11 +1,10 @@
 package ru.astrainteractive.astratemplate.modules
 
 import CommandManager
-import com.astrainteractive.astratemplate.domain.Repository
-import com.astrainteractive.astratemplate.domain.local.entities.RatingRelationTable
-import com.astrainteractive.astratemplate.domain.local.entities.UserTable
-import com.astrainteractive.astratemplate.domain.remote.RickMortyApi
-import com.astrainteractive.astratemplate.domain.remote.RickMortyApiImpl
+import com.astrainteractive.astratemplate.api.local.LocalApiFactory
+import com.astrainteractive.astratemplate.api.local.entities.UserRatingTable
+import com.astrainteractive.astratemplate.api.local.entities.UserTable
+import com.astrainteractive.astratemplate.api.remote.RickMortyApiFactory
 import kotlinx.coroutines.runBlocking
 import org.bukkit.entity.Player
 import ru.astrainteractive.astralibs.AstraLibs
@@ -28,49 +27,49 @@ import ru.astrainteractive.astratemplate.plugin.Translation
 import java.io.File
 
 object ServiceLocator {
-    val PluginConfigModule = reloadable {
+    val configurationModule = reloadable {
         EmpireSerializer.toClass<MainConfiguration>(Files.configFile) ?: MainConfiguration()
     }
-    val TranslationModule = reloadable {
+    val translationModule = reloadable {
         Translation()
     }
 
-    val RestApiModule = module {
-        RickMortyApiImpl() as RickMortyApi
+    val rmApiModule = module {
+        RickMortyApiFactory().value
     }
 
-    val SQLDatabaseModule = module {
+    val databaseModule = module {
         runBlocking {
             val connection = DBConnection.SQLite("${AstraLibs.instance.dataFolder}${File.separator}data.db")
             DefaultDatabase(connection, DBSyntax.SQLite).also {
                 it.openConnection()
                 UserTable.create(it)
-                RatingRelationTable.create(it)
+                UserRatingTable.create(it)
             }
         }
     }
-
-    val RepositoryModule = module {
-        val restApi by RestApiModule
-        val sqlDatabase by SQLDatabaseModule
-        Repository(sqlDatabase, restApi)
+    val localApiModule = module {
+        val database by databaseModule
+        LocalApiFactory(database).value
     }
 
     val eventHandlerModule = module {
-        EventManager(translationModule = TranslationModule)
+        EventManager(translationModule = translationModule)
     }
+
     val commandManager = module {
         CommandManager(
-            translationModule = TranslationModule,
-            repositoryModule = RepositoryModule,
+            translationModule = translationModule,
+            rmApiModule = rmApiModule,
             guiFactories = Guis
         )
     }
 
     object ViewModels {
         val SampleGuiViewModelFactory = factory {
-            val repository by RepositoryModule
-            SampleGUIViewModel(repository, ItemStackSpigotAPI)
+            val rmApi by rmApiModule
+            val localApi by localApiModule
+            SampleGUIViewModel(rmApi, localApi, ItemStackSpigotAPI)
         }
     }
 
@@ -78,7 +77,7 @@ object ServiceLocator {
         fun sampleGuiFactory(player: Player) = factory {
             SampleGUI(
                 player = player,
-                translationModule = TranslationModule,
+                translationModule = translationModule,
                 viewModel = ViewModels.SampleGuiViewModelFactory.value
             )
         }
