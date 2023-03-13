@@ -2,7 +2,6 @@ package ru.astrainteractive.astratemplate.gui
 
 import com.astrainteractive.astratemplate.api.dto.UserDTO
 import com.astrainteractive.astratemplate.api.local.LocalApi
-import com.astrainteractive.astratemplate.api.remote.RickMortyApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,7 +18,6 @@ import kotlin.random.Random
  * MVVM/MVI technique
  */
 class SampleGUIViewModel(
-    private val rmApi: RickMortyApi,
     private val localApi: LocalApi,
     private val itemStackSpigotAPi: ItemStackSpigotAPI
 ) : AsyncComponent() {
