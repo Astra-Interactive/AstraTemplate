@@ -8,7 +8,7 @@ tasks.shadowJar {
 
     isReproducibleFileOrder = true
     mergeServiceFiles()
-    relocate("org.bstats", "${libs.versions.group.get()}.astratemplate")
+    relocate("org.bstats", libs.versions.group.get())
     dependsOn(configurations)
     archiveClassifier.set(null as String?)
     from(sourceSets.main.get().output)

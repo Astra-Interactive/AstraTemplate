@@ -37,7 +37,7 @@ val shadowJar by tasks.getting(ShadowJar::class) {
 //    minimize()
     isReproducibleFileOrder = true
     archiveClassifier.set(null as String?)
-    archiveBaseName.set("AstraTemplate")
+    archiveBaseName.set(libs.versions.name.get())
 }
 
 val remapJar = tasks.getByName<RemapJarTask>("remapJar") {
@@ -45,7 +45,7 @@ val remapJar = tasks.getByName<RemapJarTask>("remapJar") {
     mustRunAfter(shadowJar)
     this.input.set(shadowJar.archiveFile)
     addNestedDependencies.set(true)
-    archiveBaseName.set("AstraTemplate")
+    archiveBaseName.set(libs.versions.name.get())
     destinationDirectory.set(File(libs.versions.destinationDirectoryFabricPath.get()))
 }
 tasks.assemble {
