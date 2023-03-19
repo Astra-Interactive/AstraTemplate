@@ -13,7 +13,7 @@ java {
     withSourcesJar()
     withJavadocJar()
     java.sourceCompatibility = JavaVersion.VERSION_1_8
-    java.targetCompatibility = JavaVersion.VERSION_19
+    java.targetCompatibility = JavaVersion.VERSION_17
 }
 
 tasks {
@@ -24,7 +24,7 @@ tasks {
         useJUnitPlatform()
     }
     withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-        kotlinOptions.jvmTarget = "19"
+        kotlinOptions.jvmTarget = "17"
     }
     compileJava {
         options.encoding = "UTF-8"
