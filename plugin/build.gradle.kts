@@ -21,10 +21,9 @@ dependencies {
     implementation(libs.astralibs.spigotCore)
     implementation(libs.bstats.bukkit)
     // Spigot dependencies
-    compileOnly(libs.essentialsx)
     compileOnly(libs.paperApi)
-    compileOnly(libs.spigotApi)
-    compileOnly(libs.spigot)
+//    compileOnly(libs.spigotApi)
+//    compileOnly(libs.spigot)
     // Test-Core
     testImplementation(platform(libs.junit.bom))
     testImplementation(kotlin("test-junit5"))

@@ -56,9 +56,8 @@ object ServiceLocator {
 
     object ViewModels {
         val SampleGuiViewModelFactory = factory {
-            val rmApi by rmApiModule
             val localApi by localApiModule
-            SampleGUIViewModel(rmApi, localApi, ItemStackSpigotAPI)
+            SampleGUIViewModel(localApi, ItemStackSpigotAPI)
         }
     }
 

@@ -26,8 +26,8 @@ buildscript {
 dependencyResolutionManagement {
     repositories {
         gradlePluginPortal()
-        mavenLocal()
         mavenCentral()
+        mavenLocal()
         maven("https://mvn.lumine.io/repository/maven-public/") { metadataSources { artifact() } }
         maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")
         maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
@@ -41,6 +41,7 @@ dependencyResolutionManagement {
         maven("https://repo1.maven.org/maven2/")
         maven("https://maven.playpro.com")
         maven("https://jitpack.io")
+
     }
 }
 
@@ -55,4 +56,4 @@ include("plugin")
 // Fabric
 include("fabric")
 // Forge
-include("forge")
+//include("forge")

@@ -14,7 +14,7 @@ json = "1.5.0-RC"
 kaml = "0.50.0"
 exposed = "0.38.1"
 jdbc = "3.36.0.3"
-astraLibs = "2.3.0-RC3"
+astraLibs = "2.4.0"
 mysqlDriver = "8.0.20"
 xerialSqliteJdbcVersion = "3.34.0"
 # Build
