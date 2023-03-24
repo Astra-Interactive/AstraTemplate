@@ -61,8 +61,8 @@ Also, checkout [AstraLearner](https://play.google.com/store/apps/details?id=com.
 
 ## Directory structure
     
-    ├── domain              # Shared module between fabric/spigot/forge
     ├── build-logic         # Build components
+    ├── modules             
     │   ├── api-local       # Local api with SQLite
     │   ├── api-remote      # Remote sample RickMorty API
     │   └── dto             # DTO objects for shared usage

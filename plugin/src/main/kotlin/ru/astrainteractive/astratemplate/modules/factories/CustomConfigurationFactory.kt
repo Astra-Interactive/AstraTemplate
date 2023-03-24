@@ -5,7 +5,7 @@ import ru.astrainteractive.astralibs.di.Factory
 import ru.astrainteractive.astratemplate.plugin.CustomConfiguration
 import ru.astrainteractive.astratemplate.plugin.Files
 
-object CustomConfigurationFactory: Factory<CustomConfiguration>() {
+object CustomConfigurationFactory : Factory<CustomConfiguration>() {
     override fun initializer(): CustomConfiguration {
         val fileConfiguration = Files.configFile.fileConfiguration
         return CustomConfiguration(

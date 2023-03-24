@@ -41,7 +41,6 @@ dependencyResolutionManagement {
         maven("https://repo1.maven.org/maven2/")
         maven("https://maven.playpro.com")
         maven("https://jitpack.io")
-
     }
 }
 
@@ -56,4 +55,4 @@ include("plugin")
 // Fabric
 include("fabric")
 // Forge
-//include("forge")
+// include("forge")

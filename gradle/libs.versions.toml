@@ -4,7 +4,7 @@ plugin = "5.0.0"
 name = "AstraTemplate"
 group = "com.astrainteractive.astratemplate"
 description = "Template plugin for EmpireProjekt"
-destinationDirectoryPath = "D:\\Minecraft Servers\\Servers\\EmpireProjekt_remake\\smp\\plugins"
+destinationDirectoryPath = "D:\\Minecraft Servers\\Servers\\esmp-configuration\\smp\\plugins"
 destinationDirectoryFabricPath = "C:\\Users\\makee\\Desktop\\server\\mods"
 destinationDirectoryForgePath = "C:\\Users\\makee\\Desktop\\Forge\\mods"
 # Core
