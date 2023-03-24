@@ -44,6 +44,8 @@ class AstraTemplate : JavaPlugin() {
         Logger.log("Logger enabled", "AstraTemplate")
         Logger.warn("Warn message from logger", "AstraTemplate")
         Logger.error("Error message", "AstraTemplate")
+        val customConfiguration by ServiceLocator.customConfiguration
+        Logger.error("Custom configuration version: ${customConfiguration.pluginVersion.value}", "AstraTemplate")
     }
 
     /**

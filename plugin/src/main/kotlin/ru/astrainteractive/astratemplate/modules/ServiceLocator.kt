@@ -16,6 +16,7 @@ import ru.astrainteractive.astratemplate.api.ItemStackSpigotAPI
 import ru.astrainteractive.astratemplate.events.EventManager
 import ru.astrainteractive.astratemplate.gui.SampleGUI
 import ru.astrainteractive.astratemplate.gui.SampleGUIViewModel
+import ru.astrainteractive.astratemplate.modules.factories.CustomConfigurationFactory
 import ru.astrainteractive.astratemplate.plugin.Files
 import ru.astrainteractive.astratemplate.plugin.MainConfiguration
 import ru.astrainteractive.astratemplate.plugin.Translation
@@ -52,6 +53,9 @@ object ServiceLocator {
             rmApiModule = rmApiModule,
             guiFactories = Guis
         )
+    }
+    val customConfiguration = reloadable {
+        CustomConfigurationFactory.value
     }
 
     object ViewModels {
