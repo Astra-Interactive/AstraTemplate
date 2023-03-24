@@ -1,5 +1,5 @@
 plugins {
-    id("net.minecraftforge.gradle")
+//    id("net.minecraftforge.gradle")
     id("forge-resource-processor")
     id("basic-java")
     id("forge-shadow")

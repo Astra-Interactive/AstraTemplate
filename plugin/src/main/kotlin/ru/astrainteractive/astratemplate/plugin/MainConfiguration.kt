@@ -3,7 +3,7 @@ package ru.astrainteractive.astratemplate.plugin
 import kotlinx.serialization.SerialName
 
 /**
- * Example config file with 3 types of initialization
+ * Example config file with kotlinx.serialization
  */
 @kotlinx.serialization.Serializable
 data class MainConfiguration(

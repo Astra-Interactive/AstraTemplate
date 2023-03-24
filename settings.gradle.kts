@@ -26,8 +26,8 @@ buildscript {
 dependencyResolutionManagement {
     repositories {
         gradlePluginPortal()
-        mavenLocal()
         mavenCentral()
+        mavenLocal()
         maven("https://mvn.lumine.io/repository/maven-public/") { metadataSources { artifact() } }
         maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")
         maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
@@ -47,10 +47,12 @@ dependencyResolutionManagement {
 rootProject.name = "AstraTemplate"
 
 // Shared
-include("domain")
+include("modules:dto")
+include("modules:api-remote")
+include("modules:api-local")
 // Spigot
 include("plugin")
 // Fabric
 include("fabric")
 // Forge
-include("forge")
+// include("forge")

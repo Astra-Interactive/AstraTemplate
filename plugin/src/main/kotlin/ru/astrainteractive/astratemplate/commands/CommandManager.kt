@@ -1,4 +1,4 @@
-import com.astrainteractive.astratemplate.domain.Repository
+import com.astrainteractive.astratemplate.api.remote.RickMortyApi
 import ru.astrainteractive.astralibs.commands.registerCommand
 import ru.astrainteractive.astralibs.di.Dependency
 import ru.astrainteractive.astralibs.di.getValue
@@ -21,7 +21,7 @@ import ru.astrainteractive.astratemplate.plugin.Translation
  */
 class CommandManager(
     translationModule: Dependency<Translation>,
-    repositoryModule: Dependency<Repository>,
+    rmApiModule: Dependency<RickMortyApi>,
     guiFactories: ServiceLocator.Guis
 ) {
     private val translation by translationModule
@@ -50,7 +50,7 @@ class CommandManager(
             translationModule = translationModule
         )
         randomRickAndMortyCharacter(
-            repositoryModule = repositoryModule
+            rmApiModule = rmApiModule
         )
 
         // It shows that [val XXX by IReloadable] is actually affected by reloading

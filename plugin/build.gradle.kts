@@ -21,10 +21,9 @@ dependencies {
     implementation(libs.astralibs.spigotCore)
     implementation(libs.bstats.bukkit)
     // Spigot dependencies
-    compileOnly(libs.essentialsx)
     compileOnly(libs.paperApi)
-    compileOnly(libs.spigotApi)
-    compileOnly(libs.spigot)
+//    compileOnly(libs.spigotApi)
+//    compileOnly(libs.spigot)
     // Test-Core
     testImplementation(platform(libs.junit.bom))
     testImplementation(kotlin("test-junit5"))
@@ -34,5 +33,7 @@ dependencies {
     testImplementation(libs.coroutines.coreJvm)
     testImplementation(libs.xerial.sqlite.jdbc)
     // Local
-    implementation(project(":domain"))
+    implementation(project(":modules:api-local"))
+    implementation(project(":modules:api-remote"))
+    implementation(project(":modules:dto"))
 }

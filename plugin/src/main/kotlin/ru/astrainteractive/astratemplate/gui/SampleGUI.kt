@@ -1,6 +1,6 @@
 package ru.astrainteractive.astratemplate.gui
 
-import com.astrainteractive.astratemplate.domain.local.dto.UserDTO
+import com.astrainteractive.astratemplate.api.dto.UserDTO
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryClickEvent
