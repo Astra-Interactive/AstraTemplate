@@ -46,7 +46,7 @@ val remapJar = tasks.getByName<RemapJarTask>("remapJar") {
     this.input.set(shadowJar.archiveFile)
     addNestedDependencies.set(true)
     archiveBaseName.set(libs.versions.name.get())
-    destinationDirectory.set(File(libs.versions.destinationDirectoryFabricPath.get()))
+    destinationDirectory.set(File(libs.versions.destination.fabric.get()))
 }
 tasks.assemble {
     dependsOn(remapJar)

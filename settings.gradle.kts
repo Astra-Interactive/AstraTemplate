@@ -54,5 +54,7 @@ include("modules:api-local")
 include("plugin")
 // Fabric
 include("fabric")
+// Velocity
+include("velocity")
 // Forge
 // include("forge")

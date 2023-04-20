@@ -1,12 +1,14 @@
 [versions]
 # Plugin/Mod core
-plugin = "5.0.0"
+plugin = "5.1.0"
 name = "AstraTemplate"
-group = "com.astrainteractive.astratemplate"
+group = "ru.astrainteractive.astratemplate"
+url = "EmpireProjekt.ru"
 description = "Template plugin for EmpireProjekt"
-destinationDirectoryPath = "D:\\Minecraft Servers\\Servers\\esmp-configuration\\smp\\plugins"
-destinationDirectoryFabricPath = "C:\\Users\\makee\\Desktop\\server\\mods"
-destinationDirectoryForgePath = "C:\\Users\\makee\\Desktop\\Forge\\mods"
+destination-paper = "D:\\Minecraft Servers\\Servers\\esmp-configuration\\smp\\plugins"
+destination-fabric = "C:\\Users\\makee\\Desktop\\server\\mods"
+destination-forge = "C:\\Users\\makee\\Desktop\\Forge\\mods"
+destination-velocity = "D:\\Minecraft Servers\\Servers\\esmp-configuration\\velocity\\plugins"
 # Core
 kotlin = "1.8.10"
 coroutines = "1.6.3"
@@ -14,14 +16,14 @@ json = "1.5.0-RC"
 kaml = "0.50.0"
 exposed = "0.38.1"
 jdbc = "3.36.0.3"
-astraLibs = "2.4.1"
+astraLibs = "2.4.2-RC2"
 mysqlDriver = "8.0.20"
 xerialSqliteJdbcVersion = "3.34.0"
 # Build
 shadow = "7.1.2"
 # Spigot
 velocity = "3.1.1"
-spigot = "1.19-R0.1-SNAPSHOT"
+spigot = "1.19.4-R0.1-SNAPSHOT"
 # Spigot dependencies
 placeholderAPI = "2.11.2"
 protocolLib = "4.8.0"
@@ -54,6 +56,8 @@ junit-bom = "5.7.0"
 detekt = "1.22.0"
 detekt-ruleset-compiler = "0.0.2"
 detekt-ruleset-ktlint = "0.48.0"
+# BuildConfig
+buildconfig = "3.1.0"
 [libraries]
 # Linter
 detekt-gradle = { module = "io.gitlab.arturbosch.detekt:detekt-gradle-plugin", version.ref = "detekt" }
@@ -82,7 +86,7 @@ mysql-connector-java = { module = "mysql:mysql-connector-java", version.ref = "m
 orgTesting = { module = "org.testng:testng", version.ref = "orgTesting" }
 # Spigot core
 essentialsx = { module = "net.essentialsx:EssentialsX", version.ref = "essentials" }
-paperApi = { module = "io.papermc.paper:paper-api", version.ref = "spigot" }
+paperApi = { module = "dev.folia:folia-api", version.ref = "spigot" }
 spigotApi = { module = "org.spigotmc:spigot-api", version.ref = "spigot" }
 spigot = { module = "org.spigotmc:spigot", version.ref = "spigot" }
 velocity-api = { module = "com.velocitypowered:velocity-api", version.ref = "velocity" }
@@ -110,3 +114,4 @@ shadow = { id = "com.github.johnrengelman.shadow", version.ref = "shadow" }
 fabricLoom = { id = "fabric-loom", version.ref = "fabricLoom" }
 netMinecraftForge = { id = "net.minecraftforge.gradle", version.ref = "netMinecraftForge" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
+buildconfig = { id = "com.github.gmazzo.buildconfig", version.ref = "buildconfig" }

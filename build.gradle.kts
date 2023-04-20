@@ -10,5 +10,6 @@ plugins {
     alias(libs.plugins.shadow) apply false
     alias(libs.plugins.fabricLoom) apply false
     alias(libs.plugins.netMinecraftForge) apply false
+    alias(libs.plugins.buildconfig) apply false
     id("detekt-convention")
 }

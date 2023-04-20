@@ -1,0 +1,11 @@
+{
+  "id": "${id}",
+  "name": "${name}",
+  "version": "${version}",
+  "url": "${url}",
+  "authors": [
+    "${authors}"
+  ],
+  "dependencies": [],
+  "main": "${main}"
+}

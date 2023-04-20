@@ -1,6 +1,6 @@
 package ru.astrainteractive.astratemplate.plugin
 
-import ru.astrainteractive.astralibs.file_manager.FileManager
+import ru.astrainteractive.astralibs.filemanager.SpigotFileManager
 import ru.astrainteractive.astralibs.utils.BaseTranslation
 
 /**
@@ -10,7 +10,7 @@ class Translation : BaseTranslation() {
     /**
      * This is a default translation file. Don't forget to create translation.yml in resources of the plugin
      */
-    protected override val translationFile: FileManager = FileManager("translations.yml")
+    protected override val translationFile: SpigotFileManager = SpigotFileManager("translations.yml")
 
     val getByByCheck = translationValue("getByByCheck", "#db2c18getByByCheck")
 
