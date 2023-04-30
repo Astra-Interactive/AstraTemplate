@@ -8,7 +8,11 @@ import com.velocitypowered.api.plugin.Plugin
 import com.velocitypowered.api.plugin.annotation.DataDirectory
 import com.velocitypowered.api.proxy.ProxyServer
 import org.slf4j.Logger
+import ru.astrainteractive.astralibs.getValue
 import ru.astrainteractive.astratemplate.di.RootModule
+import ru.astrainteractive.astratemplate.di.impl.RootModuleImpl
+import ru.astrainteractive.astratemplate.di.impl.VelocityModuleImpl
+import ru.astrainteractive.astratemplate.di.impl.getValue
 import java.nio.file.Path
 
 @Plugin(
@@ -26,15 +30,19 @@ class AstraTemplate @Inject constructor(
     logger: Logger,
     @DataDirectory dataDirectory: Path
 ) {
+    private val rootModule: RootModule by RootModuleImpl
+    private val jLogger by rootModule.logger
+
     init {
-        RootModule.VelocityModule.apply {
+        VelocityModuleImpl.apply {
             this.injector.initialize(injector)
             this.server.initialize(server)
             this.logger.initialize(logger)
             this.dataDirectory.initialize(dataDirectory)
         }
-        logger.info("Hello there! I made my first plugin with Velocity.")
-        logger.info("Here's your configuration: ${RootModule.configuration.value}.")
+
+        jLogger.info(BuildKonfig.name, "Hello there! I made my first plugin with Velocity.")
+        jLogger.info(BuildKonfig.name, "Here's your configuration: ${RootModuleImpl.configuration.value}.")
     }
 
     @Subscribe
@@ -45,7 +53,7 @@ class AstraTemplate @Inject constructor(
     }
 
     fun reload() {
-        with(RootModule) {
+        with(RootModuleImpl) {
             configuration.reload()
         }
     }

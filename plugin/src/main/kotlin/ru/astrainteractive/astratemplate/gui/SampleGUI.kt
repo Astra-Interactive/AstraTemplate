@@ -6,8 +6,6 @@ import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.inventory.InventoryCloseEvent
 import org.bukkit.inventory.ItemStack
-import ru.astrainteractive.astralibs.Dependency
-import ru.astrainteractive.astralibs.async.BukkitDispatchers
 import ru.astrainteractive.astralibs.getValue
 import ru.astrainteractive.astralibs.menu.clicker.MenuClickListener
 import ru.astrainteractive.astralibs.menu.holder.DefaultPlayerHolder
@@ -16,15 +14,15 @@ import ru.astrainteractive.astralibs.menu.menu.InventoryButton
 import ru.astrainteractive.astralibs.menu.menu.MenuSize
 import ru.astrainteractive.astralibs.menu.menu.PaginatedMenu
 import ru.astrainteractive.astralibs.menu.utils.ItemStackButtonBuilder
-import ru.astrainteractive.astratemplate.plugin.Translation
+import ru.astrainteractive.astratemplate.gui.di.SampleGuiModule
 
 class SampleGUI(
     player: Player,
-    translationModule: Dependency<Translation>,
-    private val viewModel: SampleGUIViewModel,
-    private val dispatchers: BukkitDispatchers
+    module: SampleGuiModule
 ) : PaginatedMenu() {
-    private val translation by translationModule
+    private val viewModel = module.viewModel.build()
+    private val translation by module.translation
+    private val dispatchers by module.dispatchers
 
     private val clickListener = MenuClickListener()
 

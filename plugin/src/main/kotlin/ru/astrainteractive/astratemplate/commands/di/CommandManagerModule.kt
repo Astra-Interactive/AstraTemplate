@@ -5,7 +5,6 @@ import org.bukkit.entity.Player
 import ru.astrainteractive.astralibs.Dependency
 import ru.astrainteractive.astralibs.Factory
 import ru.astrainteractive.astralibs.Provider
-import ru.astrainteractive.astralibs.Single
 import ru.astrainteractive.astralibs.async.AsyncComponent
 import ru.astrainteractive.astralibs.async.BukkitDispatchers
 import ru.astrainteractive.astratemplate.AstraTemplate
@@ -16,8 +15,8 @@ interface CommandManagerModule {
     val plugin: Dependency<AstraTemplate>
     val translationModule: Dependency<Translation>
     val rmApiModule: Dependency<RickMortyApi>
-    val pluginScope: Single<AsyncComponent>
-    val dispatchers: Single<BukkitDispatchers>
+    val pluginScope: Dependency<AsyncComponent>
+    val dispatchers: Dependency<BukkitDispatchers>
     val randomIntProvider: Provider<Int>
     fun sampleGuiFactory(player: Player): Factory<SampleGUI>
 }

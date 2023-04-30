@@ -1,4 +1,4 @@
-package ru.astrainteractive.astratemplate.di
+package ru.astrainteractive.astratemplate.di.impl
 
 import com.astrainteractive.astratemplate.api.local.di.LocalApiModule
 import com.astrainteractive.astratemplate.api.local.mapping.RatingMapper
@@ -10,7 +10,7 @@ import ru.astrainteractive.astralibs.orm.Database
 
 internal object LocalApiModuleImpl : LocalApiModule {
 
-    override val database: Single<Database> = RootModule.database
+    override val database: Single<Database> = RootModuleImpl.database
 
     override val ratingMapper: Single<RatingMapper> = Single {
         RatingMapperImpl
