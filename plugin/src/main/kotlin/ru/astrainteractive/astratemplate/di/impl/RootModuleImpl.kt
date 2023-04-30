@@ -7,7 +7,6 @@ import com.astrainteractive.astratemplate.api.local.di.DatabaseFactory
 import com.astrainteractive.astratemplate.api.local.di.LocalApiFactory
 import com.astrainteractive.astratemplate.api.remote.di.RickMortyApiFactory
 import org.jetbrains.kotlin.tooling.core.UnsafeApi
-import ru.astrainteractive.astralibs.Module
 import ru.astrainteractive.astralibs.Reloadable
 import ru.astrainteractive.astralibs.Single
 import ru.astrainteractive.astralibs.configloader.ConfigLoader
@@ -21,7 +20,6 @@ import ru.astrainteractive.astratemplate.events.EventManager
 import ru.astrainteractive.astratemplate.plugin.MainConfiguration
 import ru.astrainteractive.astratemplate.plugin.Translation
 import java.io.File
-import kotlin.reflect.KProperty
 
 internal object RootModuleImpl : RootModule {
     override val pluginModule: PluginModule by PluginModuleImpl
@@ -61,6 +59,3 @@ internal object RootModuleImpl : RootModule {
         CustomConfigurationFactory.build()
     }
 }
-
-@Deprecated("Already in 2.7.0-RC7")
-inline operator fun <reified T : Module, K> T.getValue(t: K?, property: KProperty<*>): T = this

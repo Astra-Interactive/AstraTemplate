@@ -8,6 +8,7 @@ import ru.astrainteractive.astralibs.Dependency
 import ru.astrainteractive.astralibs.Single
 import ru.astrainteractive.astralibs.events.EventListener
 import ru.astrainteractive.astralibs.events.GlobalEventListener
+import ru.astrainteractive.astralibs.getValue
 import ru.astrainteractive.astratemplate.events.di.EventModule
 import ru.astrainteractive.astratemplate.plugin.Translation
 

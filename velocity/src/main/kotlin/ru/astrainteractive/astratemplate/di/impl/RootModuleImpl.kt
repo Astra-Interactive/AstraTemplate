@@ -1,6 +1,5 @@
 package ru.astrainteractive.astratemplate.di.impl
 
-import ru.astrainteractive.astralibs.Module
 import ru.astrainteractive.astralibs.Reloadable
 import ru.astrainteractive.astralibs.Single
 import ru.astrainteractive.astralibs.configloader.ConfigLoader
@@ -11,7 +10,6 @@ import ru.astrainteractive.astratemplate.AstraTemplate
 import ru.astrainteractive.astratemplate.di.RootModule
 import ru.astrainteractive.astratemplate.di.VelocityModule
 import ru.astrainteractive.astratemplate.plugin.Configuration
-import kotlin.reflect.KProperty
 
 object RootModuleImpl : RootModule {
 
@@ -30,6 +28,3 @@ object RootModuleImpl : RootModule {
         ConfigLoader.toClassOrDefault(configurationFile.configFile, ::Configuration)
     }
 }
-
-@Deprecated("Already in 2.7.0-RC7")
-inline operator fun <reified T : Module, K> T.getValue(t: K?, property: KProperty<*>): T = this

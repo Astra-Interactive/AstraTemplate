@@ -12,7 +12,6 @@ import ru.astrainteractive.astralibs.getValue
 import ru.astrainteractive.astratemplate.di.RootModule
 import ru.astrainteractive.astratemplate.di.impl.RootModuleImpl
 import ru.astrainteractive.astratemplate.di.impl.VelocityModuleImpl
-import ru.astrainteractive.astratemplate.di.impl.getValue
 import java.nio.file.Path
 
 @Plugin(

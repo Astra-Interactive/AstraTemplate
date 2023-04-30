@@ -15,7 +15,6 @@ import ru.astrainteractive.astratemplate.di.impl.FilesModuleImpl
 import ru.astrainteractive.astratemplate.di.impl.LocalApiModuleImpl
 import ru.astrainteractive.astratemplate.di.impl.PluginModuleImpl
 import ru.astrainteractive.astratemplate.di.impl.RootModuleImpl
-import ru.astrainteractive.astratemplate.di.impl.getValue
 import ru.astrainteractive.astratemplate.events.EventManager
 
 /**
