@@ -3,20 +3,17 @@ plugins {
 }
 dependencies {
     // Kotlin
-    implementation(libs.kotlinGradlePlugin)
-    // Coroutines
-    implementation(libs.coroutines.coreJvm)
-    implementation(libs.coroutines.core)
-    // Serialization
-    implementation(libs.kotlin.serialization)
-    implementation(libs.kotlin.serializationJson)
-    implementation(libs.kotlin.serializationKaml)
+    implementation(libs.bundles.kotlin)
     // AstraLibs
-    implementation(libs.astralibs.ktxCore)
-    implementation(libs.astralibs.orm)
+    implementation(libs.minecraft.astralibs.ktxcore)
+    implementation(libs.minecraft.astralibs.orm)
+    implementation(libs.minecraft.astralibs.di)
     // Test
-    testImplementation(kotlin("test"))
-    testImplementation(libs.orgTesting)
+    testImplementation(platform(libs.tests.junit.bom))
+    testImplementation(libs.bundles.testing.libs)
+    testImplementation(libs.bundles.testing.kotlin)
+    testImplementation(kotlin("test-junit5"))
+    testImplementation("org.junit.jupiter:junit-jupiter")
     // Local
-    implementation(project(":modules:dto"))
+    implementation(projects.modules.dto)
 }

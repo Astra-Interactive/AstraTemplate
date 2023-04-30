@@ -8,12 +8,12 @@ tasks.shadowJar {
 
     isReproducibleFileOrder = true
     mergeServiceFiles()
-    relocate("org.bstats", libs.versions.group.get())
+    relocate("org.bstats", libs.versions.plugin.group.get())
     dependsOn(configurations)
     archiveClassifier.set(null as String?)
     from(sourceSets.main.get().output)
     from(project.configurations.runtimeClasspath)
     minimize()
-    archiveBaseName.set(libs.versions.name.get())
+    archiveBaseName.set(libs.versions.plugin.name.get())
     destinationDirectory.set(File(libs.versions.destination.paper.get()))
 }

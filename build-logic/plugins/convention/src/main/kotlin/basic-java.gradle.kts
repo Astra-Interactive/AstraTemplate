@@ -5,9 +5,9 @@ plugins {
     id("org.jetbrains.kotlin.plugin.serialization")
 }
 
-group = libs.versions.group.get()
-version = libs.versions.plugin.get()
-description = libs.versions.description.get()
+group = libs.versions.plugin.group.get()
+version = libs.versions.plugin.version.get()
+description = libs.versions.plugin.description.get()
 
 java {
     withSourcesJar()

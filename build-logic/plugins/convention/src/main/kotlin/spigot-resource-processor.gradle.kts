@@ -11,9 +11,9 @@ tasks.processResources {
     from(sourceSets.main.get().resources.srcDirs) {
         filesMatching("plugin.yml") {
             expand(
-                "name" to libs.versions.name.get(),
-                "version" to libs.versions.plugin.get(),
-                "description" to libs.versions.description.get()
+                "name" to libs.versions.plugin.name.get(),
+                "version" to libs.versions.plugin.version.get(),
+                "description" to libs.versions.plugin.description.get()
             )
         }
         duplicatesStrategy = DuplicatesStrategy.INCLUDE

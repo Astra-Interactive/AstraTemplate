@@ -2,20 +2,23 @@ package com.astrainteractive.astratemplate.api.local
 
 import com.astrainteractive.astratemplate.api.dto.RatingDTO
 import com.astrainteractive.astratemplate.api.dto.UserDTO
+import com.astrainteractive.astratemplate.api.local.di.LocalApiModule
 import com.astrainteractive.astratemplate.api.local.entities.UserDAO
 import com.astrainteractive.astratemplate.api.local.entities.UserRatingDAO
 import com.astrainteractive.astratemplate.api.local.entities.UserRatingTable
 import com.astrainteractive.astratemplate.api.local.entities.UserTable
 import com.astrainteractive.astratemplate.api.local.mapping.RatingMapper
 import com.astrainteractive.astratemplate.api.local.mapping.UserMapper
+import ru.astrainteractive.astralibs.getValue
 import ru.astrainteractive.astralibs.orm.Database
 import java.util.*
 
 internal class LocalApiImpl(
-    private val database: Database,
-    private val ratingMapper: RatingMapper,
-    private val userMapper: UserMapper
+    module: LocalApiModule
 ) : LocalApi {
+    private val database: Database by module.database
+    private val ratingMapper: RatingMapper by module.ratingMapper
+    private val userMapper: UserMapper by module.userMapper
 
     override suspend fun insertUser(user: UserDTO): Int {
         return UserTable.insert(database) {

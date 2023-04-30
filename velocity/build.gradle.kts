@@ -3,41 +3,33 @@ import buildlogic.ProjectConfig.info
 plugins {
     id("spigot-shadow")
     id("basic-java")
-    id("com.github.johnrengelman.shadow")
     id("velocity-resource-processor")
     id("velocity-shadow")
-    alias(libs.plugins.buildconfig)
+    alias(libs.plugins.gradle.shadow)
+    alias(libs.plugins.gradle.buildconfig)
 }
 
 dependencies {
-    // Kotlin
-    implementation(libs.kotlinGradlePlugin)
-    // Coroutines
-    implementation(libs.coroutines.coreJvm)
-    implementation(libs.coroutines.core)
-    // Serialization
-    implementation(libs.kotlin.serialization)
-    implementation(libs.kotlin.serializationJson)
-    implementation(libs.kotlin.serializationKaml)
+    implementation(libs.bundles.kotlin)
     // AstraLibs
-    implementation(libs.astralibs.ktxCore)
-    implementation(libs.astralibs.orm)
+    implementation(libs.minecraft.astralibs.ktxcore)
+    implementation(libs.minecraft.astralibs.orm)
+    implementation(libs.minecraft.astralibs.di)
     // Velocity
-    compileOnly(libs.velocity.api)
-    annotationProcessor(libs.velocity.api)
-    // Test-Core
-    testImplementation(platform(libs.junit.bom))
+    compileOnly(libs.minecraft.velocity.api)
+    annotationProcessor(libs.minecraft.velocity.api)
+    // Test
+    testImplementation(platform(libs.tests.junit.bom))
+    testImplementation(libs.bundles.testing.libs)
+    testImplementation(libs.bundles.testing.kotlin)
     testImplementation(kotlin("test-junit5"))
     testImplementation("org.junit.jupiter:junit-jupiter")
-    // Test-libs
-    testImplementation(libs.coroutines.core)
-    testImplementation(libs.coroutines.coreJvm)
-    testImplementation(libs.xerial.sqlite.jdbc)
+    testImplementation("com.github.seeseemelk:MockBukkit-v1.19:2.29.0")
 }
 
 buildConfig {
     className("BuildKonfig")
-    packageName(libs.versions.group.get())
+    packageName(libs.versions.plugin.group.get())
     fun buildConfigStringField(name: String, value: String) {
         buildConfigField("String", name, "\"${value}\"")
     }

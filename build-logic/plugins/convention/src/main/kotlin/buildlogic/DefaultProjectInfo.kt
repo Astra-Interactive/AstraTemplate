@@ -1,6 +1,6 @@
 package buildlogic
 
-class DefaultProjectInfo(
+data class DefaultProjectInfo(
     override val id: String,
     override val name: String,
     override val version: String,

@@ -1,13 +1,13 @@
-package ru.astrainteractive.astratemplate.modules.factories
+package ru.astrainteractive.astratemplate.di.factories
 
+import ru.astrainteractive.astralibs.Factory
 import ru.astrainteractive.astralibs.configuration.AnyConfiguration
-import ru.astrainteractive.astralibs.di.Factory
+import ru.astrainteractive.astratemplate.di.FilesModule
 import ru.astrainteractive.astratemplate.plugin.CustomConfiguration
-import ru.astrainteractive.astratemplate.plugin.Files
 
-object CustomConfigurationFactory : Factory<CustomConfiguration>() {
-    override fun initializer(): CustomConfiguration {
-        val fileConfiguration = Files.configFile.fileConfiguration
+internal object CustomConfigurationFactory : Factory<CustomConfiguration> {
+    override fun build(): CustomConfiguration {
+        val fileConfiguration = FilesModule.configFile.value.fileConfiguration
         return CustomConfiguration(
             pluginVersion = AnyConfiguration(
                 fileConfiguration = fileConfiguration,

@@ -6,21 +6,23 @@ import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.inventory.InventoryCloseEvent
 import org.bukkit.inventory.ItemStack
-import ru.astrainteractive.astralibs.di.Dependency
-import ru.astrainteractive.astralibs.di.getValue
+import ru.astrainteractive.astralibs.Dependency
+import ru.astrainteractive.astralibs.async.BukkitDispatchers
+import ru.astrainteractive.astralibs.getValue
+import ru.astrainteractive.astralibs.menu.clicker.MenuClickListener
 import ru.astrainteractive.astralibs.menu.holder.DefaultPlayerHolder
 import ru.astrainteractive.astralibs.menu.holder.PlayerHolder
+import ru.astrainteractive.astralibs.menu.menu.InventoryButton
+import ru.astrainteractive.astralibs.menu.menu.MenuSize
 import ru.astrainteractive.astralibs.menu.menu.PaginatedMenu
-import ru.astrainteractive.astralibs.menu.utils.InventoryButton
 import ru.astrainteractive.astralibs.menu.utils.ItemStackButtonBuilder
-import ru.astrainteractive.astralibs.menu.utils.MenuSize
-import ru.astrainteractive.astralibs.menu.utils.click.MenuClickListener
 import ru.astrainteractive.astratemplate.plugin.Translation
 
 class SampleGUI(
     player: Player,
     translationModule: Dependency<Translation>,
-    private val viewModel: SampleGUIViewModel
+    private val viewModel: SampleGUIViewModel,
+    private val dispatchers: BukkitDispatchers
 ) : PaginatedMenu() {
     private val translation by translationModule
 
@@ -95,7 +97,7 @@ class SampleGUI(
 
     override fun onCreated() {
         viewModel.onUiCreated()
-        viewModel.inventoryState.collectOn(block = ::onStateChanged)
+        viewModel.inventoryState.collectOn(dispatchers.BukkitMain, ::onStateChanged)
     }
 
     private fun onStateChanged(state: InventoryState = viewModel.inventoryState.value) {
@@ -135,8 +137,7 @@ class SampleGUI(
                 this.onClick = {
                     viewModel.onItemClicked(i, it.click)
                 }
-                itemStack {
-                    this.type = Material.PLAYER_HEAD
+                itemStack = ItemStack(Material.PLAYER_HEAD).apply {
                     editMeta {
                         it.setDisplayName(user.id.toString())
                         it.lore = listOf(

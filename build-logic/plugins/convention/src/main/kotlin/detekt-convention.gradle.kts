@@ -36,6 +36,6 @@ tasks.withType<Detekt> {
 }
 
 dependencies {
-    detektPlugins(libs.detekt.ruleset.compiler)
-    detektPlugins(libs.detekt.ruleset.ktlint)
+    detektPlugins(libs.lint.detekt.ruleset.compiler)
+    detektPlugins(libs.lint.detekt.ruleset.ktlint)
 }

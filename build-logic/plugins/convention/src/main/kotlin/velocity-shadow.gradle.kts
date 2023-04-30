@@ -13,7 +13,7 @@ tasks.shadowJar {
     from(sourceSets.main.get().output)
     from(project.configurations.runtimeClasspath)
     minimize()
-    archiveBaseName.set(libs.versions.name.get())
+    archiveBaseName.set(libs.versions.plugin.name.get())
     destinationDirectory.set(File(libs.versions.destination.velocity.get()))
 }
 tasks.build {

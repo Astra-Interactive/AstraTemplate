@@ -5,22 +5,15 @@ import ru.astrainteractive.astralibs.commands.registerCommand
 import ru.astrainteractive.astralibs.getValue
 import ru.astrainteractive.astratemplate.AstraTemplate
 import ru.astrainteractive.astratemplate.commands.di.CommandManagerModule
-import ru.astrainteractive.astratemplate.plugin.Permissions
 
 /**
- * Reload command handler
+ * It shows that [val XXX by IReloadable] is actually affected by reloading
  */
-fun CommandManager.reload(
+fun CommandManager.translation(
     plugin: AstraTemplate,
     module: CommandManagerModule
-) = plugin.registerCommand("atempreload") {
+) = plugin.registerCommand("translation") {
     val translation by module.translationModule
 
-    if (!Permissions.Reload.hasPermission(sender)) {
-        sender.sendMessage(translation.noPermission)
-        return@registerCommand
-    }
-    sender.sendMessage(translation.reload)
-    plugin.reloadPlugin()
-    sender.sendMessage(translation.reloadComplete)
+    sender.sendMessage(translation.getByByCheck)
 }

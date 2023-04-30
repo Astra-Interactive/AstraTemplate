@@ -1,22 +1,22 @@
 package ru.astrainteractive.astratemplate.commands
 
 import CommandManager
-import com.astrainteractive.astratemplate.api.remote.RickMortyApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import ru.astrainteractive.astralibs.async.PluginScope
+import org.bukkit.plugin.java.JavaPlugin
 import ru.astrainteractive.astralibs.commands.registerCommand
-import ru.astrainteractive.astralibs.di.Dependency
-import ru.astrainteractive.astralibs.di.getValue
-import ru.astrainteractive.astratemplate.AstraTemplate
+import ru.astrainteractive.astralibs.getValue
+import ru.astrainteractive.astratemplate.commands.di.CommandManagerModule
 
 fun CommandManager.randomRickAndMortyCharacter(
-    rmApiModule: Dependency<RickMortyApi>
-) = AstraTemplate.instance.registerCommand("rickandmorty") {
-    val rmApi by rmApiModule
+    plugin: JavaPlugin,
+    module: CommandManagerModule
+) = plugin.registerCommand("rickandmorty") {
+    val rmApi by module.rmApiModule
+    val pluginScope by module.pluginScope
 
     sender.sendMessage("Working on that...")
-    PluginScope.launch(Dispatchers.IO) {
+    pluginScope.launch(Dispatchers.IO) {
         rmApi.getRandomCharacter(1).onSuccess {
             sender.sendMessage("Got response: $it")
         }.onFailure {

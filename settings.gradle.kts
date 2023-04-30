@@ -44,6 +44,7 @@ dependencyResolutionManagement {
     }
 }
 
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 rootProject.name = "AstraTemplate"
 
 // Shared
@@ -53,7 +54,7 @@ include("modules:api-local")
 // Spigot
 include("plugin")
 // Fabric
-include("fabric")
+// include("fabric")
 // Velocity
 include("velocity")
 // Forge

@@ -9,26 +9,26 @@ plugins {
 }
 dependencies {
     mappings("net.fabricmc:yarn:1.19.2+build.8:v2")
-    minecraft(libs.mojangMinecraft.get())
-    modImplementation(libs.fabric.kotlin.get())
-    modImplementation(libs.fabric.loader.get())
-    modImplementation(libs.fabric.api.get())
+    minecraft(libs.minecraft.mojang.get())
+    modImplementation(libs.minecraft.fabric.kotlin.get())
+    modImplementation(libs.minecraft.fabric.loader.get())
+    modImplementation(libs.minecraft.fabric.api.get())
     // AstraLibs
-    implementation(libs.astralibs.ktxCore)
-    implementation(libs.astralibs.orm)
-    implementation(libs.xerialSqliteJdbcLib)
-    implementation(project(":modules:api-local"))
-    implementation(project(":modules:api-remote"))
-    implementation(project(":modules:dto"))
+    implementation(libs.minecraft.astralibs.ktxcore)
+    implementation(libs.minecraft.astralibs.orm)
+    // Driver
+    implementation(libs.driver.jdbc)
+    implementation(projects.modules.apiLocal)
+    implementation(projects.modules.apiRemote)
+    implementation(projects.modules.dto)
 }
 
 val shadowJar by tasks.getting(ShadowJar::class) {
     dependencies {
         // Kotlin
-        include(dependency(libs.kotlinGradlePlugin.get()))
-        include(dependency(libs.astralibs.ktxCore.get()))
-        include(dependency(libs.xerialSqliteJdbcLib.get()))
-        include(dependency(":domain"))
+        include(dependency(libs.kotlin.gradle.get()))
+        include(dependency(libs.minecraft.astralibs.ktxcore.get()))
+        include(dependency(libs.driver.jdbc.get()))
     }
     exclude("mappings/")
     dependsOn(configurations)
@@ -37,7 +37,7 @@ val shadowJar by tasks.getting(ShadowJar::class) {
 //    minimize()
     isReproducibleFileOrder = true
     archiveClassifier.set(null as String?)
-    archiveBaseName.set(libs.versions.name.get())
+    archiveBaseName.set(libs.versions.plugin.name.get())
 }
 
 val remapJar = tasks.getByName<RemapJarTask>("remapJar") {
@@ -45,7 +45,7 @@ val remapJar = tasks.getByName<RemapJarTask>("remapJar") {
     mustRunAfter(shadowJar)
     this.input.set(shadowJar.archiveFile)
     addNestedDependencies.set(true)
-    archiveBaseName.set(libs.versions.name.get())
+    archiveBaseName.set(libs.versions.plugin.name.get())
     destinationDirectory.set(File(libs.versions.destination.fabric.get()))
 }
 tasks.assemble {
