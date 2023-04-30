@@ -54,7 +54,7 @@ include("modules:api-local")
 // Spigot
 include("plugin")
 // Fabric
-// include("fabric")
+include("fabric")
 // Velocity
 include("velocity")
 // Forge

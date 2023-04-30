@@ -16,6 +16,9 @@ dependencies {
     // AstraLibs
     implementation(libs.minecraft.astralibs.ktxcore)
     implementation(libs.minecraft.astralibs.orm)
+    implementation(libs.minecraft.astralibs.di)
+    // Kotlin
+    implementation(libs.bundles.kotlin)
     // Driver
     implementation(libs.driver.jdbc)
     implementation(projects.modules.apiLocal)
