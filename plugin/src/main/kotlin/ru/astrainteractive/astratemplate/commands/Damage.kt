@@ -2,22 +2,22 @@ package ru.astrainteractive.astratemplate.commands
 
 import CommandManager
 import org.bukkit.Bukkit
+import org.bukkit.plugin.java.JavaPlugin
 import ru.astrainteractive.astralibs.commands.registerCommand
 import ru.astrainteractive.astralibs.commands.registerTabCompleter
-import ru.astrainteractive.astralibs.di.Dependency
-import ru.astrainteractive.astralibs.di.getValue
-import ru.astrainteractive.astratemplate.AstraTemplate
+import ru.astrainteractive.astralibs.getValue
+import ru.astrainteractive.astratemplate.commands.di.CommandManagerModule
 import ru.astrainteractive.astratemplate.plugin.Permissions
-import ru.astrainteractive.astratemplate.plugin.Translation
 
 /**
  * Damage player command
  */
 
 fun CommandManager.damageCompleter(
-    translationModule: Dependency<Translation>
-) = AstraTemplate.instance.registerTabCompleter("adamage") {
-    val translation by translationModule
+    plugin: JavaPlugin,
+    module: CommandManagerModule
+) = plugin.registerTabCompleter("adamage") {
+    val translation by module.translationModule
     when (args.size) {
         0 -> listOf("adamage")
         1 -> Bukkit.getOnlinePlayers().map { it.name }
@@ -27,9 +27,11 @@ fun CommandManager.damageCompleter(
 }
 
 fun CommandManager.damageCommand(
-    translationModule: Dependency<Translation>
-) = AstraTemplate.instance.registerCommand("adamage") {
-    val translation by translationModule
+    plugin: JavaPlugin,
+    module: CommandManagerModule
+) = plugin.registerCommand("adamage") {
+    val translation by module.translationModule
+
     if (!Permissions.Damage.hasPermission(sender)) {
         sender.sendMessage(translation.noPermission)
         return@registerCommand

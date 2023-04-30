@@ -1,6 +1,5 @@
 package ru.astrainteractive.astratemplate
 
-import com.astrainteractive.astratemplate.BuildKonfig
 import com.google.inject.Inject
 import com.google.inject.Injector
 import com.velocitypowered.api.event.Subscribe
@@ -9,9 +8,11 @@ import com.velocitypowered.api.plugin.Plugin
 import com.velocitypowered.api.plugin.annotation.DataDirectory
 import com.velocitypowered.api.proxy.ProxyServer
 import org.slf4j.Logger
-import ru.astrainteractive.astratemplate.di.ServiceLocator
+import ru.astrainteractive.astralibs.getValue
+import ru.astrainteractive.astratemplate.di.RootModule
+import ru.astrainteractive.astratemplate.di.impl.RootModuleImpl
+import ru.astrainteractive.astratemplate.di.impl.VelocityModuleImpl
 import java.nio.file.Path
-import kotlin.io.path.absolutePathString
 
 @Plugin(
     id = BuildKonfig.id,
@@ -28,15 +29,19 @@ class AstraTemplate @Inject constructor(
     logger: Logger,
     @DataDirectory dataDirectory: Path
 ) {
+    private val rootModule: RootModule by RootModuleImpl
+    private val jLogger by rootModule.logger
+
     init {
-        ru.astrainteractive.astralibs.Logger.logger = java.util.logging.Logger.getAnonymousLogger()
-        ru.astrainteractive.astralibs.Logger.logsFolderPath = dataDirectory.absolutePathString()
-        ServiceLocator.injector.initialize(injector)
-        ServiceLocator.server.initialize(server)
-        ServiceLocator.logger.initialize(logger)
-        ServiceLocator.dataDirectory.initialize(dataDirectory)
-        logger.info("Hello there! I made my first plugin with Velocity.")
-        logger.info("Here's your configuration: ${ServiceLocator.configuration.value}.")
+        VelocityModuleImpl.apply {
+            this.injector.initialize(injector)
+            this.server.initialize(server)
+            this.logger.initialize(logger)
+            this.dataDirectory.initialize(dataDirectory)
+        }
+
+        jLogger.info(BuildKonfig.name, "Hello there! I made my first plugin with Velocity.")
+        jLogger.info(BuildKonfig.name, "Here's your configuration: ${RootModuleImpl.configuration.value}.")
     }
 
     @Subscribe
@@ -47,7 +52,7 @@ class AstraTemplate @Inject constructor(
     }
 
     fun reload() {
-        with(ServiceLocator) {
+        with(RootModuleImpl) {
             configuration.reload()
         }
     }

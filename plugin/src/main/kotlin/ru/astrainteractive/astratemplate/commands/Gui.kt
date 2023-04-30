@@ -1,21 +1,23 @@
 package ru.astrainteractive.astratemplate.commands
 
 import CommandManager
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.bukkit.entity.Player
-import ru.astrainteractive.astralibs.async.PluginScope
+import org.bukkit.plugin.java.JavaPlugin
 import ru.astrainteractive.astralibs.commands.registerCommand
-import ru.astrainteractive.astratemplate.AstraTemplate
-import ru.astrainteractive.astratemplate.modules.ServiceLocator
+import ru.astrainteractive.astralibs.getValue
+import ru.astrainteractive.astratemplate.commands.di.CommandManagerModule
 
 fun CommandManager.tempGUI(
-    guisFactories: ServiceLocator.Guis
-) = AstraTemplate.instance.registerCommand("atempgui") {
+    plugin: JavaPlugin,
+    module: CommandManagerModule
+) = plugin.registerCommand("atempgui") {
+    val pluginScope by module.pluginScope
+    val dispatchers by module.dispatchers
     val player = sender as? Player ?: return@registerCommand
-
-    PluginScope.launch(Dispatchers.IO) {
-        val sampleGUI = guisFactories.sampleGuiFactory(player = player).value
-        sampleGUI.open()
+    pluginScope.launch(dispatchers.BukkitAsync) {
+        val sampleGUI = module.sampleGuiFactory(player = player).build()
+        withContext(dispatchers.BukkitMain) { sampleGUI.open() }
     }
 }

@@ -1,5 +1,3 @@
-
-
 plugins {
     java
     `java-library`
@@ -13,6 +11,6 @@ tasks.shadowJar {
     archiveClassifier.set(null as String?)
     from(sourceSets.main.get().output)
     minimize()
-    archiveBaseName.set(libs.versions.name.get())
+    archiveBaseName.set(libs.versions.plugin.name.get())
     destinationDirectory.set(File("./build/output/"))
 }

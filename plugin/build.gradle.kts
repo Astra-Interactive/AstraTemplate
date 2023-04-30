@@ -6,34 +6,23 @@ plugins {
 
 dependencies {
     // Kotlin
-    implementation(libs.kotlinGradlePlugin)
-    // Coroutines
-    implementation(libs.coroutines.coreJvm)
-    implementation(libs.coroutines.core)
-    // Serialization
-    implementation(libs.kotlin.serialization)
-    implementation(libs.kotlin.serializationJson)
-    implementation(libs.kotlin.serializationKaml)
+    implementation(libs.bundles.kotlin)
     // AstraLibs
-    implementation(libs.astralibs.ktxCore)
-    implementation(libs.astralibs.orm)
-    implementation(libs.astralibs.spigotGui)
-    implementation(libs.astralibs.spigotCore)
-    implementation(libs.bstats.bukkit)
+    implementation(libs.minecraft.astralibs.ktxcore)
+    implementation(libs.minecraft.astralibs.orm)
+    implementation(libs.minecraft.astralibs.di)
+    implementation(libs.minecraft.astralibs.spigot.gui)
+    implementation(libs.minecraft.astralibs.spigot.core)
     // Spigot dependencies
-    compileOnly(libs.paperApi)
-//    compileOnly(libs.spigotApi)
-//    compileOnly(libs.spigot)
-    // Test-Core
-    testImplementation(platform(libs.junit.bom))
-    testImplementation(kotlin("test-junit5"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
-    // Test-libs
-    testImplementation(libs.coroutines.core)
-    testImplementation(libs.coroutines.coreJvm)
-    testImplementation(libs.xerial.sqlite.jdbc)
+    compileOnly(libs.minecraft.paper.api)
+    implementation(libs.minecraft.bstats)
+    // Test
+    testImplementation(platform(libs.tests.junit.bom))
+    testImplementation(libs.bundles.testing.libs)
+    testImplementation(libs.bundles.testing.kotlin)
+    testImplementation(libs.minecraft.mockbukkit)
     // Local
-    implementation(project(":modules:api-local"))
-    implementation(project(":modules:api-remote"))
-    implementation(project(":modules:dto"))
+    implementation(projects.modules.apiLocal)
+    implementation(projects.modules.apiRemote)
+    implementation(projects.modules.dto)
 }
