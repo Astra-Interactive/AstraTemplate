@@ -1,12 +1,20 @@
 [![kotlin_version](https://img.shields.io/badge/kotlin-1.8.10-blueviolet?style=flat-square)](https://github.com/Astra-Interactive/AstraLibs)
 [![kotlin_version](https://img.shields.io/badge/java-19-blueviolet?style=flat-square)](https://github.com/Astra-Interactive/AstraLibs)
 [![minecraft_version](https://img.shields.io/badge/minecraft-1.19.4-green?style=flat-square)](https://github.com/Astra-Interactive/AstraLibs)
-[![platforms](https://img.shields.io/badge/platform-spigot%7Cfabric%7Cforge-blue?style=flat-square)](https://github.com/Astra-Interactive/AstraLibs)
+[![platforms](https://img.shields.io/badge/platform-spigot%7Cfabric%7Cvelocity-blue?style=flat-square)](https://github.com/Astra-Interactive/AstraLibs)
+
 # AstraTemplate
-This plugin template will help you to create new Spigot plugins as fast as possible
-# 
+
+### MultiPlatform (Plugin-first) Spigot/Velocity/Fabric plugin
+
+This is a Minecraft Multiplatform template that provides architecture and all(probably) tools you'll need to create new
+Spigot/Velocity plugins as fast as possible
+
+AstraTemplate highly depends on our
+library [AstraLibs](https://github.com/Asrta-Interactive/AstraTemplate/wiki/AstraLibs)
+
 <h4 align="center">☄️ Plugins based on AstraTemplate☄️ </h4>
-</br>
+
 <p align="center">
     <a href="https://github.com/Astra-Interactive/AstraLibs">
         <img alt="spigot" src="https://img.shields.io/badge/github-AstraLibs-1B76CA"/>
@@ -17,14 +25,24 @@ This plugin template will help you to create new Spigot plugins as fast as possi
     <a href="https://www.spigotmc.org/resources/simple-rating.103317/">
         <img alt="spigot" src="https://img.shields.io/badge/github-SimpleRating-1B76CA"/>
     </a>
+    <a href="https://github.com/Astra-Interactive/AspeKt">
+        <img alt="spigot" src="https://img.shields.io/badge/github-AspeKt-1B76CA"/>
+    </a>
+    <a href="https://github.com/Astra-Interactive/AstraShop">
+        <img alt="spigot" src="https://img.shields.io/badge/github-AstraShop-1B76CA"/>
+    </a>
+    <a href="https://github.com/Astra-Interactive/KapitalystiK">
+        <img alt="spigot" src="https://img.shields.io/badge/github-KapytalystiK[WIP]-1B76CA"/>
+    </a>
+    <a href="https://github.com/Astra-Interactive/SynK">
+        <img alt="spigot" src="https://img.shields.io/badge/github-SynK[WIP]-1B76CA"/>
+    </a>
 </p>
 
-# Brief description for AstraTemplate
+## Brief description for AstraTemplate
 
-AstraTemplate depends on kotlinx libraries, which located in [AstraLibs](https://github.com/Asrta-Interactive/AstraTemplate/wiki/AstraLibs), which you are allowed to modify, so, if you don't like this dependencies - you can get rid of that by yourself
- 
+Astra template has everything (probably) you need including:
 
-Astra template has everything(probably) you need including:
 - [x] Paginated menu example
 - [x] Menu live-update example
 - [x] EventManager and Event example
@@ -55,12 +73,10 @@ Astra template has everything(probably) you need including:
 - [x] Spigot/Paper
 - [x] Fabric - Pre Alpha state
 - [ ] Forge - Pre-Alpha state
-- [ ] Velocity/Bungee
-
-Also, checkout [AstraLearner](https://play.google.com/store/apps/details?id=com.makeevrserg.astralearner) - it will help you to learn foreign words easily!
+- [x] Velocity/Bungee
 
 ## Directory structure
-    
+
     ├── build-logic         # Build components
     ├── modules             
     │   ├── api-local       # Local api with SQLite
@@ -68,10 +84,20 @@ Also, checkout [AstraLearner](https://play.google.com/store/apps/details?id=com.
     │   └── dto             # DTO objects for shared usage
     ├── forge               # Forge template mod
     ├── fabric              # Fabric template mod
+    ├── velocity            # Velocity template plugin
     └── plugin              # Spigot template mod
-    
+
 ## Build jar executables
+
+Firstly, change gradle/libs.versions.toml destination-xxx to your folder
+
     $ ./gradlew :plugin:shadowJar          # assemble the plugin .jar
     $ ./gradlew :fabric:build              # assemble the Fabric .jar
+    $ ./gradlew :velocity:shadowJar          # assemble the plugin .jar
+
 ## Forge status
+
 There's gradle 8.0 and ```net.minecraftforge.gradle``` can't be applied at moment of 19.03.2023
+
+Also, checkout [AstraLearner](https://play.google.com/store/apps/details?id=com.makeevrserg.astralearner) - it will help
+you to learn foreign words easily!
