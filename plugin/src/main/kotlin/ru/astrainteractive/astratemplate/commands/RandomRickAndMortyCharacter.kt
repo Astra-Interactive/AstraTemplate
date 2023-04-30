@@ -14,10 +14,11 @@ fun CommandManager.randomRickAndMortyCharacter(
 ) = plugin.registerCommand("rickandmorty") {
     val rmApi by module.rmApiModule
     val pluginScope by module.pluginScope
+    val randomIntProvider = module.randomIntProvider
 
     sender.sendMessage("Working on that...")
     pluginScope.launch(Dispatchers.IO) {
-        rmApi.getRandomCharacter(1).onSuccess {
+        rmApi.getRandomCharacter(randomIntProvider.provide()).onSuccess {
             sender.sendMessage("Got response: $it")
         }.onFailure {
             it.printStackTrace()

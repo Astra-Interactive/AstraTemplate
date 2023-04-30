@@ -32,16 +32,16 @@ class AstraTemplate : JavaPlugin() {
      * This method called when server starts or PlugMan load plugin.
      */
     override fun onEnable() {
-        eventManager.onEnable(this)
-        commandManager
         jLogger.info("Logger enabled", "AstraTemplate")
         jLogger.warning("Warn message from logger", "AstraTemplate")
         jLogger.error("Error message", "AstraTemplate")
+
         val customConfiguration by RootModule.customConfiguration
         jLogger.info("Custom configuration version: ${customConfiguration.pluginVersion.value}", "AstraTemplate")
-
         GlobalEventListener.onEnable(this)
         GlobalInventoryClickEvent.onEnable(this)
+        commandManager
+        eventManager.onEnable(this)
     }
 
     /**

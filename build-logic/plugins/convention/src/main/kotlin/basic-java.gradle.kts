@@ -24,10 +24,7 @@ tasks {
         useJUnitPlatform()
     }
     withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-        kotlinOptions.jvmTarget = "17"
-    }
-    compileJava {
-        options.encoding = "UTF-8"
+        kotlinOptions.jvmTarget = java.targetCompatibility.majorVersion
     }
     test {
         useJUnitPlatform()

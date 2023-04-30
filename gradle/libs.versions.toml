@@ -35,8 +35,9 @@ minecraft-protocollib = "4.8.0"
 minecraft-wg = "7.0.7"
 minecraft-vault = "1.7"
 minecraft-coreprotect = "21.2"
-minecraft-astralibs = "2.7.0-RC3"
+minecraft-astralibs = "2.7.0-RC4"
 minecraft-bstats = "3.0.0"
+minecraft-mockbukkit = "v1.19-SNAPSHOT"
 
 # Testing
 tests-org-testing = "7.1.0"
@@ -73,7 +74,7 @@ exposed = "0.38.1"
 exposed = ["exposed-java-time", "exposed-jdbc", "exposed-dao", "exposed-core"]
 minecraft-bukkit = ["minecraft-paper-api", "minecraft-spigot-api", "minecraft-spigot-core", "minecraft-vaultapi", "minecraft-papi"]
 testing-kotlin = ["kotlin-coroutines-core", "kotlin-coroutines-coreJvm", "driver-jdbc", "driver-mysql", "kotlin-serialization", "kotlin-serializationJson"]
-testing-libs = ["tests-junit-jupiter-api", "tests-org-testing"]
+testing-libs = ["tests-junit-jupiter-api", "tests-org-testing", "tests-junit5", "tests-junit-jupiter"]
 kotlin = ["kotlin-coroutines-core", "kotlin-coroutines-coreJvm", "kotlin-serialization", "kotlin-serializationJson", "kotlin-serializationKaml", "kotlin-dokka-kotlinJavaPlugin", "kotlin-gradle"]
 
 
@@ -104,6 +105,8 @@ driver-mysql = { module = "mysql:mysql-connector-java", version.ref = "driver-my
 tests-junit-bom = { module = "org.junit:junit-bom", version.ref = "tests-junit-bom" }
 tests-junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "tests-junit-jupiter-api" }
 tests-org-testing = { module = "org.testng:testng", version.ref = "tests-org-testing" }
+tests-junit5 = { module = "org.jetbrains.kotlin:kotlin-test-junit5" }
+tests-junit-jupiter = { module = "org.junit.jupiter:junit-jupiter" }
 
 # Exposed
 exposed-java-time = { module = "org.jetbrains.exposed:exposed-java-time", version.ref = "exposed" }
@@ -121,6 +124,7 @@ minecraft-protocollib = { module = "com.comphenix.protocol:ProtocolLib", version
 minecraft-papi = { module = "me.clip:placeholderapi", version.ref = "minecraft-papi" }
 minecraft-vaultapi = { module = "com.github.MilkBowl:VaultAPI", version.ref = "minecraft-vault" }
 minecraft-bstats = { module = "org.bstats:bstats-bukkit", version.ref = "minecraft-bstats" }
+minecraft-mockbukkit = { module = "com.github.MockBukkit:MockBukkit", version.ref = "minecraft-mockbukkit" }
 
 # AstraLibs
 minecraft-astralibs-ktxcore = { module = "ru.astrainteractive.astralibs:ktx-core", version.ref = "minecraft-astralibs" }

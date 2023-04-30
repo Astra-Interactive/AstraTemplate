@@ -4,6 +4,7 @@ import com.astrainteractive.astratemplate.api.remote.RickMortyApi
 import org.bukkit.entity.Player
 import ru.astrainteractive.astralibs.Dependency
 import ru.astrainteractive.astralibs.Factory
+import ru.astrainteractive.astralibs.Provider
 import ru.astrainteractive.astralibs.Single
 import ru.astrainteractive.astralibs.async.AsyncComponent
 import ru.astrainteractive.astralibs.async.BukkitDispatchers
@@ -17,5 +18,6 @@ interface CommandManagerModule {
     val rmApiModule: Dependency<RickMortyApi>
     val pluginScope: Single<AsyncComponent>
     val dispatchers: Single<BukkitDispatchers>
+    val randomIntProvider: Provider<Int>
     fun sampleGuiFactory(player: Player): Factory<SampleGUI>
 }

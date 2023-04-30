@@ -15,7 +15,7 @@ import ru.astrainteractive.astratemplate.AstraTemplate
 import ru.astrainteractive.astratemplate.plugin.Configuration
 import java.nio.file.Path
 
-object ServiceLocator : Module {
+object RootModule : Module {
     object VelocityModule : Module {
         val injector = Lateinit<Injector>()
         val server = Lateinit<ProxyServer>()

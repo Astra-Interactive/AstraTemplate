@@ -4,8 +4,8 @@ plugins {
     id("org.jetbrains.kotlin.jvm")
     id("com.github.johnrengelman.shadow")
 }
-tasks.shadowJar {
 
+tasks.shadowJar {
     isReproducibleFileOrder = true
     mergeServiceFiles()
     relocate("org.bstats", libs.versions.plugin.group.get())

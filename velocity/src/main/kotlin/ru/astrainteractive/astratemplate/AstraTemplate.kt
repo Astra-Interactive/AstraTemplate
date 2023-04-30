@@ -8,7 +8,7 @@ import com.velocitypowered.api.plugin.Plugin
 import com.velocitypowered.api.plugin.annotation.DataDirectory
 import com.velocitypowered.api.proxy.ProxyServer
 import org.slf4j.Logger
-import ru.astrainteractive.astratemplate.di.ServiceLocator
+import ru.astrainteractive.astratemplate.di.RootModule
 import java.nio.file.Path
 
 @Plugin(
@@ -27,14 +27,14 @@ class AstraTemplate @Inject constructor(
     @DataDirectory dataDirectory: Path
 ) {
     init {
-        ServiceLocator.VelocityModule.apply {
+        RootModule.VelocityModule.apply {
             this.injector.initialize(injector)
             this.server.initialize(server)
             this.logger.initialize(logger)
             this.dataDirectory.initialize(dataDirectory)
         }
         logger.info("Hello there! I made my first plugin with Velocity.")
-        logger.info("Here's your configuration: ${ServiceLocator.configuration.value}.")
+        logger.info("Here's your configuration: ${RootModule.configuration.value}.")
     }
 
     @Subscribe
@@ -45,7 +45,7 @@ class AstraTemplate @Inject constructor(
     }
 
     fun reload() {
-        with(ServiceLocator) {
+        with(RootModule) {
             configuration.reload()
         }
     }

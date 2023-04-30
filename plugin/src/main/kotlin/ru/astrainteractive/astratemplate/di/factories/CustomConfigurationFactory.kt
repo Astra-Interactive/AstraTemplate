@@ -2,15 +2,16 @@ package ru.astrainteractive.astratemplate.di.factories
 
 import ru.astrainteractive.astralibs.Factory
 import ru.astrainteractive.astralibs.configuration.AnyConfiguration
+import ru.astrainteractive.astralibs.getValue
 import ru.astrainteractive.astratemplate.di.FilesModule
 import ru.astrainteractive.astratemplate.plugin.CustomConfiguration
 
 internal object CustomConfigurationFactory : Factory<CustomConfiguration> {
     override fun build(): CustomConfiguration {
-        val fileConfiguration = FilesModule.configFile.value.fileConfiguration
+        val configFile by FilesModule.configFile
         return CustomConfiguration(
             pluginVersion = AnyConfiguration(
-                fileConfiguration = fileConfiguration,
+                fileConfiguration = configFile.fileConfiguration,
                 path = "custom.version",
                 default = "0.88.0"
             )

@@ -7,6 +7,7 @@ import org.bukkit.entity.Player
 import org.jetbrains.kotlin.tooling.core.UnsafeApi
 import ru.astrainteractive.astralibs.Dependency
 import ru.astrainteractive.astralibs.Factory
+import ru.astrainteractive.astralibs.Provider
 import ru.astrainteractive.astralibs.Single
 import ru.astrainteractive.astralibs.async.AsyncComponent
 import ru.astrainteractive.astralibs.async.BukkitDispatchers
@@ -17,6 +18,7 @@ import ru.astrainteractive.astratemplate.commands.di.CommandManagerModule
 import ru.astrainteractive.astratemplate.gui.SampleGUI
 import ru.astrainteractive.astratemplate.gui.SampleGUIViewModel
 import ru.astrainteractive.astratemplate.plugin.Translation
+import kotlin.random.Random
 
 internal object CommandManagerModuleImpl : CommandManagerModule {
     override val plugin: Dependency<AstraTemplate> = RootModule.plugin
@@ -24,7 +26,7 @@ internal object CommandManagerModuleImpl : CommandManagerModule {
     override val rmApiModule: Dependency<RickMortyApi> = RootModule.rmApiModule
     override val pluginScope: Single<AsyncComponent> = RootModule.pluginScope
     override val dispatchers: Single<BukkitDispatchers> = RootModule.bukkitDispatchers
-
+    override val randomIntProvider: Provider<Int> = Provider { Random.nextInt(1, 100) }
     override fun sampleGuiFactory(player: Player): Factory<SampleGUI> = Factory {
         val sampleGuiViewModelFactory = Factory {
             val localApi by RootModule.localApiModule
