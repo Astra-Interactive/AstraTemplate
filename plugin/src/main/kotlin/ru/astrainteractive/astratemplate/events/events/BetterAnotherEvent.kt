@@ -11,9 +11,4 @@ class BetterAnotherEvent : EventListener {
     fun blockBreakEvent(e: BlockBreakEvent) {
         println("blockBreakEvent ${e.player.name}")
     }
-
-    override fun onDisable() {
-        super.onDisable()
-        BlockBreakEvent.getHandlerList().unregister(this)
-    }
 }

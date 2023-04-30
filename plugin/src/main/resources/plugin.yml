@@ -1,15 +1,16 @@
-main: ru.astrainteractive.astratemplate.AstraTemplate
-prefix: '${name}'
+main: '${main}'
+prefix: '${prefix}'
 description: '${description}'
-version: '${version}'
 name: '${name}'
-authors: [ MakeevRoman ]
-author: MakeevRoman
-website: AstraInteractive.ru
-api-version: 1.16
+version: '${version}'
+authors: [ "${authors}" ]
+author: "${author}"
+website: "${url}"
+api-version: 1.18
 softdepend: [ ]
 depend: [ ]
 loadbefore: [ ]
+#libraries: [ "${libraries}" ]
 commands:
   add:
   rickandmorty:

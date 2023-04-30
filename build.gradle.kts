@@ -1,5 +1,5 @@
-group = libs.versions.group
-version = libs.versions.plugin
+group = libs.versions.plugin.group.get()
+version = libs.versions.plugin.version.get()
 
 plugins {
     java
@@ -7,9 +7,9 @@ plugins {
     `java-library`
     alias(libs.plugins.kotlin.jvm) apply false
     alias(libs.plugins.kotlin.serialization) apply false
-    alias(libs.plugins.shadow) apply false
-    alias(libs.plugins.fabricLoom) apply false
-    alias(libs.plugins.netMinecraftForge) apply false
-    alias(libs.plugins.buildconfig) apply false
+    alias(libs.plugins.minecraft.fabric.loom) apply false
+    alias(libs.plugins.minecraft.forge.net) apply false
+    alias(libs.plugins.gradle.buildconfig) apply false
+    alias(libs.plugins.gradle.shadow) apply false
     id("detekt-convention")
 }

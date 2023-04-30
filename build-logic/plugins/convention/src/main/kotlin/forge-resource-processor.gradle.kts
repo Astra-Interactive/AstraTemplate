@@ -12,7 +12,7 @@ tasks.processResources {
     from(sourceSets.main.get().resources.srcDirs) {
         filesMatching("mods.toml") {
             expand(
-                "{displayName}" to libs.versions.name.get(),
+                "{displayName}" to libs.versions.plugin.name.get(),
                 "{version}" to project.version,
                 "{description}" to project.description
             )

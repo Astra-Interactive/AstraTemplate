@@ -9,7 +9,6 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.bukkit.ChatColor
 import org.bukkit.event.inventory.ClickType
-import ru.astrainteractive.astralibs.Logger
 import ru.astrainteractive.astralibs.async.AsyncComponent
 import ru.astrainteractive.astratemplate.api.ItemStackSpigotAPI
 import kotlin.random.Random
@@ -95,7 +94,6 @@ class SampleGUIViewModel(
     }
 
     fun onUiCreated() = componentScope.launch(Dispatchers.IO) {
-        Logger.log("SampleGuiViewModel", "onUiCreated")
         delay(1000)
         loadItemsState()
     }

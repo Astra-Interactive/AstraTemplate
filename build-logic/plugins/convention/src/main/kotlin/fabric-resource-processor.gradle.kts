@@ -1,5 +1,3 @@
-
-
 plugins {
     java
     `java-library`
@@ -8,8 +6,8 @@ plugins {
 
 tasks.processResources {
     filteringCharset = "UTF-8"
-    inputs.property("version", libs.versions.plugin.get())
+    inputs.property("version", libs.versions.plugin.version.get())
     filesMatching("fabric.mod.json") {
-        expand(mutableMapOf("version" to libs.versions.plugin.get()))
+        expand(mutableMapOf("version" to libs.versions.plugin.version.get()))
     }
 }
