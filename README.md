@@ -93,7 +93,7 @@ Firstly, change gradle/libs.versions.toml destination-xxx to your folder
 
     $ ./gradlew :plugin:shadowJar          # assemble the plugin .jar
     $ ./gradlew :fabric:build              # assemble the Fabric .jar
-    $ ./gradlew :velocity:shadowJar          # assemble the plugin .jar
+    $ ./gradlew :velocity:shadowJar        # assemble the plugin .jar
 
 ## Forge status
 
