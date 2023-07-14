@@ -8,14 +8,11 @@ import org.bukkit.plugin.java.JavaPlugin
 import org.jetbrains.kotlin.tooling.core.UnsafeApi
 import ru.astrainteractive.astralibs.async.PluginScope
 import ru.astrainteractive.astralibs.events.GlobalEventListener
-import ru.astrainteractive.astralibs.getValue
 import ru.astrainteractive.astralibs.menu.event.GlobalInventoryClickEvent
 import ru.astrainteractive.astratemplate.di.RootModule
-import ru.astrainteractive.astratemplate.di.impl.FilesModuleImpl
-import ru.astrainteractive.astratemplate.di.impl.LocalApiModuleImpl
-import ru.astrainteractive.astratemplate.di.impl.PluginModuleImpl
 import ru.astrainteractive.astratemplate.di.impl.RootModuleImpl
-import ru.astrainteractive.astratemplate.events.EventManager
+import ru.astrainteractive.astratemplate.event.EventManager
+import ru.astrainteractive.klibs.kdi.getValue
 
 /**
  * Initial class for your plugin
@@ -24,12 +21,12 @@ import ru.astrainteractive.astratemplate.events.EventManager
 class AstraTemplate : JavaPlugin() {
 
     init {
-        PluginModuleImpl.plugin.initialize(this)
+        RootModule.plugin.initialize(this)
     }
     private val rootModule: RootModule by RootModuleImpl
     private val eventManager: EventManager by rootModule.eventHandlerModule
     private val commandManager by rootModule.commandManager
-    private val jLogger by rootModule.pluginModule.logger
+    private val jLogger by rootModule.logger
 
     /**
      * This method called when server starts or PlugMan load plugin.
@@ -52,7 +49,7 @@ class AstraTemplate : JavaPlugin() {
      */
     override fun onDisable() {
         eventManager.onDisable()
-        runBlocking { LocalApiModuleImpl.database.value.closeConnection() }
+        runBlocking { RootModule.database.value.closeConnection() }
         HandlerList.unregisterAll(this)
         GlobalEventListener.onDisable()
         GlobalInventoryClickEvent.onDisable()
@@ -63,7 +60,7 @@ class AstraTemplate : JavaPlugin() {
      * As it says, function for plugin reload
      */
     fun reloadPlugin() {
-        FilesModuleImpl.configFile.value.reload()
+        RootModule.filesModule.configFile.value.reload()
         RootModuleImpl.configurationModule.reload()
         RootModuleImpl.translationModule.reload()
     }

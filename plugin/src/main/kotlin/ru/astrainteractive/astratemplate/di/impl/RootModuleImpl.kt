@@ -3,59 +3,82 @@
 package ru.astrainteractive.astratemplate.di.impl
 
 import CommandManager
-import com.astrainteractive.astratemplate.api.local.di.DatabaseFactory
-import com.astrainteractive.astratemplate.api.local.di.LocalApiFactory
-import com.astrainteractive.astratemplate.api.remote.di.RickMortyApiFactory
 import org.jetbrains.kotlin.tooling.core.UnsafeApi
-import ru.astrainteractive.astralibs.Reloadable
-import ru.astrainteractive.astralibs.Single
+import ru.astrainteractive.astralibs.async.AsyncComponent
+import ru.astrainteractive.astralibs.async.DefaultBukkitDispatchers
 import ru.astrainteractive.astralibs.configloader.ConfigLoader
-import ru.astrainteractive.astralibs.getValue
 import ru.astrainteractive.astralibs.http.HttpClient
+import ru.astrainteractive.astralibs.logging.Logger
 import ru.astrainteractive.astralibs.orm.Database
-import ru.astrainteractive.astratemplate.di.PluginModule
+import ru.astrainteractive.astralibs.utils.buildWithSpigot
+import ru.astrainteractive.astratemplate.AstraTemplate
+import ru.astrainteractive.astratemplate.api.local.di.DatabaseFactory
+import ru.astrainteractive.astratemplate.api.local.di.LocalApiFactory
+import ru.astrainteractive.astratemplate.api.remote.di.RickMortyApiFactory
+import ru.astrainteractive.astratemplate.di.FilesModule
 import ru.astrainteractive.astratemplate.di.RootModule
-import ru.astrainteractive.astratemplate.di.factories.CustomConfigurationFactory
-import ru.astrainteractive.astratemplate.events.EventManager
+import ru.astrainteractive.astratemplate.di.factory.CustomConfigurationFactory
+import ru.astrainteractive.astratemplate.event.EventManager
 import ru.astrainteractive.astratemplate.plugin.MainConfiguration
 import ru.astrainteractive.astratemplate.plugin.Translation
+import ru.astrainteractive.klibs.kdi.Lateinit
+import ru.astrainteractive.klibs.kdi.Reloadable
+import ru.astrainteractive.klibs.kdi.Single
+import ru.astrainteractive.klibs.kdi.getValue
 import java.io.File
 
 internal object RootModuleImpl : RootModule {
-    override val pluginModule: PluginModule by PluginModuleImpl
+    override val plugin = Lateinit<AstraTemplate>()
+    override val logger = Single {
+        Logger.buildWithSpigot("AstraTemplate", plugin.value)
+    }
+    override val bukkitDispatchers = Single {
+        DefaultBukkitDispatchers(plugin.value)
+    }
+    override val filesModule: FilesModule by Single {
+        FilesModuleImpl(this)
+    }
+    override val pluginScope = Single {
+        object : AsyncComponent() {} as AsyncComponent
+    }
 
     override val configurationModule = Reloadable {
-        val configFile by FilesModuleImpl.configFile
+        val filesModule by filesModule
+        val configFile by filesModule.configFile
         ConfigLoader.toClassOrDefault(configFile.configFile, ::MainConfiguration)
     }
 
     override val translationModule = Reloadable {
-        val plugin by pluginModule.plugin
+        val plugin by plugin
         Translation(plugin)
     }
 
     override val database: Single<Database> = Single {
-        val plugin by pluginModule.plugin
-        DatabaseFactory("${plugin.dataFolder}${File.separator}data.db").build()
+        val plugin by plugin
+        DatabaseFactory("${plugin.dataFolder}${File.separator}data.db").create()
     }
 
     override val rmApiModule = Single {
-        RickMortyApiFactory(HttpClient).build()
+        RickMortyApiFactory(HttpClient).create()
     }
 
     override val localApiModule = Single {
-        LocalApiFactory(LocalApiModuleImpl).build()
+        val localApiModule = LocalApiModuleImpl(this)
+        LocalApiFactory(localApiModule).create()
     }
 
     override val eventHandlerModule = Single {
-        EventManager(EventModuleImpl)
+        val eventModule = EventModuleImpl(this)
+        EventManager(eventModule)
     }
 
     override val commandManager = Single {
-        CommandManager(CommandManagerModuleImpl)
+        val commandManagerModule = CommandManagerModuleImpl(this)
+        CommandManager(commandManagerModule)
     }
 
     override val customConfiguration = Reloadable {
-        CustomConfigurationFactory.build()
+        val filesModule by filesModule
+        CustomConfigurationFactory(filesModule).create()
     }
 }

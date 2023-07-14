@@ -71,7 +71,7 @@ Astra template has everything (probably) you need including:
 # Platforms
 
 - [x] Spigot/Paper
-- [x] Fabric - Pre Alpha state
+- [ ] Fabric - Pre Alpha state
 - [ ] Forge - Pre-Alpha state
 - [x] Velocity/Bungee
 

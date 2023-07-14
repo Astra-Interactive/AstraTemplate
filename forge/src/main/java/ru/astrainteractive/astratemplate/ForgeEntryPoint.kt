@@ -1,3 +1,5 @@
+@file:Suppress("UnusedPrivateMember")
+
 package ru.astrainteractive.astratemplate
 
 import net.minecraftforge.fml.common.Mod

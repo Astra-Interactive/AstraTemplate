@@ -1,3 +1,5 @@
+@file:Suppress("UnusedPrivateMember")
+
 package ru.astrainteractive.astratemplate.mixin
 
 import net.minecraft.client.gui.screen.TitleScreen

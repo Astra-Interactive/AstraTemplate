@@ -4,7 +4,7 @@ description: '${description}'
 name: '${name}'
 version: '${version}'
 authors: [ "${authors}" ]
-author: "${author}"
+#author: "${author}"
 website: "${url}"
 api-version: 1.18
 softdepend: [ ]

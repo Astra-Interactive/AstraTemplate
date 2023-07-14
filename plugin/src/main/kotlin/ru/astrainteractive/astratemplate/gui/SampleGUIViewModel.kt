@@ -1,7 +1,5 @@
 package ru.astrainteractive.astratemplate.gui
 
-import com.astrainteractive.astratemplate.api.dto.UserDTO
-import com.astrainteractive.astratemplate.api.local.LocalApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -11,6 +9,8 @@ import org.bukkit.ChatColor
 import org.bukkit.event.inventory.ClickType
 import ru.astrainteractive.astralibs.async.AsyncComponent
 import ru.astrainteractive.astratemplate.api.ItemStackSpigotAPI
+import ru.astrainteractive.astratemplate.api.dto.UserDTO
+import ru.astrainteractive.astratemplate.api.local.LocalApi
 import kotlin.random.Random
 
 /**

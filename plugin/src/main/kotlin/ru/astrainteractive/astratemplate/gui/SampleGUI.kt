@@ -1,12 +1,10 @@
 package ru.astrainteractive.astratemplate.gui
 
-import com.astrainteractive.astratemplate.api.dto.UserDTO
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.inventory.InventoryCloseEvent
 import org.bukkit.inventory.ItemStack
-import ru.astrainteractive.astralibs.getValue
 import ru.astrainteractive.astralibs.menu.clicker.MenuClickListener
 import ru.astrainteractive.astralibs.menu.holder.DefaultPlayerHolder
 import ru.astrainteractive.astralibs.menu.holder.PlayerHolder
@@ -14,15 +12,14 @@ import ru.astrainteractive.astralibs.menu.menu.InventoryButton
 import ru.astrainteractive.astralibs.menu.menu.MenuSize
 import ru.astrainteractive.astralibs.menu.menu.PaginatedMenu
 import ru.astrainteractive.astralibs.menu.utils.ItemStackButtonBuilder
+import ru.astrainteractive.astratemplate.api.dto.UserDTO
 import ru.astrainteractive.astratemplate.gui.di.SampleGuiModule
 
 class SampleGUI(
     player: Player,
     module: SampleGuiModule
-) : PaginatedMenu() {
-    private val viewModel = module.viewModel.build()
-    private val translation by module.translation
-    private val dispatchers by module.dispatchers
+) : PaginatedMenu(), SampleGuiModule by module {
+    private val viewModel = module.viewModelFactory.create()
 
     private val clickListener = MenuClickListener()
 

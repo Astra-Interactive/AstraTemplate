@@ -7,6 +7,7 @@ import ru.astrainteractive.astralibs.utils.BaseTranslation
 
 /**
  * All translation stored here
+ * Each translation have default value so it's not necesarry to fetch it from resources
  */
 class Translation(plugin: Plugin) : BaseTranslation() {
     /**

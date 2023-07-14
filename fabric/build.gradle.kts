@@ -16,7 +16,7 @@ dependencies {
     // AstraLibs
     implementation(libs.minecraft.astralibs.ktxcore)
     implementation(libs.minecraft.astralibs.orm)
-    implementation(libs.minecraft.astralibs.di)
+    implementation(libs.klibs.kdi)
     // Kotlin
     implementation(libs.bundles.kotlin)
     // Driver
@@ -29,7 +29,6 @@ dependencies {
 val shadowJar by tasks.getting(ShadowJar::class) {
     dependencies {
         // Kotlin
-        include(dependency(libs.kotlin.gradle.get()))
         include(dependency(libs.minecraft.astralibs.ktxcore.get()))
         include(dependency(libs.driver.jdbc.get()))
     }

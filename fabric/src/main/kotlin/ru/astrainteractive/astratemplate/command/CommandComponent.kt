@@ -1,11 +1,11 @@
 package ru.astrainteractive.astratemplate.command
 
-import com.astrainteractive.astratemplate.api.dto.UserDTO
 import com.mojang.brigadier.context.CommandContext
 import kotlinx.coroutines.launch
 import net.minecraft.server.command.ServerCommandSource
-import ru.astrainteractive.astralibs.getValue
+import ru.astrainteractive.astratemplate.api.dto.UserDTO
 import ru.astrainteractive.astratemplate.di.RootModule
+import ru.astrainteractive.klibs.kdi.getValue
 import java.util.UUID
 
 class CommandComponent(

@@ -1,7 +1,7 @@
 package ru.astrainteractive.astratemplate.gui
 
-import com.astrainteractive.astratemplate.api.dto.UserDTO
 import org.bukkit.inventory.ItemStack
+import ru.astrainteractive.astratemplate.api.dto.UserDTO
 
 sealed interface InventoryState {
     data class Items(
