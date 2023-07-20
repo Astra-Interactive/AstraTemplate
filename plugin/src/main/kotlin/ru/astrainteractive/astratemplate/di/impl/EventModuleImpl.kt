@@ -10,10 +10,10 @@ import ru.astrainteractive.klibs.kdi.Single
 import ru.astrainteractive.klibs.kdi.getValue
 
 internal class EventModuleImpl(
-    pluginModule: RootModule
+    rootModule: RootModule
 ) : EventModule {
 
     override val eventListener by Single { GlobalEventListener }
-    override val plugin by pluginModule.plugin
-    override val translation by RootModuleImpl.translationModule
+    override val plugin by rootModule.plugin
+    override val translation by rootModule.translation
 }

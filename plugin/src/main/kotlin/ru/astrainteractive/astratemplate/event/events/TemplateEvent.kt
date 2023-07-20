@@ -20,7 +20,7 @@ class TemplateEvent(
      */
     @EventHandler
     public fun blockPlaceEvent(e: BlockPlaceEvent) {
-        e.player.sendMessage(translation.blockPlaced)
+        e.player.sendMessage(translation.custom.blockPlaced)
         return
     }
 

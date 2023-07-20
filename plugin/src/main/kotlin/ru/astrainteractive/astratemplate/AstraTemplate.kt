@@ -12,6 +12,7 @@ import ru.astrainteractive.astralibs.menu.event.GlobalInventoryClickEvent
 import ru.astrainteractive.astratemplate.di.RootModule
 import ru.astrainteractive.astratemplate.di.impl.RootModuleImpl
 import ru.astrainteractive.astratemplate.event.EventManager
+import ru.astrainteractive.klibs.kdi.Reloadable
 import ru.astrainteractive.klibs.kdi.getValue
 
 /**
@@ -19,11 +20,10 @@ import ru.astrainteractive.klibs.kdi.getValue
  */
 
 class AstraTemplate : JavaPlugin() {
-
-    init {
-        RootModule.plugin.initialize(this)
+    private val rootModuleReloadable = Reloadable {
+        RootModuleImpl()
     }
-    private val rootModule: RootModule by RootModuleImpl
+    private val rootModule: RootModule by rootModuleReloadable
     private val eventManager: EventManager by rootModule.eventHandlerModule
     private val commandManager by rootModule.commandManager
     private val jLogger by rootModule.logger
@@ -32,11 +32,12 @@ class AstraTemplate : JavaPlugin() {
      * This method called when server starts or PlugMan load plugin.
      */
     override fun onEnable() {
+        rootModule.plugin.initialize(this)
         jLogger.info("Logger enabled", "AstraTemplate")
         jLogger.warning("Warn message from logger", "AstraTemplate")
         jLogger.error("Error message", "AstraTemplate")
 
-        val customConfiguration by RootModuleImpl.customConfiguration
+        val customConfiguration by rootModule.customConfiguration
         jLogger.info("Custom configuration version: ${customConfiguration.pluginVersion.value}", "AstraTemplate")
         GlobalEventListener.onEnable(this)
         GlobalInventoryClickEvent.onEnable(this)
@@ -49,7 +50,7 @@ class AstraTemplate : JavaPlugin() {
      */
     override fun onDisable() {
         eventManager.onDisable()
-        runBlocking { RootModule.database.value.closeConnection() }
+        runBlocking { rootModule.database.value.closeConnection() }
         HandlerList.unregisterAll(this)
         GlobalEventListener.onDisable()
         GlobalInventoryClickEvent.onDisable()
@@ -60,8 +61,8 @@ class AstraTemplate : JavaPlugin() {
      * As it says, function for plugin reload
      */
     fun reloadPlugin() {
-        RootModule.filesModule.configFile.value.reload()
-        RootModuleImpl.configurationModule.reload()
-        RootModuleImpl.translationModule.reload()
+        rootModule.filesModule.configFile.value.reload()
+        rootModule.configurationModule.reload()
+        rootModule.translation.reload()
     }
 }

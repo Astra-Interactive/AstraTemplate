@@ -14,17 +14,21 @@ import ru.astrainteractive.klibs.kdi.getValue
 import kotlin.random.Random
 
 internal class CommandManagerModuleImpl(
-    private val rootModule: RootModule
+    rootModule: RootModule
 ) : CommandManagerModule {
 
     override val plugin by rootModule.plugin
-    override val translation by rootModule.translationModule
+    override val translation by rootModule.translation
     override val rmApi by rootModule.rmApiModule
     override val pluginScope by rootModule.pluginScope
     override val dispatchers by rootModule.bukkitDispatchers
     override val randomIntProvider: Provider<Int> = Provider { Random.nextInt(1, 100) }
+    private val sampleGuiModule by Provider {
+        SampleGuiModuleImpl(rootModule)
+    }
+
     override fun sampleGuiFactory(player: Player): Factory<SampleGUI> = Factory {
-        val sampleGuiModule: SampleGuiModule by SampleGuiModuleImpl(rootModule)
+        val sampleGuiModule: SampleGuiModule by sampleGuiModule
         SampleGUI(
             player = player,
             module = sampleGuiModule

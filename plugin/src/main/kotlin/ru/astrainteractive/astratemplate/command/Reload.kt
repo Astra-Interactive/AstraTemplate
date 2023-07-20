@@ -9,10 +9,10 @@ import ru.astrainteractive.astratemplate.plugin.Permissions
  */
 fun CommandManager.reload() = plugin.registerCommand("atempreload") {
     if (!Permissions.Reload.hasPermission(sender)) {
-        sender.sendMessage(translation.noPermission)
+        sender.sendMessage(translation.general.noPermission)
         return@registerCommand
     }
-    sender.sendMessage(translation.reload)
+    sender.sendMessage(translation.general.reload)
     plugin.reloadPlugin()
-    sender.sendMessage(translation.reloadComplete)
+    sender.sendMessage(translation.general.reloadComplete)
 }

@@ -30,7 +30,7 @@ class SampleGUI(
     }
 
     override val playerHolder: PlayerHolder = DefaultPlayerHolder(player)
-    override var menuTitle: String = translation.menuTitle
+    override var menuTitle: String = translation.menu.menuTitle
     override val menuSize: MenuSize = MenuSize.XL
     override var maxItemsPerPage: Int = 45
     override var page: Int = 0
@@ -64,16 +64,16 @@ class SampleGUI(
             }
         }
 
-    private val addUserButton = button(48, createItemStackWithName(Material.EMERALD, translation.menuAddPlayer)) {
+    private val addUserButton = button(48, createItemStackWithName(Material.EMERALD, translation.menu.menuAddPlayer)) {
         viewModel.onAddUserClicked()
     }
-    override val backPageButton = button(49, createItemStackWithName(Material.PAPER, translation.menuClose)) {
+    override val backPageButton = button(49, createItemStackWithName(Material.PAPER, translation.menu.menuClose)) {
         inventory.close()
     }
-    override val nextPageButton = button(53, createItemStackWithName(Material.PAPER, translation.menuNextPage)) {
+    override val nextPageButton = button(53, createItemStackWithName(Material.PAPER, translation.menu.menuNextPage)) {
         showPage(page + 1)
     }
-    override val prevPageButton = button(45, createItemStackWithName(Material.PAPER, translation.menuPrevPage)) {
+    override val prevPageButton = button(45, createItemStackWithName(Material.PAPER, translation.menu.menuPrevPage)) {
         showPage(page - 1)
     }
 

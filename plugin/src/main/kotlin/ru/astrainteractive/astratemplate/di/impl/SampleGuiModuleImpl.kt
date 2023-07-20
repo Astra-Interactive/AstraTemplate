@@ -11,7 +11,7 @@ internal class SampleGuiModuleImpl(
     private val rootModule: RootModule
 ) : SampleGuiModule {
 
-    override val translation by rootModule.translationModule
+    override val translation by rootModule.translation
     override val dispatchers by rootModule.bukkitDispatchers
     override val viewModelFactory: Factory<SampleGUIViewModel> = Factory {
         val localApi by rootModule.localApiModule

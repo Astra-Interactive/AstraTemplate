@@ -27,7 +27,7 @@ import ru.astrainteractive.klibs.kdi.Single
 import ru.astrainteractive.klibs.kdi.getValue
 import java.io.File
 
-internal object RootModuleImpl : RootModule {
+internal class RootModuleImpl : RootModule {
     override val plugin = Lateinit<AstraTemplate>()
     override val logger = Single {
         Logger.buildWithSpigot("AstraTemplate", plugin.value)
@@ -48,7 +48,7 @@ internal object RootModuleImpl : RootModule {
         ConfigLoader.toClassOrDefault(configFile.configFile, ::MainConfiguration)
     }
 
-    override val translationModule = Reloadable {
+    override val translation = Reloadable {
         val plugin by plugin
         Translation(plugin)
     }

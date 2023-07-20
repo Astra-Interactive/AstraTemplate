@@ -8,7 +8,6 @@ import ru.astrainteractive.astralibs.orm.Database
 import ru.astrainteractive.astratemplate.AstraTemplate
 import ru.astrainteractive.astratemplate.api.local.LocalApi
 import ru.astrainteractive.astratemplate.api.remote.RickMortyApi
-import ru.astrainteractive.astratemplate.di.impl.RootModuleImpl
 import ru.astrainteractive.astratemplate.event.EventManager
 import ru.astrainteractive.astratemplate.plugin.CustomConfiguration
 import ru.astrainteractive.astratemplate.plugin.MainConfiguration
@@ -27,12 +26,10 @@ interface RootModule : Module {
     val pluginScope: Dependency<AsyncComponent>
     val configurationModule: Reloadable<MainConfiguration>
     val customConfiguration: Reloadable<CustomConfiguration>
-    val translationModule: Reloadable<Translation>
+    val translation: Reloadable<Translation>
     val database: Single<Database>
     val rmApiModule: Dependency<RickMortyApi>
     val localApiModule: Dependency<LocalApi>
     val eventHandlerModule: Dependency<EventManager>
     val commandManager: Dependency<CommandManager>
-
-    companion object : RootModule by RootModuleImpl
 }
