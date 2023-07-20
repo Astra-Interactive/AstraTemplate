@@ -1,15 +1,13 @@
 package ru.astrainteractive.astratemplate.di
 
-import com.astrainteractive.astratemplate.api.local.di.LocalApiModule
-import com.astrainteractive.astratemplate.api.local.mapping.RatingMapper
-import com.astrainteractive.astratemplate.api.local.mapping.RatingMapperImpl
-import com.astrainteractive.astratemplate.api.local.mapping.UserMapper
-import com.astrainteractive.astratemplate.api.local.mapping.UserMapperImpl
-import ru.astrainteractive.astralibs.Single
-import ru.astrainteractive.astralibs.orm.Database
+import ru.astrainteractive.astratemplate.api.local.di.LocalApiModule
+import ru.astrainteractive.astratemplate.api.local.mapping.RatingMapperImpl
+import ru.astrainteractive.astratemplate.api.local.mapping.UserMapperImpl
+import ru.astrainteractive.klibs.kdi.Single
+import ru.astrainteractive.klibs.kdi.getValue
 
 object LocalApiModuleImpl : LocalApiModule {
-    override val database: Single<Database> = RootModule.databaseModule
-    override val ratingMapper: Single<RatingMapper> = Single { RatingMapperImpl }
-    override val userMapper: Single<UserMapper> = Single { UserMapperImpl }
+    override val database by RootModule.databaseModule
+    override val ratingMapper by Single { RatingMapperImpl }
+    override val userMapper by Single { UserMapperImpl }
 }

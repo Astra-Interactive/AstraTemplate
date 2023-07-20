@@ -1,7 +1,5 @@
 package ru.astrainteractive.astratemplate.gui
 
-import com.astrainteractive.astratemplate.api.dto.UserDTO
-import com.astrainteractive.astratemplate.api.local.LocalApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -11,6 +9,9 @@ import org.bukkit.ChatColor
 import org.bukkit.event.inventory.ClickType
 import ru.astrainteractive.astralibs.async.AsyncComponent
 import ru.astrainteractive.astratemplate.api.ItemStackSpigotAPI
+import ru.astrainteractive.astratemplate.api.dto.UserDTO
+import ru.astrainteractive.astratemplate.api.local.LocalApi
+import ru.astrainteractive.astratemplate.gui.store.InventoryStore.State
 import kotlin.random.Random
 
 /**
@@ -21,7 +22,7 @@ class SampleGUIViewModel(
     private val itemStackSpigotAPi: ItemStackSpigotAPI
 ) : AsyncComponent() {
 
-    val inventoryState = MutableStateFlow<InventoryState>(InventoryState.Loading)
+    val inventoryState = MutableStateFlow<State>(State.Loading)
 
     val randomColor: ChatColor
         get() = ChatColor.values()[Random.nextInt(ChatColor.values().size)]
@@ -29,19 +30,19 @@ class SampleGUIViewModel(
     fun onModeChange() = componentScope.launch(Dispatchers.IO) {
         println("OnModeChanged")
         when (inventoryState.value) {
-            InventoryState.Loading -> return@launch
-            is InventoryState.Items -> loadUsersState()
-            is InventoryState.Users -> loadItemsState()
+            State.Loading -> return@launch
+            is State.Items -> loadUsersState()
+            is State.Users -> loadItemsState()
         }
     }
 
     fun onItemClicked(slot: Int, clickType: ClickType) = when (val state = inventoryState.value) {
-        InventoryState.Loading -> {}
-        is InventoryState.Items -> {
+        State.Loading -> {}
+        is State.Items -> {
             onItemStackClicked(slot)
         }
 
-        is InventoryState.Users -> {
+        is State.Users -> {
             onPlayerHeadClicked(slot, clickType)
         }
     }
@@ -54,7 +55,7 @@ class SampleGUIViewModel(
     }
 
     private fun onPlayerHeadClicked(slot: Int, clickType: ClickType) {
-        val state = inventoryState.value as? InventoryState.Users ?: return
+        val state = inventoryState.value as? State.Users ?: return
         val users = state.users
         val user = users.getOrNull(slot) ?: return
         componentScope.launch(Dispatchers.IO) {
@@ -71,7 +72,7 @@ class SampleGUIViewModel(
     }
 
     private fun onItemStackClicked(slot: Int) {
-        val state = inventoryState.value as? InventoryState.Items ?: return
+        val state = inventoryState.value as? State.Items ?: return
 
         val list = state.items.toMutableList()
         val item = list.getOrNull(slot)?.clone()?.apply {
@@ -86,11 +87,11 @@ class SampleGUIViewModel(
     }
 
     suspend fun loadItemsState() {
-        inventoryState.value = InventoryState.Items(itemStackSpigotAPi.randomItemStackList())
+        inventoryState.value = State.Items(itemStackSpigotAPi.randomItemStackList())
     }
 
     suspend fun loadUsersState() {
-        inventoryState.value = InventoryState.Users(localApi.getAllUsers() ?: emptyList())
+        inventoryState.value = State.Users(localApi.getAllUsers() ?: emptyList())
     }
 
     fun onUiCreated() = componentScope.launch(Dispatchers.IO) {

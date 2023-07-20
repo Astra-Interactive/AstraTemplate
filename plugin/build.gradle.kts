@@ -13,6 +13,8 @@ dependencies {
     implementation(libs.minecraft.astralibs.di)
     implementation(libs.minecraft.astralibs.spigot.gui)
     implementation(libs.minecraft.astralibs.spigot.core)
+    // klibs
+    implementation(libs.klibs.kdi)
     // Spigot dependencies
     compileOnly(libs.minecraft.paper.api)
     implementation(libs.minecraft.bstats)

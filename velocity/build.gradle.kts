@@ -15,6 +15,8 @@ dependencies {
     implementation(libs.minecraft.astralibs.ktxcore)
     implementation(libs.minecraft.astralibs.orm)
     implementation(libs.minecraft.astralibs.di)
+    // klibs
+    implementation(libs.klibs.kdi)
     // Velocity
     compileOnly(libs.minecraft.velocity.api)
     annotationProcessor(libs.minecraft.velocity.api)

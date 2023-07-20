@@ -1,14 +1,13 @@
 package ru.astrainteractive.astratemplate.gui.di
 
-import ru.astrainteractive.astralibs.Dependency
-import ru.astrainteractive.astralibs.Factory
-import ru.astrainteractive.astralibs.Module
 import ru.astrainteractive.astralibs.async.BukkitDispatchers
 import ru.astrainteractive.astratemplate.gui.SampleGUIViewModel
 import ru.astrainteractive.astratemplate.plugin.Translation
+import ru.astrainteractive.klibs.kdi.Factory
+import ru.astrainteractive.klibs.kdi.Module
 
 interface SampleGuiModule : Module {
-    val translation: Dependency<Translation>
-    val dispatchers: Dependency<BukkitDispatchers>
-    val viewModel: Factory<SampleGUIViewModel>
+    val translation: Translation
+    val dispatchers: BukkitDispatchers
+    val viewModelFactory: Factory<SampleGUIViewModel>
 }

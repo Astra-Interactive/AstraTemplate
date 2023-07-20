@@ -1,3 +1,5 @@
+@file:Suppress("UnusedPrivateMember")
+
 package ru.astrainteractive.astratemplate
 
 import com.google.inject.Inject
@@ -8,10 +10,10 @@ import com.velocitypowered.api.plugin.Plugin
 import com.velocitypowered.api.plugin.annotation.DataDirectory
 import com.velocitypowered.api.proxy.ProxyServer
 import org.slf4j.Logger
-import ru.astrainteractive.astralibs.getValue
 import ru.astrainteractive.astratemplate.di.RootModule
 import ru.astrainteractive.astratemplate.di.impl.RootModuleImpl
 import ru.astrainteractive.astratemplate.di.impl.VelocityModuleImpl
+import ru.astrainteractive.klibs.kdi.getValue
 import java.nio.file.Path
 
 @Plugin(

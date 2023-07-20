@@ -1,3 +1,8 @@
+buildscript {
+    dependencies {
+        classpath(libs.klibs.gradleplugin.convention)
+    }
+}
 group = libs.versions.plugin.group.get()
 version = libs.versions.plugin.version.get()
 
@@ -11,5 +16,6 @@ plugins {
     alias(libs.plugins.minecraft.forge.net) apply false
     alias(libs.plugins.gradle.buildconfig) apply false
     alias(libs.plugins.gradle.shadow) apply false
-    id("detekt-convention")
 }
+
+apply(plugin = "ru.astrainteractive.gradleplugin.detekt")

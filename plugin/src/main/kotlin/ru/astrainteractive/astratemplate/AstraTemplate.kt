@@ -8,38 +8,36 @@ import org.bukkit.plugin.java.JavaPlugin
 import org.jetbrains.kotlin.tooling.core.UnsafeApi
 import ru.astrainteractive.astralibs.async.PluginScope
 import ru.astrainteractive.astralibs.events.GlobalEventListener
-import ru.astrainteractive.astralibs.getValue
 import ru.astrainteractive.astralibs.menu.event.GlobalInventoryClickEvent
 import ru.astrainteractive.astratemplate.di.RootModule
-import ru.astrainteractive.astratemplate.di.impl.FilesModuleImpl
-import ru.astrainteractive.astratemplate.di.impl.LocalApiModuleImpl
-import ru.astrainteractive.astratemplate.di.impl.PluginModuleImpl
 import ru.astrainteractive.astratemplate.di.impl.RootModuleImpl
-import ru.astrainteractive.astratemplate.events.EventManager
+import ru.astrainteractive.astratemplate.event.EventManager
+import ru.astrainteractive.klibs.kdi.Reloadable
+import ru.astrainteractive.klibs.kdi.getValue
 
 /**
  * Initial class for your plugin
  */
 
 class AstraTemplate : JavaPlugin() {
-
-    init {
-        PluginModuleImpl.plugin.initialize(this)
+    private val rootModuleReloadable = Reloadable {
+        RootModuleImpl()
     }
-    private val rootModule: RootModule by RootModuleImpl
+    private val rootModule: RootModule by rootModuleReloadable
     private val eventManager: EventManager by rootModule.eventHandlerModule
     private val commandManager by rootModule.commandManager
-    private val jLogger by rootModule.pluginModule.logger
+    private val jLogger by rootModule.logger
 
     /**
      * This method called when server starts or PlugMan load plugin.
      */
     override fun onEnable() {
+        rootModule.plugin.initialize(this)
         jLogger.info("Logger enabled", "AstraTemplate")
         jLogger.warning("Warn message from logger", "AstraTemplate")
         jLogger.error("Error message", "AstraTemplate")
 
-        val customConfiguration by RootModuleImpl.customConfiguration
+        val customConfiguration by rootModule.customConfiguration
         jLogger.info("Custom configuration version: ${customConfiguration.pluginVersion.value}", "AstraTemplate")
         GlobalEventListener.onEnable(this)
         GlobalInventoryClickEvent.onEnable(this)
@@ -52,7 +50,7 @@ class AstraTemplate : JavaPlugin() {
      */
     override fun onDisable() {
         eventManager.onDisable()
-        runBlocking { LocalApiModuleImpl.database.value.closeConnection() }
+        runBlocking { rootModule.database.value.closeConnection() }
         HandlerList.unregisterAll(this)
         GlobalEventListener.onDisable()
         GlobalInventoryClickEvent.onDisable()
@@ -63,8 +61,8 @@ class AstraTemplate : JavaPlugin() {
      * As it says, function for plugin reload
      */
     fun reloadPlugin() {
-        FilesModuleImpl.configFile.value.reload()
-        RootModuleImpl.configurationModule.reload()
-        RootModuleImpl.translationModule.reload()
+        rootModule.filesModule.configFile.value.reload()
+        rootModule.configurationModule.reload()
+        rootModule.translation.reload()
     }
 }
