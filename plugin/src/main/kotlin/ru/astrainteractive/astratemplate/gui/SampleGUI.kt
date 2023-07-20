@@ -14,6 +14,7 @@ import ru.astrainteractive.astralibs.menu.menu.PaginatedMenu
 import ru.astrainteractive.astralibs.menu.utils.ItemStackButtonBuilder
 import ru.astrainteractive.astratemplate.api.dto.UserDTO
 import ru.astrainteractive.astratemplate.gui.di.SampleGuiModule
+import ru.astrainteractive.astratemplate.gui.store.InventoryStore.State
 
 class SampleGUI(
     player: Player,
@@ -36,9 +37,9 @@ class SampleGUI(
     override var page: Int = 0
     override val maxItemsAmount: Int
         get() = when (val state = viewModel.inventoryState.value) {
-            is InventoryState.Items -> state.items.size
-            is InventoryState.Users -> state.users.size
-            InventoryState.Loading -> 0
+            is State.Items -> state.items.size
+            is State.Users -> state.users.size
+            State.Loading -> 0
         }
 
     private fun button(
@@ -58,9 +59,9 @@ class SampleGUI(
                 viewModel.onModeChange()
             }
             itemStack = when (viewModel.inventoryState.value) {
-                is InventoryState.Items -> createItemStackWithName(Material.SUNFLOWER, "Items")
-                InventoryState.Loading -> createItemStackWithName(Material.SUNFLOWER, "Loading")
-                is InventoryState.Users -> createItemStackWithName(Material.SUNFLOWER, "Users")
+                is State.Items -> createItemStackWithName(Material.SUNFLOWER, "Items")
+                State.Loading -> createItemStackWithName(Material.SUNFLOWER, "Loading")
+                is State.Users -> createItemStackWithName(Material.SUNFLOWER, "Users")
             }
         }
 
@@ -95,7 +96,7 @@ class SampleGUI(
         viewModel.inventoryState.collectOn(dispatchers.BukkitMain, ::onStateChanged)
     }
 
-    private fun onStateChanged(state: InventoryState = viewModel.inventoryState.value) {
+    private fun onStateChanged(state: State = viewModel.inventoryState.value) {
         inventory.clear()
         clickListener.clearClickListener()
         changeModeButton.apply {
@@ -106,17 +107,17 @@ class SampleGUI(
         setManageButtons(clickListener)
 
         when (state) {
-            is InventoryState.Items -> {
+            is State.Items -> {
                 setItemStacks(state.items)
             }
 
-            is InventoryState.Users -> {
+            is State.Users -> {
                 addUserButton.setInventoryButton()
                 clickListener.remember(addUserButton)
                 setUsers(state.users)
             }
 
-            InventoryState.Loading -> {}
+            State.Loading -> {}
         }
     }
 
