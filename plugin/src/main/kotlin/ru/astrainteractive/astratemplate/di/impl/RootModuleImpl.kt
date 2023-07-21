@@ -3,6 +3,7 @@
 package ru.astrainteractive.astratemplate.di.impl
 
 import CommandManager
+import kotlinx.serialization.encodeToString
 import org.jetbrains.kotlin.tooling.core.UnsafeApi
 import ru.astrainteractive.astralibs.async.AsyncComponent
 import ru.astrainteractive.astralibs.async.DefaultBukkitDispatchers
@@ -17,7 +18,6 @@ import ru.astrainteractive.astratemplate.api.local.di.LocalApiFactory
 import ru.astrainteractive.astratemplate.api.remote.di.RickMortyApiFactory
 import ru.astrainteractive.astratemplate.di.FilesModule
 import ru.astrainteractive.astratemplate.di.RootModule
-import ru.astrainteractive.astratemplate.di.factory.CustomConfigurationFactory
 import ru.astrainteractive.astratemplate.event.EventManager
 import ru.astrainteractive.astratemplate.plugin.MainConfiguration
 import ru.astrainteractive.astratemplate.plugin.Translation
@@ -45,7 +45,12 @@ internal class RootModuleImpl : RootModule {
     override val configurationModule = Reloadable {
         val filesModule by filesModule
         val configFile by filesModule.configFile
-        ConfigLoader.toClassOrDefault(configFile.configFile, ::MainConfiguration)
+        val configuration = ConfigLoader.toClassOrDefault(configFile.configFile, ::MainConfiguration)
+        if (!configFile.configFile.exists()) {
+            configFile.configFile.createNewFile()
+            configFile.configFile.writeText(ConfigLoader.defaultYaml.encodeToString(configuration))
+        }
+        configuration
     }
 
     override val translation = Reloadable {
@@ -75,10 +80,5 @@ internal class RootModuleImpl : RootModule {
     override val commandManager = Single {
         val commandManagerModule = CommandManagerModuleImpl(this)
         CommandManager(commandManagerModule)
-    }
-
-    override val customConfiguration = Reloadable {
-        val filesModule by filesModule
-        CustomConfigurationFactory(filesModule).create()
     }
 }

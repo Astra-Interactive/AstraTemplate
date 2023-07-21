@@ -9,7 +9,6 @@ import ru.astrainteractive.astratemplate.AstraTemplate
 import ru.astrainteractive.astratemplate.api.local.LocalApi
 import ru.astrainteractive.astratemplate.api.remote.RickMortyApi
 import ru.astrainteractive.astratemplate.event.EventManager
-import ru.astrainteractive.astratemplate.plugin.CustomConfiguration
 import ru.astrainteractive.astratemplate.plugin.MainConfiguration
 import ru.astrainteractive.astratemplate.plugin.Translation
 import ru.astrainteractive.klibs.kdi.Dependency
@@ -25,7 +24,6 @@ interface RootModule : Module {
     val filesModule: FilesModule
     val pluginScope: Dependency<AsyncComponent>
     val configurationModule: Reloadable<MainConfiguration>
-    val customConfiguration: Reloadable<CustomConfiguration>
     val translation: Reloadable<Translation>
     val database: Single<Database>
     val rmApiModule: Dependency<RickMortyApi>

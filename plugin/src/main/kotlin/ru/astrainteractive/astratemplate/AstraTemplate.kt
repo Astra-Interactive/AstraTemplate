@@ -37,8 +37,6 @@ class AstraTemplate : JavaPlugin() {
         jLogger.warning("Warn message from logger", "AstraTemplate")
         jLogger.error("Error message", "AstraTemplate")
 
-        val customConfiguration by rootModule.customConfiguration
-        jLogger.info("Custom configuration version: ${customConfiguration.pluginVersion.value}", "AstraTemplate")
         GlobalEventListener.onEnable(this)
         GlobalInventoryClickEvent.onEnable(this)
         commandManager
@@ -61,7 +59,7 @@ class AstraTemplate : JavaPlugin() {
      * As it says, function for plugin reload
      */
     fun reloadPlugin() {
-        rootModule.filesModule.configFile.value.reload()
+        rootModule.filesModule.configFile.reload()
         rootModule.configurationModule.reload()
         rootModule.translation.reload()
     }
