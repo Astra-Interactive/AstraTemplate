@@ -1,6 +1,6 @@
 [versions]
 # Plugin core
-plugin-version = "5.3.0"
+plugin-version = "5.4.0"
 plugin-name = "AstraTemplate"
 plugin-group = "ru.astrainteractive.astratemplate"
 plugin-url = "EmpireProjekt.ru"
