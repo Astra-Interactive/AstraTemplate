@@ -7,7 +7,7 @@ dependencies {
     // AstraLibs
     implementation(libs.minecraft.astralibs.ktxcore)
     // klibs
-    implementation(libs.klibs.kdi)
+//    implementation(libs.bundles.klibs)
     // Local
     implementation(projects.modules.dto)
 }

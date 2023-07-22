@@ -1,8 +1,8 @@
 package ru.astrainteractive.astratemplate.api.local.mapping
 
-import ru.astrainteractive.astralibs.domain.mapping.Mapper
 import ru.astrainteractive.astratemplate.api.dto.UserDTO
 import ru.astrainteractive.astratemplate.api.local.entities.UserDAO
+import ru.astrainteractive.klibs.mikro.core.domain.Mapper
 
 interface UserMapper : Mapper<UserDAO, UserDTO>
 

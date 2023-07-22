@@ -10,11 +10,10 @@ dependencies {
     // AstraLibs
     implementation(libs.minecraft.astralibs.ktxcore)
     implementation(libs.minecraft.astralibs.orm)
-    implementation(libs.minecraft.astralibs.di)
     implementation(libs.minecraft.astralibs.spigot.gui)
     implementation(libs.minecraft.astralibs.spigot.core)
     // klibs
-    implementation(libs.klibs.kdi)
+//    implementation(libs.bundles.klibs)
     // Spigot dependencies
     compileOnly(libs.minecraft.paper.api)
     implementation(libs.minecraft.bstats)
@@ -22,7 +21,7 @@ dependencies {
     testImplementation(platform(libs.tests.junit.bom))
     testImplementation(libs.bundles.testing.libs)
     testImplementation(libs.bundles.testing.kotlin)
-    testImplementation(libs.minecraft.mockbukkit)
+//    testImplementation(libs.minecraft.mockbukkit)
     // Local
     implementation(projects.modules.apiLocal)
     implementation(projects.modules.apiRemote)

@@ -22,7 +22,7 @@ import java.nio.file.Path
     version = BuildKonfig.version,
     url = BuildKonfig.url,
     description = BuildKonfig.description,
-    authors = [BuildKonfig.author],
+    authors = [BuildKonfig.author_0],
     dependencies = []
 )
 class AstraTemplate @Inject constructor(

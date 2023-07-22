@@ -5,25 +5,19 @@
 
 # AstraTemplate
 
-### MultiPlatform (Plugin-first) Spigot/Velocity/Fabric plugin
+### MultiPlatform (Plugin-first) Spigot/Velocity plugin
 
-This is a Minecraft Multiplatform template that provides architecture and all(probably) tools you'll need to create new
+This is a Minecraft Multiplatform template that provides architecture and various tools you'll need to create new
 Spigot/Velocity plugins as fast as possible
-
-AstraTemplate highly depends on our
-library [AstraLibs](https://github.com/Asrta-Interactive/AstraTemplate/wiki/AstraLibs)
 
 <h4 align="center">☄️ Plugins based on AstraTemplate☄️ </h4>
 
 <p align="center">
-    <a href="https://github.com/Astra-Interactive/AstraLibs">
-        <img alt="spigot" src="https://img.shields.io/badge/github-AstraLibs-1B76CA"/>
-    </a>    
-    <a href="https://www.spigotmc.org/resources/astra-market.99114/">
-        <img alt="spigot" src="https://img.shields.io/badge/github-AstraMarket-1B76CA"/>
+    <a href="https://github.com/Astra-Interactive/AstraAuctions/">
+        <img alt="spigot" src="https://img.shields.io/badge/github-AstraAuctions-1B76CA"/>
     </a>
-    <a href="https://www.spigotmc.org/resources/simple-rating.103317/">
-        <img alt="spigot" src="https://img.shields.io/badge/github-SimpleRating-1B76CA"/>
+    <a href="https://github.com/Astra-Interactive/AstraRating">
+        <img alt="spigot" src="https://img.shields.io/badge/github-AstraRating -1B76CA"/>
     </a>
     <a href="https://github.com/Astra-Interactive/AspeKt">
         <img alt="spigot" src="https://img.shields.io/badge/github-AspeKt-1B76CA"/>
@@ -39,43 +33,16 @@ library [AstraLibs](https://github.com/Asrta-Interactive/AstraTemplate/wiki/Astr
     </a>
 </p>
 
-## Brief description for AstraTemplate
+## Novice developer?
 
-Astra template has everything (probably) you need including:
+This project can be very difficult for novice developers. Especially for those who were working with java.
 
-- [x] Paginated menu example
-- [x] Menu live-update example
-- [x] EventManager and Event example
-- [x] Commands example
-- [x] TabCompleter example
-- [x] Database example
-- [x] Permissions example
-- [x] FileManager example
-- [x] YML Config loader example
-- [x] Translation config example
-- [x] Plugin reload
-- [x] PlugMan support
-- [x] GSON-like YML loader using GSON or kotlinx.serialization
-- [x] Logger, which can be logged in file
-- [x] Readable code
-- [x] (almost) Everything is commented
-- [x] Error catching
-- [x] Enum extensions
-- [x] DTO And domain structure
-- [x] Multimodules structure
-- [x] DSL Database
-- [x] Easy DI aka Dependency Injection
-- [x] MVI GUI example
-- [x] And more other stuff - better look by yourself
+## Overview
 
-# Platforms
+AstraTemplate and it's libs design after more than 2 years of developing spigot plugins and android applications.
+It contains powerful and scalable architecture template which will help you in your development.
 
-- [x] Spigot/Paper
-- [ ] Fabric - Pre Alpha state
-- [ ] Forge - Pre-Alpha state
-- [x] Velocity/Bungee
-
-## Directory structure
+## 1. Directory structure
 
     ├── build-logic         # Build components
     ├── modules             
@@ -87,17 +54,83 @@ Astra template has everything (probably) you need including:
     ├── velocity            # Velocity template plugin
     └── plugin              # Spigot template mod
 
-## Build jar executables
+## 2. Build convention
+
+#### 2.1 `basic-java.gradle.kts`
+
+This convention plugin contains default java configuration
+
+#### 2.2 `xxx-resource-processor.gradle.kts`
+
+This convention plugin contains basic resource processor.
+For example **spigot-resource-processor.gradle.kts** will replace **name**, **prefix** etc in your plugin.yml
+
+#### 2.3 `xxx-shadow.gradle.kts`
+
+This convention plugin will create default shadowJar task for module
+
+## 3. Modules
+
+#### 3.1 `api-local`
+
+This module contains local API with sqlite database. It contains no spigot/velocity/fabric dependencies.
+Jvm only. Due to this factor, you can easily share this module between your spigot/velocity plugin or fabric/forge.
+
+With this module you will be only dependent on LocalApi, which is an interface.
+
+Currently AstraLibs-orm is used for SQLite api-local, but you can replace it with anything you want.
+Only implementation will be changed, but LocalApi will be untouched, also as other functionality of your plugin/mod
+
+#### 3.2 `api-remote`
+
+This module contains remote api with RickMortyApi. It will return random character with suspend async response.
+Like `api-local`, this module also contains only jvm dependencies, so can be used in spigot/fabrict and others.
+
+#### 3.3 `dto`
+
+Sometimes you need to share models between other modules, so this module contains shared data models.
+
+## 4. Velocity [wip]
+
+I've not been working with velocity too much, but this module contains basic velocity functionality with plugin
+information generation.
+
+## 5. Plugin
+
+This plugin contains advanced and powerful spigot functionality
+
+- GUI
+- Commands
+- Events
+- Translation
+- DI
+- Permissions
+- Configuration
+
+### Platforms
+
+- [x] Spigot/Paper
+- [ ] Fabric - Pre Alpha state
+- [ ] Forge - Pre-Alpha state
+- [x] Velocity/Bungee
+
+### Build jar executables
 
 Firstly, change gradle/libs.versions.toml destination-xxx to your folder
 
     $ ./gradlew :plugin:shadowJar          # assemble the plugin .jar
-    $ ./gradlew :fabric:build              # assemble the Fabric .jar
     $ ./gradlew :velocity:shadowJar        # assemble the plugin .jar
 
-## Forge status
-
-There's gradle 8.0 and ```net.minecraftforge.gradle``` can't be applied at moment of 19.03.2023
+### Forge and fabirc is on pause
 
 Also, checkout [AstraLearner](https://play.google.com/store/apps/details?id=com.makeevrserg.astralearner) - it will help
 you to learn foreign words easily!
+
+### Afterword
+
+AstraTemplate highly dependent on self-written open source libraries
+
+- [AstraLibs](https://github.com/Astra-Interactive/AstraLibs) - Minecraft development
+- [klibs.mikro](https://github.com/makeevrserg/klibs.mikro) - Mapper, UseCase, Dispatchers interface
+- [klibs.kstorage](https://github.com/makeevrserg/klibs.kstorage) - Key-value storage wrapper
+- [klibs.kdi](https://github.com/makeevrserg/klibs.kdi) - Manual DI

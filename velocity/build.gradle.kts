@@ -14,7 +14,6 @@ dependencies {
     // AstraLibs
     implementation(libs.minecraft.astralibs.ktxcore)
     implementation(libs.minecraft.astralibs.orm)
-    implementation(libs.minecraft.astralibs.di)
     // klibs
     implementation(libs.klibs.kdi)
     // Velocity
@@ -26,7 +25,6 @@ dependencies {
     testImplementation(libs.bundles.testing.kotlin)
     testImplementation(kotlin("test-junit5"))
     testImplementation("org.junit.jupiter:junit-jupiter")
-    testImplementation("com.github.seeseemelk:MockBukkit-v1.19:2.29.0")
 }
 
 buildConfig {
@@ -40,6 +38,7 @@ buildConfig {
     buildConfigStringField("version", info.version)
     buildConfigStringField("url", info.url)
     buildConfigStringField("description", info.description)
-//    buildConfigField("List<String>", "authors", info.authors.joinToString("\",\"","listOf(\"","\")"))
-    buildConfigStringField("author", info.authors.first())
+    info.authors.forEachIndexed { i, dev ->
+        buildConfigStringField("author_$i", dev)
+    }
 }
