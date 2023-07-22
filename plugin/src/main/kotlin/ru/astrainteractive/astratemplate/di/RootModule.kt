@@ -3,6 +3,7 @@ package ru.astrainteractive.astratemplate.di
 import CommandManager
 import ru.astrainteractive.astralibs.async.AsyncComponent
 import ru.astrainteractive.astralibs.async.BukkitDispatchers
+import ru.astrainteractive.astralibs.configloader.ConfigLoader
 import ru.astrainteractive.astralibs.logging.Logger
 import ru.astrainteractive.astralibs.orm.Database
 import ru.astrainteractive.astratemplate.AstraTemplate
@@ -19,6 +20,7 @@ import ru.astrainteractive.klibs.kdi.Single
 
 interface RootModule : Module {
     val plugin: Lateinit<AstraTemplate>
+    val configLoader: Single<ConfigLoader>
     val logger: Dependency<Logger>
     val bukkitDispatchers: Dependency<BukkitDispatchers>
     val filesModule: FilesModule

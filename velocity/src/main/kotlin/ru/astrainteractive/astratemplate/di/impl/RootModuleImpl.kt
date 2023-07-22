@@ -25,6 +25,6 @@ object RootModuleImpl : RootModule {
     }
     override val configuration = Reloadable {
         val configurationFile by configurationFile
-        ConfigLoader.toClassOrDefault(configurationFile.configFile, ::Configuration)
+        ConfigLoader().toClassOrDefault(configurationFile.configFile, ::Configuration)
     }
 }

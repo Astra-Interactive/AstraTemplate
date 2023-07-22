@@ -29,6 +29,9 @@ import java.io.File
 
 internal class RootModuleImpl : RootModule {
     override val plugin = Lateinit<AstraTemplate>()
+    override val configLoader: Single<ConfigLoader> = Single {
+        ConfigLoader()
+    }
     override val logger = Single {
         Logger.buildWithSpigot("AstraTemplate", plugin.value)
     }
@@ -45,10 +48,11 @@ internal class RootModuleImpl : RootModule {
     override val configurationModule = Reloadable {
         val filesModule by filesModule
         val configFile by filesModule.configFile
-        val configuration = ConfigLoader.toClassOrDefault(configFile.configFile, ::MainConfiguration)
+        val configLoader by configLoader
+        val configuration = configLoader.toClassOrDefault(configFile.configFile, ::MainConfiguration)
         if (!configFile.configFile.exists()) {
             configFile.configFile.createNewFile()
-            configFile.configFile.writeText(ConfigLoader.defaultYaml.encodeToString(configuration))
+            configFile.configFile.writeText(configLoader.defaultYaml.encodeToString(configuration))
         }
         configuration
     }
