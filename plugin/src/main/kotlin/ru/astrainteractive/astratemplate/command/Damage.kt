@@ -2,8 +2,8 @@ package ru.astrainteractive.astratemplate.command
 
 import CommandManager
 import org.bukkit.Bukkit
-import ru.astrainteractive.astralibs.commands.registerCommand
-import ru.astrainteractive.astralibs.commands.registerTabCompleter
+import ru.astrainteractive.astralibs.command.registerCommand
+import ru.astrainteractive.astralibs.command.registerTabCompleter
 import ru.astrainteractive.astratemplate.plugin.Permissions
 
 /**

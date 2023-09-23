@@ -3,7 +3,7 @@ package ru.astrainteractive.astratemplate.plugin
 import org.bukkit.plugin.Plugin
 import ru.astrainteractive.astralibs.filemanager.DefaultSpigotFileManager
 import ru.astrainteractive.astralibs.filemanager.SpigotFileManager
-import ru.astrainteractive.astralibs.utils.BaseTranslation
+import ru.astrainteractive.astralibs.util.BaseTranslation
 
 /**
  * All translation stored here

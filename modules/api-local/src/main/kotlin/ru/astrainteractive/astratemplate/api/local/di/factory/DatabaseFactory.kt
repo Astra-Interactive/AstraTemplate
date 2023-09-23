@@ -1,4 +1,4 @@
-package ru.astrainteractive.astratemplate.api.local.di
+package ru.astrainteractive.astratemplate.api.local.di.factory
 
 import kotlinx.coroutines.runBlocking
 import ru.astrainteractive.astralibs.orm.DBConnection

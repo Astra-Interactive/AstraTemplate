@@ -2,7 +2,7 @@ package ru.astrainteractive.astratemplate.event.events
 
 import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.entity.EntityDamageEvent
-import ru.astrainteractive.astralibs.events.DSLEvent
+import ru.astrainteractive.astralibs.event.DSLEvent
 import ru.astrainteractive.astratemplate.event.di.EventModule
 
 /**

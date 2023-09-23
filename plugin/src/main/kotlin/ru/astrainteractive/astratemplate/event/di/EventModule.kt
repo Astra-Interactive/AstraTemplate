@@ -1,7 +1,7 @@
 package ru.astrainteractive.astratemplate.event.di
 
 import org.bukkit.plugin.Plugin
-import ru.astrainteractive.astralibs.events.EventListener
+import ru.astrainteractive.astralibs.event.EventListener
 import ru.astrainteractive.astratemplate.plugin.Translation
 
 interface EventModule {

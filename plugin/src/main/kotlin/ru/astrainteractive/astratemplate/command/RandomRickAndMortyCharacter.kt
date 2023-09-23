@@ -2,7 +2,7 @@ package ru.astrainteractive.astratemplate.command
 
 import CommandManager
 import kotlinx.coroutines.launch
-import ru.astrainteractive.astralibs.commands.registerCommand
+import ru.astrainteractive.astralibs.command.registerCommand
 import ru.astrainteractive.klibs.kdi.getValue
 
 fun CommandManager.randomRickAndMortyCharacter() = plugin.registerCommand("rickandmorty") {

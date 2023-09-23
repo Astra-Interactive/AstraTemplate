@@ -1,6 +1,6 @@
 package ru.astrainteractive.astratemplate.plugin
 
-import ru.astrainteractive.astralibs.utils.Permission
+import ru.astrainteractive.astralibs.util.Permission
 
 /**
  * Permissions sealed itnerface

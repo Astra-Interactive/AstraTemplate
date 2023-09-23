@@ -8,14 +8,13 @@ import org.jetbrains.kotlin.tooling.core.UnsafeApi
 import ru.astrainteractive.astralibs.async.AsyncComponent
 import ru.astrainteractive.astralibs.async.DefaultBukkitDispatchers
 import ru.astrainteractive.astralibs.configloader.ConfigLoader
-import ru.astrainteractive.astralibs.http.HttpClient
 import ru.astrainteractive.astralibs.logging.Logger
 import ru.astrainteractive.astralibs.orm.Database
-import ru.astrainteractive.astralibs.utils.buildWithSpigot
+import ru.astrainteractive.astralibs.util.buildWithSpigot
 import ru.astrainteractive.astratemplate.AstraTemplate
-import ru.astrainteractive.astratemplate.api.local.di.DatabaseFactory
-import ru.astrainteractive.astratemplate.api.local.di.LocalApiFactory
-import ru.astrainteractive.astratemplate.api.remote.di.RickMortyApiFactory
+import ru.astrainteractive.astratemplate.api.local.di.factory.DatabaseFactory
+import ru.astrainteractive.astratemplate.api.local.di.factory.LocalApiFactory
+import ru.astrainteractive.astratemplate.api.remote.di.factory.RickMortyApiFactory
 import ru.astrainteractive.astratemplate.di.FilesModule
 import ru.astrainteractive.astratemplate.di.RootModule
 import ru.astrainteractive.astratemplate.event.EventManager
@@ -52,7 +51,7 @@ internal class RootModuleImpl : RootModule {
         val configuration = configLoader.toClassOrDefault(configFile.configFile, ::MainConfiguration)
         if (!configFile.configFile.exists()) {
             configFile.configFile.createNewFile()
-            configFile.configFile.writeText(configLoader.defaultYaml.encodeToString(configuration))
+            configFile.configFile.writeText(configLoader.yaml.encodeToString(configuration))
         }
         configuration
     }
@@ -68,7 +67,7 @@ internal class RootModuleImpl : RootModule {
     }
 
     override val rmApiModule = Single {
-        RickMortyApiFactory(HttpClient).create()
+        RickMortyApiFactory().create()
     }
 
     override val localApiModule = Single {

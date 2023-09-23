@@ -5,9 +5,9 @@ import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
-import ru.astrainteractive.astralibs.commands.registerCommand
-import ru.astrainteractive.astralibs.commands.registerTabCompleter
-import ru.astrainteractive.astralibs.utils.withEntry
+import ru.astrainteractive.astralibs.command.registerCommand
+import ru.astrainteractive.astralibs.command.registerTabCompleter
+import ru.astrainteractive.astralibs.util.withEntry
 
 fun CommandManager.addCommandCompleter() = plugin.registerTabCompleter("add") {
     when (args.size) {

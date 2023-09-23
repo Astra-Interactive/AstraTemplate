@@ -4,7 +4,7 @@ import CommandManager
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.bukkit.entity.Player
-import ru.astrainteractive.astralibs.commands.registerCommand
+import ru.astrainteractive.astralibs.command.registerCommand
 
 fun CommandManager.tempGUI() = plugin.registerCommand("atempgui") {
     val player = sender as? Player ?: return@registerCommand
