@@ -5,6 +5,7 @@ import ru.astrainteractive.astratemplate.api.local.entity.UserRatingDAO
 import ru.astrainteractive.klibs.mikro.core.domain.Mapper
 
 interface RatingMapper : Mapper<UserRatingDAO, RatingDTO>
+
 object RatingMapperImpl : RatingMapper {
     override fun fromDTO(it: RatingDTO): UserRatingDAO {
         throw NotImplementedError()

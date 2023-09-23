@@ -10,6 +10,7 @@ object UserRatingTable : Table<Int>("rating") {
     val userID = integer("user_id")
     val reason = text("reason")
 }
+
 class UserRatingDAO : Entity<Int>(UserRatingTable) {
     val id by UserRatingTable.id
     val userID by UserRatingTable.userID
