@@ -1,4 +1,4 @@
-package ru.astrainteractive.astratemplate.event.events
+package ru.astrainteractive.astratemplate.event.event
 
 import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.entity.EntityDamageEvent

@@ -1,4 +1,4 @@
-package ru.astrainteractive.astratemplate.api.remote.models
+package ru.astrainteractive.astratemplate.api.remote.model
 
 import kotlinx.serialization.Serializable
 

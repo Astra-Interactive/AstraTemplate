@@ -1,4 +1,4 @@
-package ru.astrainteractive.astratemplate.api.local.entities
+package ru.astrainteractive.astratemplate.api.local.entity
 
 import ru.astrainteractive.astralibs.orm.database.Column
 import ru.astrainteractive.astralibs.orm.database.Constructable

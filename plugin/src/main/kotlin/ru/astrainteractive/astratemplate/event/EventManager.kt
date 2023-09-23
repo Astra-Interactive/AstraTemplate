@@ -3,9 +3,9 @@ package ru.astrainteractive.astratemplate.event
 import org.bukkit.plugin.Plugin
 import ru.astrainteractive.astralibs.event.EventListener
 import ru.astrainteractive.astratemplate.event.di.EventModule
-import ru.astrainteractive.astratemplate.event.events.BetterAnotherEvent
-import ru.astrainteractive.astratemplate.event.events.MultipleEventsDSL
-import ru.astrainteractive.astratemplate.event.events.TemplateEvent
+import ru.astrainteractive.astratemplate.event.event.BetterAnotherEvent
+import ru.astrainteractive.astratemplate.event.event.MultipleEventsDSL
+import ru.astrainteractive.astratemplate.event.event.TemplateEvent
 
 /**
  * Handler for all your events

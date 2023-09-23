@@ -12,11 +12,13 @@ import ru.astrainteractive.astralibs.logging.Logger
 import ru.astrainteractive.astralibs.orm.Database
 import ru.astrainteractive.astralibs.util.buildWithSpigot
 import ru.astrainteractive.astratemplate.AstraTemplate
-import ru.astrainteractive.astratemplate.api.local.di.factory.DatabaseFactory
-import ru.astrainteractive.astratemplate.api.local.di.factory.LocalApiFactory
-import ru.astrainteractive.astratemplate.api.remote.di.factory.RickMortyApiFactory
+import ru.astrainteractive.astratemplate.api.local.mapping.RatingMapperImpl
+import ru.astrainteractive.astratemplate.api.local.mapping.UserMapperImpl
 import ru.astrainteractive.astratemplate.di.FilesModule
 import ru.astrainteractive.astratemplate.di.RootModule
+import ru.astrainteractive.astratemplate.di.factory.DatabaseFactory
+import ru.astrainteractive.astratemplate.di.factory.LocalApiFactory
+import ru.astrainteractive.astratemplate.di.factory.RickMortyApiFactory
 import ru.astrainteractive.astratemplate.event.EventManager
 import ru.astrainteractive.astratemplate.plugin.MainConfiguration
 import ru.astrainteractive.astratemplate.plugin.Translation
@@ -71,8 +73,11 @@ internal class RootModuleImpl : RootModule {
     }
 
     override val localApiModule = Single {
-        val localApiModule = LocalApiModuleImpl(this)
-        LocalApiFactory(localApiModule).create()
+        LocalApiFactory(
+            database = database.value,
+            ratingMapper = RatingMapperImpl,
+            userMapper = UserMapperImpl
+        ).create()
     }
 
     override val eventHandlerModule = Single {

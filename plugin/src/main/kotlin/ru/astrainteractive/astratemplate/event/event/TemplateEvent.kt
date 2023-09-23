@@ -1,4 +1,4 @@
-package ru.astrainteractive.astratemplate.event.events
+package ru.astrainteractive.astratemplate.event.event
 
 import org.bukkit.event.EventHandler
 import org.bukkit.event.HandlerList
