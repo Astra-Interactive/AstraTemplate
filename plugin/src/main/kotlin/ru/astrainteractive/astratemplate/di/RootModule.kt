@@ -8,7 +8,9 @@ import ru.astrainteractive.astralibs.logging.Logger
 import ru.astrainteractive.astralibs.orm.Database
 import ru.astrainteractive.astratemplate.AstraTemplate
 import ru.astrainteractive.astratemplate.api.local.LocalApi
+import ru.astrainteractive.astratemplate.api.local.di.ApiLocalModule
 import ru.astrainteractive.astratemplate.api.remote.RickMortyApi
+import ru.astrainteractive.astratemplate.api.remote.di.ApiRemoteModule
 import ru.astrainteractive.astratemplate.event.EventManager
 import ru.astrainteractive.astratemplate.plugin.MainConfiguration
 import ru.astrainteractive.astratemplate.plugin.Translation
@@ -19,17 +21,13 @@ import ru.astrainteractive.klibs.kdi.Reloadable
 import ru.astrainteractive.klibs.kdi.Single
 
 interface RootModule : Module {
-    val plugin: Lateinit<AstraTemplate>
-    val configLoader: Single<ConfigLoader>
-    val logger: Dependency<Logger>
-    val bukkitDispatchers: Dependency<BukkitDispatchers>
-    val filesModule: FilesModule
-    val pluginScope: Dependency<AsyncComponent>
-    val configurationModule: Reloadable<MainConfiguration>
-    val translation: Reloadable<Translation>
-    val database: Single<Database>
-    val rmApiModule: Dependency<RickMortyApi>
-    val localApiModule: Dependency<LocalApi>
+    val servicesModule: ServicesModule
+
+    val apiLocalModule: ApiLocalModule
+
+    val apiRemoteModule: ApiRemoteModule
+
     val eventHandlerModule: Dependency<EventManager>
+
     val commandManager: Dependency<CommandManager>
 }

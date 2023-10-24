@@ -14,6 +14,6 @@ internal class EventModuleImpl(
 ) : EventModule {
 
     override val eventListener by Single { GlobalEventListener }
-    override val plugin by rootModule.plugin
-    override val translation by rootModule.translation
+    override val plugin by rootModule.servicesModule.plugin
+    override val translation by rootModule.servicesModule.translation
 }
