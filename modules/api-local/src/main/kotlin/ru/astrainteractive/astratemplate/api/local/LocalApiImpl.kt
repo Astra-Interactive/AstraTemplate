@@ -56,4 +56,5 @@ internal class LocalApiImpl(
     override suspend fun getAllUsers(): List<UserDTO> {
         return UserTable.all(database, UserDAO).map(userMapper::toDTO)
     }
+
 }

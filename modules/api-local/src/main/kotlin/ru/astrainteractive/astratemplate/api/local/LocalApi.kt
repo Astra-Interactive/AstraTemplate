@@ -20,15 +20,4 @@ interface LocalApi {
 
     suspend fun getAllUsers(): List<UserDTO>
 
-    companion object {
-        fun LocalApi(
-            database: Database,
-            ratingMapper: RatingMapper,
-            userMapper: UserMapper
-        ): LocalApi = LocalApiImpl(
-            database = database,
-            ratingMapper = ratingMapper,
-            userMapper = userMapper
-        )
-    }
 }
