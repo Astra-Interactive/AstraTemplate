@@ -1,3 +1,3 @@
 plugins {
-    id("basic-java")
+    kotlin("jvm")
 }

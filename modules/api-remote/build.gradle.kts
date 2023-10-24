@@ -1,5 +1,5 @@
 plugins {
-    id("basic-java")
+    kotlin("jvm")
 }
 dependencies {
     // Kotlin

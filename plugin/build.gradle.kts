@@ -1,7 +1,5 @@
 plugins {
-    id("spigot-resource-processor")
-    id("spigot-shadow")
-    id("basic-java")
+    kotlin("jvm")
 }
 
 dependencies {
