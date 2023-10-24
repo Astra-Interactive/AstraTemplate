@@ -18,7 +18,7 @@ minecraft-protocollib = "4.8.0"
 minecraft-wg = "7.0.7"
 minecraft-vault = "1.7"
 minecraft-coreprotect = "21.2"
-minecraft-astralibs = "2.11.0"
+minecraft-astralibs = "2.12.1"
 minecraft-bstats = "3.0.0"
 minecraft-mockbukkit = "v1.19-SNAPSHOT"
 

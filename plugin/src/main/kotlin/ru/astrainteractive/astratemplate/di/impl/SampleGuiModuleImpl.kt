@@ -11,8 +11,8 @@ internal class SampleGuiModuleImpl(
     private val rootModule: RootModule
 ) : SampleGuiModule {
 
-    override val translation by rootModule.servicesModule.translation
-    override val dispatchers by rootModule.servicesModule.bukkitDispatchers
+    override val translation by rootModule.bukkitModule.translation
+    override val dispatchers by rootModule.bukkitModule.bukkitDispatchers
     override val viewModelFactory: Factory<SampleGUIViewModel> = Factory {
         val localApi = rootModule.apiLocalModule.localApi
         SampleGUIViewModel(localApi, ItemStackSpigotAPI)

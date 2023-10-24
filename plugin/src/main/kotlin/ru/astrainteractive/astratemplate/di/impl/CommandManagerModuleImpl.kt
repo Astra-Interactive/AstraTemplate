@@ -17,11 +17,11 @@ internal class CommandManagerModuleImpl(
     rootModule: RootModule
 ) : CommandManagerModule {
 
-    override val plugin by rootModule.servicesModule.plugin
-    override val translation by rootModule.servicesModule.translation
+    override val plugin by rootModule.bukkitModule.plugin
+    override val translation by rootModule.bukkitModule.translation
     override val rmApi = rootModule.apiRemoteModule.rickMortyApi
-    override val pluginScope by rootModule.servicesModule.pluginScope
-    override val dispatchers by rootModule.servicesModule.bukkitDispatchers
+    override val pluginScope by rootModule.bukkitModule.pluginScope
+    override val dispatchers by rootModule.bukkitModule.bukkitDispatchers
     override val randomIntProvider: Provider<Int> = Provider { Random.nextInt(1, 100) }
     private val sampleGuiModule by Provider {
         SampleGuiModuleImpl(rootModule)

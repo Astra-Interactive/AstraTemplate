@@ -51,6 +51,7 @@ rootProject.name = "AstraTemplate"
 include("modules:dto")
 include("modules:api-remote")
 include("modules:api-local")
+include("modules:shared")
 // Spigot
 include("plugin")
 // Fabric
