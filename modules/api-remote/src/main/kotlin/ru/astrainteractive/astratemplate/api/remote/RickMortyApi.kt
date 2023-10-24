@@ -1,7 +1,6 @@
 package ru.astrainteractive.astratemplate.api.remote
 
 import ru.astrainteractive.astratemplate.api.remote.model.RMResponse
-import java.net.http.HttpClient
 
 interface RickMortyApi {
     /**
@@ -10,11 +9,4 @@ interface RickMortyApi {
      */
     suspend fun getRandomCharacter(id: Int): Result<RMResponse>
 
-    companion object {
-        fun RickMortyApi(
-            httpClient: HttpClient
-        ): RickMortyApi = RickMortyApiImpl(
-            httpClient = httpClient
-        )
-    }
 }
