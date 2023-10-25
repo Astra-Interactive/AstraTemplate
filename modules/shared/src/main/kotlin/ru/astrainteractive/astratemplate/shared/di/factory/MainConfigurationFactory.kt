@@ -7,7 +7,7 @@ import ru.astrainteractive.astratemplate.shared.core.MainConfiguration
 import ru.astrainteractive.klibs.kdi.Factory
 import java.io.File
 
-class MainConfigurationFactory(
+internal class MainConfigurationFactory(
     private val dataFolder: File,
     private val yamlSerializer: YamlSerializer
 ) : Factory<MainConfiguration> {

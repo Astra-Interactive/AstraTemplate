@@ -14,8 +14,8 @@ import ru.astrainteractive.astralibs.menu.menu.InventorySlot
 import ru.astrainteractive.astralibs.menu.menu.MenuSize
 import ru.astrainteractive.astralibs.menu.menu.PaginatedMenu
 import ru.astrainteractive.astratemplate.api.dto.UserDTO
-import ru.astrainteractive.astratemplate.gui.di.SampleGuiDependencies
 import ru.astrainteractive.astratemplate.gui.SampleGuiComponent.Model
+import ru.astrainteractive.astratemplate.gui.di.SampleGuiDependencies
 
 class SampleGUI(
     player: Player,

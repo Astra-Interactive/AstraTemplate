@@ -9,7 +9,7 @@ import ru.astrainteractive.astratemplate.api.local.entity.UserRatingTable
 import ru.astrainteractive.astratemplate.api.local.entity.UserTable
 import ru.astrainteractive.klibs.kdi.Factory
 
-class DatabaseFactory(
+internal class DatabaseFactory(
     private val path: String
 ) : Factory<Database> {
     override fun create(): Database = runBlocking {
