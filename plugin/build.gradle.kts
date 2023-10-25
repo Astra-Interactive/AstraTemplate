@@ -16,9 +16,9 @@ dependencies {
     compileOnly(libs.minecraft.paper.api)
     implementation(libs.minecraft.bstats)
     // Test
-    testImplementation(platform(libs.tests.junit.bom))
-    testImplementation(libs.bundles.testing.libs)
-    testImplementation(libs.bundles.testing.kotlin)
+//    testImplementation(platform(libs.tests.junit.bom))
+//    testImplementation(libs.bundles.testing.libs)
+//    testImplementation(libs.bundles.testing.kotlin)
 //    testImplementation(libs.minecraft.mockbukkit)
     // Local
     implementation(projects.modules.apiLocal)

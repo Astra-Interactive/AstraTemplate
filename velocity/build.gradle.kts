@@ -1,7 +1,9 @@
+import ru.astrainteractive.gradleplugin.util.ProjectProperties.projectInfo
+
 plugins {
     kotlin("jvm")
     alias(libs.plugins.gradle.shadow)
-//    alias(libs.plugins.gradle.buildconfig)
+    alias(libs.plugins.gradle.buildconfig)
 }
 
 dependencies {
@@ -14,20 +16,22 @@ dependencies {
     // Velocity
     compileOnly(libs.minecraft.velocity.api)
     annotationProcessor(libs.minecraft.velocity.api)
+    // Local
+    implementation(projects.modules.shared)
 }
 
-// buildConfig {
-//    className("BuildKonfig")
-//    packageName(libs.versions.plugin.group.get())
-//    fun buildConfigStringField(name: String, value: String) {
-//        buildConfigField("String", name, "\"${value}\"")
-//    }
-// //    buildConfigStringField("id", info.id)
-// //    buildConfigStringField("name", info.name)
-// //    buildConfigStringField("version", info.version)
-// //    buildConfigStringField("url", info.url)
-// //    buildConfigStringField("description", info.description)
-// //    info.authors.forEachIndexed { i, dev ->
-// //        buildConfigStringField("author_$i", dev)
-// //    }
-// }
+buildConfig {
+    className("BuildKonfig")
+    packageName(projectInfo.group)
+    fun buildConfigStringField(name: String, value: String) {
+        buildConfigField("String", name, "\"${value}\"")
+    }
+    buildConfigStringField("id", projectInfo.name.lowercase())
+    buildConfigStringField("name", projectInfo.name)
+    buildConfigStringField("version", projectInfo.versionString)
+    buildConfigStringField("url", projectInfo.url)
+    buildConfigStringField("description", projectInfo.description)
+    projectInfo.developersList.forEachIndexed { i, dev ->
+        buildConfigStringField("author_$i", dev.id)
+    }
+}
