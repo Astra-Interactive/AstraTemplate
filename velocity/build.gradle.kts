@@ -1,3 +1,5 @@
+import ru.astrainteractive.gradleplugin.setupSpigotShadow
+import ru.astrainteractive.gradleplugin.setupVelocityProcessor
 import ru.astrainteractive.gradleplugin.util.ProjectProperties.projectInfo
 
 plugins {
@@ -35,3 +37,6 @@ buildConfig {
         buildConfigStringField("author_$i", dev.id)
     }
 }
+
+setupVelocityProcessor()
+setupSpigotShadow()

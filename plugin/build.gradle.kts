@@ -1,3 +1,6 @@
+import ru.astrainteractive.gradleplugin.setupSpigotProcessor
+import ru.astrainteractive.gradleplugin.setupSpigotShadow
+
 plugins {
     kotlin("jvm")
 }
@@ -26,3 +29,6 @@ dependencies {
     implementation(projects.modules.dto)
     implementation(projects.modules.shared)
 }
+
+setupSpigotProcessor()
+setupSpigotShadow()
