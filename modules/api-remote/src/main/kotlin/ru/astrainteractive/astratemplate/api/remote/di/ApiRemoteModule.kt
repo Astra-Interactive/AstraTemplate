@@ -1,11 +1,11 @@
 package ru.astrainteractive.astratemplate.api.remote.di
 
-import java.net.http.HttpClient
 import ru.astrainteractive.astratemplate.api.remote.RickMortyApi
 import ru.astrainteractive.astratemplate.api.remote.RickMortyApiImpl
 import ru.astrainteractive.klibs.kdi.Provider
 import ru.astrainteractive.klibs.kdi.Single
 import ru.astrainteractive.klibs.kdi.getValue
+import java.net.http.HttpClient
 
 interface ApiRemoteModule {
     val httpClient: HttpClient
@@ -20,7 +20,5 @@ interface ApiRemoteModule {
         override val rickMortyApi: RickMortyApi by Provider {
             RickMortyApiImpl(httpClient)
         }
-
     }
-
 }

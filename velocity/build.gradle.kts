@@ -16,18 +16,18 @@ dependencies {
     annotationProcessor(libs.minecraft.velocity.api)
 }
 
-//buildConfig {
+// buildConfig {
 //    className("BuildKonfig")
 //    packageName(libs.versions.plugin.group.get())
 //    fun buildConfigStringField(name: String, value: String) {
 //        buildConfigField("String", name, "\"${value}\"")
 //    }
-////    buildConfigStringField("id", info.id)
-////    buildConfigStringField("name", info.name)
-////    buildConfigStringField("version", info.version)
-////    buildConfigStringField("url", info.url)
-////    buildConfigStringField("description", info.description)
-////    info.authors.forEachIndexed { i, dev ->
-////        buildConfigStringField("author_$i", dev)
-////    }
-//}
+// //    buildConfigStringField("id", info.id)
+// //    buildConfigStringField("name", info.name)
+// //    buildConfigStringField("version", info.version)
+// //    buildConfigStringField("url", info.url)
+// //    buildConfigStringField("description", info.description)
+// //    info.authors.forEachIndexed { i, dev ->
+// //        buildConfigStringField("author_$i", dev)
+// //    }
+// }

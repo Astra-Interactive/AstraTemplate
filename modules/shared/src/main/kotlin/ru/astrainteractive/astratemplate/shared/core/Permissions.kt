@@ -2,7 +2,6 @@ package ru.astrainteractive.astratemplate.shared.core
 
 import ru.astrainteractive.astralibs.permission.Permission
 
-
 /**
  * Permissions sealed itnerface
  */

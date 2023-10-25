@@ -1,6 +1,5 @@
 package ru.astrainteractive.astratemplate.shared.di
 
-import java.io.File
 import ru.astrainteractive.astralibs.async.AsyncComponent
 import ru.astrainteractive.astralibs.logging.JUtilLogger
 import ru.astrainteractive.astralibs.logging.Logger
@@ -12,6 +11,7 @@ import ru.astrainteractive.astratemplate.shared.di.factory.TranslationFactory
 import ru.astrainteractive.klibs.kdi.Dependency
 import ru.astrainteractive.klibs.kdi.Reloadable
 import ru.astrainteractive.klibs.kdi.Single
+import java.io.File
 
 interface SharedModule {
 

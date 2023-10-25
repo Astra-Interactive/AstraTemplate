@@ -38,5 +38,4 @@ interface ApiLocalModule {
             )
         }
     }
-
 }

@@ -8,5 +8,4 @@ interface RickMortyApi {
      * @param id - id of the character
      */
     suspend fun getRandomCharacter(id: Int): Result<RMResponse>
-
 }

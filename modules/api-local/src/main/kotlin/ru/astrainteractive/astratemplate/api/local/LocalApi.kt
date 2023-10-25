@@ -1,10 +1,7 @@
 package ru.astrainteractive.astratemplate.api.local
 
-import ru.astrainteractive.astralibs.orm.Database
 import ru.astrainteractive.astratemplate.api.dto.RatingDTO
 import ru.astrainteractive.astratemplate.api.dto.UserDTO
-import ru.astrainteractive.astratemplate.api.local.mapping.RatingMapper
-import ru.astrainteractive.astratemplate.api.local.mapping.UserMapper
 
 interface LocalApi {
 
@@ -19,5 +16,4 @@ interface LocalApi {
     suspend fun deleteUser(user: UserDTO)
 
     suspend fun getAllUsers(): List<UserDTO>
-
 }

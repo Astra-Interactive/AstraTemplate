@@ -1,5 +1,6 @@
 package ru.astrainteractive.astratemplate.gui
 
+import net.kyori.adventure.text.Component
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryClickEvent
@@ -13,13 +14,13 @@ import ru.astrainteractive.astralibs.menu.menu.InventorySlot
 import ru.astrainteractive.astralibs.menu.menu.MenuSize
 import ru.astrainteractive.astralibs.menu.menu.PaginatedMenu
 import ru.astrainteractive.astratemplate.api.dto.UserDTO
-import ru.astrainteractive.astratemplate.gui.di.SampleGuiModule
+import ru.astrainteractive.astratemplate.gui.di.SampleGuiDependencies
 import ru.astrainteractive.astratemplate.gui.store.InventoryStore.State
 
 class SampleGUI(
     player: Player,
-    module: SampleGuiModule
-) : PaginatedMenu(), SampleGuiModule by module {
+    module: SampleGuiDependencies
+) : PaginatedMenu(), SampleGuiDependencies by module {
     private val viewModel = module.viewModelFactory.create()
 
     private val clickListener = MenuClickListener()
@@ -31,7 +32,7 @@ class SampleGUI(
     }
 
     override val playerHolder: PlayerHolder = DefaultPlayerHolder(player)
-    override var menuTitle: String = translation.menu.menuTitle
+    override var menuTitle: Component = kyoriComponentSerializer.toComponent(translation.menu.menuTitle)
     override val menuSize: MenuSize = MenuSize.XL
     override var maxItemsPerPage: Int = 45
     override var page: Int = 0
@@ -101,7 +102,7 @@ class SampleGUI(
         clickListener.clearClickListener()
         changeModeButton.apply {
             clickListener.remember(this)
-            setInventoryButton()
+            setInventorySlot()
         }
 
         setManageButtons(clickListener)
@@ -112,7 +113,7 @@ class SampleGUI(
             }
 
             is State.Users -> {
-                addUserButton.setInventoryButton()
+                addUserButton.setInventorySlot()
                 clickListener.remember(addUserButton)
                 setUsers(state.users)
             }
@@ -147,7 +148,7 @@ class SampleGUI(
                 }
             }
             clickListener.remember(button)
-            button.setInventoryButton()
+            button.setInventorySlot()
         }
     }
 
@@ -166,7 +167,7 @@ class SampleGUI(
                 }
             }
             clickListener.remember(button)
-            button.setInventoryButton()
+            button.setInventorySlot()
         }
     }
 }

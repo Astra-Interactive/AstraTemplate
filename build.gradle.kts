@@ -23,7 +23,6 @@ plugins {
     alias(klibs.plugins.klibs.gradle.minecraft.multiplatform) apply false
 }
 
-
 apply(plugin = "ru.astrainteractive.gradleplugin.dokka.root")
 apply(plugin = "ru.astrainteractive.gradleplugin.detekt")
 apply(plugin = "ru.astrainteractive.gradleplugin.root.info")

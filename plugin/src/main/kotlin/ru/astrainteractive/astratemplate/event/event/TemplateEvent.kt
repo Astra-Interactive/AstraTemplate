@@ -5,15 +5,15 @@ import org.bukkit.event.HandlerList
 import org.bukkit.event.block.BlockPlaceEvent
 import ru.astrainteractive.astralibs.event.EventListener
 import ru.astrainteractive.astratemplate.AstraTemplate
-import ru.astrainteractive.astratemplate.event.di.EventModule
+import ru.astrainteractive.astratemplate.event.di.EventDependencies
 
 /**
  * Template event class
  * @see [MultipleEventsDSL]
  */
 class TemplateEvent(
-    module: EventModule
-) : EventListener, EventModule by module {
+    module: EventDependencies
+) : EventListener, EventDependencies by module {
 
     /**
      * Sample event which is called when Block is placed

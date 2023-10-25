@@ -2,7 +2,7 @@ package ru.astrainteractive.astratemplate.event
 
 import org.bukkit.plugin.Plugin
 import ru.astrainteractive.astralibs.event.EventListener
-import ru.astrainteractive.astratemplate.event.di.EventModule
+import ru.astrainteractive.astratemplate.event.di.EventDependencies
 import ru.astrainteractive.astratemplate.event.event.BetterAnotherEvent
 import ru.astrainteractive.astratemplate.event.event.MultipleEventsDSL
 import ru.astrainteractive.astratemplate.event.event.TemplateEvent
@@ -11,10 +11,10 @@ import ru.astrainteractive.astratemplate.event.event.TemplateEvent
  * Handler for all your events
  */
 class EventManager(
-    private val module: EventModule
+    private val dependencies: EventDependencies
 ) : EventListener {
     private val events = buildList {
-        TemplateEvent(module).also(::add)
+        TemplateEvent(dependencies).also(::add)
         BetterAnotherEvent().also(::add)
     }
 
@@ -22,7 +22,7 @@ class EventManager(
         super.onEnable(plugin)
         events.forEach { it.onEnable(plugin) }
         // DSL Events
-        MultipleEventsDSL(module)
+        MultipleEventsDSL(dependencies)
     }
 
     override fun onDisable() {

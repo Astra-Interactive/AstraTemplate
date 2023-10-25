@@ -1,3 +1,5 @@
+@file:Suppress("LongParameterList")
+
 package ru.astrainteractive.astratemplate.shared.core
 
 import kotlinx.serialization.SerialName
@@ -32,7 +34,7 @@ class Translation(
         @SerialName("getByByCheck")
         val getByByCheck: String = "#db2c18getByByCheck",
 
-        )
+    )
 
     class Menu(
         @SerialName("menu.title")
@@ -53,7 +55,6 @@ class Translation(
         val menuClose: String = "#18dbd1Закрыть"
     )
 
-
     class Custom(
         @SerialName("custom.block_placed")
         val blockPlaced: String = "#18dbd1Блок поставлен!",
@@ -64,5 +65,4 @@ class Translation(
         @SerialName("custom.damage_hint")
         val damageHint: String = "<amount>"
     )
-
 }

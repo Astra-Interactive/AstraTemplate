@@ -24,4 +24,5 @@ dependencies {
     implementation(projects.modules.apiLocal)
     implementation(projects.modules.apiRemote)
     implementation(projects.modules.dto)
+    implementation(projects.modules.shared)
 }
