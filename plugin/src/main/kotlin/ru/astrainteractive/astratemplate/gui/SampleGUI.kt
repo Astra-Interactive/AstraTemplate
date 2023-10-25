@@ -15,7 +15,7 @@ import ru.astrainteractive.astralibs.menu.menu.MenuSize
 import ru.astrainteractive.astralibs.menu.menu.PaginatedMenu
 import ru.astrainteractive.astratemplate.api.dto.UserDTO
 import ru.astrainteractive.astratemplate.gui.di.SampleGuiDependencies
-import ru.astrainteractive.astratemplate.gui.store.InventoryStore.State
+import ru.astrainteractive.astratemplate.gui.SampleGuiComponent.Model
 
 class SampleGUI(
     player: Player,
@@ -37,10 +37,10 @@ class SampleGUI(
     override var maxItemsPerPage: Int = 45
     override var page: Int = 0
     override val maxItemsAmount: Int
-        get() = when (val state = viewModel.inventoryState.value) {
-            is State.Items -> state.items.size
-            is State.Users -> state.users.size
-            State.Loading -> 0
+        get() = when (val state = viewModel.model.value) {
+            is Model.Items -> state.items.size
+            is Model.Users -> state.users.size
+            Model.Loading -> 0
         }
 
     private fun button(
@@ -59,10 +59,10 @@ class SampleGUI(
             click = Click {
                 viewModel.onModeChange()
             }
-            itemStack = when (viewModel.inventoryState.value) {
-                is State.Items -> createItemStackWithName(Material.SUNFLOWER, "Items")
-                State.Loading -> createItemStackWithName(Material.SUNFLOWER, "Loading")
-                is State.Users -> createItemStackWithName(Material.SUNFLOWER, "Users")
+            itemStack = when (viewModel.model.value) {
+                is Model.Items -> createItemStackWithName(Material.SUNFLOWER, "Items")
+                Model.Loading -> createItemStackWithName(Material.SUNFLOWER, "Loading")
+                is Model.Users -> createItemStackWithName(Material.SUNFLOWER, "Users")
             }
         }
 
@@ -84,7 +84,7 @@ class SampleGUI(
     }
 
     override fun onPageChanged() {
-        onStateChanged()
+        onModelChanged()
     }
 
     override fun onInventoryClicked(e: InventoryClickEvent) {
@@ -94,10 +94,10 @@ class SampleGUI(
 
     override fun onCreated() {
         viewModel.onUiCreated()
-        viewModel.inventoryState.collectOn(dispatchers.BukkitMain, ::onStateChanged)
+        viewModel.model.collectOn(dispatchers.BukkitMain, ::onModelChanged)
     }
 
-    private fun onStateChanged(state: State = viewModel.inventoryState.value) {
+    private fun onModelChanged(state: Model = viewModel.model.value) {
         inventory.clear()
         clickListener.clearClickListener()
         changeModeButton.apply {
@@ -108,17 +108,17 @@ class SampleGUI(
         setManageButtons(clickListener)
 
         when (state) {
-            is State.Items -> {
+            is Model.Items -> {
                 setItemStacks(state.items)
             }
 
-            is State.Users -> {
+            is Model.Users -> {
                 addUserButton.setInventorySlot()
                 clickListener.remember(addUserButton)
                 setUsers(state.users)
             }
 
-            State.Loading -> {}
+            Model.Loading -> {}
         }
     }
 
