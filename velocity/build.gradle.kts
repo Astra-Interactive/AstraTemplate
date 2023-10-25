@@ -39,4 +39,6 @@ buildConfig {
 }
 
 setupVelocityProcessor()
-setupSpigotShadow()
+setupSpigotShadow {
+    archiveBaseName.set("${projectInfo.name}-velocity")
+}

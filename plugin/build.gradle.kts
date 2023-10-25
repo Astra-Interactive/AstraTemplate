@@ -1,5 +1,6 @@
 import ru.astrainteractive.gradleplugin.setupSpigotProcessor
 import ru.astrainteractive.gradleplugin.setupSpigotShadow
+import ru.astrainteractive.gradleplugin.util.ProjectProperties.projectInfo
 
 plugins {
     kotlin("jvm")
@@ -31,4 +32,6 @@ dependencies {
 }
 
 setupSpigotProcessor()
-setupSpigotShadow()
+setupSpigotShadow {
+    archiveBaseName.set("${projectInfo.name}-bukkit")
+}

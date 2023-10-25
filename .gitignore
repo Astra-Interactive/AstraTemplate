@@ -4,6 +4,7 @@
 astra.properties
 local.properties
 build
+jars
 # build-logic
 build-logic/.gradle
 build-logic/plugins/convention/build
