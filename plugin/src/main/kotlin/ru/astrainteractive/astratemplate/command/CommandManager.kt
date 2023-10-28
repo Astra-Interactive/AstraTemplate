@@ -1,3 +1,4 @@
+import ru.astrainteractive.astralibs.string.BukkitTranslationContext
 import ru.astrainteractive.astratemplate.command.addCommand
 import ru.astrainteractive.astratemplate.command.addCommandCompleter
 import ru.astrainteractive.astratemplate.command.damageCommand
@@ -13,7 +14,10 @@ import ru.astrainteractive.astratemplate.command.translation
  * Command handler for your plugin
  * It's better to create different executors for different commands
  */
-class CommandManager(module: CommandManagerDependencies) : CommandManagerDependencies by module {
+class CommandManager(
+    module: CommandManagerDependencies
+) : CommandManagerDependencies by module,
+    BukkitTranslationContext by module.bukkitTranslationContext {
     /**
      * Here you should declare commands for your plugin
      *

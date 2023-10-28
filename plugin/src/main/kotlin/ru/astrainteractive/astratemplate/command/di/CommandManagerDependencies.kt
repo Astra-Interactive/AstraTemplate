@@ -4,6 +4,7 @@ import org.bukkit.entity.Player
 import ru.astrainteractive.astralibs.async.AsyncComponent
 import ru.astrainteractive.astralibs.async.BukkitDispatchers
 import ru.astrainteractive.astralibs.permission.PermissionManager
+import ru.astrainteractive.astralibs.string.BukkitTranslationContext
 import ru.astrainteractive.astratemplate.AstraTemplate
 import ru.astrainteractive.astratemplate.api.remote.RickMortyApi
 import ru.astrainteractive.astratemplate.di.RootModule
@@ -23,6 +24,7 @@ interface CommandManagerDependencies {
     val dispatchers: BukkitDispatchers
     val randomIntProvider: Provider<Int>
     val permissionManager: PermissionManager
+    val bukkitTranslationContext: BukkitTranslationContext
 
     fun sampleGuiFactory(player: Player): Factory<SampleGUI>
 
@@ -35,7 +37,7 @@ interface CommandManagerDependencies {
         override val randomIntProvider: Provider<Int> = Provider { Random.nextInt(1, 100) }
 
         override val permissionManager: PermissionManager by rootModule.bukkitModule.permissionManager
-
+        override val bukkitTranslationContext by rootModule.bukkitModule.bukkitTranslationContext
         private val sampleGuiDependencies by Provider {
             SampleGuiDependencies.Default(rootModule)
         }

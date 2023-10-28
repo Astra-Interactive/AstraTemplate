@@ -16,7 +16,7 @@ fun CommandManager.damageCompleter() = plugin.registerTabCompleter("adamage") {
     when (args.size) {
         0 -> listOf("adamage")
         1 -> Bukkit.getOnlinePlayers().map { it.name }
-        2 -> listOf(translation.custom.damageHint)
+        2 -> listOf(translation.custom.damageHint.raw)
         else -> Bukkit.getOnlinePlayers().map { it.name }
     }
 }
@@ -34,5 +34,5 @@ fun CommandManager.damageCommand() = plugin.registerCommand("adamage") {
     val damage = argument(1) { it.toIntOrNull() ?: 1 }
         .resultOrNull() ?: return@registerCommand
     player.damage(damage.toDouble())
-    player.sendMessage(translation.custom.damaged.replace("%player%", sender.name))
+    player.sendMessage(translation.custom.damaged)
 }

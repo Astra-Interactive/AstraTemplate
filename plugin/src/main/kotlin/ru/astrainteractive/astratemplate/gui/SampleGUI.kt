@@ -13,6 +13,8 @@ import ru.astrainteractive.astralibs.menu.holder.PlayerHolder
 import ru.astrainteractive.astralibs.menu.menu.InventorySlot
 import ru.astrainteractive.astralibs.menu.menu.MenuSize
 import ru.astrainteractive.astralibs.menu.menu.PaginatedMenu
+import ru.astrainteractive.astralibs.string.BukkitTranslationContext
+import ru.astrainteractive.astralibs.string.StringDesc
 import ru.astrainteractive.astratemplate.api.dto.UserDTO
 import ru.astrainteractive.astratemplate.gui.SampleGuiComponent.Model
 import ru.astrainteractive.astratemplate.gui.di.SampleGuiDependencies
@@ -20,19 +22,25 @@ import ru.astrainteractive.astratemplate.gui.di.SampleGuiDependencies
 class SampleGUI(
     player: Player,
     module: SampleGuiDependencies
-) : PaginatedMenu(), SampleGuiDependencies by module {
+) : PaginatedMenu(),
+    SampleGuiDependencies by module,
+    BukkitTranslationContext by module.bukkitTranslationContext {
     private val viewModel = module.viewModelFactory.create()
 
     private val clickListener = MenuClickListener()
 
-    fun createItemStackWithName(material: Material, name: String) = ItemStack(material).apply {
+    private fun createItemStackWithName(material: Material, name: String): ItemStack {
+        return createItemStackWithName(material, StringDesc.Raw(name))
+    }
+
+    private fun createItemStackWithName(material: Material, name: StringDesc) = ItemStack(material).apply {
         val meta = itemMeta
-        meta.setDisplayName(name)
+        meta.displayName(name.toComponent())
         itemMeta = meta
     }
 
     override val playerHolder: PlayerHolder = DefaultPlayerHolder(player)
-    override var menuTitle: Component = kyoriComponentSerializer.toComponent(translation.menu.menuTitle)
+    override var menuTitle: Component = translation.menu.menuTitle.toComponent()
     override val menuSize: MenuSize = MenuSize.XL
     override var maxItemsPerPage: Int = 45
     override var page: Int = 0

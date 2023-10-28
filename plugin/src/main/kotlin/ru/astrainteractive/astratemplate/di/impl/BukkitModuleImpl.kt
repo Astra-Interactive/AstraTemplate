@@ -7,6 +7,7 @@ import ru.astrainteractive.astralibs.menu.event.DefaultInventoryClickEvent
 import ru.astrainteractive.astralibs.permission.BukkitPermissionManager
 import ru.astrainteractive.astralibs.permission.PermissionManager
 import ru.astrainteractive.astralibs.serialization.KyoriComponentSerializer
+import ru.astrainteractive.astralibs.string.BukkitTranslationContext
 import ru.astrainteractive.astratemplate.AstraTemplate
 import ru.astrainteractive.astratemplate.command.di.CommandManagerDependencies
 import ru.astrainteractive.astratemplate.di.BukkitModule
@@ -46,5 +47,8 @@ class BukkitModuleImpl(rootModule: RootModule) : BukkitModule {
     override val commandManager: Single<CommandManager> = Single {
         val dependencies = CommandManagerDependencies.Default(rootModule)
         CommandManager(dependencies)
+    }
+    override val bukkitTranslationContext: Single<BukkitTranslationContext> = Single {
+        BukkitTranslationContext.Default { kyoriComponentSerializer.value }
     }
 }

@@ -4,6 +4,7 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.HandlerList
 import org.bukkit.event.block.BlockPlaceEvent
 import ru.astrainteractive.astralibs.event.EventListener
+import ru.astrainteractive.astralibs.string.BukkitTranslationContext
 import ru.astrainteractive.astratemplate.AstraTemplate
 import ru.astrainteractive.astratemplate.event.di.EventDependencies
 
@@ -13,7 +14,9 @@ import ru.astrainteractive.astratemplate.event.di.EventDependencies
  */
 class TemplateEvent(
     module: EventDependencies
-) : EventListener, EventDependencies by module {
+) : EventListener,
+    EventDependencies by module,
+    BukkitTranslationContext by module.bukkitTranslationContext {
 
     /**
      * Sample event which is called when Block is placed
