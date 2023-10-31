@@ -34,5 +34,5 @@ fun CommandManager.damageCommand() = plugin.registerCommand("adamage") {
     val damage = argument(1) { it.toIntOrNull() ?: 1 }
         .resultOrNull() ?: return@registerCommand
     player.damage(damage.toDouble())
-    player.sendMessage(translation.custom.damaged)
+    player.sendMessage(translation.custom.damaged(sender.name))
 }

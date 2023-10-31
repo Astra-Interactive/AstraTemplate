@@ -6,13 +6,14 @@ import ru.astrainteractive.astralibs.serialization.YamlSerializer
 import ru.astrainteractive.astratemplate.shared.core.MainConfiguration
 import ru.astrainteractive.klibs.kdi.Factory
 import java.io.File
+import ru.astrainteractive.astralibs.filemanager.impl.JVMResourceFileManager
 
 internal class MainConfigurationFactory(
     private val dataFolder: File,
     private val yamlSerializer: YamlSerializer
 ) : Factory<MainConfiguration> {
     override fun create(): MainConfiguration {
-        val configFile = JVMFileManager("config.yml", dataFolder)
+        val configFile = JVMResourceFileManager("config.yml", dataFolder, this::class.java)
         val configuration = yamlSerializer.toClassOrDefault(
             configFile.configFile,
             ::MainConfiguration

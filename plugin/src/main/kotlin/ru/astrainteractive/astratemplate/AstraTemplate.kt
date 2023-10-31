@@ -5,6 +5,7 @@ import org.bukkit.event.HandlerList
 import org.bukkit.plugin.java.JavaPlugin
 import ru.astrainteractive.astratemplate.di.RootModule
 import ru.astrainteractive.astratemplate.di.impl.RootModuleImpl
+import ru.astrainteractive.klibs.kdi.Provider
 import ru.astrainteractive.klibs.kdi.Reloadable
 import ru.astrainteractive.klibs.kdi.getValue
 
@@ -13,18 +14,19 @@ import ru.astrainteractive.klibs.kdi.getValue
  */
 
 class AstraTemplate : JavaPlugin() {
-    private val rootModuleReloadable = Reloadable {
-        RootModuleImpl()
+    private val rootModule = RootModuleImpl()
+    private val jLogger by Provider {
+        rootModule.sharedModule.logger.value
     }
-    private val rootModule: RootModule by rootModuleReloadable
 
-    private val jLogger by rootModule.sharedModule.logger
+    init {
+        rootModule.bukkitModule.plugin.initialize(this)
+    }
 
     /**
      * This method called when server starts or PlugMan load plugin.
      */
     override fun onEnable() {
-        rootModule.bukkitModule.plugin.initialize(this)
         jLogger.info("Logger enabled", "AstraTemplate")
         jLogger.warning("Warn message from logger", "AstraTemplate")
         jLogger.error("Error message", "AstraTemplate")

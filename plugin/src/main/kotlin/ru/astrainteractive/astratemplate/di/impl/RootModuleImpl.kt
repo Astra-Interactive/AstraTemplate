@@ -22,6 +22,7 @@ internal class RootModuleImpl : RootModule {
     override val apiRemoteModule: ApiRemoteModule by Single {
         ApiRemoteModule.Default()
     }
+
     override val sharedModule: SharedModule by Single {
         SharedModule.Default(bukkitModule.plugin.value.dataFolder)
     }
