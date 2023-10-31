@@ -20,21 +20,21 @@ class Translation(
 ) {
     @Serializable
     class Database(
-        @SerialName("database.success")
+        @SerialName("success")
         val dbSuccess: StringDesc.Raw = StringDesc.Raw("&#18dbd1Успешно подключено к базе данных"),
-        @SerialName("database.fail")
+        @SerialName("fail")
         val dbFail: StringDesc.Raw = StringDesc.Raw("&#db2c18Нет подключения к базе данных"),
     )
 
     @Serializable
     class General(
-        @SerialName("general.prefix")
+        @SerialName("prefix")
         val prefix: StringDesc.Raw = StringDesc.Raw("&#18dbd1[EmpireItems]"),
-        @SerialName("general.reload")
+        @SerialName("reload")
         val reload: StringDesc.Raw = StringDesc.Raw("&#dbbb18Перезагрузка плагина"),
-        @SerialName("general.reload_complete")
+        @SerialName("reload_complete")
         val reloadComplete: StringDesc.Raw = StringDesc.Raw("&#42f596Перезагрузка успешно завершена"),
-        @SerialName("general.no_permission")
+        @SerialName("no_permission")
         val noPermission: StringDesc.Raw = StringDesc.Raw("&#db2c18У вас нет прав!"),
         @SerialName("getByByCheck")
         val getByByCheck: StringDesc.Raw = StringDesc.Raw("&#db2c18getByByCheck")
@@ -42,33 +42,33 @@ class Translation(
 
     @Serializable
     class Menu(
-        @SerialName("menu.title")
+        @SerialName("title")
         val menuTitle: StringDesc.Raw = StringDesc.Raw("&#18dbd1Меню"),
-        @SerialName("menu.add_player")
+        @SerialName("add_player")
         val menuAddPlayer: StringDesc.Raw = StringDesc.Raw("&#18dbd1Добавить игрока"),
-        @SerialName("menu.first_page")
+        @SerialName("first_page")
         val menuFirstPage: StringDesc.Raw = StringDesc.Raw("&#dbbb18Вы на первой странице"),
-        @SerialName("menu.last_page")
+        @SerialName("last_page")
         val menuLastPage: StringDesc.Raw = StringDesc.Raw("&#dbbb18Вы на последней странице"),
-        @SerialName("menu.prev_page")
+        @SerialName("prev_page")
         val menuPrevPage: StringDesc.Raw = StringDesc.Raw("&#18dbd1Пред. страницы"),
-        @SerialName("menu.next_page")
+        @SerialName("next_page")
         val menuNextPage: StringDesc.Raw = StringDesc.Raw("&#18dbd1След. страница"),
-        @SerialName("menu.back")
+        @SerialName("back")
         val menuBack: StringDesc.Raw = StringDesc.Raw("&#18dbd1Назад"),
-        @SerialName("menu.close")
+        @SerialName("close")
         val menuClose: StringDesc.Raw = StringDesc.Raw("&#18dbd1Закрыть)")
     )
 
     @Serializable
     class Custom(
-        @SerialName("custom.block_placed")
+        @SerialName("block_placed")
         val blockPlaced: StringDesc.Raw = StringDesc.Raw("&#18dbd1Блок поставлен!"),
-        @SerialName("custom.no_player_name")
+        @SerialName("no_player_name")
         val noPlayerName: StringDesc.Raw = StringDesc.Raw("&#db2c18Вы не ввели имя игрока!"),
-        @SerialName("custom.damaged")
+        @SerialName("damaged")
         private val damaged: StringDesc.Raw = StringDesc.Raw("&#db2c18Вас продамажил игрок %player%!"),
-        @SerialName("custom.damage_hint")
+        @SerialName("damage_hint")
         val damageHint: StringDesc.Raw = StringDesc.Raw("<amount>")
     ) {
         fun damaged(player: String) = damaged.replace("%player%", player)

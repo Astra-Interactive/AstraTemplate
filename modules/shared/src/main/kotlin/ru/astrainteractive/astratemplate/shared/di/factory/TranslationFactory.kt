@@ -20,8 +20,8 @@ internal class TranslationFactory(
         )
         if (!configFile.configFile.exists()) {
             configFile.configFile.createNewFile()
-            configFile.configFile.writeText(yamlSerializer.yaml.encodeToString(translation))
         }
+        configFile.configFile.writeText(yamlSerializer.yaml.encodeToString(translation))
         return translation
     }
 }
