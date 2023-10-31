@@ -14,6 +14,11 @@ import java.net.http.HttpResponse.BodyHandlers
 internal class RickMortyApiImpl(
     private val httpClient: HttpClient
 ) : RickMortyApi {
+    private val jsonConfiguration = Json {
+        ignoreUnknownKeys = true
+        isLenient = true
+    }
+
     override suspend fun getRandomCharacter(id: Int): Result<RMResponse> = kotlin.runCatching {
         val request: HttpRequest = HttpRequest.newBuilder()
             .uri(URI("https://rickandmortyapi.com/api/character/$id"))
@@ -21,6 +26,6 @@ internal class RickMortyApiImpl(
             .build()
         val response = httpClient.send(request, BodyHandlers.ofString())
         val json = response.body()
-        Json.decodeFromString<RMResponse>(json)
+        jsonConfiguration.decodeFromString<RMResponse>(json)
     }
 }
