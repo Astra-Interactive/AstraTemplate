@@ -1,9 +1,9 @@
-[![kotlin_version](https://img.shields.io/badge/kotlin-1.8.10-blueviolet?style=flat-square)](https://github.com/Astra-Interactive/AstraLibs)
-[![kotlin_version](https://img.shields.io/badge/java-19-blueviolet?style=flat-square)](https://github.com/Astra-Interactive/AstraLibs)
-[![minecraft_version](https://img.shields.io/badge/minecraft-1.19.4-green?style=flat-square)](https://github.com/Astra-Interactive/AstraLibs)
-[![platforms](https://img.shields.io/badge/platform-spigot%7Cfabric%7Cvelocity-blue?style=flat-square)](https://github.com/Astra-Interactive/AstraLibs)
+[![kotlin_version](https://img.shields.io/badge/kotlin-1.9.0-blueviolet?style=flat-square)](https://github.com/Astra-Interactive/AstraLibs)
+[![kotlin_version](https://img.shields.io/badge/java-17-blueviolet?style=flat-square)](https://github.com/Astra-Interactive/AstraLibs)
+[![minecraft_version](https://img.shields.io/badge/minecraft-1.19.2-green?style=flat-square)](https://github.com/Astra-Interactive/AstraLibs)
+[![platforms](https://img.shields.io/badge/platform-spigot%7Cvelocity-blue?style=flat-square)](https://github.com/Astra-Interactive/AstraLibs)
 
-# AstraTemplate
+# AstraTemplate v6.0.0
 
 ### MultiPlatform (Plugin-first) Spigot/Velocity plugin
 
@@ -44,30 +44,23 @@ It contains powerful and scalable architecture template which will help you in y
 
 ## 1. Directory structure
 
-    ├── build-logic         # Build components
     ├── modules             
     │   ├── api-local       # Local api with SQLite
     │   ├── api-remote      # Remote sample RickMorty API
-    │   └── dto             # DTO objects for shared usage
-    ├── forge               # Forge template mod
-    ├── fabric              # Fabric template mod
+    │   ├── shared          # Shared modules for every instance
+    │   └── dto             # DTO's/models for shared usage
+    ├── forge               # Forge template mod[wip]
+    ├── fabric              # Fabric template mod[wip]
     ├── velocity            # Velocity template plugin
     └── plugin              # Spigot template mod
 
-## 2. Build convention
+## 2. Gradle plugin
 
-#### 2.1 `basic-java.gradle.kts`
+Build convention is great, but it's a lot of boilerplate when you have different projects.
 
-This convention plugin contains default java configuration
+Because of this I've made a decision to implement my gradle plugin into AstraTemplate
 
-#### 2.2 `xxx-resource-processor.gradle.kts`
-
-This convention plugin contains basic resource processor.
-For example **spigot-resource-processor.gradle.kts** will replace **name**, **prefix** etc in your plugin.yml
-
-#### 2.3 `xxx-shadow.gradle.kts`
-
-This convention plugin will create default shadowJar task for module
+My gradle plugin is well-documented and easy to use. [Please, see it](https://github.com/makeevrserg/gradle-plugin)
 
 ## 3. Modules
 
@@ -90,12 +83,16 @@ Like `api-local`, this module also contains only jvm dependencies, so can be use
 
 Sometimes you need to share models between other modules, so this module contains shared data models.
 
+#### 3.4 `shared`
+
+Usually all instances(forge/bukkit) have the same logic, which can be located here without depending on platform
+
 ## 4. Velocity [wip]
 
 I've not been working with velocity too much, but this module contains basic velocity functionality with plugin
 information generation.
 
-## 5. Plugin
+## 5. Quick overview
 
 This plugin contains advanced and powerful spigot functionality
 
@@ -112,7 +109,7 @@ This plugin contains advanced and powerful spigot functionality
 - [x] Spigot/Paper
 - [ ] Fabric - Pre Alpha state
 - [ ] Forge - Pre-Alpha state
-- [x] Velocity/Bungee
+- [x] Velocity
 
 ### Build jar executables
 
