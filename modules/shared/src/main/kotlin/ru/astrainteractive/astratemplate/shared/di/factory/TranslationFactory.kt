@@ -1,12 +1,11 @@
 package ru.astrainteractive.astratemplate.shared.di.factory
 
 import kotlinx.serialization.encodeToString
-import ru.astrainteractive.astralibs.filemanager.impl.JVMFileManager
+import ru.astrainteractive.astralibs.filemanager.impl.JVMResourceFileManager
 import ru.astrainteractive.astralibs.serialization.YamlSerializer
 import ru.astrainteractive.astratemplate.shared.core.Translation
 import ru.astrainteractive.klibs.kdi.Factory
 import java.io.File
-import ru.astrainteractive.astralibs.filemanager.impl.JVMResourceFileManager
 
 internal class TranslationFactory(
     private val dataFolder: File,
