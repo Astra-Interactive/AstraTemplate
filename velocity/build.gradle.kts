@@ -1,10 +1,9 @@
-import buildlogic.ProjectConfig.info
+import ru.astrainteractive.gradleplugin.setupSpigotShadow
+import ru.astrainteractive.gradleplugin.setupVelocityProcessor
+import ru.astrainteractive.gradleplugin.util.ProjectProperties.projectInfo
 
 plugins {
-    id("spigot-shadow")
-    id("basic-java")
-    id("velocity-resource-processor")
-    id("velocity-shadow")
+    kotlin("jvm")
     alias(libs.plugins.gradle.shadow)
     alias(libs.plugins.gradle.buildconfig)
 }
@@ -15,30 +14,31 @@ dependencies {
     implementation(libs.minecraft.astralibs.ktxcore)
     implementation(libs.minecraft.astralibs.orm)
     // klibs
-    implementation(libs.klibs.kdi)
+    implementation(klibs.klibs.kdi)
     // Velocity
     compileOnly(libs.minecraft.velocity.api)
     annotationProcessor(libs.minecraft.velocity.api)
-    // Test
-    testImplementation(platform(libs.tests.junit.bom))
-    testImplementation(libs.bundles.testing.libs)
-    testImplementation(libs.bundles.testing.kotlin)
-    testImplementation(kotlin("test-junit5"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
+    // Local
+    implementation(projects.modules.shared)
 }
 
 buildConfig {
     className("BuildKonfig")
-    packageName(libs.versions.plugin.group.get())
+    packageName(projectInfo.group)
     fun buildConfigStringField(name: String, value: String) {
         buildConfigField("String", name, "\"${value}\"")
     }
-    buildConfigStringField("id", info.id)
-    buildConfigStringField("name", info.name)
-    buildConfigStringField("version", info.version)
-    buildConfigStringField("url", info.url)
-    buildConfigStringField("description", info.description)
-    info.authors.forEachIndexed { i, dev ->
-        buildConfigStringField("author_$i", dev)
+    buildConfigStringField("id", projectInfo.name.lowercase())
+    buildConfigStringField("name", projectInfo.name)
+    buildConfigStringField("version", projectInfo.versionString)
+    buildConfigStringField("url", projectInfo.url)
+    buildConfigStringField("description", projectInfo.description)
+    projectInfo.developersList.forEachIndexed { i, dev ->
+        buildConfigStringField("author_$i", dev.id)
     }
+}
+
+setupVelocityProcessor()
+setupSpigotShadow {
+    archiveBaseName.set("${projectInfo.name}-velocity")
 }

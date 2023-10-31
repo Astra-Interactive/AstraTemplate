@@ -11,7 +11,7 @@ import ru.astrainteractive.astralibs.async.AsyncComponent
 import ru.astrainteractive.astratemplate.api.ItemStackSpigotAPI
 import ru.astrainteractive.astratemplate.api.dto.UserDTO
 import ru.astrainteractive.astratemplate.api.local.LocalApi
-import ru.astrainteractive.astratemplate.gui.store.InventoryStore.State
+import ru.astrainteractive.astratemplate.gui.SampleGuiComponent.Model
 import kotlin.random.Random
 
 /**
@@ -20,42 +20,46 @@ import kotlin.random.Random
 class SampleGUIViewModel(
     private val localApi: LocalApi,
     private val itemStackSpigotAPi: ItemStackSpigotAPI
-) : AsyncComponent() {
+) : AsyncComponent(), SampleGuiComponent {
 
-    val inventoryState = MutableStateFlow<State>(State.Loading)
+    override val model = MutableStateFlow<Model>(Model.Loading)
 
-    val randomColor: ChatColor
+    override val randomColor: ChatColor
         get() = ChatColor.values()[Random.nextInt(ChatColor.values().size)]
 
-    fun onModeChange() = componentScope.launch(Dispatchers.IO) {
-        println("OnModeChanged")
-        when (inventoryState.value) {
-            State.Loading -> return@launch
-            is State.Items -> loadUsersState()
-            is State.Users -> loadItemsState()
+    override fun onModeChange() {
+        componentScope.launch(Dispatchers.IO) {
+            println("OnModeChanged")
+            when (model.value) {
+                Model.Loading -> return@launch
+                is Model.Items -> loadUsersModel()
+                is Model.Users -> loadItemsModel()
+            }
         }
     }
 
-    fun onItemClicked(slot: Int, clickType: ClickType) = when (val state = inventoryState.value) {
-        State.Loading -> {}
-        is State.Items -> {
-            onItemStackClicked(slot)
-        }
+    override fun onItemClicked(slot: Int, clickType: ClickType) {
+        when (val state = model.value) {
+            Model.Loading -> {}
+            is Model.Items -> {
+                onItemStackClicked(slot)
+            }
 
-        is State.Users -> {
-            onPlayerHeadClicked(slot, clickType)
+            is Model.Users -> {
+                onPlayerHeadClicked(slot, clickType)
+            }
         }
     }
 
-    fun onAddUserClicked() {
+    override fun onAddUserClicked() {
         componentScope.launch(Dispatchers.IO) {
             localApi.insertUser(UserDTO(-1, "id${Random.nextInt(20000)}", "mine${Random.nextInt(5000)}"))
-            loadUsersState()
+            loadUsersModel()
         }
     }
 
     private fun onPlayerHeadClicked(slot: Int, clickType: ClickType) {
-        val state = inventoryState.value as? State.Users ?: return
+        val state = model.value as? Model.Users ?: return
         val users = state.users
         val user = users.getOrNull(slot) ?: return
         componentScope.launch(Dispatchers.IO) {
@@ -67,12 +71,12 @@ class SampleGUIViewModel(
                     localApi.insertRating(user)
                 }
             }
-            loadUsersState()
+            loadUsersModel()
         }
     }
 
     private fun onItemStackClicked(slot: Int) {
-        val state = inventoryState.value as? State.Items ?: return
+        val state = model.value as? Model.Items ?: return
 
         val list = state.items.toMutableList()
         val item = list.getOrNull(slot)?.clone()?.apply {
@@ -81,21 +85,23 @@ class SampleGUIViewModel(
             }
         } ?: return
         list[slot] = item
-        this.inventoryState.update {
+        this.model.update {
             state.copy(items = list)
         }
     }
 
-    suspend fun loadItemsState() {
-        inventoryState.value = State.Items(itemStackSpigotAPi.randomItemStackList())
+    private suspend fun loadItemsModel() {
+        model.value = Model.Items(itemStackSpigotAPi.randomItemStackList())
     }
 
-    suspend fun loadUsersState() {
-        inventoryState.value = State.Users(localApi.getAllUsers() ?: emptyList())
+    private suspend fun loadUsersModel() {
+        model.value = Model.Users(localApi.getAllUsers())
     }
 
-    fun onUiCreated() = componentScope.launch(Dispatchers.IO) {
-        delay(1000)
-        loadItemsState()
+    override fun onUiCreated() {
+        componentScope.launch(Dispatchers.IO) {
+            delay(1000)
+            loadItemsModel()
+        }
     }
 }

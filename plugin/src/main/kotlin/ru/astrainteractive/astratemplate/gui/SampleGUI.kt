@@ -1,67 +1,76 @@
 package ru.astrainteractive.astratemplate.gui
 
+import net.kyori.adventure.text.Component
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.inventory.InventoryCloseEvent
 import org.bukkit.inventory.ItemStack
+import ru.astrainteractive.astralibs.menu.clicker.Click
 import ru.astrainteractive.astralibs.menu.clicker.MenuClickListener
 import ru.astrainteractive.astralibs.menu.holder.DefaultPlayerHolder
 import ru.astrainteractive.astralibs.menu.holder.PlayerHolder
-import ru.astrainteractive.astralibs.menu.menu.InventoryButton
+import ru.astrainteractive.astralibs.menu.menu.InventorySlot
 import ru.astrainteractive.astralibs.menu.menu.MenuSize
 import ru.astrainteractive.astralibs.menu.menu.PaginatedMenu
-import ru.astrainteractive.astralibs.menu.utils.ItemStackButtonBuilder
+import ru.astrainteractive.astralibs.string.BukkitTranslationContext
+import ru.astrainteractive.astralibs.string.StringDesc
 import ru.astrainteractive.astratemplate.api.dto.UserDTO
-import ru.astrainteractive.astratemplate.gui.di.SampleGuiModule
-import ru.astrainteractive.astratemplate.gui.store.InventoryStore.State
+import ru.astrainteractive.astratemplate.gui.SampleGuiComponent.Model
+import ru.astrainteractive.astratemplate.gui.di.SampleGuiDependencies
 
 class SampleGUI(
     player: Player,
-    module: SampleGuiModule
-) : PaginatedMenu(), SampleGuiModule by module {
+    module: SampleGuiDependencies
+) : PaginatedMenu(),
+    SampleGuiDependencies by module,
+    BukkitTranslationContext by module.bukkitTranslationContext {
     private val viewModel = module.viewModelFactory.create()
 
     private val clickListener = MenuClickListener()
 
-    fun createItemStackWithName(material: Material, name: String) = ItemStack(material).apply {
+    private fun createItemStackWithName(material: Material, name: String): ItemStack {
+        return createItemStackWithName(material, StringDesc.Raw(name))
+    }
+
+    private fun createItemStackWithName(material: Material, name: StringDesc) = ItemStack(material).apply {
         val meta = itemMeta
-        meta.setDisplayName(name)
+        meta.displayName(name.toComponent())
         itemMeta = meta
     }
 
     override val playerHolder: PlayerHolder = DefaultPlayerHolder(player)
-    override var menuTitle: String = translation.menu.menuTitle
+    override var menuTitle: Component = translation.menu.menuTitle.toComponent()
     override val menuSize: MenuSize = MenuSize.XL
     override var maxItemsPerPage: Int = 45
     override var page: Int = 0
     override val maxItemsAmount: Int
-        get() = when (val state = viewModel.inventoryState.value) {
-            is State.Items -> state.items.size
-            is State.Users -> state.users.size
-            State.Loading -> 0
+        get() = when (val state = viewModel.model.value) {
+            is Model.Items -> state.items.size
+            is Model.Users -> state.users.size
+            Model.Loading -> 0
         }
 
     private fun button(
         index: Int,
         item: ItemStack,
-        onClick: (e: InventoryClickEvent) -> Unit
-    ) = ItemStackButtonBuilder {
+        onClick: Click
+    ) = InventorySlot.Builder {
         this.index = index
-        this.onClick = onClick
+        this.click = onClick
         itemStack = item
     }
 
-    private val changeModeButton: InventoryButton
-        get() = ItemStackButtonBuilder {
+    private val changeModeButton: InventorySlot
+        get() = InventorySlot.Builder {
             index = 50
-            onClick = {
+            click = Click {
                 viewModel.onModeChange()
             }
-            itemStack = when (viewModel.inventoryState.value) {
-                is State.Items -> createItemStackWithName(Material.SUNFLOWER, "Items")
-                State.Loading -> createItemStackWithName(Material.SUNFLOWER, "Loading")
-                is State.Users -> createItemStackWithName(Material.SUNFLOWER, "Users")
+            itemStack = when (viewModel.model.value) {
+                is Model.Items -> createItemStackWithName(Material.SUNFLOWER, "Items")
+                Model.Loading -> createItemStackWithName(Material.SUNFLOWER, "Loading")
+                is Model.Users -> createItemStackWithName(Material.SUNFLOWER, "Users")
             }
         }
 
@@ -83,7 +92,7 @@ class SampleGUI(
     }
 
     override fun onPageChanged() {
-        onStateChanged()
+        onModelChanged()
     }
 
     override fun onInventoryClicked(e: InventoryClickEvent) {
@@ -93,31 +102,31 @@ class SampleGUI(
 
     override fun onCreated() {
         viewModel.onUiCreated()
-        viewModel.inventoryState.collectOn(dispatchers.BukkitMain, ::onStateChanged)
+        viewModel.model.collectOn(dispatchers.BukkitMain, ::onModelChanged)
     }
 
-    private fun onStateChanged(state: State = viewModel.inventoryState.value) {
+    private fun onModelChanged(state: Model = viewModel.model.value) {
         inventory.clear()
         clickListener.clearClickListener()
         changeModeButton.apply {
             clickListener.remember(this)
-            setInventoryButton()
+            setInventorySlot()
         }
 
         setManageButtons(clickListener)
 
         when (state) {
-            is State.Items -> {
+            is Model.Items -> {
                 setItemStacks(state.items)
             }
 
-            is State.Users -> {
-                addUserButton.setInventoryButton()
+            is Model.Users -> {
+                addUserButton.setInventorySlot()
                 clickListener.remember(addUserButton)
                 setUsers(state.users)
             }
 
-            State.Loading -> {}
+            Model.Loading -> {}
         }
     }
 
@@ -128,9 +137,9 @@ class SampleGUI(
                 continue
             }
             val user = list[index]
-            val button = ItemStackButtonBuilder {
+            val button = InventorySlot.Builder {
                 this.index = i
-                this.onClick = {
+                this.click = Click {
                     viewModel.onItemClicked(i, it.click)
                 }
                 itemStack = ItemStack(Material.PLAYER_HEAD).apply {
@@ -147,7 +156,7 @@ class SampleGUI(
                 }
             }
             clickListener.remember(button)
-            button.setInventoryButton()
+            button.setInventorySlot()
         }
     }
 
@@ -158,15 +167,15 @@ class SampleGUI(
                 continue
             }
             val itemStack = list[index]
-            val button = ItemStackButtonBuilder {
+            val button = InventorySlot.Builder {
                 this.index = i
                 this.itemStack = itemStack
-                this.onClick = {
+                this.click = Click {
                     viewModel.onItemClicked(i, it.click)
                 }
             }
             clickListener.remember(button)
-            button.setInventoryButton()
+            button.setInventorySlot()
         }
     }
 }

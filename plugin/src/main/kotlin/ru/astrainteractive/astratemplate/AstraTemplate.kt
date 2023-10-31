@@ -1,18 +1,10 @@
-@file:OptIn(UnsafeApi::class)
-
 package ru.astrainteractive.astratemplate
 
 import kotlinx.coroutines.runBlocking
 import org.bukkit.event.HandlerList
 import org.bukkit.plugin.java.JavaPlugin
-import org.jetbrains.kotlin.tooling.core.UnsafeApi
-import ru.astrainteractive.astralibs.async.PluginScope
-import ru.astrainteractive.astralibs.events.GlobalEventListener
-import ru.astrainteractive.astralibs.menu.event.GlobalInventoryClickEvent
-import ru.astrainteractive.astratemplate.di.RootModule
 import ru.astrainteractive.astratemplate.di.impl.RootModuleImpl
-import ru.astrainteractive.astratemplate.event.EventManager
-import ru.astrainteractive.klibs.kdi.Reloadable
+import ru.astrainteractive.klibs.kdi.Provider
 import ru.astrainteractive.klibs.kdi.getValue
 
 /**
@@ -20,47 +12,46 @@ import ru.astrainteractive.klibs.kdi.getValue
  */
 
 class AstraTemplate : JavaPlugin() {
-    private val rootModuleReloadable = Reloadable {
-        RootModuleImpl()
+    private val rootModule = RootModuleImpl()
+    private val jLogger by Provider {
+        rootModule.sharedModule.logger.value
     }
-    private val rootModule: RootModule by rootModuleReloadable
-    private val eventManager: EventManager by rootModule.eventHandlerModule
-    private val commandManager by rootModule.commandManager
-    private val jLogger by rootModule.logger
+
+    init {
+        rootModule.bukkitModule.plugin.initialize(this)
+    }
 
     /**
      * This method called when server starts or PlugMan load plugin.
      */
     override fun onEnable() {
-        rootModule.plugin.initialize(this)
         jLogger.info("Logger enabled", "AstraTemplate")
         jLogger.warning("Warn message from logger", "AstraTemplate")
         jLogger.error("Error message", "AstraTemplate")
 
-        GlobalEventListener.onEnable(this)
-        GlobalInventoryClickEvent.onEnable(this)
-        commandManager
-        eventManager.onEnable(this)
+        rootModule.bukkitModule.eventListener.value.onEnable(this)
+        rootModule.bukkitModule.inventoryClickEvent.value.onEnable(this)
+        rootModule.bukkitModule.eventManager.value.onEnable(this)
+        rootModule.bukkitModule.commandManager.value
     }
 
     /**
      * This method called when server is shutting down or when PlugMan disable plugin.
      */
     override fun onDisable() {
-        eventManager.onDisable()
-        runBlocking { rootModule.database.value.closeConnection() }
+        rootModule.bukkitModule.eventManager.value.onDisable()
+        runBlocking { rootModule.apiLocalModule.database.closeConnection() }
         HandlerList.unregisterAll(this)
-        GlobalEventListener.onDisable()
-        GlobalInventoryClickEvent.onDisable()
-        PluginScope.close()
+        rootModule.bukkitModule.eventListener.value.onDisable()
+        rootModule.bukkitModule.inventoryClickEvent.value.onDisable()
+        rootModule.sharedModule.pluginScope.value.close()
     }
 
     /**
      * As it says, function for plugin reload
      */
     fun reloadPlugin() {
-        rootModule.filesModule.configFile.reload()
-        rootModule.configurationModule.reload()
-        rootModule.translation.reload()
+        rootModule.sharedModule.configurationModule.reload()
+        rootModule.sharedModule.translation.reload()
     }
 }

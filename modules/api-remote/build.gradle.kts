@@ -1,13 +1,13 @@
 plugins {
-    id("basic-java")
+    kotlin("jvm")
+    alias(libs.plugins.kotlin.serialization)
 }
+
 dependencies {
     // Kotlin
     implementation(libs.bundles.kotlin)
-    // AstraLibs
-    implementation(libs.minecraft.astralibs.ktxcore)
     // klibs
-//    implementation(libs.bundles.klibs)
+    implementation(klibs.klibs.kdi)
     // Local
     implementation(projects.modules.dto)
 }

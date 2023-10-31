@@ -7,7 +7,7 @@ import ru.astrainteractive.astratemplate.di.VelocityModule
 import ru.astrainteractive.klibs.kdi.Lateinit
 import java.nio.file.Path
 
-object VelocityModuleImpl : VelocityModule {
+class VelocityModuleImpl : VelocityModule {
     override val injector = Lateinit<Injector>()
     override val server = Lateinit<ProxyServer>()
     override val logger = Lateinit<Logger>()

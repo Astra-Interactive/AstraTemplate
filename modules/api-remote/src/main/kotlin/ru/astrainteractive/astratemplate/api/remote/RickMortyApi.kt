@@ -1,6 +1,6 @@
 package ru.astrainteractive.astratemplate.api.remote
 
-import ru.astrainteractive.astratemplate.api.remote.models.RMResponse
+import ru.astrainteractive.astratemplate.api.remote.model.RMResponse
 
 interface RickMortyApi {
     /**
