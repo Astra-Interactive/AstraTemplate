@@ -17,7 +17,7 @@ import kotlin.random.Random
 /**
  * MVVM/MVI technique
  */
-class SampleGUIViewModel(
+class DefaultSampleGUIComponent(
     private val localApi: LocalApi,
     private val itemStackSpigotAPi: ItemStackSpigotAPI
 ) : AsyncComponent(), SampleGuiComponent {
