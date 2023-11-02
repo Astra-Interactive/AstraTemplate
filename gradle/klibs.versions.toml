@@ -4,7 +4,7 @@ klibs-gradleplugin = "0.5.0"
 
 [libraries]
 # klibs - mikro
-klibs-mikro-core = { module = "ru.astrainteractive.klibs:mikro-core", version.strictly = "1.1.1" }
+klibs-mikro-core = { module = "ru.astrainteractive.klibs:mikro-core", version.strictly = "1.4.0" }
 # klibs - kdi
 klibs-kdi = { module = "ru.astrainteractive.klibs:kdi", version.strictly = "1.2.1" }
 
