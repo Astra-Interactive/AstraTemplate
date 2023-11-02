@@ -14,6 +14,7 @@ dependencies {
     implementation(libs.minecraft.astralibs.orm)
     implementation(libs.minecraft.astralibs.spigot.gui)
     implementation(libs.minecraft.astralibs.spigot.core)
+    implementation(klibs.klibs.mikro.core)
     // Spigot dependencies
     compileOnly(libs.minecraft.paper.api)
     implementation(libs.minecraft.bstats)

@@ -12,6 +12,8 @@ import ru.astrainteractive.astratemplate.api.ItemStackSpigotAPI
 import ru.astrainteractive.astratemplate.api.dto.UserDTO
 import ru.astrainteractive.astratemplate.api.local.LocalApi
 import ru.astrainteractive.astratemplate.gui.SampleGuiComponent.Model
+import ru.astrainteractive.astratemplate.gui.domain.GetRandomColorUseCase
+import ru.astrainteractive.astratemplate.gui.domain.SetDisplayNameUseCase
 import kotlin.random.Random
 
 /**
@@ -19,13 +21,15 @@ import kotlin.random.Random
  */
 class DefaultSampleGUIComponent(
     private val localApi: LocalApi,
-    private val itemStackSpigotAPi: ItemStackSpigotAPI
+    private val itemStackSpigotAPi: ItemStackSpigotAPI,
+    private val getRandomColorUseCase: GetRandomColorUseCase,
+    private val setDisplayNameUseCase: SetDisplayNameUseCase
 ) : AsyncComponent(), SampleGuiComponent {
 
     override val model = MutableStateFlow<Model>(Model.Loading)
 
     override val randomColor: ChatColor
-        get() = ChatColor.values()[Random.nextInt(ChatColor.values().size)]
+        get() = getRandomColorUseCase.invoke().color
 
     override fun onModeChange() {
         componentScope.launch(Dispatchers.IO) {
@@ -78,15 +82,13 @@ class DefaultSampleGUIComponent(
     private fun onItemStackClicked(slot: Int) {
         val state = model.value as? Model.Items ?: return
 
-        val list = state.items.toMutableList()
-        val item = list.getOrNull(slot)?.clone()?.apply {
-            editMeta {
-                it.setDisplayName(randomColor.toString() + this.type.name)
-            }
-        } ?: return
-        list[slot] = item
+        val input = SetDisplayNameUseCase.Input(
+            items = state.items,
+            index = slot
+        )
+
         this.model.update {
-            state.copy(items = list)
+            state.copy(items = setDisplayNameUseCase.invoke(input).items)
         }
     }
 

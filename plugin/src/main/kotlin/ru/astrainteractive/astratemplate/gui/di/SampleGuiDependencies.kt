@@ -5,6 +5,8 @@ import ru.astrainteractive.astralibs.string.BukkitTranslationContext
 import ru.astrainteractive.astratemplate.api.ItemStackSpigotAPI
 import ru.astrainteractive.astratemplate.di.RootModule
 import ru.astrainteractive.astratemplate.gui.DefaultSampleGUIComponent
+import ru.astrainteractive.astratemplate.gui.domain.GetRandomColorUseCaseImpl
+import ru.astrainteractive.astratemplate.gui.domain.SetDisplayNameUseCaseImpl
 import ru.astrainteractive.astratemplate.shared.core.Translation
 import ru.astrainteractive.klibs.kdi.Factory
 import ru.astrainteractive.klibs.kdi.Module
@@ -20,9 +22,16 @@ interface SampleGuiDependencies : Module {
         override val translation by rootModule.sharedModule.translation
         override val dispatchers by rootModule.bukkitModule.bukkitDispatchers
         override val bukkitTranslationContext by rootModule.bukkitModule.bukkitTranslationContext
+        private val getRandomColorUseCase = GetRandomColorUseCaseImpl()
+        private val setDisplayNameUseCase = SetDisplayNameUseCaseImpl(getRandomColorUseCase)
         override val viewModelFactory: Factory<DefaultSampleGUIComponent> = Factory {
             val localApi = rootModule.apiLocalModule.localApi
-            DefaultSampleGUIComponent(localApi, ItemStackSpigotAPI)
+            DefaultSampleGUIComponent(
+                localApi = localApi,
+                itemStackSpigotAPi = ItemStackSpigotAPI,
+                getRandomColorUseCase = getRandomColorUseCase,
+                setDisplayNameUseCase = setDisplayNameUseCase
+            )
         }
     }
 }
