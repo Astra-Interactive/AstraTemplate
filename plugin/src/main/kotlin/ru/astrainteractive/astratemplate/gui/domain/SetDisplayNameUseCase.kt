@@ -17,7 +17,7 @@ class SetDisplayNameUseCaseImpl(
         val list = input.items.toMutableList()
         val item = list.getOrNull(input.index)?.clone()?.apply {
             editMeta {
-                val color = getRandomColorUseCase.invoke().toString()
+                val color = getRandomColorUseCase.invoke().color.toString()
                 it.setDisplayName(color + this.type.name)
             }
         } ?: return list.let(::Output)

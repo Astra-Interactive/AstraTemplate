@@ -1,6 +1,5 @@
 package ru.astrainteractive.astratemplate.command.di
 
-import org.bukkit.entity.Player
 import ru.astrainteractive.astralibs.async.AsyncComponent
 import ru.astrainteractive.astralibs.async.BukkitDispatchers
 import ru.astrainteractive.astralibs.permission.PermissionManager
@@ -8,10 +7,8 @@ import ru.astrainteractive.astralibs.string.BukkitTranslationContext
 import ru.astrainteractive.astratemplate.AstraTemplate
 import ru.astrainteractive.astratemplate.api.remote.RickMortyApi
 import ru.astrainteractive.astratemplate.di.RootModule
-import ru.astrainteractive.astratemplate.gui.SampleGUI
-import ru.astrainteractive.astratemplate.gui.di.SampleGuiDependencies
+import ru.astrainteractive.astratemplate.gui.router.Router
 import ru.astrainteractive.astratemplate.shared.core.Translation
-import ru.astrainteractive.klibs.kdi.Factory
 import ru.astrainteractive.klibs.kdi.Provider
 import ru.astrainteractive.klibs.kdi.getValue
 import kotlin.random.Random
@@ -25,8 +22,7 @@ interface CommandManagerDependencies {
     val randomIntProvider: Provider<Int>
     val permissionManager: PermissionManager
     val bukkitTranslationContext: BukkitTranslationContext
-
-    fun sampleGuiFactory(player: Player): Factory<SampleGUI>
+    val router: Router
 
     class Default(rootModule: RootModule) : CommandManagerDependencies {
         override val plugin by rootModule.bukkitModule.plugin
@@ -38,15 +34,6 @@ interface CommandManagerDependencies {
 
         override val permissionManager: PermissionManager by rootModule.bukkitModule.permissionManager
         override val bukkitTranslationContext by rootModule.bukkitModule.bukkitTranslationContext
-        private val sampleGuiDependencies by Provider {
-            SampleGuiDependencies.Default(rootModule)
-        }
-        override fun sampleGuiFactory(player: Player): Factory<SampleGUI> = Factory {
-            val sampleGuiDependencies: SampleGuiDependencies by sampleGuiDependencies
-            SampleGUI(
-                player = player,
-                module = sampleGuiDependencies
-            )
-        }
+        override val router: Router = rootModule.bukkitModule.router
     }
 }

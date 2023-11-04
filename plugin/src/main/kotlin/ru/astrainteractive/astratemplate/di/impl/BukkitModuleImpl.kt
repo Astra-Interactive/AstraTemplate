@@ -14,8 +14,11 @@ import ru.astrainteractive.astratemplate.di.BukkitModule
 import ru.astrainteractive.astratemplate.di.RootModule
 import ru.astrainteractive.astratemplate.event.EventManager
 import ru.astrainteractive.astratemplate.event.di.EventDependencies
+import ru.astrainteractive.astratemplate.gui.router.DefaultRouter
+import ru.astrainteractive.astratemplate.gui.router.Router
 import ru.astrainteractive.klibs.kdi.Lateinit
 import ru.astrainteractive.klibs.kdi.Single
+import ru.astrainteractive.klibs.kdi.getValue
 
 class BukkitModuleImpl(rootModule: RootModule) : BukkitModule {
     override val plugin = Lateinit<AstraTemplate>()
@@ -50,5 +53,12 @@ class BukkitModuleImpl(rootModule: RootModule) : BukkitModule {
     }
     override val bukkitTranslationContext: Single<BukkitTranslationContext> = Single {
         BukkitTranslationContext.Default { kyoriComponentSerializer.value }
+    }
+    override val router: Router by Single {
+        DefaultRouter(
+            rootModule = rootModule,
+            scope = rootModule.sharedModule.pluginScope.value,
+            dispatchers = bukkitDispatchers.value
+        )
     }
 }
