@@ -26,6 +26,7 @@ dependencies {
 }
 
 setupSpigotProcessor()
-setupSpigotShadow {
+
+setupSpigotShadow(File("D:\\Minecraft Servers\\Servers\\esmp-configuration\\anarchy\\plugins")) {
     archiveBaseName.set("${projectInfo.name}-bukkit")
 }

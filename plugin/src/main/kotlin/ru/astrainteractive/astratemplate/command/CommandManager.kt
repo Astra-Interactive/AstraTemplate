@@ -1,11 +1,9 @@
 import ru.astrainteractive.astralibs.string.BukkitTranslationContext
-import ru.astrainteractive.astratemplate.command.addCommand
-import ru.astrainteractive.astratemplate.command.addCommandCompleter
-import ru.astrainteractive.astratemplate.command.damageCommand
-import ru.astrainteractive.astratemplate.command.damageCompleter
+import ru.astrainteractive.astratemplate.command.additem.AddItemCommand
+import ru.astrainteractive.astratemplate.command.damage.DamageCommand
 import ru.astrainteractive.astratemplate.command.di.CommandManagerDependencies
-import ru.astrainteractive.astratemplate.command.randomRickAndMortyCharacter
-import ru.astrainteractive.astratemplate.command.reload
+import ru.astrainteractive.astratemplate.command.reload.ReloadCommand
+import ru.astrainteractive.astratemplate.command.rickmorty.RandomRickAndMortyCommand
 import ru.astrainteractive.astratemplate.command.tabCompleter
 import ru.astrainteractive.astratemplate.command.tempGUI
 import ru.astrainteractive.astratemplate.command.translation
@@ -18,6 +16,7 @@ class CommandManager(
     module: CommandManagerDependencies
 ) : CommandManagerDependencies by module,
     BukkitTranslationContext by module.bukkitTranslationContext {
+
     /**
      * Here you should declare commands for your plugin
      *
@@ -26,15 +25,30 @@ class CommandManager(
      * etemp has TabCompleter
      */
     init {
-        addCommandCompleter()
+        AddItemCommand().register(plugin)
+        DamageCommand(
+            translation = translation,
+            permissionManager = permissionManager,
+            translationContext = this
+        ).register(plugin)
+        RandomRickAndMortyCommand(
+            scope = pluginScope,
+            dispatchers = dispatchers,
+            rmApi = rmApi,
+            randomIntProvider = randomIntProvider
+        ).register(plugin)
+        ReloadCommand(
+            permissionManager = permissionManager,
+            translation = translation,
+            translationContext = this
+        ).register(plugin)
+        ReloadCommand(
+            permissionManager = permissionManager,
+            translation = translation,
+            translationContext = this
+        ).register(plugin)
         tabCompleter()
-        addCommand()
-
-        randomRickAndMortyCharacter()
-        damageCompleter()
-        damageCommand()
         translation()
         tempGUI()
-        reload()
     }
 }
