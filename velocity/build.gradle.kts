@@ -39,6 +39,6 @@ buildConfig {
 }
 
 setupVelocityProcessor()
-setupSpigotShadow {
+setupSpigotShadow(File("D:\\Minecraft Servers\\Servers\\esmp-configuration\\velocity\\plugins")) {
     archiveBaseName.set("${projectInfo.name}-velocity")
 }

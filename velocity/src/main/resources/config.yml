@@ -1,0 +1,13 @@
+# First line description for config1
+# Second line description for config2
+config1: "NONE"
+# Some description for config2
+config2: 0
+config3: false
+section:
+  # Description for value1
+  value1: "NONE"
+  value2: -1
+list: []
+# Description for list
+another_list: []

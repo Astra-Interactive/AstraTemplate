@@ -1,0 +1,23 @@
+database:
+  success: "&#18dbd1Успешно подключено к базе данных"
+  fail: "&#db2c18Нет подключения к базе данных"
+menu:
+  title: "&#18dbd1Меню"
+  add_player: "&#18dbd1Добавить игрока"
+  first_page: "&#dbbb18Вы на первой странице"
+  last_page: "&#dbbb18Вы на последней странице"
+  prev_page: "&#18dbd1Пред. страницы"
+  next_page: "&#18dbd1След. страница"
+  back: "&#18dbd1Назад"
+  close: "&#18dbd1Закрыть)"
+custom:
+  block_placed: "&#18dbd1Блок поставлен!"
+  no_player_name: "&#db2c18Вы не ввели имя игрока!"
+  damaged: "&#db2c18Вас продамажил игрок %player%!"
+  damage_hint: "<amount>"
+general:
+  prefix: "&#18dbd1[EmpireItems]"
+  reload: "&#dbbb18Перезагрузка плагина"
+  reload_complete: "&#42f596Перезагрузка успешно завершена"
+  no_permission: "&#db2c18У вас нет прав!"
+  getByByCheck: "&#db2c18getByByChecфывыфвk"

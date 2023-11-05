@@ -14,6 +14,7 @@ import ru.astrainteractive.astratemplate.di.RootModule
 import ru.astrainteractive.astratemplate.di.impl.RootModuleImpl
 import ru.astrainteractive.klibs.kdi.getValue
 import java.nio.file.Path
+import ru.astrainteractive.klibs.kdi.Provider
 
 @Plugin(
     id = BuildKonfig.id,
@@ -31,7 +32,9 @@ class AstraTemplate @Inject constructor(
     @DataDirectory dataDirectory: Path
 ) {
     private val rootModule: RootModule = RootModuleImpl()
-    private val jLogger by rootModule.sharedModule.logger
+    private val jLogger by Provider {
+        rootModule.sharedModule.logger.value
+    }
 
     init {
         rootModule.velocityModule.apply {
