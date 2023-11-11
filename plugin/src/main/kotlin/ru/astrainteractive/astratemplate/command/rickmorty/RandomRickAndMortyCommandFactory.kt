@@ -23,7 +23,6 @@ class RandomRickAndMortyCommandFactory(
     private inner class RandomRickAndMortyCommandImpl :
         RandomRickAndMortyCommand,
         Command<RandomRickAndMortyCommand.Input, RandomRickAndMortyCommand.Input> by DefaultCommandFactory.create(
-            plugin = plugin,
             alias = "rickandmorty",
             commandParser = { args, sender ->
                 RandomRickAndMortyCommand.Input(sender)
@@ -46,6 +45,8 @@ class RandomRickAndMortyCommandFactory(
         )
 
     override fun create(): RandomRickAndMortyCommand {
-        return RandomRickAndMortyCommandImpl()
+        return RandomRickAndMortyCommandImpl().also {
+            it.register(plugin)
+        }
     }
 }

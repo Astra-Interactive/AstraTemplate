@@ -27,7 +27,6 @@ class ReloadCommandFactory(
     inner class ReloadCommandImpl :
         ReloadCommand,
         Command<ReloadCommand.Result, ReloadCommand.Input> by DefaultCommandFactory.create(
-            plugin = plugin,
             alias = alias,
             commandParser = commandParser,
             commandExecutor = {
@@ -38,8 +37,12 @@ class ReloadCommandFactory(
                 }
             },
             resultHandler = { commandSender, result ->
-                with(translationContext) {
-                    commandSender.sendMessage(translation.general.noPermission)
+                when (result) {
+                    ReloadCommand.Result.NoPermission -> with(translationContext) {
+                        commandSender.sendMessage(translation.general.noPermission)
+                    }
+
+                    is ReloadCommand.Result.Success -> Unit
                 }
             },
             mapper = {
@@ -48,6 +51,8 @@ class ReloadCommandFactory(
         )
 
     override fun create(): ReloadCommand {
-        return ReloadCommandImpl()
+        return ReloadCommandImpl().also {
+            it.register(plugin)
+        }
     }
 }

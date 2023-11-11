@@ -29,7 +29,6 @@ class AddItemCommandFactory(
     inner class AddItemCommandImpl :
         AddItemCommand,
         Command<AddItemCommand.Result, AddItemCommand.Input> by DefaultCommandFactory.create(
-            plugin = plugin,
             alias = alias,
             commandParser = AddItemCommandParser(),
             commandExecutor = AddItemExecutor(),
@@ -47,6 +46,8 @@ class AddItemCommandFactory(
 
     override fun create(): AddItemCommand {
         tabCompleter(plugin)
-        return AddItemCommandImpl()
+        return AddItemCommandImpl().also {
+            it.register(plugin)
+        }
     }
 }

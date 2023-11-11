@@ -7,7 +7,6 @@ import ru.astrainteractive.astralibs.command.api.CommandExecutor
 import ru.astrainteractive.astralibs.command.api.CommandParser
 import ru.astrainteractive.astralibs.command.api.DefaultCommandFactory
 import ru.astrainteractive.astralibs.command.registerTabCompleter
-import ru.astrainteractive.astralibs.command.types.OnlinePlayerArgument
 import ru.astrainteractive.astralibs.permission.BukkitPermissibleExt.toPermissible
 import ru.astrainteractive.astralibs.string.BukkitTranslationContext
 import ru.astrainteractive.astratemplate.shared.core.Permissions
@@ -27,7 +26,7 @@ class DamageCommandFactory(
         if (!hasPermission) return@CommandParser DamageCommand.Result.NoPermission
 
         val player = args.getOrNull(0)
-            ?.let(OnlinePlayerArgument::transform)
+            ?.let(Bukkit::getPlayerExact)
             ?: return@CommandParser DamageCommand.Result.PlayerNotExists
 
         val damage = args.getOrNull(1)
@@ -73,7 +72,6 @@ class DamageCommandFactory(
     inner class DamageCommandImpl :
         DamageCommand,
         Command<DamageCommand.Result, DamageCommand.Input> by DefaultCommandFactory.create(
-            plugin = plugin,
             alias = alias,
             commandParser = commandParser,
             commandExecutor = commandExecutor,
@@ -91,6 +89,8 @@ class DamageCommandFactory(
 
     override fun create(): DamageCommand {
         tabCompleter()
-        return DamageCommandImpl()
+        return DamageCommandImpl().also {
+            it.register(plugin)
+        }
     }
 }
