@@ -4,8 +4,6 @@ import CommandManager
 import ru.astrainteractive.astralibs.async.DefaultBukkitDispatchers
 import ru.astrainteractive.astralibs.event.EventListener
 import ru.astrainteractive.astralibs.menu.event.DefaultInventoryClickEvent
-import ru.astrainteractive.astralibs.permission.BukkitPermissionManager
-import ru.astrainteractive.astralibs.permission.PermissionManager
 import ru.astrainteractive.astralibs.serialization.KyoriComponentSerializer
 import ru.astrainteractive.astralibs.string.BukkitTranslationContext
 import ru.astrainteractive.astratemplate.AstraTemplate
@@ -32,10 +30,6 @@ class BukkitModuleImpl(rootModule: RootModule) : BukkitModule {
     }
     override val inventoryClickEvent: Single<DefaultInventoryClickEvent> = Single {
         DefaultInventoryClickEvent()
-    }
-
-    override val permissionManager: Single<PermissionManager> = Single {
-        BukkitPermissionManager()
     }
 
     override val kyoriComponentSerializer: Single<KyoriComponentSerializer> = Single {

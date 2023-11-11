@@ -2,7 +2,6 @@ package ru.astrainteractive.astratemplate.command.di
 
 import ru.astrainteractive.astralibs.async.AsyncComponent
 import ru.astrainteractive.astralibs.async.BukkitDispatchers
-import ru.astrainteractive.astralibs.permission.PermissionManager
 import ru.astrainteractive.astralibs.string.BukkitTranslationContext
 import ru.astrainteractive.astratemplate.AstraTemplate
 import ru.astrainteractive.astratemplate.api.remote.RickMortyApi
@@ -20,7 +19,6 @@ interface CommandManagerDependencies {
     val pluginScope: AsyncComponent
     val dispatchers: BukkitDispatchers
     val randomIntProvider: Provider<Int>
-    val permissionManager: PermissionManager
     val bukkitTranslationContext: BukkitTranslationContext
     val router: Router
 
@@ -32,7 +30,6 @@ interface CommandManagerDependencies {
         override val dispatchers by rootModule.bukkitModule.bukkitDispatchers
         override val randomIntProvider: Provider<Int> = Provider { Random.nextInt(1, 100) }
 
-        override val permissionManager: PermissionManager by rootModule.bukkitModule.permissionManager
         override val bukkitTranslationContext by rootModule.bukkitModule.bukkitTranslationContext
         override val router: Router = rootModule.bukkitModule.router
     }

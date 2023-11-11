@@ -1,9 +1,9 @@
 import ru.astrainteractive.astralibs.string.BukkitTranslationContext
-import ru.astrainteractive.astratemplate.command.additem.AddItemCommand
-import ru.astrainteractive.astratemplate.command.damage.DamageCommand
+import ru.astrainteractive.astratemplate.command.additem.AddItemCommandFactory
+import ru.astrainteractive.astratemplate.command.damage.DamageCommandFactory
 import ru.astrainteractive.astratemplate.command.di.CommandManagerDependencies
-import ru.astrainteractive.astratemplate.command.reload.ReloadCommand
-import ru.astrainteractive.astratemplate.command.rickmorty.RandomRickAndMortyCommand
+import ru.astrainteractive.astratemplate.command.reload.ReloadCommandFactory
+import ru.astrainteractive.astratemplate.command.rickmorty.RandomRickAndMortyCommandFactory
 import ru.astrainteractive.astratemplate.command.tabCompleter
 import ru.astrainteractive.astratemplate.command.tempGUI
 import ru.astrainteractive.astratemplate.command.translation
@@ -25,28 +25,31 @@ class CommandManager(
      * etemp has TabCompleter
      */
     init {
-        AddItemCommand().register(plugin)
-        DamageCommand(
+        AddItemCommandFactory(
+            plugin = plugin
+        ).create()
+        DamageCommandFactory(
+            plugin = plugin,
             translation = translation,
-            permissionManager = permissionManager,
             translationContext = this
-        ).register(plugin)
-        RandomRickAndMortyCommand(
+        ).create()
+        RandomRickAndMortyCommandFactory(
+            plugin = plugin,
             scope = pluginScope,
             dispatchers = dispatchers,
             rmApi = rmApi,
             randomIntProvider = randomIntProvider
-        ).register(plugin)
-        ReloadCommand(
-            permissionManager = permissionManager,
+        ).create()
+        ReloadCommandFactory(
+            plugin = plugin,
             translation = translation,
             translationContext = this
-        ).register(plugin)
-        ReloadCommand(
-            permissionManager = permissionManager,
+        ).create()
+        ReloadCommandFactory(
+            plugin = plugin,
             translation = translation,
             translationContext = this
-        ).register(plugin)
+        ).create()
         tabCompleter()
         translation()
         tempGUI()

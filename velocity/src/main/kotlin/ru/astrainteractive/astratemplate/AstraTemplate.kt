@@ -12,9 +12,9 @@ import com.velocitypowered.api.proxy.ProxyServer
 import org.slf4j.Logger
 import ru.astrainteractive.astratemplate.di.RootModule
 import ru.astrainteractive.astratemplate.di.impl.RootModuleImpl
+import ru.astrainteractive.klibs.kdi.Provider
 import ru.astrainteractive.klibs.kdi.getValue
 import java.nio.file.Path
-import ru.astrainteractive.klibs.kdi.Provider
 
 @Plugin(
     id = BuildKonfig.id,

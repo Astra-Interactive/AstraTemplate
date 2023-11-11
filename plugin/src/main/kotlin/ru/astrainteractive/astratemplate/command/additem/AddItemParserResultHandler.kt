@@ -1,25 +1,25 @@
 package ru.astrainteractive.astratemplate.command.additem
 
 import org.bukkit.command.CommandSender
-import ru.astrainteractive.astralibs.command.api.CommandParser
+import ru.astrainteractive.astralibs.command.api.Command
 
-internal class AddItemParserResultHandler : CommandParser.ResultHandler<AddItemCommandParser.Result> {
-    override fun handle(commandSender: CommandSender, result: AddItemCommandParser.Result) {
+internal class AddItemParserResultHandler : Command.ResultHandler<AddItemCommand.Result> {
+    override fun handle(commandSender: CommandSender, result: AddItemCommand.Result) {
         when (result) {
-            AddItemCommandParser.Result.ItemNotfound -> {
+            AddItemCommand.Result.ItemNotfound -> {
                 commandSender.sendMessage("Item not found")
             }
 
-            AddItemCommandParser.Result.PlayerNotExists -> {
+            AddItemCommand.Result.PlayerNotExists -> {
                 commandSender.sendMessage("Player not exists")
             }
 
-            AddItemCommandParser.Result.SenderNotPlayer -> {
+            AddItemCommand.Result.SenderNotPlayer -> {
                 commandSender.sendMessage("Sender should be player")
             }
 
-            AddItemCommandParser.Result.NoEx -> Unit
-            is AddItemCommandParser.Result.Success -> Unit
+            AddItemCommand.Result.NoEx -> Unit
+            is AddItemCommand.Result.Success -> Unit
         }
     }
 }
