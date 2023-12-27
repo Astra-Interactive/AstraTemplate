@@ -51,7 +51,7 @@ class BukkitModuleImpl(rootModule: RootModule) : BukkitModule {
     override val router: Router by Single {
         DefaultRouter(
             rootModule = rootModule,
-            scope = rootModule.sharedModule.pluginScope.value,
+            scope = rootModule.coreModule.pluginScope.value,
             dispatchers = bukkitDispatchers.value
         )
     }

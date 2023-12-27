@@ -12,7 +12,7 @@ import ru.astrainteractive.astralibs.string.replace
  * Each translation have default value so it's not necesarry to fetch it from resources
  */
 @Serializable
-class Translation(
+class PluginTranslation(
     val database: Database = Database(),
     val menu: Menu = Menu(),
     val custom: Custom = Custom(),

@@ -7,19 +7,19 @@ import ru.astrainteractive.astralibs.command.api.DefaultCommandFactory
 import ru.astrainteractive.astralibs.permission.BukkitPermissibleExt.toPermissible
 import ru.astrainteractive.astralibs.string.BukkitTranslationContext
 import ru.astrainteractive.astratemplate.AstraTemplate
-import ru.astrainteractive.astratemplate.shared.core.Permissions
-import ru.astrainteractive.astratemplate.shared.core.Translation
+import ru.astrainteractive.astratemplate.shared.core.PluginPermission
+import ru.astrainteractive.astratemplate.shared.core.PluginTranslation
 import ru.astrainteractive.klibs.kdi.Factory
 
 class ReloadCommandFactory(
     private val plugin: JavaPlugin,
-    private val translation: Translation,
+    private val translation: PluginTranslation,
     private val translationContext: BukkitTranslationContext
 ) : Factory<ReloadCommand> {
     private val alias = "atempreload"
 
     private val commandParser = CommandParser { args, sender ->
-        val hasPermission = sender.toPermissible().hasPermission(Permissions.Damage)
+        val hasPermission = sender.toPermissible().hasPermission(PluginPermission.Damage)
         if (!hasPermission) return@CommandParser ReloadCommand.Result.NoPermission
         ReloadCommand.Result.Success(sender)
     }

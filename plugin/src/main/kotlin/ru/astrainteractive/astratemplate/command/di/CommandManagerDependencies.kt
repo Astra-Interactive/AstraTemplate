@@ -7,14 +7,14 @@ import ru.astrainteractive.astratemplate.AstraTemplate
 import ru.astrainteractive.astratemplate.api.remote.RickMortyApi
 import ru.astrainteractive.astratemplate.di.RootModule
 import ru.astrainteractive.astratemplate.gui.router.Router
-import ru.astrainteractive.astratemplate.shared.core.Translation
+import ru.astrainteractive.astratemplate.shared.core.PluginTranslation
 import ru.astrainteractive.klibs.kdi.Provider
 import ru.astrainteractive.klibs.kdi.getValue
 import kotlin.random.Random
 
 interface CommandManagerDependencies {
     val plugin: AstraTemplate
-    val translation: Translation
+    val translation: PluginTranslation
     val rmApi: RickMortyApi
     val pluginScope: AsyncComponent
     val dispatchers: BukkitDispatchers
@@ -24,9 +24,9 @@ interface CommandManagerDependencies {
 
     class Default(rootModule: RootModule) : CommandManagerDependencies {
         override val plugin by rootModule.bukkitModule.plugin
-        override val translation by rootModule.sharedModule.translation
+        override val translation by rootModule.coreModule.translation
         override val rmApi = rootModule.apiRemoteModule.rickMortyApi
-        override val pluginScope by rootModule.sharedModule.pluginScope
+        override val pluginScope by rootModule.coreModule.pluginScope
         override val dispatchers by rootModule.bukkitModule.bukkitDispatchers
         override val randomIntProvider: Provider<Int> = Provider { Random.nextInt(1, 100) }
 

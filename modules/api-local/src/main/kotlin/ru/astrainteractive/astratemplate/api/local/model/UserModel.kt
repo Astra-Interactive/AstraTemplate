@@ -1,6 +1,6 @@
-package ru.astrainteractive.astratemplate.api.dto
+package ru.astrainteractive.astratemplate.api.local.model
 
-class UserDTO(
+class UserModel(
     val id: Int,
     val discordId: String,
     val minecraftUUID: String

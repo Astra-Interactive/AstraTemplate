@@ -23,7 +23,6 @@ dependencies {
     implementation(libs.driver.jdbc)
     implementation(projects.modules.apiLocal)
     implementation(projects.modules.apiRemote)
-    implementation(projects.modules.dto)
 }
 
 val shadowJar by tasks.getting(ShadowJar::class) {

@@ -48,7 +48,6 @@ enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 rootProject.name = "AstraTemplate"
 
 // Shared
-include("modules:dto")
 include("modules:api-remote")
 include("modules:api-local")
 include("modules:shared")

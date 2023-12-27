@@ -2,7 +2,7 @@ package ru.astrainteractive.astratemplate.command
 
 import com.velocitypowered.api.command.SimpleCommand
 import ru.astrainteractive.astratemplate.AstraTemplate
-import ru.astrainteractive.astratemplate.shared.core.Permissions
+import ru.astrainteractive.astratemplate.shared.core.PluginPermission
 
 class ReloadCommand(private val plugin: AstraTemplate) : SimpleCommand {
 
@@ -11,6 +11,6 @@ class ReloadCommand(private val plugin: AstraTemplate) : SimpleCommand {
     }
 
     override fun hasPermission(invocation: SimpleCommand.Invocation): Boolean {
-        return invocation.source().hasPermission(Permissions.Reload.value)
+        return invocation.source().hasPermission(PluginPermission.Reload.value)
     }
 }
