@@ -4,7 +4,7 @@ import ru.astrainteractive.astratemplate.api.local.di.ApiLocalModule
 import ru.astrainteractive.astratemplate.api.remote.di.ApiRemoteModule
 import ru.astrainteractive.astratemplate.di.BukkitModule
 import ru.astrainteractive.astratemplate.di.RootModule
-import ru.astrainteractive.astratemplate.shared.di.SharedModule
+import ru.astrainteractive.astratemplate.shared.di.CoreModule
 import ru.astrainteractive.klibs.kdi.Single
 import ru.astrainteractive.klibs.kdi.getValue
 import java.io.File
@@ -23,7 +23,7 @@ internal class RootModuleImpl : RootModule {
         ApiRemoteModule.Default()
     }
 
-    override val sharedModule: SharedModule by Single {
-        SharedModule.Default(bukkitModule.plugin.value.dataFolder)
+    override val coreModule: CoreModule by Single {
+        CoreModule.Default(bukkitModule.plugin.value.dataFolder)
     }
 }

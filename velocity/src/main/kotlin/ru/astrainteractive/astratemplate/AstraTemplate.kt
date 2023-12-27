@@ -33,7 +33,7 @@ class AstraTemplate @Inject constructor(
 ) {
     private val rootModule: RootModule = RootModuleImpl()
     private val jLogger by Provider {
-        rootModule.sharedModule.logger.value
+        rootModule.coreModule.logger.value
     }
 
     init {
@@ -47,7 +47,7 @@ class AstraTemplate @Inject constructor(
         jLogger.info(BuildKonfig.name, "Hello there! I made my first plugin with Velocity.")
         jLogger.info(
             BuildKonfig.name,
-            "Here's your configuration: ${rootModule.sharedModule.configurationModule.value}."
+            "Here's your configuration: ${rootModule.coreModule.configurationModule.value}."
         )
     }
 
@@ -60,8 +60,8 @@ class AstraTemplate @Inject constructor(
 
     fun reload() {
         with(rootModule) {
-            sharedModule.configurationModule.reload()
-            sharedModule.translation.reload()
+            coreModule.configurationModule.reload()
+            coreModule.translation.reload()
         }
     }
 }

@@ -9,8 +9,8 @@ import org.bukkit.ChatColor
 import org.bukkit.event.inventory.ClickType
 import ru.astrainteractive.astralibs.async.AsyncComponent
 import ru.astrainteractive.astratemplate.api.ItemStackSpigotAPI
-import ru.astrainteractive.astratemplate.api.dto.UserDTO
 import ru.astrainteractive.astratemplate.api.local.LocalApi
+import ru.astrainteractive.astratemplate.api.local.model.UserModel
 import ru.astrainteractive.astratemplate.gui.SampleGuiComponent.Model
 import ru.astrainteractive.astratemplate.gui.domain.GetRandomColorUseCase
 import ru.astrainteractive.astratemplate.gui.domain.SetDisplayNameUseCase
@@ -57,7 +57,7 @@ class DefaultSampleGUIComponent(
 
     override fun onAddUserClicked() {
         componentScope.launch(Dispatchers.IO) {
-            localApi.insertUser(UserDTO(-1, "id${Random.nextInt(20000)}", "mine${Random.nextInt(5000)}"))
+            localApi.insertUser(UserModel(-1, "id${Random.nextInt(20000)}", "mine${Random.nextInt(5000)}"))
             loadUsersModel()
         }
     }

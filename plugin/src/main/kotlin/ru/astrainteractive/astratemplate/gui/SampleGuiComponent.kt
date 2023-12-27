@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.StateFlow
 import org.bukkit.ChatColor
 import org.bukkit.event.inventory.ClickType
 import org.bukkit.inventory.ItemStack
-import ru.astrainteractive.astratemplate.api.dto.UserDTO
+import ru.astrainteractive.astratemplate.api.local.model.UserModel
 
 interface SampleGuiComponent {
     val model: StateFlow<Model>
@@ -25,7 +25,7 @@ interface SampleGuiComponent {
         ) : Model
 
         data class Users(
-            val users: List<UserDTO>
+            val users: List<UserModel>
         ) : Model
 
         data object Loading : Model

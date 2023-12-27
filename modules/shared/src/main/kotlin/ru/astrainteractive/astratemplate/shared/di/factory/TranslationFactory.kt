@@ -3,19 +3,20 @@ package ru.astrainteractive.astratemplate.shared.di.factory
 import kotlinx.serialization.encodeToString
 import ru.astrainteractive.astralibs.filemanager.impl.JVMResourceFileManager
 import ru.astrainteractive.astralibs.serialization.YamlSerializer
-import ru.astrainteractive.astratemplate.shared.core.Translation
+import ru.astrainteractive.astratemplate.shared.core.PluginTranslation
 import ru.astrainteractive.klibs.kdi.Factory
 import java.io.File
 
 internal class TranslationFactory(
     private val dataFolder: File,
     private val yamlSerializer: YamlSerializer
-) : Factory<Translation> {
-    override fun create(): Translation {
+) : Factory<PluginTranslation> {
+
+    override fun create(): PluginTranslation {
         val configFile = JVMResourceFileManager("translations.yml", dataFolder, this::class.java)
-        val translation = yamlSerializer.toClassOrDefault(
+        val translation = yamlSerializer.parseOrDefault(
             configFile.configFile,
-            ::Translation
+            ::PluginTranslation
         )
         if (!configFile.configFile.exists()) {
             configFile.configFile.createNewFile()

@@ -3,20 +3,20 @@ package ru.astrainteractive.astratemplate.shared.di.factory
 import kotlinx.serialization.encodeToString
 import ru.astrainteractive.astralibs.filemanager.impl.JVMResourceFileManager
 import ru.astrainteractive.astralibs.serialization.YamlSerializer
-import ru.astrainteractive.astratemplate.shared.core.MainConfiguration
+import ru.astrainteractive.astratemplate.shared.core.PluginConfiguration
 import ru.astrainteractive.klibs.kdi.Factory
 import java.io.File
 
 internal class MainConfigurationFactory(
     private val dataFolder: File,
     private val yamlSerializer: YamlSerializer
-) : Factory<MainConfiguration> {
+) : Factory<PluginConfiguration> {
 
-    override fun create(): MainConfiguration {
+    override fun create(): PluginConfiguration {
         val configFile = JVMResourceFileManager("config.yml", dataFolder, this::class.java)
-        val configuration = yamlSerializer.toClassOrDefault(
+        val configuration = yamlSerializer.parseOrDefault(
             configFile.configFile,
-            ::MainConfiguration
+            ::PluginConfiguration
         )
         if (!configFile.configFile.exists()) {
             configFile.configFile.createNewFile()

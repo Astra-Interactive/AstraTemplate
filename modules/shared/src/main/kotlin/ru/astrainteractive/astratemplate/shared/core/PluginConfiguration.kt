@@ -7,7 +7,7 @@ import kotlinx.serialization.SerialName
  * Example config file with kotlinx.serialization
  */
 @kotlinx.serialization.Serializable
-data class MainConfiguration(
+data class PluginConfiguration(
     @YamlComment("First line description for config1", "Second line description for config2")
     val config1: String = "NONE",
     @YamlComment("Some description for config2")

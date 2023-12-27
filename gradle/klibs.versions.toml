@@ -1,6 +1,6 @@
 [versions]
 # klibs
-klibs-gradleplugin = "0.5.0"
+klibs-gradleplugin = "0.5.1"
 
 [libraries]
 # klibs - mikro

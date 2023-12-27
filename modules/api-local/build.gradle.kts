@@ -10,6 +10,4 @@ dependencies {
     // klibs
     implementation(klibs.klibs.kdi)
     implementation(klibs.klibs.mikro.core)
-    // Local
-    implementation(projects.modules.dto)
 }

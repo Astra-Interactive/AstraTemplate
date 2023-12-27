@@ -14,7 +14,7 @@ import ru.astrainteractive.klibs.kdi.getValue
 class AstraTemplate : JavaPlugin() {
     private val rootModule = RootModuleImpl()
     private val jLogger by Provider {
-        rootModule.sharedModule.logger.value
+        rootModule.coreModule.logger.value
     }
 
     init {
@@ -44,14 +44,14 @@ class AstraTemplate : JavaPlugin() {
         HandlerList.unregisterAll(this)
         rootModule.bukkitModule.eventListener.value.onDisable()
         rootModule.bukkitModule.inventoryClickEvent.value.onDisable()
-        rootModule.sharedModule.pluginScope.value.close()
+        rootModule.coreModule.pluginScope.value.close()
     }
 
     /**
      * As it says, function for plugin reload
      */
     fun reloadPlugin() {
-        rootModule.sharedModule.configurationModule.reload()
-        rootModule.sharedModule.translation.reload()
+        rootModule.coreModule.configurationModule.reload()
+        rootModule.coreModule.translation.reload()
     }
 }

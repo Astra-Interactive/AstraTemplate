@@ -7,19 +7,19 @@ import ru.astrainteractive.astratemplate.di.RootModule
 import ru.astrainteractive.astratemplate.gui.DefaultSampleGUIComponent
 import ru.astrainteractive.astratemplate.gui.domain.GetRandomColorUseCaseImpl
 import ru.astrainteractive.astratemplate.gui.domain.SetDisplayNameUseCaseImpl
-import ru.astrainteractive.astratemplate.shared.core.Translation
+import ru.astrainteractive.astratemplate.shared.core.PluginTranslation
 import ru.astrainteractive.klibs.kdi.Factory
 import ru.astrainteractive.klibs.kdi.Module
 import ru.astrainteractive.klibs.kdi.getValue
 
 interface SampleGuiDependencies : Module {
-    val translation: Translation
+    val translation: PluginTranslation
     val dispatchers: BukkitDispatchers
     val bukkitTranslationContext: BukkitTranslationContext
     val viewModelFactory: Factory<DefaultSampleGUIComponent>
 
     class Default(rootModule: RootModule) : SampleGuiDependencies {
-        override val translation by rootModule.sharedModule.translation
+        override val translation by rootModule.coreModule.translation
         override val dispatchers by rootModule.bukkitModule.bukkitDispatchers
         override val bukkitTranslationContext by rootModule.bukkitModule.bukkitTranslationContext
         private val getRandomColorUseCase = GetRandomColorUseCaseImpl()
