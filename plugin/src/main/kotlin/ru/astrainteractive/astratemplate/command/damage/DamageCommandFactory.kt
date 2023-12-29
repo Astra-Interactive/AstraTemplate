@@ -9,8 +9,8 @@ import ru.astrainteractive.astralibs.command.api.DefaultCommandFactory
 import ru.astrainteractive.astralibs.command.registerTabCompleter
 import ru.astrainteractive.astralibs.permission.BukkitPermissibleExt.toPermissible
 import ru.astrainteractive.astralibs.string.BukkitTranslationContext
-import ru.astrainteractive.astratemplate.shared.core.PluginPermission
-import ru.astrainteractive.astratemplate.shared.core.PluginTranslation
+import ru.astrainteractive.astratemplate.core.PluginPermission
+import ru.astrainteractive.astratemplate.core.PluginTranslation
 import ru.astrainteractive.klibs.kdi.Factory
 
 class DamageCommandFactory(

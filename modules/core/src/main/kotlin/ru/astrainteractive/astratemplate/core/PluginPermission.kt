@@ -1,4 +1,4 @@
-package ru.astrainteractive.astratemplate.shared.core
+package ru.astrainteractive.astratemplate.core
 
 import ru.astrainteractive.astralibs.permission.Permission
 

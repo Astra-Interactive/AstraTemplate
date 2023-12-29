@@ -1,4 +1,4 @@
-package ru.astrainteractive.astratemplate.shared.core
+package ru.astrainteractive.astratemplate.core
 
 import com.charleskorn.kaml.YamlComment
 import kotlinx.serialization.SerialName

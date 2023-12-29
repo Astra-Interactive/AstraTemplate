@@ -7,7 +7,7 @@ import ru.astrainteractive.astratemplate.di.RootModule
 import ru.astrainteractive.astratemplate.gui.DefaultSampleGUIComponent
 import ru.astrainteractive.astratemplate.gui.domain.GetRandomColorUseCaseImpl
 import ru.astrainteractive.astratemplate.gui.domain.SetDisplayNameUseCaseImpl
-import ru.astrainteractive.astratemplate.shared.core.PluginTranslation
+import ru.astrainteractive.astratemplate.core.PluginTranslation
 import ru.astrainteractive.klibs.kdi.Factory
 import ru.astrainteractive.klibs.kdi.Module
 import ru.astrainteractive.klibs.kdi.getValue

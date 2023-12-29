@@ -21,7 +21,7 @@ dependencies {
     // Local
     implementation(projects.modules.apiLocal)
     implementation(projects.modules.apiRemote)
-    implementation(projects.modules.shared)
+    implementation(projects.modules.core)
 }
 
 setupSpigotProcessor()

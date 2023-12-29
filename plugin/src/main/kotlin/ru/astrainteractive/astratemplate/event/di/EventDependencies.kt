@@ -4,7 +4,7 @@ import org.bukkit.plugin.Plugin
 import ru.astrainteractive.astralibs.event.EventListener
 import ru.astrainteractive.astralibs.string.BukkitTranslationContext
 import ru.astrainteractive.astratemplate.di.RootModule
-import ru.astrainteractive.astratemplate.shared.core.PluginTranslation
+import ru.astrainteractive.astratemplate.core.PluginTranslation
 import ru.astrainteractive.klibs.kdi.getValue
 
 interface EventDependencies {

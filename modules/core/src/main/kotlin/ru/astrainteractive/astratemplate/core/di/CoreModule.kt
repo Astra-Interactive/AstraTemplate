@@ -1,13 +1,13 @@
-package ru.astrainteractive.astratemplate.shared.di
+package ru.astrainteractive.astratemplate.core.di
 
 import ru.astrainteractive.astralibs.async.AsyncComponent
 import ru.astrainteractive.astralibs.logging.JUtilLogger
 import ru.astrainteractive.astralibs.logging.Logger
 import ru.astrainteractive.astralibs.serialization.YamlSerializer
-import ru.astrainteractive.astratemplate.shared.core.PluginConfiguration
-import ru.astrainteractive.astratemplate.shared.core.PluginTranslation
-import ru.astrainteractive.astratemplate.shared.di.factory.MainConfigurationFactory
-import ru.astrainteractive.astratemplate.shared.di.factory.TranslationFactory
+import ru.astrainteractive.astratemplate.core.PluginConfiguration
+import ru.astrainteractive.astratemplate.core.PluginTranslation
+import ru.astrainteractive.astratemplate.core.di.factory.MainConfigurationFactory
+import ru.astrainteractive.astratemplate.core.di.factory.TranslationFactory
 import ru.astrainteractive.klibs.kdi.Dependency
 import ru.astrainteractive.klibs.kdi.Reloadable
 import ru.astrainteractive.klibs.kdi.Single

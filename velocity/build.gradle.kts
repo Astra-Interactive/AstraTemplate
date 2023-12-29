@@ -19,7 +19,7 @@ dependencies {
     compileOnly(libs.minecraft.velocity.api)
     annotationProcessor(libs.minecraft.velocity.api)
     // Local
-    implementation(projects.modules.shared)
+    implementation(projects.modules.core)
 }
 
 buildConfig {
