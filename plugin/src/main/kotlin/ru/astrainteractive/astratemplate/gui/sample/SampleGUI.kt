@@ -26,11 +26,11 @@ import ru.astrainteractive.astratemplate.gui.sample.SampleGuiComponent.Model
 
 class SampleGUI(
     player: Player,
-    module: SampleGuiDependencies
+    dependencies: SampleGuiDependencies
 ) : PaginatedMenu(),
-    SampleGuiDependencies by module,
-    BukkitTranslationContext by module.bukkitTranslationContext {
-    private val viewModel = module.viewModelFactory.create()
+    SampleGuiDependencies by dependencies,
+    BukkitTranslationContext by dependencies.bukkitTranslationContext {
+    private val viewModel = dependencies.viewModelFactory.create()
 
     override val playerHolder: PlayerHolder = DefaultPlayerHolder(player)
     override var menuTitle: Component = translation.menu.menuTitle.toComponent()
@@ -134,6 +134,7 @@ class SampleGUI(
                 continue
             }
             val user = list[index]
+
             InventorySlot.Builder()
                 .setIndex(i)
                 .setMaterial(Material.PLAYER_HEAD)
@@ -147,7 +148,7 @@ class SampleGUI(
                         "${viewModel.randomColor}Press RightClick to Add Relation"
                     ).map(Component::text)
                 )
-                .setOnClickListener { viewModel.onItemClicked(i, it.click) }
+                .setOnClickListener { viewModel.onItemClicked(index, it.click) }
                 .build()
                 .setInventorySlot()
         }
@@ -163,7 +164,7 @@ class SampleGUI(
             InventorySlot.Builder()
                 .setIndex(i)
                 .setItemStack(itemStack)
-                .setOnClickListener { viewModel.onItemClicked(i, it.click) }
+                .setOnClickListener { viewModel.onItemClicked(index, it.click) }
                 .build()
                 .setInventorySlot()
         }

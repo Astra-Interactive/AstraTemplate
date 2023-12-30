@@ -17,7 +17,7 @@ class DefaultRouter(
     private fun buildRoute(player: Player, route: Router.Route) = when (route) {
         Router.Route.Sample -> SampleGUI(
             player = player,
-            module = SampleGuiDependencies.Default(rootModule)
+            dependencies = SampleGuiDependencies.Default(rootModule)
         )
     }
 
