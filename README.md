@@ -25,9 +25,6 @@ Spigot/Velocity plugins as fast as possible
     <a href="https://github.com/Astra-Interactive/AstraShop">
         <img alt="spigot" src="https://img.shields.io/badge/github-AstraShop-1B76CA"/>
     </a>
-    <a href="https://github.com/Astra-Interactive/KapitalystiK">
-        <img alt="spigot" src="https://img.shields.io/badge/github-KapytalystiK[WIP]-1B76CA"/>
-    </a>
     <a href="https://github.com/Astra-Interactive/SynK">
         <img alt="spigot" src="https://img.shields.io/badge/github-SynK[WIP]-1B76CA"/>
     </a>
@@ -47,12 +44,11 @@ It contains powerful and scalable architecture template which will help you in y
     ├── modules             
     │   ├── api-local       # Local api with SQLite
     │   ├── api-remote      # Remote sample RickMorty API
-    │   ├── shared          # Shared modules for every instance
-    │   └── dto             # DTO's/models for shared usage
+    │   └── core            # Core multiplatform module
     ├── forge               # Forge template mod[wip]
     ├── fabric              # Fabric template mod[wip]
     ├── velocity            # Velocity template plugin
-    └── plugin              # Spigot template mod
+    └── plugin              # Bukkit template mod
 
 ## 2. Gradle plugin
 
@@ -62,7 +58,7 @@ Because of this I've made a decision to implement my gradle plugin into AstraTem
 
 My gradle plugin is well-documented and easy to use. [Please, see it](https://github.com/makeevrserg/gradle-plugin)
 
-## 3. Modules
+## 3. Modules overview
 
 #### 3.1 `api-local`
 
@@ -103,6 +99,69 @@ This plugin contains advanced and powerful spigot functionality
 - DI
 - Permissions
 - Configuration
+
+## 6. Architecture overview
+
+<details>
+  <summary><b>(Click to expand)</b> Lifecycle diagram</summary>
+
+With this hierarchy its' possible to create independent modules
+
+Each Module contains Lifecycle which is handled by it's parent module
+
+Each Lifecycle contains three methods:
+
+- onEnable
+- onDisable
+- onReload
+
+In this example, we have `RootPlugin` which is `JavaPlugin`.
+`RootPlugin` contains list of child lifecycles.
+Child lifecycles called when RootPlugins's lifecycle methods is called.
+
+RootPlugin doesn't go beyond it's area of responsibility.
+All children handle it's own lifecycles.
+
+```mermaid
+classDiagram
+    class RootPlugin {
+        lifecycles
+        onEnable()
+        onDisable()
+        onReload()
+    }
+
+    RootPlugin ..> CoreModule: Child
+    RootPlugin ..> EventModule: Child
+    RootPlugin ..> DatabaseModule: Child
+    EventModule ..> MoveEventModule: Child
+
+    namespace RootModule {
+        class MoveEventModule {
+            lifecycle: Lifecycle
+            onEnable()
+            onDisable()
+        }
+        class EventModule {
+            lifecycle: Lifecycle
+            onEnable()
+            onDisable()
+        }
+        class CoreModule {
+            lifecycle: Lifecycle
+            onReload()
+        }
+    }
+    namespace SqlModule {
+        class DatabaseModule {
+            lifecycle: Lifecycle
+            onEnable()
+            onDisable()
+        }
+    }
+```
+
+</details>
 
 ### Platforms
 
