@@ -20,7 +20,8 @@ class AstraTemplate : JavaPlugin() {
         get() = listOf(
             rootModule.coreModule.lifecycle,
             rootModule.eventModule.lifecycle,
-            rootModule.apiLocalModule.lifecycle
+            rootModule.apiLocalModule.lifecycle,
+            rootModule.commandModule.lifecycle
         )
 
     init {
@@ -34,8 +35,6 @@ class AstraTemplate : JavaPlugin() {
         jLogger.info("Logger enabled", "AstraTemplate")
         jLogger.warning("Warn message from logger", "AstraTemplate")
         jLogger.error("Error message", "AstraTemplate")
-
-        rootModule.bukkitModule.commandManager.value
         lifecycles.forEach(Lifecycle::onEnable)
     }
 

@@ -2,9 +2,9 @@ package ru.astrainteractive.astratemplate.gui.di
 
 import ru.astrainteractive.astralibs.async.BukkitDispatchers
 import ru.astrainteractive.astralibs.string.BukkitTranslationContext
-import ru.astrainteractive.astratemplate.api.ItemStackSpigotAPI
 import ru.astrainteractive.astratemplate.core.PluginTranslation
 import ru.astrainteractive.astratemplate.di.RootModule
+import ru.astrainteractive.astratemplate.gui.api.ItemStackSpigotAPI
 import ru.astrainteractive.astratemplate.gui.domain.GetRandomColorUseCaseImpl
 import ru.astrainteractive.astratemplate.gui.domain.SetDisplayNameUseCaseImpl
 import ru.astrainteractive.astratemplate.gui.sample.DefaultSampleGUIComponent

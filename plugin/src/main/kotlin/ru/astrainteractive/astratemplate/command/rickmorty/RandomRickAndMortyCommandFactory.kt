@@ -1,24 +1,16 @@
 package ru.astrainteractive.astratemplate.command.rickmorty
 
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import org.bukkit.plugin.java.JavaPlugin
-import ru.astrainteractive.astralibs.async.BukkitDispatchers
 import ru.astrainteractive.astralibs.command.api.Command
 import ru.astrainteractive.astralibs.command.api.DefaultCommandFactory
-import ru.astrainteractive.astratemplate.api.remote.RickMortyApi
+import ru.astrainteractive.astratemplate.command.rickmorty.di.RickMortyCommandDependencies
 import ru.astrainteractive.klibs.kdi.Factory
-import ru.astrainteractive.klibs.kdi.Provider
 import ru.astrainteractive.klibs.kdi.getValue
 
 class RandomRickAndMortyCommandFactory(
-    private val plugin: JavaPlugin,
-    scope: CoroutineScope,
-    private val dispatchers: BukkitDispatchers,
-    private val rmApi: RickMortyApi,
-    private val randomIntProvider: Provider<Int>
+    dependencies: RickMortyCommandDependencies
 ) : Factory<RandomRickAndMortyCommand>,
-    CoroutineScope by scope {
+    RickMortyCommandDependencies by dependencies {
 
     private inner class RandomRickAndMortyCommandImpl :
         RandomRickAndMortyCommand,
@@ -29,7 +21,7 @@ class RandomRickAndMortyCommandFactory(
             },
             resultHandler = Command.ResultHandler.NoOp(),
             commandExecutor = { input ->
-                launch(dispatchers.IO) {
+                scope.launch(dispatchers.IO) {
                     val randomInt by randomIntProvider
                     val result = rmApi.getRandomCharacter(randomInt)
                     result.onSuccess {

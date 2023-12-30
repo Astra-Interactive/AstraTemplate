@@ -1,21 +1,17 @@
 package ru.astrainteractive.astratemplate.command.reload
 
-import org.bukkit.plugin.java.JavaPlugin
 import ru.astrainteractive.astralibs.command.api.Command
 import ru.astrainteractive.astralibs.command.api.CommandParser
 import ru.astrainteractive.astralibs.command.api.DefaultCommandFactory
 import ru.astrainteractive.astralibs.permission.BukkitPermissibleExt.toPermissible
-import ru.astrainteractive.astralibs.string.BukkitTranslationContext
 import ru.astrainteractive.astratemplate.AstraTemplate
+import ru.astrainteractive.astratemplate.command.reload.di.ReloadCommandDependencies
 import ru.astrainteractive.astratemplate.core.PluginPermission
-import ru.astrainteractive.astratemplate.core.PluginTranslation
 import ru.astrainteractive.klibs.kdi.Factory
 
 class ReloadCommandFactory(
-    private val plugin: JavaPlugin,
-    private val translation: PluginTranslation,
-    private val translationContext: BukkitTranslationContext
-) : Factory<ReloadCommand> {
+    dependencies: ReloadCommandDependencies
+) : Factory<ReloadCommand>, ReloadCommandDependencies by dependencies {
     private val alias = "atempreload"
 
     private val commandParser = CommandParser { args, sender ->

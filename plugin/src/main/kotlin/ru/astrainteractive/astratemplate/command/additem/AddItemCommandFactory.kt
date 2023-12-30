@@ -7,11 +7,12 @@ import ru.astrainteractive.astralibs.command.api.Command
 import ru.astrainteractive.astralibs.command.api.DefaultCommandFactory
 import ru.astrainteractive.astralibs.command.registerTabCompleter
 import ru.astrainteractive.astralibs.util.withEntry
+import ru.astrainteractive.astratemplate.command.additem.di.AddItemCommandDependencies
 import ru.astrainteractive.klibs.kdi.Factory
 
 class AddItemCommandFactory(
-    private val plugin: JavaPlugin
-) : Factory<AddItemCommand> {
+    dependencies: AddItemCommandDependencies
+) : Factory<AddItemCommand>, AddItemCommandDependencies by dependencies {
     private val alias = "add"
 
     internal class Mapper : Command.Mapper<AddItemCommand.Result, AddItemCommand.Input> {

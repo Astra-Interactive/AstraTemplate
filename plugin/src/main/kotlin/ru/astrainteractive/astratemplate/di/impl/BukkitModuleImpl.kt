@@ -1,11 +1,9 @@
 package ru.astrainteractive.astratemplate.di.impl
 
-import CommandManager
 import ru.astrainteractive.astralibs.async.DefaultBukkitDispatchers
 import ru.astrainteractive.astralibs.serialization.KyoriComponentSerializer
 import ru.astrainteractive.astralibs.string.BukkitTranslationContext
 import ru.astrainteractive.astratemplate.AstraTemplate
-import ru.astrainteractive.astratemplate.command.di.CommandManagerDependencies
 import ru.astrainteractive.astratemplate.di.BukkitModule
 import ru.astrainteractive.astratemplate.di.RootModule
 import ru.astrainteractive.astratemplate.gui.router.DefaultRouter
@@ -22,10 +20,6 @@ class BukkitModuleImpl(rootModule: RootModule) : BukkitModule {
     }
     override val kyoriComponentSerializer: Single<KyoriComponentSerializer> = Single {
         KyoriComponentSerializer.Legacy
-    }
-    override val commandManager: Single<CommandManager> = Single {
-        val dependencies = CommandManagerDependencies.Default(rootModule)
-        CommandManager(dependencies)
     }
     override val bukkitTranslationContext: Single<BukkitTranslationContext> = Single {
         BukkitTranslationContext.Default { kyoriComponentSerializer.value }

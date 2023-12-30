@@ -1,4 +1,4 @@
-package ru.astrainteractive.astratemplate.api
+package ru.astrainteractive.astratemplate.gui.api
 
 import org.bukkit.Material
 import org.bukkit.inventory.ItemStack

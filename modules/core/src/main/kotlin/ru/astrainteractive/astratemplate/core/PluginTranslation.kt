@@ -36,6 +36,8 @@ class PluginTranslation(
         val reloadComplete: StringDesc.Raw = StringDesc.Raw("&#42f596Перезагрузка успешно завершена"),
         @SerialName("no_permission")
         val noPermission: StringDesc.Raw = StringDesc.Raw("&#db2c18У вас нет прав!"),
+        @SerialName("not_player")
+        val notPlayer: StringDesc.Raw = StringDesc.Raw("&#db2c18Вы не игрок"),
         @SerialName("getByByCheck")
         val getByByCheck: StringDesc.Raw = StringDesc.Raw("&#db2c18getByByCheck")
     )

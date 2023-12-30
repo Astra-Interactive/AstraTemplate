@@ -2,6 +2,7 @@ package ru.astrainteractive.astratemplate.di.impl
 
 import ru.astrainteractive.astratemplate.api.local.di.ApiLocalModule
 import ru.astrainteractive.astratemplate.api.remote.di.ApiRemoteModule
+import ru.astrainteractive.astratemplate.command.di.CommandModule
 import ru.astrainteractive.astratemplate.core.di.CoreModule
 import ru.astrainteractive.astratemplate.di.BukkitModule
 import ru.astrainteractive.astratemplate.di.RootModule
@@ -29,5 +30,9 @@ internal class RootModuleImpl : RootModule {
 
     override val eventModule: EventModule by lazy {
         EventModule.Default(this)
+    }
+
+    override val commandModule: CommandModule by lazy {
+        CommandModule.Default(this)
     }
 }
