@@ -3,7 +3,7 @@
 [![minecraft_version](https://img.shields.io/badge/minecraft-1.19.2-green?style=flat-square)](https://github.com/Astra-Interactive/AstraLibs)
 [![platforms](https://img.shields.io/badge/platform-spigot%7Cvelocity-blue?style=flat-square)](https://github.com/Astra-Interactive/AstraLibs)
 
-# AstraTemplate v6.0.0
+# AstraTemplate v7.0.0
 
 ### MultiPlatform (Plugin-first) Spigot/Velocity plugin
 
@@ -162,6 +162,16 @@ classDiagram
 ```
 
 </details>
+
+## 7. Plugin usage
+
+| Command                             | Permission | Description                                   |
+|:------------------------------------|:-----------|:----------------------------------------------|
+| `/add <player> <material> [amount]` | `-`        | `Add item to player inventory`                |
+| `/atemp translation`                | `-`        | `Show translation change after /atempreload`  |
+| `/adamage <player> <amount>`        | `-`        | `Damage player`                               |
+| `/atempgui`                         | `-`        | `Open sample gui`                             |
+| `/rickandmorty `                    | `-`        | `Send to executor random RickMorty character` |
 
 ### Platforms
 
