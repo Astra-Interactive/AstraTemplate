@@ -5,19 +5,18 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.bukkit.entity.Player
 import ru.astrainteractive.astralibs.async.BukkitDispatchers
-import ru.astrainteractive.astratemplate.di.RootModule
 import ru.astrainteractive.astratemplate.gui.di.SampleGuiDependencies
 import ru.astrainteractive.astratemplate.gui.sample.SampleGUI
 
 class DefaultRouter(
-    private val rootModule: RootModule,
+    private val dependencies: SampleGuiDependencies,
     private val scope: CoroutineScope,
     private val dispatchers: BukkitDispatchers
 ) : Router {
     private fun buildRoute(player: Player, route: Router.Route) = when (route) {
         Router.Route.Sample -> SampleGUI(
             player = player,
-            dependencies = SampleGuiDependencies.Default(rootModule)
+            dependencies = dependencies
         )
     }
 

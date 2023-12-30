@@ -7,13 +7,14 @@ import ru.astrainteractive.astratemplate.core.di.CoreModule
 import ru.astrainteractive.astratemplate.di.BukkitModule
 import ru.astrainteractive.astratemplate.di.RootModule
 import ru.astrainteractive.astratemplate.event.di.EventModule
+import ru.astrainteractive.astratemplate.gui.di.GuiModule
 import ru.astrainteractive.klibs.kdi.getValue
 import java.io.File
 
 internal class RootModuleImpl : RootModule {
 
     override val bukkitModule: BukkitModule by lazy {
-        BukkitModuleImpl(this)
+        BukkitModuleImpl()
     }
 
     override val apiLocalModule: ApiLocalModule by lazy {
@@ -34,5 +35,13 @@ internal class RootModuleImpl : RootModule {
 
     override val commandModule: CommandModule by lazy {
         CommandModule.Default(this)
+    }
+
+    override val guiModule: GuiModule by lazy {
+        GuiModule.Default(
+            coreModule = coreModule,
+            bukkitModule = bukkitModule,
+            apiLocalModule = apiLocalModule
+        )
     }
 }

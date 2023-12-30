@@ -29,6 +29,6 @@ interface CommandManagerDependencies :
         override val rmApi = rootModule.apiRemoteModule.rickMortyApi
         override val dispatchers by rootModule.bukkitModule.bukkitDispatchers
         override val randomIntProvider: Provider<Int> = Provider { Random.nextInt(1, 100) }
-        override val router: Router by Provider { rootModule.bukkitModule.router }
+        override val router: Router by rootModule.guiModule.router
     }
 }
