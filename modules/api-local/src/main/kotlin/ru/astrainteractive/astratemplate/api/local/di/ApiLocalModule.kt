@@ -1,5 +1,7 @@
 package ru.astrainteractive.astratemplate.api.local.di
 
+import kotlinx.coroutines.runBlocking
+import ru.astrainteractive.astralibs.lifecycle.Lifecycle
 import ru.astrainteractive.astralibs.orm.Database
 import ru.astrainteractive.astratemplate.api.local.LocalApi
 import ru.astrainteractive.astratemplate.api.local.LocalApiImpl
@@ -15,6 +17,7 @@ import ru.astrainteractive.klibs.kdi.getValue
 interface ApiLocalModule {
     val database: Database
     val localApi: LocalApi
+    val lifecycle: Lifecycle
 
     class Default(databasePath: String) : ApiLocalModule {
 
@@ -35,6 +38,13 @@ interface ApiLocalModule {
                 database = database,
                 ratingMapper = ratingMapper,
                 userMapper = userMapper
+            )
+        }
+        override val lifecycle: Lifecycle by lazy {
+            Lifecycle.Lambda(
+                onDisable = {
+                    runBlocking { database.closeConnection() }
+                }
             )
         }
     }

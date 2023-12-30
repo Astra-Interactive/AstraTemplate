@@ -1,4 +1,4 @@
-package ru.astrainteractive.astratemplate.gui
+package ru.astrainteractive.astratemplate.gui.sample
 
 import kotlinx.coroutines.flow.StateFlow
 import org.bukkit.ChatColor

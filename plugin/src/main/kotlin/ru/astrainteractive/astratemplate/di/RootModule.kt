@@ -3,6 +3,7 @@ package ru.astrainteractive.astratemplate.di
 import ru.astrainteractive.astratemplate.api.local.di.ApiLocalModule
 import ru.astrainteractive.astratemplate.api.remote.di.ApiRemoteModule
 import ru.astrainteractive.astratemplate.core.di.CoreModule
+import ru.astrainteractive.astratemplate.event.di.EventModule
 import ru.astrainteractive.klibs.kdi.Module
 
 interface RootModule : Module {
@@ -13,4 +14,6 @@ interface RootModule : Module {
     val apiRemoteModule: ApiRemoteModule
 
     val coreModule: CoreModule
+
+    val eventModule: EventModule
 }

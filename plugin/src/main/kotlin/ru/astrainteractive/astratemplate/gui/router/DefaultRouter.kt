@@ -6,8 +6,8 @@ import kotlinx.coroutines.withContext
 import org.bukkit.entity.Player
 import ru.astrainteractive.astralibs.async.BukkitDispatchers
 import ru.astrainteractive.astratemplate.di.RootModule
-import ru.astrainteractive.astratemplate.gui.SampleGUI
 import ru.astrainteractive.astratemplate.gui.di.SampleGuiDependencies
+import ru.astrainteractive.astratemplate.gui.sample.SampleGUI
 
 class DefaultRouter(
     private val rootModule: RootModule,

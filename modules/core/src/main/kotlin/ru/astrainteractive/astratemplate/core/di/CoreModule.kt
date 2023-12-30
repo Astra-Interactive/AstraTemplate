@@ -1,6 +1,7 @@
 package ru.astrainteractive.astratemplate.core.di
 
 import ru.astrainteractive.astralibs.async.AsyncComponent
+import ru.astrainteractive.astralibs.lifecycle.Lifecycle
 import ru.astrainteractive.astralibs.logging.JUtilLogger
 import ru.astrainteractive.astralibs.logging.Logger
 import ru.astrainteractive.astralibs.serialization.YamlSerializer
@@ -15,11 +16,12 @@ import java.io.File
 
 interface CoreModule {
 
-    val yamlSerializer: Single<YamlSerializer>
+    val lifecycle: Lifecycle
+    val yamlSerializer: Dependency<YamlSerializer>
     val logger: Dependency<Logger>
     val pluginScope: Dependency<AsyncComponent>
-    val translation: Reloadable<PluginTranslation>
-    val configurationModule: Reloadable<PluginConfiguration>
+    val translation: Dependency<PluginTranslation>
+    val configurationModule: Dependency<PluginConfiguration>
 
     class Default(
         dataFolder: File
@@ -50,6 +52,17 @@ interface CoreModule {
                 dataFolder = dataFolder,
                 yamlSerializer = yamlSerializer.value
             ).create()
+        }
+        override val lifecycle: Lifecycle by lazy {
+            Lifecycle.Lambda(
+                onReload = {
+                    configurationModule.reload()
+                    translation.reload()
+                },
+                onDisable = {
+                    pluginScope.value.close()
+                }
+            )
         }
     }
 }

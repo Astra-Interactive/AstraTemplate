@@ -1,8 +1,8 @@
 package ru.astrainteractive.astratemplate
 
-import kotlinx.coroutines.runBlocking
 import org.bukkit.event.HandlerList
 import org.bukkit.plugin.java.JavaPlugin
+import ru.astrainteractive.astralibs.lifecycle.Lifecycle
 import ru.astrainteractive.astratemplate.di.impl.RootModuleImpl
 import ru.astrainteractive.klibs.kdi.Provider
 import ru.astrainteractive.klibs.kdi.getValue
@@ -16,6 +16,12 @@ class AstraTemplate : JavaPlugin() {
     private val jLogger by Provider {
         rootModule.coreModule.logger.value
     }
+    private val lifecycles: List<Lifecycle>
+        get() = listOf(
+            rootModule.coreModule.lifecycle,
+            rootModule.eventModule.lifecycle,
+            rootModule.apiLocalModule.lifecycle
+        )
 
     init {
         rootModule.bukkitModule.plugin.initialize(this)
@@ -29,29 +35,22 @@ class AstraTemplate : JavaPlugin() {
         jLogger.warning("Warn message from logger", "AstraTemplate")
         jLogger.error("Error message", "AstraTemplate")
 
-        rootModule.bukkitModule.eventListener.value.onEnable(this)
-        rootModule.bukkitModule.inventoryClickEvent.value.onEnable(this)
-        rootModule.bukkitModule.eventManager.value.onEnable(this)
         rootModule.bukkitModule.commandManager.value
+        lifecycles.forEach(Lifecycle::onEnable)
     }
 
     /**
      * This method called when server is shutting down or when PlugMan disable plugin.
      */
     override fun onDisable() {
-        rootModule.bukkitModule.eventManager.value.onDisable()
-        runBlocking { rootModule.apiLocalModule.database.closeConnection() }
         HandlerList.unregisterAll(this)
-        rootModule.bukkitModule.eventListener.value.onDisable()
-        rootModule.bukkitModule.inventoryClickEvent.value.onDisable()
-        rootModule.coreModule.pluginScope.value.close()
+        lifecycles.forEach(Lifecycle::onDisable)
     }
 
     /**
      * As it says, function for plugin reload
      */
     fun reloadPlugin() {
-        rootModule.coreModule.configurationModule.reload()
-        rootModule.coreModule.translation.reload()
+        lifecycles.forEach(Lifecycle::onReload)
     }
 }

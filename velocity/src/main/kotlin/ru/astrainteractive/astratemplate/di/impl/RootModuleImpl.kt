@@ -1,8 +1,8 @@
 package ru.astrainteractive.astratemplate.di.impl
 
+import ru.astrainteractive.astratemplate.core.di.CoreModule
 import ru.astrainteractive.astratemplate.di.RootModule
 import ru.astrainteractive.astratemplate.di.VelocityModule
-import ru.astrainteractive.astratemplate.core.di.CoreModule
 import ru.astrainteractive.klibs.kdi.Single
 import ru.astrainteractive.klibs.kdi.getValue
 

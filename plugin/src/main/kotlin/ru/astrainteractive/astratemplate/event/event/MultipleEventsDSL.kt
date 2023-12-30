@@ -8,7 +8,7 @@ import ru.astrainteractive.astratemplate.event.di.EventDependencies
 /**
  * This is a most convenient way to use bukkit events in kotlin
  */
-class MultipleEventsDSL(module: EventDependencies) : EventDependencies by module {
+internal class MultipleEventsDSL(module: EventDependencies) : EventDependencies by module {
 
     val blockBreakEvent = DSLEvent<BlockBreakEvent>(eventListener, plugin) {
         println("DSLEvent: blockBreakEvent ${it.player.name}")

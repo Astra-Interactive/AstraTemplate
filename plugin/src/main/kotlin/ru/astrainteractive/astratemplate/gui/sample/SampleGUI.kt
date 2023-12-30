@@ -1,4 +1,4 @@
-package ru.astrainteractive.astratemplate.gui
+package ru.astrainteractive.astratemplate.gui.sample
 
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -21,8 +21,8 @@ import ru.astrainteractive.astralibs.menu.menu.setMaterial
 import ru.astrainteractive.astralibs.menu.menu.setOnClickListener
 import ru.astrainteractive.astralibs.string.BukkitTranslationContext
 import ru.astrainteractive.astratemplate.api.local.model.UserModel
-import ru.astrainteractive.astratemplate.gui.SampleGuiComponent.Model
 import ru.astrainteractive.astratemplate.gui.di.SampleGuiDependencies
+import ru.astrainteractive.astratemplate.gui.sample.SampleGuiComponent.Model
 
 class SampleGUI(
     player: Player,

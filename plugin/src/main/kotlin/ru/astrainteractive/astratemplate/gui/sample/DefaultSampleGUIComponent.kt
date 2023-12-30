@@ -1,4 +1,4 @@
-package ru.astrainteractive.astratemplate.gui
+package ru.astrainteractive.astratemplate.gui.sample
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -11,9 +11,9 @@ import ru.astrainteractive.astralibs.async.AsyncComponent
 import ru.astrainteractive.astratemplate.api.ItemStackSpigotAPI
 import ru.astrainteractive.astratemplate.api.local.LocalApi
 import ru.astrainteractive.astratemplate.api.local.model.UserModel
-import ru.astrainteractive.astratemplate.gui.SampleGuiComponent.Model
 import ru.astrainteractive.astratemplate.gui.domain.GetRandomColorUseCase
 import ru.astrainteractive.astratemplate.gui.domain.SetDisplayNameUseCase
+import ru.astrainteractive.astratemplate.gui.sample.SampleGuiComponent.Model
 import kotlin.random.Random
 
 /**
