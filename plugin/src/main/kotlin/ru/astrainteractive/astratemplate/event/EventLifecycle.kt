@@ -17,7 +17,7 @@ internal class EventLifecycle(
 ) : Lifecycle {
     private val defaultStyleEvents = buildList {
         eventModule.eventListener.also(::add)
-        dependencies.eventListener.also(::add)
+        eventModule.inventoryClickListener.also(::add)
         TemplateEvent(dependencies).also(::add)
         BetterAnotherEvent().also(::add)
     }
