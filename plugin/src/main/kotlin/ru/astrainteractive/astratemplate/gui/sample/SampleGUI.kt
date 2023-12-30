@@ -30,7 +30,7 @@ class SampleGUI(
 ) : PaginatedMenu(),
     SampleGuiDependencies by dependencies,
     BukkitTranslationContext by dependencies.bukkitTranslationContext {
-    private val viewModel = dependencies.viewModelFactory.create()
+    private val sampleComponent = dependencies.viewModelFactory.create()
 
     override val playerHolder: PlayerHolder = DefaultPlayerHolder(player)
     override var menuTitle: Component = translation.menu.menuTitle.toComponent()
@@ -38,7 +38,7 @@ class SampleGUI(
     override var maxItemsPerPage: Int = 45
     override var page: Int = 0
     override val maxItemsAmount: Int
-        get() = when (val state = viewModel.model.value) {
+        get() = when (val state = sampleComponent.model.value) {
             is Model.Items -> state.items.size
             is Model.Users -> state.users.size
             Model.Loading -> 0
@@ -49,13 +49,13 @@ class SampleGUI(
             .setIndex(50)
             .setMaterial(Material.SUNFLOWER)
             .setDisplayName(
-                when (viewModel.model.value) {
+                when (sampleComponent.model.value) {
                     is Model.Items -> "Items"
                     Model.Loading -> "Loading"
                     is Model.Users -> "Users"
                 }
             )
-            .setOnClickListener { viewModel.onModeChange() }
+            .setOnClickListener { sampleComponent.onModeChange() }
             .build()
 
     private val addUserButton: InventorySlot
@@ -63,7 +63,7 @@ class SampleGUI(
             .setIndex(48)
             .setMaterial(Material.EMERALD)
             .setDisplayName(translation.menu.menuAddPlayer.toComponent())
-            .setOnClickListener { viewModel.onAddUserClicked() }
+            .setOnClickListener { sampleComponent.onAddUserClicked() }
             .build()
 
     override val backPageButton: InventorySlot
@@ -71,7 +71,7 @@ class SampleGUI(
             .setIndex(49)
             .setMaterial(Material.PAPER)
             .setDisplayName(translation.menu.menuClose.toComponent())
-            .setOnClickListener { viewModel.close() }
+            .setOnClickListener { sampleComponent.close() }
             .build()
 
     override val nextPageButton: InventorySlot
@@ -91,7 +91,7 @@ class SampleGUI(
             .build()
 
     override fun onInventoryClose(it: InventoryCloseEvent) {
-        viewModel.close()
+        sampleComponent.close()
     }
 
     override fun onPageChanged() {
@@ -104,11 +104,11 @@ class SampleGUI(
     }
 
     override fun onCreated() {
-        viewModel.onUiCreated()
-        viewModel.model.onEach { state -> onModelChanged(state) }.launchIn(componentScope)
+        sampleComponent.onUiCreated()
+        sampleComponent.model.onEach { state -> onModelChanged(state) }.launchIn(componentScope)
     }
 
-    private fun onModelChanged(state: Model = viewModel.model.value) {
+    private fun onModelChanged(state: Model = sampleComponent.model.value) {
         inventory.clear()
         changeModeButton.setInventorySlot()
         setManageButtons()
@@ -141,14 +141,14 @@ class SampleGUI(
                 .setDisplayName(user.id.toString())
                 .setLore(
                     listOf(
-                        "${viewModel.randomColor}discordID: ${user.discordId}",
-                        "${viewModel.randomColor}minecraftUUID: ${user.minecraftUUID}",
-                        "${viewModel.randomColor}Press LeftClick to delete user",
-                        "${viewModel.randomColor}Press MiddleClick to delete user",
-                        "${viewModel.randomColor}Press RightClick to Add Relation"
+                        "${sampleComponent.randomColor}discordID: ${user.discordId}",
+                        "${sampleComponent.randomColor}minecraftUUID: ${user.minecraftUUID}",
+                        "${sampleComponent.randomColor}Press LeftClick to delete user",
+                        "${sampleComponent.randomColor}Press MiddleClick to delete user",
+                        "${sampleComponent.randomColor}Press RightClick to Add Relation"
                     ).map(Component::text)
                 )
-                .setOnClickListener { viewModel.onItemClicked(index, it.click) }
+                .setOnClickListener { sampleComponent.onItemClicked(index, it.click) }
                 .build()
                 .setInventorySlot()
         }
@@ -164,7 +164,7 @@ class SampleGUI(
             InventorySlot.Builder()
                 .setIndex(i)
                 .setItemStack(itemStack)
-                .setOnClickListener { viewModel.onItemClicked(index, it.click) }
+                .setOnClickListener { sampleComponent.onItemClicked(index, it.click) }
                 .build()
                 .setInventorySlot()
         }
