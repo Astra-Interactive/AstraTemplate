@@ -1,23 +1,19 @@
 package ru.astrainteractive.astratemplate.command.damage
 
 import org.bukkit.Bukkit
-import org.bukkit.plugin.java.JavaPlugin
 import ru.astrainteractive.astralibs.command.api.Command
 import ru.astrainteractive.astralibs.command.api.CommandExecutor
 import ru.astrainteractive.astralibs.command.api.CommandParser
 import ru.astrainteractive.astralibs.command.api.DefaultCommandFactory
 import ru.astrainteractive.astralibs.command.registerTabCompleter
 import ru.astrainteractive.astralibs.permission.BukkitPermissibleExt.toPermissible
-import ru.astrainteractive.astralibs.string.BukkitTranslationContext
-import ru.astrainteractive.astratemplate.shared.core.PluginPermission
-import ru.astrainteractive.astratemplate.shared.core.PluginTranslation
+import ru.astrainteractive.astratemplate.command.damage.di.DamageCommandDependencies
+import ru.astrainteractive.astratemplate.core.PluginPermission
 import ru.astrainteractive.klibs.kdi.Factory
 
 class DamageCommandFactory(
-    private val plugin: JavaPlugin,
-    private val translation: PluginTranslation,
-    private val translationContext: BukkitTranslationContext
-) : Factory<DamageCommand> {
+    dependencies: DamageCommandDependencies
+) : Factory<DamageCommand>, DamageCommandDependencies by dependencies {
     private val alias = "adamage"
 
     private val commandParser = CommandParser { args, sender ->

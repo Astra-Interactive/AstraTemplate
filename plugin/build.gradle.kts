@@ -21,12 +21,12 @@ dependencies {
     // Local
     implementation(projects.modules.apiLocal)
     implementation(projects.modules.apiRemote)
-    implementation(projects.modules.shared)
+    implementation(projects.modules.core)
 }
 
 setupSpigotProcessor()
 
-val destination = File("D:\\Minecraft Servers\\Servers\\esmp-configuration\\anarchy\\plugins")
+val destination = File("D:\\Minecraft Servers\\Servers\\esmp-configuration\\smp\\plugins")
     .takeIf(File::exists)
     ?: File(rootDir, "jars")
 

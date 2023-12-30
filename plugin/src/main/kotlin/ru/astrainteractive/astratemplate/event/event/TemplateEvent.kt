@@ -12,7 +12,7 @@ import ru.astrainteractive.astratemplate.event.di.EventDependencies
  * Template event class
  * @see [MultipleEventsDSL]
  */
-class TemplateEvent(
+internal class TemplateEvent(
     module: EventDependencies
 ) : EventListener,
     EventDependencies by module,

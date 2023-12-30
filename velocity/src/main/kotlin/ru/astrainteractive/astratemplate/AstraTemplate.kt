@@ -10,6 +10,7 @@ import com.velocitypowered.api.plugin.Plugin
 import com.velocitypowered.api.plugin.annotation.DataDirectory
 import com.velocitypowered.api.proxy.ProxyServer
 import org.slf4j.Logger
+import ru.astrainteractive.astralibs.lifecycle.Lifecycle
 import ru.astrainteractive.astratemplate.di.RootModule
 import ru.astrainteractive.astratemplate.di.impl.RootModuleImpl
 import ru.astrainteractive.klibs.kdi.Provider
@@ -35,6 +36,10 @@ class AstraTemplate @Inject constructor(
     private val jLogger by Provider {
         rootModule.coreModule.logger.value
     }
+    private val lifecycles: List<Lifecycle>
+        get() = listOf(
+            rootModule.coreModule.lifecycle,
+        )
 
     init {
         rootModule.velocityModule.apply {
@@ -59,9 +64,6 @@ class AstraTemplate @Inject constructor(
     }
 
     fun reload() {
-        with(rootModule) {
-            coreModule.configurationModule.reload()
-            coreModule.translation.reload()
-        }
+        lifecycles.forEach(Lifecycle::onReload)
     }
 }

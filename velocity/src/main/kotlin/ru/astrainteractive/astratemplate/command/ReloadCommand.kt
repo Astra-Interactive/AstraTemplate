@@ -2,7 +2,7 @@ package ru.astrainteractive.astratemplate.command
 
 import com.velocitypowered.api.command.SimpleCommand
 import ru.astrainteractive.astratemplate.AstraTemplate
-import ru.astrainteractive.astratemplate.shared.core.PluginPermission
+import ru.astrainteractive.astratemplate.core.PluginPermission
 
 class ReloadCommand(private val plugin: AstraTemplate) : SimpleCommand {
 

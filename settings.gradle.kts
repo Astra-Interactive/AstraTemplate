@@ -50,7 +50,7 @@ rootProject.name = "AstraTemplate"
 // Shared
 include("modules:api-remote")
 include("modules:api-local")
-include("modules:shared")
+include("modules:core")
 // Spigot
 include("plugin")
 // Fabric
