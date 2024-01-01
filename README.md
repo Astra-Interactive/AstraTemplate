@@ -136,28 +136,24 @@ classDiagram
     RootPlugin ..> DatabaseModule: Child
     EventModule ..> MoveEventModule: Child
 
-    namespace RootModule {
-        class MoveEventModule {
-            lifecycle: Lifecycle
-            onEnable()
-            onDisable()
-        }
-        class EventModule {
-            lifecycle: Lifecycle
-            onEnable()
-            onDisable()
-        }
-        class CoreModule {
-            lifecycle: Lifecycle
-            onReload()
-        }
+    class MoveEventModule {
+        lifecycle: Lifecycle
+        onEnable()
+        onDisable()
     }
-    namespace SqlModule {
-        class DatabaseModule {
-            lifecycle: Lifecycle
-            onEnable()
-            onDisable()
-        }
+    class EventModule {
+        lifecycle: Lifecycle
+        onEnable()
+        onDisable()
+    }
+    class CoreModule {
+        lifecycle: Lifecycle
+        onReload()
+    }
+    class DatabaseModule {
+        lifecycle: Lifecycle
+        onEnable()
+        onDisable()
     }
 ```
 
