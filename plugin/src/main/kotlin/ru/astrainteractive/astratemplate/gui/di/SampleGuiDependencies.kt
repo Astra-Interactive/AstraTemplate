@@ -1,7 +1,7 @@
 package ru.astrainteractive.astratemplate.gui.di
 
 import ru.astrainteractive.astralibs.async.BukkitDispatchers
-import ru.astrainteractive.astralibs.string.BukkitTranslationContext
+import ru.astrainteractive.astralibs.serialization.KyoriComponentSerializer
 import ru.astrainteractive.astratemplate.api.local.di.ApiLocalModule
 import ru.astrainteractive.astratemplate.core.PluginTranslation
 import ru.astrainteractive.astratemplate.core.di.CoreModule
@@ -17,7 +17,7 @@ import ru.astrainteractive.klibs.kdi.getValue
 interface SampleGuiDependencies : Module {
     val translation: PluginTranslation
     val dispatchers: BukkitDispatchers
-    val bukkitTranslationContext: BukkitTranslationContext
+    val kyoriComponentSerializer: KyoriComponentSerializer
     val viewModelFactory: Factory<DefaultSampleGUIComponent>
 
     class Default(
@@ -27,7 +27,7 @@ interface SampleGuiDependencies : Module {
     ) : SampleGuiDependencies {
         override val translation by coreModule.translation
         override val dispatchers by bukkitModule.bukkitDispatchers
-        override val bukkitTranslationContext by bukkitModule.bukkitTranslationContext
+        override val kyoriComponentSerializer by bukkitModule.kyoriComponentSerializer
         private val getRandomColorUseCase = GetRandomColorUseCaseImpl()
         private val setDisplayNameUseCase = SetDisplayNameUseCaseImpl(getRandomColorUseCase)
         override val viewModelFactory: Factory<DefaultSampleGUIComponent> = Factory {

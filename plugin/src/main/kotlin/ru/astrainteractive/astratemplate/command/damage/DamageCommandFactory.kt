@@ -5,7 +5,6 @@ import ru.astrainteractive.astralibs.command.api.Command
 import ru.astrainteractive.astralibs.command.api.CommandExecutor
 import ru.astrainteractive.astralibs.command.api.CommandParser
 import ru.astrainteractive.astralibs.command.api.DefaultCommandFactory
-import ru.astrainteractive.astralibs.command.registerTabCompleter
 import ru.astrainteractive.astralibs.permission.BukkitPermissibleExt.toPermissible
 import ru.astrainteractive.astratemplate.command.damage.di.DamageCommandDependencies
 import ru.astrainteractive.astratemplate.core.PluginPermission
@@ -38,12 +37,12 @@ class DamageCommandFactory(
 
     private val resultHandler = Command.ResultHandler<DamageCommand.Result> { commandSender, result ->
         when (result) {
-            DamageCommand.Result.PlayerNotExists -> with(translationContext) {
-                commandSender.sendMessage(translation.custom.noPlayerName)
+            DamageCommand.Result.PlayerNotExists -> with(kyoriComponentSerializer) {
+                commandSender.sendMessage(translation.custom.noPlayerName.let(::toComponent))
             }
 
-            DamageCommand.Result.NoPermission -> with(translationContext) {
-                commandSender.sendMessage(translation.general.noPermission)
+            DamageCommand.Result.NoPermission -> with(kyoriComponentSerializer) {
+                commandSender.sendMessage(translation.general.noPermission.let(::toComponent))
             }
 
             DamageCommand.Result.NoOp -> Unit
@@ -52,11 +51,13 @@ class DamageCommandFactory(
     }
 
     private val commandExecutor = CommandExecutor<DamageCommand.Input> {
-        with(translationContext) { it.player.sendMessage(translation.custom.damaged(it.damagerName)) }
+        with(kyoriComponentSerializer) {
+            it.player.sendMessage(translation.custom.damaged(it.damagerName).let(::toComponent))
+        }
         it.player.damage(it.damage)
     }
 
-    private fun tabCompleter() = plugin.registerTabCompleter(alias) {
+    private fun tabCompleter() = plugin.getCommand(alias)?.setTabCompleter { sender, command, label, args ->
         when (args.size) {
             0 -> listOf("adamage")
             1 -> Bukkit.getOnlinePlayers().map { it.name }

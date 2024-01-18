@@ -26,16 +26,16 @@ class ReloadCommandFactory(
             alias = alias,
             commandParser = commandParser,
             commandExecutor = {
-                with(translationContext) {
-                    it.sender.sendMessage(translation.general.reload)
+                with(kyoriComponentSerializer) {
+                    it.sender.sendMessage(translation.general.reload.let(::toComponent))
                     (plugin as AstraTemplate).reloadPlugin()
-                    it.sender.sendMessage(translation.general.reloadComplete)
+                    it.sender.sendMessage(translation.general.reloadComplete.let(::toComponent))
                 }
             },
             resultHandler = { commandSender, result ->
                 when (result) {
-                    ReloadCommand.Result.NoPermission -> with(translationContext) {
-                        commandSender.sendMessage(translation.general.noPermission)
+                    ReloadCommand.Result.NoPermission -> with(kyoriComponentSerializer) {
+                        commandSender.sendMessage(translation.general.noPermission.let(::toComponent))
                     }
 
                     is ReloadCommand.Result.Success -> Unit

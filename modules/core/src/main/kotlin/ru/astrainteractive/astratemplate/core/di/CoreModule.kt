@@ -2,7 +2,7 @@ package ru.astrainteractive.astratemplate.core.di
 
 import ru.astrainteractive.astralibs.async.AsyncComponent
 import ru.astrainteractive.astralibs.lifecycle.Lifecycle
-import ru.astrainteractive.astralibs.logging.JUtilLogger
+import ru.astrainteractive.astralibs.logging.JUtilFileLogger
 import ru.astrainteractive.astralibs.logging.Logger
 import ru.astrainteractive.astralibs.serialization.YamlSerializer
 import ru.astrainteractive.astratemplate.core.PluginConfiguration
@@ -30,7 +30,7 @@ interface CoreModule {
             YamlSerializer()
         }
         override val logger: Dependency<Logger> = Single {
-            JUtilLogger(
+            JUtilFileLogger(
                 tag = "AstraTemplate",
                 folder = dataFolder
             )
