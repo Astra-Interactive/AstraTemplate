@@ -1,7 +1,6 @@
 package ru.astrainteractive.astratemplate.command.di
 
 import kotlinx.coroutines.CoroutineScope
-import ru.astrainteractive.astralibs.string.BukkitTranslationContext
 import ru.astrainteractive.astratemplate.command.additem.di.AddItemCommandDependencies
 import ru.astrainteractive.astratemplate.command.common.di.CommonCommandsDependencies
 import ru.astrainteractive.astratemplate.command.damage.di.DamageCommandDependencies
@@ -24,7 +23,7 @@ interface CommandManagerDependencies :
     class Default(rootModule: RootModule) : CommandManagerDependencies {
         override val plugin by rootModule.bukkitModule.plugin
         override val translation by rootModule.coreModule.translation
-        override val translationContext: BukkitTranslationContext by rootModule.bukkitModule.bukkitTranslationContext
+        override val kyoriComponentSerializer by rootModule.bukkitModule.kyoriComponentSerializer
         override val scope: CoroutineScope by rootModule.coreModule.pluginScope
         override val rmApi = rootModule.apiRemoteModule.rickMortyApi
         override val dispatchers by rootModule.bukkitModule.bukkitDispatchers

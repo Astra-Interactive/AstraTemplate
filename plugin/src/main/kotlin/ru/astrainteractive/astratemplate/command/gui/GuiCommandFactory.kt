@@ -31,8 +31,8 @@ class GuiCommandFactory(
             },
             resultHandler = { sender, result ->
                 when (result) {
-                    GuiCommand.Output.NotPlayer -> with(translationContext) {
-                        sender.sendMessage(translation.general.notPlayer)
+                    GuiCommand.Output.NotPlayer -> with(kyoriComponentSerializer) {
+                        sender.sendMessage(translation.general.notPlayer.let(::toComponent))
                     }
 
                     is GuiCommand.Output.Route -> Unit

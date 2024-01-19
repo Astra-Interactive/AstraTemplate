@@ -19,7 +19,7 @@ import ru.astrainteractive.astralibs.menu.menu.setItemStack
 import ru.astrainteractive.astralibs.menu.menu.setLore
 import ru.astrainteractive.astralibs.menu.menu.setMaterial
 import ru.astrainteractive.astralibs.menu.menu.setOnClickListener
-import ru.astrainteractive.astralibs.string.BukkitTranslationContext
+import ru.astrainteractive.astralibs.serialization.KyoriComponentSerializer
 import ru.astrainteractive.astratemplate.api.local.model.UserModel
 import ru.astrainteractive.astratemplate.gui.di.SampleGuiDependencies
 import ru.astrainteractive.astratemplate.gui.sample.SampleGuiComponent.Model
@@ -29,11 +29,11 @@ class SampleGUI(
     dependencies: SampleGuiDependencies
 ) : PaginatedMenu(),
     SampleGuiDependencies by dependencies,
-    BukkitTranslationContext by dependencies.bukkitTranslationContext {
+    KyoriComponentSerializer by dependencies.kyoriComponentSerializer {
     private val sampleComponent = dependencies.viewModelFactory.create()
 
     override val playerHolder: PlayerHolder = DefaultPlayerHolder(player)
-    override var menuTitle: Component = translation.menu.menuTitle.toComponent()
+    override var menuTitle: Component = translation.menu.menuTitle.let(::toComponent)
     override val menuSize: MenuSize = MenuSize.XL
     override var maxItemsPerPage: Int = 45
     override var page: Int = 0
@@ -62,7 +62,7 @@ class SampleGUI(
         get() = InventorySlot.Builder()
             .setIndex(48)
             .setMaterial(Material.EMERALD)
-            .setDisplayName(translation.menu.menuAddPlayer.toComponent())
+            .setDisplayName(translation.menu.menuAddPlayer.let(::toComponent))
             .setOnClickListener { sampleComponent.onAddUserClicked() }
             .build()
 
@@ -70,7 +70,7 @@ class SampleGUI(
         get() = InventorySlot.Builder()
             .setIndex(49)
             .setMaterial(Material.PAPER)
-            .setDisplayName(translation.menu.menuClose.toComponent())
+            .setDisplayName(translation.menu.menuClose.let(::toComponent))
             .setOnClickListener { sampleComponent.close() }
             .build()
 
@@ -78,7 +78,7 @@ class SampleGUI(
         get() = InventorySlot.Builder()
             .setIndex(53)
             .setMaterial(Material.PAPER)
-            .setDisplayName(translation.menu.menuNextPage.toComponent())
+            .setDisplayName(translation.menu.menuNextPage.let(::toComponent))
             .setOnClickListener { showPage(page + 1) }
             .build()
 
@@ -86,7 +86,7 @@ class SampleGUI(
         get() = InventorySlot.Builder()
             .setIndex(45)
             .setMaterial(Material.PAPER)
-            .setDisplayName(translation.menu.menuPrevPage.toComponent())
+            .setDisplayName(translation.menu.menuPrevPage.let(::toComponent))
             .setOnClickListener { showPage(page - 1) }
             .build()
 
@@ -105,7 +105,7 @@ class SampleGUI(
 
     override fun onCreated() {
         sampleComponent.onUiCreated()
-        sampleComponent.model.onEach { state -> onModelChanged(state) }.launchIn(componentScope)
+        sampleComponent.model.onEach { state -> onModelChanged(state) }.launchIn(menuScope)
     }
 
     private fun onModelChanged(state: Model = sampleComponent.model.value) {
