@@ -14,7 +14,7 @@ dependencies {
     modImplementation(libs.minecraft.fabric.loader.get())
     modImplementation(libs.minecraft.fabric.api.get())
     // AstraLibs
-    implementation(libs.minecraft.astralibs.ktxcore)
+    implementation(libs.minecraft.astralibs.core)
     implementation(libs.minecraft.astralibs.orm)
     implementation(libs.klibs.kdi)
     // Kotlin
@@ -28,7 +28,7 @@ dependencies {
 val shadowJar by tasks.getting(ShadowJar::class) {
     dependencies {
         // Kotlin
-        include(dependency(libs.minecraft.astralibs.ktxcore.get()))
+        include(dependency(libs.minecraft.astralibs.core.get()))
         include(dependency(libs.driver.jdbc.get()))
     }
     exclude("mappings/")
