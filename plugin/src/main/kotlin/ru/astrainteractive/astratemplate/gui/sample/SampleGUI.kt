@@ -9,20 +9,22 @@ import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.inventory.InventoryCloseEvent
 import org.bukkit.inventory.ItemStack
-import ru.astrainteractive.astralibs.menu.core.MenuSize
 import ru.astrainteractive.astralibs.menu.holder.DefaultPlayerHolder
 import ru.astrainteractive.astralibs.menu.holder.PlayerHolder
 import ru.astrainteractive.astralibs.menu.inventory.PaginatedInventoryMenu
+import ru.astrainteractive.astralibs.menu.inventory.model.MenuSize
 import ru.astrainteractive.astralibs.menu.inventory.model.PageContext
 import ru.astrainteractive.astralibs.menu.inventory.util.PageContextExt.getIndex
 import ru.astrainteractive.astralibs.menu.inventory.util.PageContextExt.isLastPage
+import ru.astrainteractive.astralibs.menu.inventory.util.PaginatedInventoryMenuExt.showNextPage
+import ru.astrainteractive.astralibs.menu.inventory.util.PaginatedInventoryMenuExt.showPrevPage
 import ru.astrainteractive.astralibs.menu.slot.InventorySlot
-import ru.astrainteractive.astralibs.menu.slot.util.InventorySlotExt.setDisplayName
-import ru.astrainteractive.astralibs.menu.slot.util.InventorySlotExt.setIndex
-import ru.astrainteractive.astralibs.menu.slot.util.InventorySlotExt.setItemStack
-import ru.astrainteractive.astralibs.menu.slot.util.InventorySlotExt.setLore
-import ru.astrainteractive.astralibs.menu.slot.util.InventorySlotExt.setMaterial
-import ru.astrainteractive.astralibs.menu.slot.util.InventorySlotExt.setOnClickListener
+import ru.astrainteractive.astralibs.menu.slot.util.InventorySlotBuilderExt.setDisplayName
+import ru.astrainteractive.astralibs.menu.slot.util.InventorySlotBuilderExt.setIndex
+import ru.astrainteractive.astralibs.menu.slot.util.InventorySlotBuilderExt.setItemStack
+import ru.astrainteractive.astralibs.menu.slot.util.InventorySlotBuilderExt.setLore
+import ru.astrainteractive.astralibs.menu.slot.util.InventorySlotBuilderExt.setMaterial
+import ru.astrainteractive.astralibs.menu.slot.util.InventorySlotBuilderExt.setOnClickListener
 import ru.astrainteractive.astralibs.serialization.KyoriComponentSerializer
 import ru.astrainteractive.astratemplate.api.local.model.UserModel
 import ru.astrainteractive.astratemplate.gui.di.SampleGuiDependencies
@@ -93,13 +95,9 @@ class SampleGUI(
             .setOnClickListener { showPrevPage() }
             .build()
 
-    override fun onInventoryClose(it: InventoryCloseEvent) {
-        super.onInventoryClose(it)
+    override fun onInventoryClosed(it: InventoryCloseEvent) {
+        super.onInventoryClosed(it)
         sampleComponent.close()
-    }
-
-    override fun onPageChanged() {
-        render()
     }
 
     override fun onInventoryClicked(e: InventoryClickEvent) {
@@ -107,7 +105,7 @@ class SampleGUI(
         e.isCancelled = true
     }
 
-    override fun onCreated() {
+    override fun onInventoryCreated() {
         sampleComponent.onUiCreated()
         sampleComponent.model
             .onEach { state ->
