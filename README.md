@@ -159,7 +159,7 @@ classDiagram
 
 </details>
 
-## 7. Plugin usage
+## 7.1 Plugin usage
 
 | Command                             | Permission | Description                                   |
 |:------------------------------------|:-----------|:----------------------------------------------|
@@ -169,10 +169,17 @@ classDiagram
 | `/atempgui`                         | `-`        | `Open sample gui`                             |
 | `/rickandmorty `                    | `-`        | `Send to executor random RickMorty character` |
 
+## 7.1 Fabric mod usage
+
+| Command       | Permission | Description                    |
+|:--------------|:-----------|:-------------------------------|
+| `/rickmorty`  | `-`        | `Rick morty character println` |
+| `/helloworld` | `-`        | `Hello world println`          |
+
 ### Platforms
 
 - [x] Spigot/Paper
-- [ ] Fabric - Pre Alpha state
+- [x] Fabric - Pre Alpha state
 - [ ] Forge - Pre-Alpha state
 - [x] Velocity
 
@@ -182,6 +189,7 @@ Firstly, change gradle/libs.versions.toml destination-xxx to your folder
 
     $ ./gradlew :plugin:shadowJar          # assemble the plugin .jar
     $ ./gradlew :velocity:shadowJar        # assemble the plugin .jar
+    $ ./gradlew :fabric:build              # assemble the fabric .jar
 
 ### Forge and fabirc is on pause
 

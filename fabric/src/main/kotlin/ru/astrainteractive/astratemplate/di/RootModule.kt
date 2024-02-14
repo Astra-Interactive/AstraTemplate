@@ -1,35 +1,70 @@
-@file:OptIn(UnsafeApi::class)
-
 package ru.astrainteractive.astratemplate.di
 
-import org.jetbrains.kotlin.tooling.core.UnsafeApi
-import ru.astrainteractive.astralibs.async.AsyncComponent
-import ru.astrainteractive.astralibs.async.KDispatchers
-import ru.astrainteractive.astralibs.async.KotlinDispatchers
-import ru.astrainteractive.astralibs.async.PluginScope
-import ru.astrainteractive.astralibs.http.HttpClient
-import ru.astrainteractive.astratemplate.api.local.di.DatabaseFactory
-import ru.astrainteractive.astratemplate.api.local.di.LocalApiFactory
-import ru.astrainteractive.astratemplate.api.remote.di.RickMortyApiFactory
-import ru.astrainteractive.klibs.kdi.Single
+import ru.astrainteractive.astralibs.lifecycle.Lifecycle
+import ru.astrainteractive.astratemplate.api.local.di.ApiLocalModule
+import ru.astrainteractive.astratemplate.api.remote.di.ApiRemoteModule
+import ru.astrainteractive.astratemplate.command.di.CommandModule
+import ru.astrainteractive.astratemplate.core.di.CoreModule
+import java.io.File
 
-object RootModule {
-    val scope = Single { PluginScope as AsyncComponent }
-    val dispatchers = Single { KDispatchers as KotlinDispatchers }
+interface RootModule {
+    val lifecycle: Lifecycle
 
-    val databaseModule = Single {
-        DatabaseFactory("data.db").create()
-    }
+    val fabricModule: FabricModule
 
-    val rmApiModule = Single {
-        RickMortyApiFactory(HttpClient).create()
-    }
+    val coreModule: CoreModule
 
-    val localApi = Single {
-        LocalApiFactory(LocalApiModuleImpl).create()
-    }
+    val apiLocalModule: ApiLocalModule
 
-    val helloWorldModule = Single {
-        "Hello world"
+    val apiRemoteModule: ApiRemoteModule
+
+    val commandModule: CommandModule
+
+    class Default : RootModule {
+        override val fabricModule: FabricModule by lazy {
+            FabricModule.Default()
+        }
+
+        override val coreModule: CoreModule by lazy {
+            CoreModule.Default(
+                dataFolder = fabricModule.configDir
+            )
+        }
+
+        override val apiLocalModule: ApiLocalModule by lazy {
+            ApiLocalModule.Default(
+                databasePath = "${fabricModule.configDir}${File.separator}data.db"
+            )
+        }
+
+        override val apiRemoteModule: ApiRemoteModule by lazy {
+            ApiRemoteModule.Default()
+        }
+
+        override val commandModule: CommandModule by lazy {
+            CommandModule.Default(
+                coreModule = coreModule,
+                apiRemoteModule = apiRemoteModule
+            )
+        }
+
+        private val lifecycles: List<Lifecycle>
+            get() = listOf(
+                commandModule.lifecycle
+            )
+
+        override val lifecycle: Lifecycle by lazy {
+            Lifecycle.Lambda(
+                onEnable = {
+                    lifecycles.forEach(Lifecycle::onEnable)
+                },
+                onDisable = {
+                    lifecycles.forEach(Lifecycle::onDisable)
+                },
+                onReload = {
+                    lifecycles.forEach(Lifecycle::onReload)
+                }
+            )
+        }
     }
 }
