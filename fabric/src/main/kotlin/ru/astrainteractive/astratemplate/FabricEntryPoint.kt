@@ -1,12 +1,16 @@
 package ru.astrainteractive.astratemplate
 
 import net.fabricmc.api.ModInitializer
-import ru.astrainteractive.astratemplate.command.CommandManager
+import ru.astrainteractive.astratemplate.di.RootModule
 
 class FabricEntryPoint : ModInitializer {
 
+    private val rootModule: RootModule by lazy {
+        RootModule.Default()
+    }
+
     override fun onInitialize() {
         println("AstraTemplate: onInitialize")
-        CommandManager.enable()
+        rootModule.lifecycle.onEnable()
     }
 }

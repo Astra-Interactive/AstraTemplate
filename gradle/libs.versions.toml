@@ -1,6 +1,6 @@
 [versions]
 # Kotlin
-kotlin-version = "1.9.0"
+kotlin-version = "1.9.22"
 kotlin-coroutines = "1.6.3"
 kotlin-json = "1.5.0-RC"
 kotlin-kaml = "0.50.0"
@@ -10,7 +10,7 @@ driver-jdbc = "3.36.0.3"
 driver-mysql = "8.0.20"
 
 # Minecraft
-minecraft-version = "1.19.2"
+minecraft-version = "1.20.2"
 minecraft-velocity = "3.1.1"
 minecraft-spigot = "1.20.1-R0.1-SNAPSHOT"
 minecraft-papi = "2.11.2"
@@ -30,17 +30,18 @@ tests-junit-jupiter-api = "5.9.1"
 tests-junit-bom = "5.7.0"
 
 # Fabric
-minecraft-fabric-loom = "1.0-SNAPSHOT"
-minecraft-fabric-kotlin = "1.10.0+kotlin.1.9.0"
-minecraft-fabric-loader = "0.14.21"
-minecraft-fabric-api = "0.85.0+1.20.1"
+minecraft-fabric-loom = "1.4.4"
+minecraft-fabric-kotlin = "1.10.17+kotlin.1.9.22"
+minecraft-fabric-loader = "0.14.24"
+minecraft-fabric-api = "0.83.0+1.19.4"
+minecraft-fabric-yarn = "1.20.2+build.4"
 
 # Forge
 minecraft-forge-net = "5.1.61"
 minecrft-forge-version = "1.19.2-43.1.52"
 
 # Shadow
-gradle-shadow = "7.1.2"
+gradle-shadow = "8.1.1"
 
 # BuildConfig
 gradle-buildconfig = "3.1.0"
