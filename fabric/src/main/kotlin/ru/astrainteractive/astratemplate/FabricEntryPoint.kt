@@ -13,4 +13,8 @@ class FabricEntryPoint : ModInitializer {
         println("AstraTemplate: onInitialize")
         rootModule.lifecycle.onEnable()
     }
+
+    fun reload() {
+        rootModule.lifecycle.onReload()
+    }
 }

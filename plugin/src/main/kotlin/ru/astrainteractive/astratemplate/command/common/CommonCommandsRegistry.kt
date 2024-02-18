@@ -2,14 +2,12 @@ package ru.astrainteractive.astratemplate.command.common
 
 import ru.astrainteractive.astralibs.util.StringListExt.withEntry
 import ru.astrainteractive.astratemplate.command.common.di.CommonCommandsDependencies
-import ru.astrainteractive.klibs.kdi.Factory
 
-class CommonCommandsFactory(
+class CommonCommandsRegistry(
     dependencies: CommonCommandsDependencies
-) : Factory<CommonCommands>,
-    CommonCommandsDependencies by dependencies {
+) : CommonCommandsDependencies by dependencies {
 
-    override fun create(): CommonCommands {
+    fun register() {
         plugin.getCommand("atemp")?.setTabCompleter { sender, command, label, args ->
             when {
                 args.isEmpty() -> listOf("atemp", "atempreload")
@@ -21,6 +19,5 @@ class CommonCommandsFactory(
             sender.sendMessage(translation.general.getByByCheck.let(kyoriComponentSerializer::toComponent))
             true
         }
-        return CommonCommands.Stub
     }
 }

@@ -2,26 +2,22 @@ package ru.astrainteractive.astratemplate.command.additem
 
 import org.bukkit.Bukkit
 import org.bukkit.Material
-import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
-import ru.astrainteractive.astralibs.command.api.CommandParser
+import ru.astrainteractive.astralibs.command.api.context.BukkitCommandContext
+import ru.astrainteractive.astralibs.command.api.parser.BukkitCommandParser
 
-internal class AddItemCommandParser : CommandParser<AddItemCommand.Result> {
+internal class AddItemCommandParser : BukkitCommandParser<AddItemCommand.Result> {
+    override fun parse(commandContext: BukkitCommandContext): AddItemCommand.Result {
+        if (commandContext.sender !is Player) return AddItemCommand.Result.SenderNotPlayer
 
-    override fun parse(
-        args: Array<out String>,
-        sender: CommandSender
-    ): AddItemCommand.Result {
-        if (sender !is Player) return AddItemCommand.Result.SenderNotPlayer
-
-        val player = args.getOrNull(0)
+        val player = commandContext.args.getOrNull(0)
             ?.let { value -> Bukkit.getOnlinePlayers().firstOrNull { it.name == value } }
             ?: return AddItemCommand.Result.PlayerNotExists
 
-        val amount = args.getOrNull(2)
+        val amount = commandContext.args.getOrNull(2)
             ?.toIntOrNull() ?: 1
 
-        val item = args.getOrNull(1)
+        val item = commandContext.args.getOrNull(1)
             ?.let(Material::getMaterial)
             ?: return AddItemCommand.Result.ItemNotfound
 

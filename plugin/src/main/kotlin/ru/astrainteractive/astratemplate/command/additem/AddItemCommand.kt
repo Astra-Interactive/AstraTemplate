@@ -2,9 +2,9 @@ package ru.astrainteractive.astratemplate.command.additem
 
 import org.bukkit.Material
 import org.bukkit.entity.Player
-import ru.astrainteractive.astralibs.command.api.Command
+import ru.astrainteractive.astralibs.command.api.command.BukkitCommand
 
-interface AddItemCommand : Command<AddItemCommand.Result, AddItemCommand.Input> {
+interface AddItemCommand : BukkitCommand {
     sealed interface Result {
         data object NoEx : Result
         data object SenderNotPlayer : Result

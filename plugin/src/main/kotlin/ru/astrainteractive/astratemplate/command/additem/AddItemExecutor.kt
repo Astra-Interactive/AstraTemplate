@@ -1,7 +1,7 @@
 package ru.astrainteractive.astratemplate.command.additem
 
 import org.bukkit.inventory.ItemStack
-import ru.astrainteractive.astralibs.command.api.CommandExecutor
+import ru.astrainteractive.astralibs.command.api.executor.CommandExecutor
 
 internal class AddItemExecutor : CommandExecutor<AddItemCommand.Input> {
     override fun execute(input: AddItemCommand.Input) {

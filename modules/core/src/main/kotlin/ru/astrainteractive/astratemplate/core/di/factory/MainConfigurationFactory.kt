@@ -1,7 +1,7 @@
 package ru.astrainteractive.astratemplate.core.di.factory
 
 import kotlinx.serialization.encodeToString
-import ru.astrainteractive.astralibs.filemanager.impl.JVMResourceFileManager
+import ru.astrainteractive.astralibs.filemanager.impl.JVMFileManager
 import ru.astrainteractive.astralibs.serialization.SerializerExt.parseOrDefault
 import ru.astrainteractive.astralibs.serialization.YamlSerializer
 import ru.astrainteractive.astratemplate.core.PluginConfiguration
@@ -14,7 +14,7 @@ internal class MainConfigurationFactory(
 ) : Factory<PluginConfiguration> {
 
     override fun create(): PluginConfiguration {
-        val configFile = JVMResourceFileManager("config.yml", dataFolder, this::class.java)
+        val configFile = JVMFileManager("config.yml", dataFolder)
         val configuration = yamlSerializer.parseOrDefault(
             configFile.configFile,
             ::PluginConfiguration

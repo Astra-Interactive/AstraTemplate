@@ -1,12 +1,12 @@
 package ru.astrainteractive.astratemplate.command.di
 
 import ru.astrainteractive.astralibs.lifecycle.Lifecycle
-import ru.astrainteractive.astratemplate.command.additem.AddItemCommandFactory
-import ru.astrainteractive.astratemplate.command.common.CommonCommandsFactory
-import ru.astrainteractive.astratemplate.command.damage.DamageCommandFactory
-import ru.astrainteractive.astratemplate.command.gui.GuiCommandFactory
-import ru.astrainteractive.astratemplate.command.reload.ReloadCommandFactory
-import ru.astrainteractive.astratemplate.command.rickmorty.RandomRickAndMortyCommandFactory
+import ru.astrainteractive.astratemplate.command.additem.AddItemCommandRegistry
+import ru.astrainteractive.astratemplate.command.common.CommonCommandsRegistry
+import ru.astrainteractive.astratemplate.command.damage.DamageCommandRegistry
+import ru.astrainteractive.astratemplate.command.gui.GuiCommandRegistry
+import ru.astrainteractive.astratemplate.command.reload.ReloadCommandRegistry
+import ru.astrainteractive.astratemplate.command.rickmorty.RandomRickAndMortyCommandRegistry
 import ru.astrainteractive.astratemplate.di.RootModule
 
 interface CommandModule {
@@ -17,12 +17,12 @@ interface CommandModule {
             Lifecycle.Lambda(
                 onEnable = {
                     val dependencies = CommandManagerDependencies.Default(rootModule)
-                    AddItemCommandFactory(dependencies).create()
-                    CommonCommandsFactory(dependencies).create()
-                    DamageCommandFactory(dependencies).create()
-                    GuiCommandFactory(dependencies).create()
-                    ReloadCommandFactory(dependencies).create()
-                    RandomRickAndMortyCommandFactory(dependencies).create()
+                    AddItemCommandRegistry(dependencies).register()
+                    CommonCommandsRegistry(dependencies).register()
+                    DamageCommandRegistry(dependencies).register()
+                    GuiCommandRegistry(dependencies).register()
+                    ReloadCommandRegistry(dependencies).register()
+                    RandomRickAndMortyCommandRegistry(dependencies).register()
                 }
             )
         }

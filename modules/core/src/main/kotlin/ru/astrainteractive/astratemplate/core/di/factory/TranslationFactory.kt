@@ -1,7 +1,7 @@
 package ru.astrainteractive.astratemplate.core.di.factory
 
 import kotlinx.serialization.encodeToString
-import ru.astrainteractive.astralibs.filemanager.impl.JVMResourceFileManager
+import ru.astrainteractive.astralibs.filemanager.impl.JVMFileManager
 import ru.astrainteractive.astralibs.serialization.SerializerExt.parseOrDefault
 import ru.astrainteractive.astralibs.serialization.YamlSerializer
 import ru.astrainteractive.astratemplate.core.PluginTranslation
@@ -14,7 +14,7 @@ internal class TranslationFactory(
 ) : Factory<PluginTranslation> {
 
     override fun create(): PluginTranslation {
-        val configFile = JVMResourceFileManager("translations.yml", dataFolder, this::class.java)
+        val configFile = JVMFileManager("translations.yml", dataFolder)
         val translation = yamlSerializer.parseOrDefault(
             configFile.configFile,
             ::PluginTranslation

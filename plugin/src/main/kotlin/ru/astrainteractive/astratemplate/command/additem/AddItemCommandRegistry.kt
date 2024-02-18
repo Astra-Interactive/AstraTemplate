@@ -3,15 +3,16 @@ package ru.astrainteractive.astratemplate.command.additem
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.plugin.java.JavaPlugin
-import ru.astrainteractive.astralibs.command.api.Command
-import ru.astrainteractive.astralibs.command.api.DefaultCommandFactory
+import ru.astrainteractive.astralibs.command.api.command.Command
+import ru.astrainteractive.astralibs.command.api.commandfactory.BukkitCommandFactory
+import ru.astrainteractive.astralibs.command.api.registry.BukkitCommandRegistry
+import ru.astrainteractive.astralibs.command.api.registry.BukkitCommandRegistryContext.Companion.toCommandRegistryContext
 import ru.astrainteractive.astralibs.util.StringListExt.withEntry
 import ru.astrainteractive.astratemplate.command.additem.di.AddItemCommandDependencies
-import ru.astrainteractive.klibs.kdi.Factory
 
-class AddItemCommandFactory(
+class AddItemCommandRegistry(
     dependencies: AddItemCommandDependencies
-) : Factory<AddItemCommand>, AddItemCommandDependencies by dependencies {
+) : AddItemCommandDependencies by dependencies {
     private val alias = "add"
 
     internal class Mapper : Command.Mapper<AddItemCommand.Result, AddItemCommand.Input> {
@@ -26,16 +27,6 @@ class AddItemCommandFactory(
         }
     }
 
-    inner class AddItemCommandImpl :
-        AddItemCommand,
-        Command<AddItemCommand.Result, AddItemCommand.Input> by DefaultCommandFactory.create(
-            alias = alias,
-            commandParser = AddItemCommandParser(),
-            commandExecutor = AddItemExecutor(),
-            resultHandler = AddItemParserResultHandler(),
-            mapper = Mapper()
-        )
-
     private fun tabCompleter(plugin: JavaPlugin) {
         plugin.getCommand(alias)?.setTabCompleter { sender, command, label, args ->
             when (args.size) {
@@ -46,10 +37,18 @@ class AddItemCommandFactory(
         }
     }
 
-    override fun create(): AddItemCommand {
+    fun register() {
         tabCompleter(plugin)
-        return AddItemCommandImpl().also {
-            it.register(plugin)
-        }
+        val command = BukkitCommandFactory.create(
+            alias = alias,
+            commandParser = AddItemCommandParser(),
+            commandExecutor = AddItemExecutor(),
+            commandSideEffect = AddItemParserResultHandler(),
+            mapper = Mapper()
+        )
+        BukkitCommandRegistry.register(
+            command = command,
+            registryContext = plugin.toCommandRegistryContext()
+        )
     }
 }

@@ -1,25 +1,25 @@
 package ru.astrainteractive.astratemplate.command.rickmorty
 
 import kotlinx.coroutines.launch
-import ru.astrainteractive.astralibs.command.api.Command
-import ru.astrainteractive.astralibs.command.api.DefaultCommandFactory
+import ru.astrainteractive.astralibs.command.api.command.Command
+import ru.astrainteractive.astralibs.command.api.commandfactory.BukkitCommandFactory
+import ru.astrainteractive.astralibs.command.api.registry.BukkitCommandRegistry
+import ru.astrainteractive.astralibs.command.api.registry.BukkitCommandRegistryContext.Companion.toCommandRegistryContext
+import ru.astrainteractive.astralibs.command.api.sideeffect.CommandSideEffect
 import ru.astrainteractive.astratemplate.command.rickmorty.di.RickMortyCommandDependencies
-import ru.astrainteractive.klibs.kdi.Factory
 import ru.astrainteractive.klibs.kdi.getValue
 
-class RandomRickAndMortyCommandFactory(
+class RandomRickAndMortyCommandRegistry(
     dependencies: RickMortyCommandDependencies
-) : Factory<RandomRickAndMortyCommand>,
-    RickMortyCommandDependencies by dependencies {
+) : RickMortyCommandDependencies by dependencies {
 
-    private inner class RandomRickAndMortyCommandImpl :
-        RandomRickAndMortyCommand,
-        Command<RandomRickAndMortyCommand.Input, RandomRickAndMortyCommand.Input> by DefaultCommandFactory.create(
+    fun register() {
+        val command = BukkitCommandFactory.create(
             alias = "rickandmorty",
-            commandParser = { args, sender ->
-                RandomRickAndMortyCommand.Input(sender)
+            commandParser = { commandContext ->
+                RandomRickAndMortyCommand.Input(commandContext.sender)
             },
-            resultHandler = Command.ResultHandler.NoOp(),
+            commandSideEffect = CommandSideEffect.NoOp(),
             commandExecutor = { input ->
                 scope.launch(dispatchers.IO) {
                     val randomInt by randomIntProvider
@@ -35,10 +35,9 @@ class RandomRickAndMortyCommandFactory(
             },
             mapper = Command.Mapper.NoOp()
         )
-
-    override fun create(): RandomRickAndMortyCommand {
-        return RandomRickAndMortyCommandImpl().also {
-            it.register(plugin)
-        }
+        BukkitCommandRegistry.register(
+            command = command,
+            registryContext = plugin.toCommandRegistryContext()
+        )
     }
 }

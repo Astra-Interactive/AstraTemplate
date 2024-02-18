@@ -12,7 +12,7 @@ import org.bukkit.inventory.ItemStack
 import ru.astrainteractive.astralibs.menu.holder.DefaultPlayerHolder
 import ru.astrainteractive.astralibs.menu.holder.PlayerHolder
 import ru.astrainteractive.astralibs.menu.inventory.PaginatedInventoryMenu
-import ru.astrainteractive.astralibs.menu.inventory.model.MenuSize
+import ru.astrainteractive.astralibs.menu.inventory.model.InventorySize
 import ru.astrainteractive.astralibs.menu.inventory.model.PageContext
 import ru.astrainteractive.astralibs.menu.inventory.util.PageContextExt.getIndex
 import ru.astrainteractive.astralibs.menu.inventory.util.PageContextExt.isLastPage
@@ -42,10 +42,10 @@ class SampleGUI(
 
     override val playerHolder: PlayerHolder = DefaultPlayerHolder(player)
     override var title: Component = translation.menu.menuTitle.let(::toComponent)
-    override val inventorySize: MenuSize = MenuSize.XL
+    override val inventorySize: InventorySize = InventorySize.XL
     override var pageContext: PageContext = PageContext(
         page = 0,
-        maxItemsPerPage = inventorySize.size - MenuSize.XXS.size,
+        maxItemsPerPage = inventorySize.size - InventorySize.XXS.size,
         maxItems = 0
     )
 
