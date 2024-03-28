@@ -5,7 +5,7 @@
 
 # AstraTemplate v7.0.0
 
-### MultiPlatform (Plugin-first) Spigot/Velocity plugin
+### MultiPlatform (Plugin-first) Spigot/Velocity/Fabric/Forge plugin
 
 This is a Minecraft Multiplatform template that provides architecture and various tools you'll need to create new
 Spigot/Velocity plugins as fast as possible
@@ -45,8 +45,8 @@ It contains powerful and scalable architecture template which will help you in y
     │   ├── api-local       # Local api with SQLite
     │   ├── api-remote      # Remote sample RickMorty API
     │   └── core            # Core multiplatform module
-    ├── forge               # Forge template mod[wip]
-    ├── fabric              # Fabric template mod[wip]
+    ├── forge               # Forge template mod
+    ├── fabric              # Fabric template mod
     ├── velocity            # Velocity template plugin
     └── plugin              # Bukkit template mod
 
@@ -83,9 +83,9 @@ Sometimes you need to share models between other modules, so this module contain
 
 Usually all instances(forge/bukkit) have the same logic, which can be located here without depending on platform
 
-## 4. Velocity [wip]
+## 4. Velocity/Fabric/Forge
 
-I've not been working with velocity too much, but this module contains basic velocity functionality with plugin
+I've not been working with velocity too much, but this modules contains basic functionality with plugin
 information generation.
 
 ## 5. Quick overview
@@ -176,11 +176,17 @@ classDiagram
 | `/rickmorty`  | `-`        | `Rick morty character println` |
 | `/helloworld` | `-`        | `Hello world println`          |
 
+## 7.2 Forge mod usage
+
+| Command       | Permission | Description           |
+|:--------------|:-----------|:----------------------|
+| `/helloworld` | `-`        | `Hello world println` |
+
 ### Platforms
 
 - [x] Spigot/Paper
 - [x] Fabric - Pre Alpha state
-- [ ] Forge - Pre-Alpha state
+- [x] Forge - Pre-Alpha state
 - [x] Velocity
 
 ### Build jar executables
@@ -190,6 +196,7 @@ Firstly, change gradle/libs.versions.toml destination-xxx to your folder
     $ ./gradlew :plugin:shadowJar          # assemble the plugin .jar
     $ ./gradlew :velocity:shadowJar        # assemble the plugin .jar
     $ ./gradlew :fabric:build              # assemble the fabric .jar
+    $ ./gradlew :forge:shadowJar           # assemble the forge .jar
 
 ### Forge and fabirc is on pause
 
