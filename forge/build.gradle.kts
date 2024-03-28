@@ -36,6 +36,7 @@ dependencies {
     minecraft("net.minecraftforge:forge:1.20.1-47.1.46")
     // AstraLibs
     implementation(libs.minecraft.astralibs.core)
+    implementation(libs.minecraft.astralibs.command)
     implementation(klibs.klibs.kdi)
     // Kotlin
     implementation(libs.bundles.kotlin)
@@ -123,6 +124,7 @@ val shadowJar by tasks.getting(ShadowJar::class) {
         // Kotlin
         include(dependency("ru.astrainteractive.klibs:kdi-jvm"))
         include(dependency(libs.minecraft.astralibs.core.asProvider().get()))
+        include(dependency(libs.minecraft.astralibs.command.asProvider().get()))
         include(dependency(projects.modules.core))
         include(dependency(projects.modules.apiRemote))
         include(dependency(projects.modules.apiLocal))

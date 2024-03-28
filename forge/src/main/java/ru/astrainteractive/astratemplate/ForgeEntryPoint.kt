@@ -12,11 +12,15 @@ import javax.annotation.ParametersAreNonnullByDefault
 @Mod(BuildKonfig.id)
 @ParametersAreNonnullByDefault
 class ForgeEntryPoint {
-    val rootModule by lazy { RootModule.Default() }
+    companion object {
+        val rootModule by lazy { RootModule.Default() }
+    }
+
     private val logger = LogManager.getLogger()
 
     private fun setup(event: FMLCommonSetupEvent) {
         rootModule.coreModule.logger.value.info("ForgeEntryPoint", "setup")
+        CommandLoader.commonSetup(event)
     }
 
     init {
