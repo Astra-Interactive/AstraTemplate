@@ -76,50 +76,15 @@ val processResources = project.tasks.withType<org.gradle.language.jvm.tasks.Proc
     }
 }
 
-tasks.jar {
-    mustRunAfter(processResources)
-    dependsOn(processResources)
-    enabled = false
-    archiveBaseName.set(project.name)
-}
-
-tasks.jarJar {
-    mustRunAfter(processResources)
-    dependsOn(processResources)
-    enabled = true
-    archiveBaseName.set(project.name)
-    manifest {
-        attributes(
-            "Specification-Title" to project.name,
-            "Specification-Vendor" to projectInfo.developersList.first().id,
-            "Specification-Version" to project.version,
-            "Implementation-Title" to project.name,
-            "Implementation-Version" to project.version,
-            "Implementation-Vendor" to projectInfo.developersList.first().id
-        )
-    }
-}
-
-tasks.whenTaskAdded {
-    // Disable reobfJar
-    if (name == "reobfJar") {
-        enabled = false
-    }
-    // Fight ForgeGradle and Forge crashing when MOD_CLASSES don't exist
-    if (name == "prepareRuns") {
-        doFirst {
-            sourceSets.main.get().output.files.forEach(File::mkdirs)
-        }
-    }
-}
-
-tasks.assemble { dependsOn(tasks.jarJar) }
-
 val destination = File("C:\\Users\\Roman\\Desktop\\EsmpModded\\server\\mods")
     .takeIf(File::exists)
     ?: File(rootDir, "jars")
 
+val reobfShadowJar = reobf.create("shadowJar")
+
 val shadowJar by tasks.getting(ShadowJar::class) {
+    mustRunAfter(processResources)
+    dependsOn(processResources)
     dependencies {
         // Kotlin
         include(dependency("ru.astrainteractive.klibs:kdi-jvm"))
@@ -135,17 +100,23 @@ val shadowJar by tasks.getting(ShadowJar::class) {
         include(dependency("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm"))
         include(dependency(libs.driver.jdbc.get()))
     }
-    mustRunAfter(tasks.assemble)
-    dependsOn(tasks.assemble)
-    dependsOn(configurations)
-    mustRunAfter(processResources)
-    dependsOn(processResources)
-    mergeServiceFiles()
     relocate("kotlin", "${projectInfo.group}.kotlin")
     relocate("kotlinx", "${projectInfo.group}.kotlinx")
     relocate("org.jetbrains", "${projectInfo.group}.org.jetbrains")
+    mergeServiceFiles()
+    manifest {
+        attributes(
+            "Specification-Title" to project.name,
+            "Specification-Vendor" to projectInfo.developersList.first().id,
+            "Specification-Version" to project.version,
+            "Implementation-Title" to project.name,
+            "Implementation-Version" to project.version,
+            "Implementation-Vendor" to projectInfo.developersList.first().id
+        )
+    }
     isReproducibleFileOrder = true
     archiveClassifier.set(null as String?)
     archiveBaseName.set("${projectInfo.name}-forge-shadow")
     destinationDirectory.set(destination)
+    finalizedBy(reobfShadowJar)
 }
