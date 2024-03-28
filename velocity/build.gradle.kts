@@ -21,22 +21,7 @@ dependencies {
     annotationProcessor(libs.minecraft.velocity.api)
     // Local
     implementation(projects.modules.core)
-}
-
-buildConfig {
-    className("BuildKonfig")
-    packageName(projectInfo.group)
-    fun buildConfigStringField(name: String, value: String) {
-        buildConfigField("String", name, "\"${value}\"")
-    }
-    buildConfigStringField("id", projectInfo.name.lowercase())
-    buildConfigStringField("name", projectInfo.name)
-    buildConfigStringField("version", projectInfo.versionString)
-    buildConfigStringField("url", projectInfo.url)
-    buildConfigStringField("description", projectInfo.description)
-    projectInfo.developersList.forEachIndexed { i, dev ->
-        buildConfigStringField("author_$i", dev.id)
-    }
+    implementation(projects.modules.buildKonfig)
 }
 
 setupVelocityProcessor()

@@ -1,13 +1,149 @@
+@file:Suppress("UnusedPrivateMember")
+
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+import ru.astrainteractive.gradleplugin.models.Developer
+import ru.astrainteractive.gradleplugin.util.ProjectProperties.projectInfo
+
 plugins {
-    id("net.minecraftforge.gradle")
-    id("forge-resource-processor")
-    id("basic-java")
-    id("forge-shadow")
+    kotlin("jvm")
+    alias(klibs.plugins.klibs.gradle.java.core)
+    id("net.minecraftforge.gradle") version ("[6.0,6.2)")
     id("com.github.johnrengelman.shadow")
 }
+
 minecraft {
-    mappings("official", "1.19")
+    mappings("official", "1.20.1")
+    runs {
+        val runProperties = mapOf(
+            // Recommended logging data for a userdev environment.
+            Pair("forge.logging.markers", "SCAN,REGISTRIES,REGISTRYDUMP"),
+            // Recommended logging level for the console.
+            Pair("forge.logging.console.level", "debug")
+        )
+        val server by creating {
+            properties(runProperties)
+            workingDirectory(File("./build${File.separator}run"))
+            mods {
+                create(projectInfo.name) {
+                    source(sourceSets.getByName("main"))
+                }
+            }
+        }
+    }
 }
+
 dependencies {
-    minecraft("net.minecraftforge:forge:${libs.versions.minecrft.forge.version.get()}")
+    minecraft("net.minecraftforge:forge:1.20.1-47.1.46")
+    // AstraLibs
+    implementation(libs.minecraft.astralibs.core)
+    implementation(klibs.klibs.kdi)
+    // Kotlin
+    implementation(libs.bundles.kotlin)
+    // Local
+    implementation(projects.modules.apiLocal)
+    implementation(projects.modules.apiRemote)
+    implementation(projects.modules.core)
+    implementation(projects.modules.buildKonfig)
+}
+
+configurations {
+    apiElements {
+        artifacts.clear()
+    }
+    runtimeElements {
+        setExtendsFrom(emptySet())
+        // Publish the jarJar
+        artifacts.clear()
+        outgoing.artifact(tasks.jarJar)
+    }
+}
+
+val processResources = project.tasks.withType<org.gradle.language.jvm.tasks.ProcessResources>() {
+    filteringCharset = "UTF-8"
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+
+    from(sourceSets.main.get().resources.srcDirs) {
+        include("META-INF/mods.toml")
+        include("mods.toml")
+        expand(
+            "modId" to projectInfo.name.lowercase(),
+            "version" to projectInfo.versionString,
+            "description" to projectInfo.description,
+            "displayName" to projectInfo.name,
+            "authors" to projectInfo.developersList.map(Developer::id).joinToString(",")
+        )
+    }
+}
+
+tasks.jar {
+    mustRunAfter(processResources)
+    dependsOn(processResources)
+    enabled = false
+    archiveBaseName.set(project.name)
+}
+
+tasks.jarJar {
+    mustRunAfter(processResources)
+    dependsOn(processResources)
+    enabled = true
+    archiveBaseName.set(project.name)
+    manifest {
+        attributes(
+            "Specification-Title" to project.name,
+            "Specification-Vendor" to projectInfo.developersList.first().id,
+            "Specification-Version" to project.version,
+            "Implementation-Title" to project.name,
+            "Implementation-Version" to project.version,
+            "Implementation-Vendor" to projectInfo.developersList.first().id
+        )
+    }
+}
+
+tasks.whenTaskAdded {
+    // Disable reobfJar
+    if (name == "reobfJar") {
+        enabled = false
+    }
+    // Fight ForgeGradle and Forge crashing when MOD_CLASSES don't exist
+    if (name == "prepareRuns") {
+        doFirst {
+            sourceSets.main.get().output.files.forEach(File::mkdirs)
+        }
+    }
+}
+
+tasks.assemble { dependsOn(tasks.jarJar) }
+
+val destination = File("C:\\Users\\Roman\\Desktop\\EsmpModded\\server\\mods")
+    .takeIf(File::exists)
+    ?: File(rootDir, "jars")
+
+val shadowJar by tasks.getting(ShadowJar::class) {
+    dependencies {
+        // Kotlin
+        include(dependency("ru.astrainteractive.klibs:kdi-jvm"))
+        include(dependency(libs.minecraft.astralibs.core.asProvider().get()))
+        include(dependency(projects.modules.core))
+        include(dependency(projects.modules.apiRemote))
+        include(dependency(projects.modules.apiLocal))
+        // TODO somehow fix the multiplatform libraries
+        include(dependency("ru.astrainteractive.klibs:kdi-jvm"))
+        include(dependency("ru.astrainteractive.klibs:kdi-jvm"))
+        include(dependency("org.jetbrains.kotlin:kotlin-stdlib"))
+        include(dependency("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm"))
+        include(dependency(libs.driver.jdbc.get()))
+    }
+    mustRunAfter(tasks.assemble)
+    dependsOn(tasks.assemble)
+    dependsOn(configurations)
+    mustRunAfter(processResources)
+    dependsOn(processResources)
+    mergeServiceFiles()
+    relocate("kotlin", "${projectInfo.group}.kotlin")
+    relocate("kotlinx", "${projectInfo.group}.kotlinx")
+    relocate("org.jetbrains", "${projectInfo.group}.org.jetbrains")
+    isReproducibleFileOrder = true
+    archiveClassifier.set(null as String?)
+    archiveBaseName.set("${projectInfo.name}-forge-shadow")
+    destinationDirectory.set(destination)
 }

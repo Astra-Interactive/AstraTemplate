@@ -36,10 +36,6 @@ minecraft-fabric-loader = "0.14.24"
 minecraft-fabric-api = "0.83.0+1.19.4"
 minecraft-fabric-yarn = "1.20.2+build.4"
 
-# Forge
-minecraft-forge-net = "5.1.61"
-minecrft-forge-version = "1.19.2-43.1.52"
-
 # Shadow
 gradle-shadow = "8.1.1"
 
@@ -120,7 +116,6 @@ kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", versi
 
 # Minecraft
 minecraft-fabric-loom = { id = "fabric-loom", version.ref = "minecraft-fabric-loom" }
-minecraft-forge-net = { id = "net.minecraftforge.gradle", version.ref = "minecraft-forge-net" }
 
 # Gradle
 gradle-shadow = { id = "com.github.johnrengelman.shadow", version.ref = "gradle-shadow" }

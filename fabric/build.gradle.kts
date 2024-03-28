@@ -26,6 +26,7 @@ dependencies {
     implementation(libs.bundles.kotlin)
     // Driver
     implementation(libs.driver.jdbc)
+    // Local
     implementation(projects.modules.apiLocal)
     implementation(projects.modules.apiRemote)
     implementation(projects.modules.core)
@@ -47,7 +48,6 @@ val shadowJar by tasks.getting(ShadowJar::class) {
         include(dependency("ru.astrainteractive.klibs:mikro-core-jvm"))
         include(dependency(libs.driver.jdbc.get()))
     }
-    println("Configurations: ${project.configurations.names}")
     exclude("mappings/")
     dependsOn(configurations)
     from(sourceSets.main.get().allSource)

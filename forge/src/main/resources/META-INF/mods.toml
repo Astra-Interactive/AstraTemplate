@@ -1,12 +1,10 @@
 license="MIT"
 modLoader="javafml"
-loaderVersion="[31,)"
+loaderVersion="[34,)"
 [[mods]]
-modId="astratemplate"
-version="0.0.1"
-displayName="AstraTemplate"
-authors="makeevrserg"
+modId="${modId}"
+version="${version}"
+displayName="${displayName}"
+authors="${authors}"
 logoFile="icon.png"
-description='''
-Astra Template Forge module
-'''
+description="${description}"
