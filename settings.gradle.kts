@@ -3,6 +3,7 @@ pluginManagement {
         maven("https://maven.fabricmc.net/") { name = "Fabric" }
         maven("https://files.minecraftforge.net/maven")
         maven("https://dist.creeper.host/Sponge/maven")
+        maven("https://maven.minecraftforge.net/")
         maven("https://plugins.gradle.org/m2/")
         maven("https://jitpack.io")
         gradlePluginPortal()
@@ -16,6 +17,7 @@ buildscript {
     repositories {
         maven("https://files.minecraftforge.net/maven")
         maven("https://dist.creeper.host/Sponge/maven")
+        maven("https://maven.minecraftforge.net/")
         maven("https://plugins.gradle.org/m2/")
         mavenCentral()
         mavenLocal()
@@ -35,6 +37,7 @@ dependencyResolutionManagement {
         maven("https://repo.dmulloy2.net/repository/public/")
         maven("https://repo.essentialsx.net/snapshots/")
         maven("https://repo.maven.apache.org/maven2/")
+        maven("https://maven.minecraftforge.net/")
         maven("https://maven.enginehub.org/repo/")
         maven("https://m2.dv8tion.net/releases")
         maven("https://repo1.maven.org/maven2/")
@@ -51,6 +54,7 @@ rootProject.name = "AstraTemplate"
 include("modules:api-remote")
 include("modules:api-local")
 include("modules:core")
+include("modules:build-konfig")
 // Spigot
 include("plugin")
 // Fabric
@@ -58,4 +62,4 @@ include("fabric")
 // Velocity
 include("velocity")
 // Forge
-// include("forge")
+include("forge")
