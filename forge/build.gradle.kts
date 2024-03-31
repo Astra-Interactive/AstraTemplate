@@ -76,7 +76,7 @@ val processResources = project.tasks.withType<org.gradle.language.jvm.tasks.Proc
     }
 }
 
-val destination = File("C:\\Users\\Roman\\Desktop\\EsmpModded\\server\\mods")
+val destination = File("C:\\Users\\Roman\\Desktop\\ForgeTest\\mods")
     .takeIf(File::exists)
     ?: File(rootDir, "jars")
 
