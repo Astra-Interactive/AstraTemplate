@@ -1,6 +1,6 @@
+import ru.astrainteractive.gradleplugin.property.extension.ModelPropertyValueExt.requireProjectInfo
 import ru.astrainteractive.gradleplugin.setupSpigotShadow
 import ru.astrainteractive.gradleplugin.setupVelocityProcessor
-import ru.astrainteractive.gradleplugin.util.ProjectProperties.projectInfo
 
 plugins {
     kotlin("jvm")
@@ -24,7 +24,7 @@ dependencies {
     implementation(projects.modules.buildKonfig)
 }
 
-setupVelocityProcessor()
-setupSpigotShadow(File("D:\\Minecraft Servers\\Servers\\esmp-configuration\\velocity\\plugins")) {
-    archiveBaseName.set("${projectInfo.name}-velocity")
-}
+ setupVelocityProcessor()
+ setupSpigotShadow(File("D:\\Minecraft Servers\\Servers\\esmp-configuration\\velocity\\plugins")) {
+    archiveBaseName.set("${requireProjectInfo.name}-velocity")
+ }

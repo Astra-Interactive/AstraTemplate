@@ -1,8 +1,8 @@
 @file:Suppress("UnusedPrivateMember")
 
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
-import ru.astrainteractive.gradleplugin.models.Developer
-import ru.astrainteractive.gradleplugin.util.ProjectProperties.projectInfo
+import ru.astrainteractive.gradleplugin.model.Developer
+import ru.astrainteractive.gradleplugin.property.extension.ModelPropertyValueExt.requireProjectInfo
 
 plugins {
     kotlin("jvm")
@@ -24,7 +24,7 @@ minecraft {
             properties(runProperties)
             workingDirectory(File("./build${File.separator}run"))
             mods {
-                create(projectInfo.name) {
+                create(requireProjectInfo.name) {
                     source(sourceSets.getByName("main"))
                 }
             }
@@ -67,11 +67,11 @@ val processResources = project.tasks.withType<org.gradle.language.jvm.tasks.Proc
         include("META-INF/mods.toml")
         include("mods.toml")
         expand(
-            "modId" to projectInfo.name.lowercase(),
-            "version" to projectInfo.versionString,
-            "description" to projectInfo.description,
-            "displayName" to projectInfo.name,
-            "authors" to projectInfo.developersList.map(Developer::id).joinToString(",")
+            "modId" to requireProjectInfo.name.lowercase(),
+            "version" to requireProjectInfo.versionString,
+            "description" to requireProjectInfo.description,
+            "displayName" to requireProjectInfo.name,
+            "authors" to requireProjectInfo.developersList.map(Developer::id).joinToString(",")
         )
     }
 }
@@ -100,23 +100,23 @@ val shadowJar by tasks.getting(ShadowJar::class) {
         include(dependency("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm"))
         include(dependency(libs.driver.jdbc.get()))
     }
-    relocate("kotlin", "${projectInfo.group}.kotlin")
-    relocate("kotlinx", "${projectInfo.group}.kotlinx")
-    relocate("org.jetbrains", "${projectInfo.group}.org.jetbrains")
+    relocate("kotlin", "${requireProjectInfo.group}.kotlin")
+    relocate("kotlinx", "${requireProjectInfo.group}.kotlinx")
+    relocate("org.jetbrains", "${requireProjectInfo.group}.org.jetbrains")
     mergeServiceFiles()
     manifest {
         attributes(
             "Specification-Title" to project.name,
-            "Specification-Vendor" to projectInfo.developersList.first().id,
+            "Specification-Vendor" to requireProjectInfo.developersList.first().id,
             "Specification-Version" to project.version,
             "Implementation-Title" to project.name,
             "Implementation-Version" to project.version,
-            "Implementation-Vendor" to projectInfo.developersList.first().id
+            "Implementation-Vendor" to requireProjectInfo.developersList.first().id
         )
     }
     isReproducibleFileOrder = true
     archiveClassifier.set(null as String?)
-    archiveBaseName.set("${projectInfo.name}-forge-shadow")
+    archiveBaseName.set("${requireProjectInfo.name}-forge-shadow")
     destinationDirectory.set(destination)
     finalizedBy(reobfShadowJar)
 }

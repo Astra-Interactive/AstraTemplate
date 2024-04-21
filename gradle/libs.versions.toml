@@ -1,24 +1,24 @@
 [versions]
 # Kotlin
-kotlin-version = "1.9.22"
-kotlin-coroutines = "1.6.3"
-kotlin-json = "1.5.0-RC"
-kotlin-kaml = "0.50.0"
+kotlin-version = "1.9.23" # https://github.com/JetBrains/kotlin
+kotlin-coroutines = "1.8.0" # https://github.com/Kotlin/kotlinx.coroutines
+kotlin-json = "1.6.3" # https://github.com/Kotlin/kotlinx.serialization
+kotlin-kaml = "0.58.0" # https://github.com/charleskorn/kaml
 
 # Drivers
-driver-jdbc = "3.36.0.3"
-driver-mysql = "8.0.20"
+driver-jdbc = "3.45.3.0" # https://github.com/xerial/sqlite-jdbc
+driver-mysql = "8.0.33" # https://github.com/mysql/mysql-connector-j
 
 # Minecraft
 minecraft-version = "1.20.2"
-minecraft-velocity = "3.1.1"
-minecraft-spigot = "1.20.1-R0.1-SNAPSHOT"
-minecraft-papi = "2.11.2"
+minecraft-velocity = "3.3.0-SNAPSHOT" # https://github.com/PaperMC/Velocity
+minecraft-spigot = "1.20.4-R0.1-SNAPSHOT" # https://github.com/PaperMC/Paper
+minecraft-papi = "2.11.5" # https://github.com/PlaceholderAPI/PlaceholderAPI
 minecraft-protocollib = "4.8.0"
 minecraft-wg = "7.0.7"
-minecraft-vault = "1.7"
+minecraft-vault = "1.7" # https://github.com/MilkBowl/VaultAPI
 minecraft-coreprotect = "21.2"
-minecraft-astralibs = "3.0.0-alpha06"
+minecraft-astralibs = "3.1.0-alpha"
 minecraft-bstats = "3.0.0"
 minecraft-mockbukkit = "v1.19-SNAPSHOT"
 

@@ -2,7 +2,7 @@ package ru.astrainteractive.astratemplate.event.di
 
 import org.bukkit.plugin.Plugin
 import ru.astrainteractive.astralibs.event.EventListener
-import ru.astrainteractive.astralibs.serialization.KyoriComponentSerializer
+import ru.astrainteractive.astralibs.kyori.KyoriComponentSerializer
 import ru.astrainteractive.astratemplate.core.PluginTranslation
 import ru.astrainteractive.astratemplate.di.RootModule
 import ru.astrainteractive.klibs.kdi.getValue
