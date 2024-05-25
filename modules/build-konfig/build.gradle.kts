@@ -9,6 +9,7 @@ plugins {
 buildConfig {
     className("BuildKonfig")
     packageName(requireProjectInfo.group)
+    useKotlinOutput { internalVisibility = false }
     fun buildConfigStringField(name: String, value: String) {
         buildConfigField("String", name, "\"${value}\"")
     }
