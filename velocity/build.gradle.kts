@@ -24,7 +24,7 @@ dependencies {
     implementation(projects.modules.buildKonfig)
 }
 
- setupVelocityProcessor()
- setupSpigotShadow(File("D:\\Minecraft Servers\\Servers\\esmp-configuration\\velocity\\plugins")) {
+setupVelocityProcessor()
+setupSpigotShadow(File("D:\\Minecraft Servers\\Servers\\esmp-configuration\\velocity\\plugins")) {
     archiveBaseName.set("${requireProjectInfo.name}-velocity")
- }
+}

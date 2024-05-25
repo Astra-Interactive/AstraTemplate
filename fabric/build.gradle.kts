@@ -22,6 +22,8 @@ dependencies {
     implementation(klibs.klibs.kdi)
     implementation(klibs.klibs.kdi)
     implementation(libs.minecraft.astralibs.command)
+    // klibs
+    implementation(klibs.klibs.mikro.core)
     // Kotlin
     implementation(libs.bundles.kotlin)
     // Driver

@@ -59,7 +59,7 @@ configurations {
     }
 }
 
-val processResources = project.tasks.withType<org.gradle.language.jvm.tasks.ProcessResources>() {
+val processResources = project.tasks.withType<org.gradle.language.jvm.tasks.ProcessResources> {
     filteringCharset = "UTF-8"
     duplicatesStrategy = DuplicatesStrategy.INCLUDE
 
