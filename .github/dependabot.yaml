@@ -1,0 +1,23 @@
+version: 2
+updates:
+  - package-ecosystem: "gradle"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    rebase-strategy: "disabled"
+    groups:
+      versions:
+        dependency-type: production
+        applies-to: version-updates
+    open-pull-requests-limit: 1
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    groups:
+      versions:
+        dependency-type: production
+        applies-to: version-updates
+    rebase-strategy: "disabled"
+    open-pull-requests-limit: 1

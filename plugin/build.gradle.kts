@@ -1,6 +1,6 @@
+import ru.astrainteractive.gradleplugin.property.extension.ModelPropertyValueExt.requireProjectInfo
 import ru.astrainteractive.gradleplugin.setupSpigotProcessor
 import ru.astrainteractive.gradleplugin.setupSpigotShadow
-import ru.astrainteractive.gradleplugin.util.ProjectProperties.projectInfo
 
 plugins {
     kotlin("jvm")
@@ -17,6 +17,7 @@ dependencies {
     implementation(libs.minecraft.astralibs.menu.bukkit)
     implementation(libs.minecraft.astralibs.core.bukkit)
     implementation(klibs.klibs.mikro.core)
+    implementation(klibs.klibs.kdi)
     // Spigot dependencies
     compileOnly(libs.minecraft.paper.api)
     implementation(libs.minecraft.bstats)
@@ -33,5 +34,5 @@ val destination = File("D:\\Minecraft Servers\\Servers\\esmp-configuration\\smp\
     ?: File(rootDir, "jars")
 
 setupSpigotShadow(destination) {
-    archiveBaseName.set("${projectInfo.name}-bukkit")
+    archiveBaseName.set("${requireProjectInfo.name}-bukkit")
 }

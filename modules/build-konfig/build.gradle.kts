@@ -1,5 +1,4 @@
-
-import ru.astrainteractive.gradleplugin.util.ProjectProperties.projectInfo
+import ru.astrainteractive.gradleplugin.property.extension.ModelPropertyValueExt.requireProjectInfo
 
 
 plugins {
@@ -9,16 +8,16 @@ plugins {
 
 buildConfig {
     className("BuildKonfig")
-    packageName(projectInfo.group)
+    packageName(requireProjectInfo.group)
     fun buildConfigStringField(name: String, value: String) {
         buildConfigField("String", name, "\"${value}\"")
     }
-    buildConfigStringField("id", projectInfo.name.lowercase())
-    buildConfigStringField("name", projectInfo.name)
-    buildConfigStringField("version", projectInfo.versionString)
-    buildConfigStringField("url", projectInfo.url)
-    buildConfigStringField("description", projectInfo.description)
-    projectInfo.developersList.forEachIndexed { i, dev ->
+    buildConfigStringField("id", requireProjectInfo.name.lowercase())
+    buildConfigStringField("name", requireProjectInfo.name)
+    buildConfigStringField("version", requireProjectInfo.versionString)
+    buildConfigStringField("url", requireProjectInfo.url)
+    buildConfigStringField("description", requireProjectInfo.description)
+    requireProjectInfo.developersList.forEachIndexed { i, dev ->
         buildConfigStringField("author_$i", dev.id)
     }
 }

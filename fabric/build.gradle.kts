@@ -1,7 +1,7 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import net.fabricmc.loom.task.RemapJarTask
+import ru.astrainteractive.gradleplugin.property.extension.ModelPropertyValueExt.requireProjectInfo
 import ru.astrainteractive.gradleplugin.setupFabricProcessor
-import ru.astrainteractive.gradleplugin.util.ProjectProperties.projectInfo
 
 plugins {
     kotlin("jvm")
@@ -22,6 +22,8 @@ dependencies {
     implementation(klibs.klibs.kdi)
     implementation(klibs.klibs.kdi)
     implementation(libs.minecraft.astralibs.command)
+    // klibs
+    implementation(klibs.klibs.mikro.core)
     // Kotlin
     implementation(libs.bundles.kotlin)
     // Driver
@@ -54,7 +56,7 @@ val shadowJar by tasks.getting(ShadowJar::class) {
     mergeServiceFiles()
     isReproducibleFileOrder = true
     archiveClassifier.set(null as String?)
-    archiveBaseName.set("${projectInfo.name}-fabric-shadow")
+    archiveBaseName.set("${requireProjectInfo.name}-fabric-shadow")
 }
 
 val remapJar = tasks.getByName<RemapJarTask>("remapJar") {
@@ -62,7 +64,7 @@ val remapJar = tasks.getByName<RemapJarTask>("remapJar") {
     mustRunAfter(shadowJar)
     inputFile = shadowJar.archiveFile
     addNestedDependencies.set(true)
-    archiveBaseName.set("${projectInfo.name}-fabric-remap")
+    archiveBaseName.set("${requireProjectInfo.name}-fabric-remap")
     destinationDirectory.set(destination)
 }
 

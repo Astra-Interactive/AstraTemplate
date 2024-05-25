@@ -1,7 +1,7 @@
 package ru.astrainteractive.astratemplate.command.common.di
 
 import org.bukkit.plugin.java.JavaPlugin
-import ru.astrainteractive.astralibs.serialization.KyoriComponentSerializer
+import ru.astrainteractive.astralibs.kyori.KyoriComponentSerializer
 import ru.astrainteractive.astratemplate.core.PluginTranslation
 
 interface CommonCommandsDependencies {
