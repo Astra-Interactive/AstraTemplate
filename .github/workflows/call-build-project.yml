@@ -5,6 +5,9 @@ jobs:
   build:
     name: Build project with gradle
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        target: [ "fabric", "forge", "velocity", "plugin" ]
     steps:
       - name: Checkout Git repo
         uses: actions/checkout@v4
@@ -18,4 +21,4 @@ jobs:
       - name: Build with Gradle
         uses: gradle/gradle-build-action@v3
         with:
-          arguments: build --stacktrace
+          arguments: ${{ matrix.target }}:build --stacktrace
