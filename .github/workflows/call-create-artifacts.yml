@@ -26,7 +26,7 @@ jobs:
       - name: Build with Gradle
         uses: gradle/gradle-build-action@v3
         with:
-          arguments: shadowJar --stacktrace
+          arguments: shadowJar :fabric:assemble --stacktrace
       - name: Create release
         id: create_internal_release
         uses: softprops/action-gh-release@v2
