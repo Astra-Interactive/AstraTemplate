@@ -1,0 +1,13 @@
+name: CI
+on:
+  push:
+    branches:
+      - master
+jobs:
+  gradle_validation:
+    uses: ./.github/workflows/call-gradle-wrapper-validation.yml
+  create_artifact:
+    needs: [ gradle_validation ]
+    uses: ./.github/workflows/call-create-artifacts.yml
+    secrets:
+      ACTIONS_TOKEN: ${{ secrets.ACTIONS_TOKEN }}

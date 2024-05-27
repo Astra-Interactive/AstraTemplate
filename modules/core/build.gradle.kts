@@ -10,4 +10,7 @@ dependencies {
     implementation(libs.minecraft.astralibs.core)
     // klibs
     implementation(klibs.klibs.kdi)
+    // Test
+    testImplementation(libs.bundles.testing.kotlin)
+    testImplementation(libs.tests.kotlin.test)
 }

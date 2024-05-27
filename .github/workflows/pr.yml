@@ -1,10 +1,9 @@
-name: Pull request
+name: Check Develop
 on:
   pull_request:
     branches:
       - 'develop'
       - 'master'
-      - 'prerelease/*'
 
 # Concurrency strategy:
 #   github.workflow: distinguish this workflow from others
@@ -22,15 +21,15 @@ concurrency:
 jobs:
   gradle_validation:
     name: Validate gradle wrapper
-    uses: ./.github/workflows/gradle-wrapper-validation.yml
+    uses: ./.github/workflows/call-gradle-wrapper-validation.yml
   detekt_validation:
     name: Check by detekt
     needs: gradle_validation
-    uses: ./.github/workflows/detekt-validation.yml
+    uses: ./.github/workflows/call-detekt-validation.yml
   tests_validation:
     needs: gradle_validation
-    uses: ./.github/workflows/tests-validation.yml
+    uses: ./.github/workflows/call-tests-validation.yml
   build:
     name: Build project
     needs: [ gradle_validation, detekt_validation, tests_validation ]
-    uses: ./.github/workflows/build-project.yml
+    uses: ./.github/workflows/call-build-project.yml

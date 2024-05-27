@@ -18,7 +18,7 @@ minecraft-protocollib = "5.1.0"
 minecraft-wg = "7.0.7"
 minecraft-vault = "1.7.1" # https://github.com/MilkBowl/VaultAPI
 minecraft-coreprotect = "21.2"
-minecraft-astralibs = "3.5.1"
+minecraft-astralibs = "3.6.0"
 minecraft-bstats = "3.0.2"
 minecraft-mockbukkit = "3.86.1"
 
@@ -49,7 +49,6 @@ exposed = "0.50.1"
 exposed = ["exposed-java-time", "exposed-jdbc", "exposed-dao", "exposed-core"]
 minecraft-bukkit = ["minecraft-paper-api", "minecraft-spigot-api", "minecraft-spigot-core", "minecraft-vaultapi", "minecraft-papi"]
 testing-kotlin = ["kotlin-coroutines-core", "kotlin-coroutines-coreJvm", "driver-jdbc", "driver-mysql", "kotlin-serialization", "kotlin-serializationJson"]
-testing-libs = ["tests-junit-jupiter-api", "tests-org-testing", "tests-junit5", "tests-junit-jupiter"]
 kotlin = ["kotlin-coroutines-core", "kotlin-coroutines-coreJvm", "kotlin-serialization", "kotlin-serializationJson", "kotlin-serializationKaml", "kotlin-tooling-core"]
 
 [libraries]
@@ -62,6 +61,9 @@ kotlin-serializationJson = { module = "org.jetbrains.kotlinx:kotlinx-serializati
 kotlin-serializationKaml = { module = "com.charleskorn.kaml:kaml", version.ref = "kotlin-kaml" }
 kotlin-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin-version" }
 kotlin-tooling-core = { module = "org.jetbrains.kotlin:kotlin-tooling-core", version.ref = "kotlin-version" }
+
+# Testing
+tests-kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test" }
 
 # Shadow
 gradle-shadow = { module = "gradle.plugin.com.github.johnrengelman:shadow", version.ref = "gradle-shadow" }
