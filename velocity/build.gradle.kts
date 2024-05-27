@@ -25,6 +25,11 @@ dependencies {
 }
 
 setupVelocityProcessor()
-setupSpigotShadow(File("D:\\Minecraft Servers\\Servers\\esmp-configuration\\velocity\\plugins")) {
+
+val destination = File("C:\\Users\\Roman\\Desktop\\ForgeTest\\mods")
+    .takeIf(File::exists)
+    ?: File(rootDir, "jars")
+
+setupSpigotShadow(destination) {
     archiveBaseName.set("${requireProjectInfo.name}-velocity")
 }

@@ -1,0 +1,41 @@
+name: "detekt-validation"
+on:
+  workflow_call:
+    secrets:
+      ACTIONS_TOKEN:
+        required: true
+jobs:
+  publish:
+    name: Build and upload
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Git repo
+        uses: actions/checkout@v4
+      - uses: christian-draeger/read-properties@1.1.1
+        id: properties
+        with:
+          path: './gradle.properties'
+          properties: 'makeevrserg.project.name makeevrserg.project.version.string'
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'adopt'
+          java-version: 21
+      - name: Give gradle permission
+        run: chmod +x gradlew
+      - name: Build with Gradle
+        uses: gradle/gradle-build-action@v3
+        with:
+          arguments: :shadowJar --stacktrace
+      - name: Create release
+        id: create_internal_release
+        uses: softprops/action-gh-release@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.ACTIONS_TOKEN }}
+        with:
+          files: |
+            ./jars/*.jar
+          tag_name: ${{ steps.properties.outputs.makeevrserg-project-version-string }}
+          name: ${{ steps.properties.outputs.makeevrserg-project-name }} - ${{ steps.properties.outputs.makeevrserg-project-version-string }}
+          draft: false
+          prerelease: false
