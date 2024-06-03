@@ -6,12 +6,12 @@ kotlin-json = "1.6.3" # https://github.com/Kotlin/kotlinx.serialization
 kotlin-kaml = "0.59.0" # https://github.com/charleskorn/kaml
 
 # Drivers
-driver-jdbc = "3.45.3.0" # https://github.com/xerial/sqlite-jdbc
+driver-jdbc = "3.46.0.0" # https://github.com/xerial/sqlite-jdbc
 driver-mysql = "8.0.33" # https://github.com/mysql/mysql-connector-j
 
 # Minecraft
 minecraft-version = "1.20.2"
-minecraft-velocity = "3.3.0-SNAPSHOT" # https://github.com/PaperMC/Velocity
+minecraft-velocity = "4.0.0-SNAPSHOT" # https://github.com/PaperMC/Velocity
 minecraft-spigot = "1.20.6-R0.1-SNAPSHOT" # https://github.com/PaperMC/Paper
 minecraft-papi = "2.11.6" # https://github.com/PlaceholderAPI/PlaceholderAPI
 minecraft-protocollib = "5.1.0"
@@ -20,7 +20,7 @@ minecraft-vault = "1.7.1" # https://github.com/MilkBowl/VaultAPI
 minecraft-coreprotect = "21.2"
 minecraft-astralibs = "3.6.0"
 minecraft-bstats = "3.0.2"
-minecraft-mockbukkit = "3.86.1"
+minecraft-mockbukkit = "3.88.1"
 
 # Testing
 tests-org-testing = "7.10.2"
@@ -30,10 +30,10 @@ tests-junit-jupiter-api = "5.10.2"
 tests-junit-bom = "5.10.2"
 
 # Fabric
-minecraft-fabric-loom = "1.6.11"
+minecraft-fabric-loom = "1.6.12"
 minecraft-fabric-kotlin = "1.11.0+"
 minecraft-fabric-loader = "0.15.11"
-minecraft-fabric-api = "0.99.1+"
+minecraft-fabric-api = "0.99.4+"
 minecraft-fabric-yarn = "1.20.2+build.4"
 
 # Shadow
@@ -43,7 +43,7 @@ gradle-shadow = "8.1.1"
 gradle-buildconfig = "5.3.5"
 
 # Exposed
-exposed = "0.50.1"
+exposed = "0.51.0"
 
 [bundles]
 exposed = ["exposed-java-time", "exposed-jdbc", "exposed-dao", "exposed-core"]
