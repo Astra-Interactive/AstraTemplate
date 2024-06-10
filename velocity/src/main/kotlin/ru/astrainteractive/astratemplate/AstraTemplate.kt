@@ -9,15 +9,15 @@ import com.velocitypowered.api.event.proxy.ProxyInitializeEvent
 import com.velocitypowered.api.plugin.Plugin
 import com.velocitypowered.api.plugin.annotation.DataDirectory
 import com.velocitypowered.api.proxy.ProxyServer
-import org.slf4j.Logger
 import ru.astrainteractive.astralibs.lifecycle.Lifecycle
+import ru.astrainteractive.astralibs.logging.JUtiltLogger
+import ru.astrainteractive.astralibs.logging.Logger
 import ru.astrainteractive.astratemplate.command.api.VelocityCommandRegistryContext
 import ru.astrainteractive.astratemplate.command.reload.ReloadCommandRegistry
 import ru.astrainteractive.astratemplate.di.RootModule
 import ru.astrainteractive.astratemplate.di.impl.RootModuleImpl
-import ru.astrainteractive.klibs.kdi.Provider
-import ru.astrainteractive.klibs.kdi.getValue
 import java.nio.file.Path
+import org.slf4j.Logger as Slf4jLogger
 
 @Plugin(
     id = BuildKonfig.id,
@@ -31,14 +31,11 @@ import java.nio.file.Path
 class AstraTemplate @Inject constructor(
     private val injector: Injector,
     private val server: ProxyServer,
-    private val logger: Logger,
+    private val logger: Slf4jLogger,
     @DataDirectory
     private val dataDirectory: Path
-) {
+) : Logger by JUtiltLogger("AstraTemplate") {
     private val rootModule: RootModule = RootModuleImpl()
-    private val jLogger by Provider {
-        rootModule.coreModule.logger.value
-    }
     private val lifecycles: List<Lifecycle>
         get() = listOf(
             rootModule.coreModule.lifecycle,
@@ -56,11 +53,8 @@ class AstraTemplate @Inject constructor(
             this.plugin.initialize(this@AstraTemplate)
         }
 
-        jLogger.info(BuildKonfig.name, "Hello there! I made my first plugin with Velocity.")
-        jLogger.info(
-            BuildKonfig.name,
-            "Here's your configuration: ${rootModule.coreModule.configurationModule.value}."
-        )
+        info { "Hello there! I made my first plugin with Velocity" }
+        info { "Here's your configuration: ${rootModule.coreModule.configurationModule.value}." }
 
         ReloadCommandRegistry(
             registryContext = VelocityCommandRegistryContext(

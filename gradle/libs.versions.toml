@@ -1,9 +1,9 @@
 [versions]
 # Kotlin
-kotlin-version = "1.9.23" # https://github.com/JetBrains/kotlin
+kotlin-version = "2.0.0" # https://github.com/JetBrains/kotlin
 kotlin-coroutines = "1.8.1" # https://github.com/Kotlin/kotlinx.coroutines
-kotlin-json = "1.6.3" # https://github.com/Kotlin/kotlinx.serialization
-kotlin-kaml = "0.59.0" # https://github.com/charleskorn/kaml
+kotlin-json = "1.7.0" # https://github.com/Kotlin/kotlinx.serialization
+kotlin-kaml = "0.60.0" # https://github.com/charleskorn/kaml
 
 # Drivers
 driver-jdbc = "3.46.0.0" # https://github.com/xerial/sqlite-jdbc
@@ -18,7 +18,7 @@ minecraft-protocollib = "5.1.0"
 minecraft-wg = "7.0.7"
 minecraft-vault = "1.7.1" # https://github.com/MilkBowl/VaultAPI
 minecraft-coreprotect = "21.2"
-minecraft-astralibs = "3.6.0"
+minecraft-astralibs = "3.7.0"
 minecraft-bstats = "3.0.2"
 minecraft-mockbukkit = "3.88.1"
 
@@ -33,7 +33,7 @@ tests-junit-bom = "5.10.2"
 minecraft-fabric-loom = "1.6.12"
 minecraft-fabric-kotlin = "1.11.0+"
 minecraft-fabric-loader = "0.15.11"
-minecraft-fabric-api = "0.99.4+"
+minecraft-fabric-api = "0.100.0+"
 minecraft-fabric-yarn = "1.20.2+build.4"
 
 # Shadow
@@ -43,7 +43,7 @@ gradle-shadow = "8.1.1"
 gradle-buildconfig = "5.3.5"
 
 # Exposed
-exposed = "0.51.0"
+exposed = "0.51.1"
 
 [bundles]
 exposed = ["exposed-java-time", "exposed-jdbc", "exposed-dao", "exposed-core"]

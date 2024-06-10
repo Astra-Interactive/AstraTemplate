@@ -3,19 +3,16 @@ package ru.astrainteractive.astratemplate
 import org.bukkit.event.HandlerList
 import org.bukkit.plugin.java.JavaPlugin
 import ru.astrainteractive.astralibs.lifecycle.Lifecycle
+import ru.astrainteractive.astralibs.logging.JUtiltLogger
+import ru.astrainteractive.astralibs.logging.Logger
 import ru.astrainteractive.astratemplate.di.impl.RootModuleImpl
-import ru.astrainteractive.klibs.kdi.Provider
-import ru.astrainteractive.klibs.kdi.getValue
 
 /**
  * Initial class for your plugin
  */
 
-class AstraTemplate : JavaPlugin() {
+class AstraTemplate : JavaPlugin(), Logger by JUtiltLogger("AstraTemplate") {
     private val rootModule = RootModuleImpl()
-    private val jLogger by Provider {
-        rootModule.coreModule.logger.value
-    }
     private val lifecycles: List<Lifecycle>
         get() = listOf(
             rootModule.coreModule.lifecycle,
@@ -32,9 +29,9 @@ class AstraTemplate : JavaPlugin() {
      * This method called when server starts or PlugMan load plugin.
      */
     override fun onEnable() {
-        jLogger.info("Logger enabled", "AstraTemplate")
-        jLogger.warning("Warn message from logger", "AstraTemplate")
-        jLogger.error("Error message", "AstraTemplate")
+        info { "#onEnable Logger enabled" }
+        warn { "#onEnable Warn message from logger" }
+        error { "#onEnable Error message" }
         lifecycles.forEach(Lifecycle::onEnable)
     }
 

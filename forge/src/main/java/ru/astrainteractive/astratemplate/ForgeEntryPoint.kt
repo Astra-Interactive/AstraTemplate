@@ -7,6 +7,8 @@ import net.minecraftforge.event.server.ServerStartedEvent
 import net.minecraftforge.event.server.ServerStoppingEvent
 import net.minecraftforge.eventbus.api.SubscribeEvent
 import net.minecraftforge.fml.common.Mod
+import ru.astrainteractive.astralibs.logging.JUtiltLogger
+import ru.astrainteractive.astralibs.logging.Logger
 import ru.astrainteractive.astratemplate.command.CommandLoader
 import ru.astrainteractive.astratemplate.di.RootModule
 import ru.astrainteractive.astratemplate.event.core.ForgeEventBusListener
@@ -14,26 +16,28 @@ import javax.annotation.ParametersAreNonnullByDefault
 
 @Mod(BuildKonfig.id)
 @ParametersAreNonnullByDefault
-class ForgeEntryPoint : ForgeEventBusListener {
+class ForgeEntryPoint :
+    ForgeEventBusListener,
+    Logger by JUtiltLogger("ForgeEntryPoint") {
     private val rootModule: RootModule by lazy { RootModule.Default() }
 
     @SubscribeEvent
     fun onEnable(e: ServerStartedEvent) {
-        rootModule.coreModule.logger.value.info("ForgeEntryPoint", "onEnable")
+        info { "#onEnable" }
         rootModule.lifecycle.onEnable()
     }
 
     @SubscribeEvent
     fun onDisable(e: ServerStoppingEvent) {
-        rootModule.coreModule.logger.value.info("ForgeEntryPoint", "onDisable")
+        info { "#onDisable" }
         rootModule.lifecycle.onDisable()
         unregister()
     }
 
     @SubscribeEvent
     fun onCommandRegister(e: RegisterCommandsEvent) {
-        rootModule.coreModule.logger.value.info("ForgeEntryPoint", "onCommandRegister")
-        val commandLoader = CommandLoader(logger = rootModule.coreModule.logger.value)
+        info { "#onCommandRegister" }
+        val commandLoader = CommandLoader()
         commandLoader.registerCommands(e)
     }
 
