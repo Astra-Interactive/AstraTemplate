@@ -3,8 +3,6 @@ package ru.astrainteractive.astratemplate.core.di
 import kotlinx.serialization.StringFormat
 import ru.astrainteractive.astralibs.async.AsyncComponent
 import ru.astrainteractive.astralibs.lifecycle.Lifecycle
-import ru.astrainteractive.astralibs.logging.JUtilFileLogger
-import ru.astrainteractive.astralibs.logging.Logger
 import ru.astrainteractive.astralibs.serialization.YamlStringFormat
 import ru.astrainteractive.astratemplate.core.PluginConfiguration
 import ru.astrainteractive.astratemplate.core.PluginTranslation
@@ -19,7 +17,6 @@ interface CoreModule {
 
     val lifecycle: Lifecycle
     val stringFormat: Dependency<StringFormat>
-    val logger: Dependency<Logger>
     val pluginScope: Dependency<AsyncComponent>
     val translation: Dependency<PluginTranslation>
     val configurationModule: Dependency<PluginConfiguration>
@@ -29,12 +26,6 @@ interface CoreModule {
     ) : CoreModule {
         override val stringFormat: Single<StringFormat> = Single {
             YamlStringFormat()
-        }
-        override val logger: Dependency<Logger> = Single {
-            JUtilFileLogger(
-                tag = "AstraTemplate",
-                folder = dataFolder
-            )
         }
 
         override val pluginScope = Single {
