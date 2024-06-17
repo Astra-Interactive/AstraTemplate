@@ -4,6 +4,9 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+      day: "monday"
+      time: "08:00"
+      timezone: "Europe/Moscow"
     rebase-strategy: "disabled"
     groups:
       versions:
@@ -15,6 +18,9 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+      day: "monday"
+      time: "08:00"
+      timezone: "Europe/Moscow"
     groups:
       versions:
         dependency-type: production
