@@ -9,6 +9,6 @@ dependencies {
     implementation(libs.minecraft.astralibs.orm)
     implementation(libs.minecraft.astralibs.core)
     // klibs
-    implementation(klibs.klibs.kdi)
-    implementation(klibs.klibs.mikro.core)
+    implementation(libs.klibs.kdi)
+    implementation(libs.klibs.mikro.core)
 }

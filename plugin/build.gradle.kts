@@ -16,8 +16,8 @@ dependencies {
     implementation(libs.minecraft.astralibs.command.bukkit)
     implementation(libs.minecraft.astralibs.menu.bukkit)
     implementation(libs.minecraft.astralibs.core.bukkit)
-    implementation(klibs.klibs.mikro.core)
-    implementation(klibs.klibs.kdi)
+    implementation(libs.klibs.mikro.core)
+    implementation(libs.klibs.kdi)
     // Spigot dependencies
     compileOnly(libs.minecraft.paper.api)
     implementation(libs.minecraft.bstats)

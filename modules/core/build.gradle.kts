@@ -9,7 +9,7 @@ dependencies {
     // AstraLibs
     implementation(libs.minecraft.astralibs.core)
     // klibs
-    implementation(klibs.klibs.kdi)
+    implementation(libs.klibs.kdi)
     // Test
     testImplementation(libs.bundles.testing.kotlin)
     testImplementation(libs.tests.kotlin.test)

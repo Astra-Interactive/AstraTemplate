@@ -6,7 +6,7 @@ import ru.astrainteractive.gradleplugin.property.extension.ModelPropertyValueExt
 
 plugins {
     kotlin("jvm")
-    alias(klibs.plugins.klibs.gradle.java.core)
+    alias(libs.plugins.klibs.gradle.java.core)
     id("net.minecraftforge.gradle") version ("[6.0,6.2)")
     id("com.github.johnrengelman.shadow")
 }
@@ -33,11 +33,11 @@ minecraft {
 }
 
 dependencies {
-    minecraft("net.minecraftforge:forge:1.20.6-50.1.3")
+    minecraft("net.minecraftforge:forge:1.21-51.0.8")
     // AstraLibs
     implementation(libs.minecraft.astralibs.core)
     implementation(libs.minecraft.astralibs.command)
-    implementation(klibs.klibs.kdi)
+    implementation(libs.klibs.kdi)
     // Kotlin
     implementation(libs.bundles.kotlin)
     // Local
