@@ -7,5 +7,5 @@ dependencies {
     // Kotlin
     implementation(libs.bundles.kotlin)
     // klibs
-    implementation(klibs.klibs.kdi)
+    implementation(libs.klibs.kdi)
 }

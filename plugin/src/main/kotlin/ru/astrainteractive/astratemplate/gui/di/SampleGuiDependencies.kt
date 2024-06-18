@@ -11,10 +11,9 @@ import ru.astrainteractive.astratemplate.gui.domain.GetRandomColorUseCaseImpl
 import ru.astrainteractive.astratemplate.gui.domain.SetDisplayNameUseCaseImpl
 import ru.astrainteractive.astratemplate.gui.sample.DefaultSampleGUIComponent
 import ru.astrainteractive.klibs.kdi.Factory
-import ru.astrainteractive.klibs.kdi.Module
 import ru.astrainteractive.klibs.kdi.getValue
 
-interface SampleGuiDependencies : Module {
+interface SampleGuiDependencies {
     val translation: PluginTranslation
     val dispatchers: BukkitDispatchers
     val kyoriComponentSerializer: KyoriComponentSerializer

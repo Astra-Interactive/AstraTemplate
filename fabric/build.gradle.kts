@@ -7,11 +7,11 @@ plugins {
     kotlin("jvm")
     id("fabric-loom")
     id("com.github.johnrengelman.shadow")
-    alias(klibs.plugins.klibs.gradle.java.core)
+    alias(libs.plugins.klibs.gradle.java.core)
 }
 
 dependencies {
-    mappings("net.fabricmc:yarn:${libs.versions.minecraft.fabric.yarn.get()}")
+    mappings("net.fabricmc:yarn:${libs.versions.minecraft.fabric.yarn.get()}:v2")
     minecraft(libs.minecraft.mojang.get())
     modImplementation(libs.minecraft.fabric.kotlin.get())
     modImplementation(libs.minecraft.fabric.loader.get())
@@ -19,11 +19,11 @@ dependencies {
     // AstraLibs
     implementation(libs.minecraft.astralibs.core)
     implementation(libs.minecraft.astralibs.orm)
-    implementation(klibs.klibs.kdi)
-    implementation(klibs.klibs.kdi)
+    implementation(libs.klibs.kdi)
+    implementation(libs.klibs.kdi)
     implementation(libs.minecraft.astralibs.command)
     // klibs
-    implementation(klibs.klibs.mikro.core)
+    implementation(libs.klibs.mikro.core)
     // Kotlin
     implementation(libs.bundles.kotlin)
     // Driver
