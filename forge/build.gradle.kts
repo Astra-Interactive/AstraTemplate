@@ -33,7 +33,7 @@ minecraft {
 }
 
 dependencies {
-    minecraft("net.minecraftforge:forge:1.21-51.0.8")
+    minecraft("net.minecraftforge:forge:1.21-51.0.17")
     // AstraLibs
     implementation(libs.minecraft.astralibs.core)
     implementation(libs.minecraft.astralibs.command)
