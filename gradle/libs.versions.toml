@@ -30,7 +30,7 @@ tests-junit-jupiter-api = "5.10.2"
 tests-junit-bom = "5.10.2"
 
 # Fabric
-minecraft-fabric-loom = "1.7.1"
+minecraft-fabric-loom = "1.6-SNAPSHOT"
 minecraft-fabric-kotlin = "1.11.0+kotlin.2.0.0"
 minecraft-fabric-loader = "0.15.11"
 minecraft-fabric-api = "0.100.3+1.21"
