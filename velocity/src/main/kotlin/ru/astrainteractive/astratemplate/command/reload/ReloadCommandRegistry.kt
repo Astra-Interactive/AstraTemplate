@@ -1,11 +1,8 @@
 package ru.astrainteractive.astratemplate.command.reload
 
 import net.kyori.adventure.text.Component
-import ru.astrainteractive.astralibs.command.api.command.Command
-import ru.astrainteractive.astralibs.command.api.commandfactory.DefaultCommandFactory
 import ru.astrainteractive.astralibs.command.api.executor.CommandExecutor
 import ru.astrainteractive.astralibs.command.api.parser.CommandParser
-import ru.astrainteractive.astralibs.command.api.sideeffect.CommandSideEffect
 import ru.astrainteractive.astratemplate.command.api.VelocityCommandContext
 import ru.astrainteractive.astratemplate.command.api.VelocityCommandRegistryContext
 import ru.astrainteractive.astratemplate.core.PluginPermission

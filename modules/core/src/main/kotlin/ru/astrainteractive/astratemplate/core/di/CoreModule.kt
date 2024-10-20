@@ -1,7 +1,10 @@
 package ru.astrainteractive.astratemplate.core.di
 
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.cancel
 import kotlinx.serialization.StringFormat
-import ru.astrainteractive.astralibs.async.AsyncComponent
+import ru.astrainteractive.astralibs.async.CoroutineFeature
 import ru.astrainteractive.astralibs.lifecycle.Lifecycle
 import ru.astrainteractive.astralibs.serialization.YamlStringFormat
 import ru.astrainteractive.astratemplate.core.PluginConfiguration
@@ -17,7 +20,7 @@ interface CoreModule {
 
     val lifecycle: Lifecycle
     val stringFormat: Dependency<StringFormat>
-    val pluginScope: Dependency<AsyncComponent>
+    val pluginScope: Dependency<CoroutineScope>
     val translation: Dependency<PluginTranslation>
     val configurationModule: Dependency<PluginConfiguration>
 
@@ -29,7 +32,7 @@ interface CoreModule {
         }
 
         override val pluginScope = Single {
-            AsyncComponent.Default()
+            CoroutineFeature.Default(Dispatchers.IO)
         }
 
         override val translation: Reloadable<PluginTranslation> = Reloadable {
@@ -52,7 +55,7 @@ interface CoreModule {
                     translation.reload()
                 },
                 onDisable = {
-                    pluginScope.value.close()
+                    pluginScope.value.cancel()
                 }
             )
         }

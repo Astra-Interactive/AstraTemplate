@@ -1,9 +1,8 @@
 package ru.astrainteractive.astratemplate.command.damage
 
 import org.bukkit.entity.Player
-import ru.astrainteractive.astralibs.command.api.command.BukkitCommand
 
-interface DamageCommand : BukkitCommand {
+interface DamageCommand {
     sealed interface Result {
         data object NoOp : Result
         data object NoPermission : Result

@@ -5,6 +5,7 @@ import ru.astrainteractive.astralibs.command.api.commandfactory.BukkitCommandFac
 import ru.astrainteractive.astralibs.command.api.context.BukkitCommandContext
 import ru.astrainteractive.astralibs.command.api.executor.CommandExecutor
 import ru.astrainteractive.astralibs.command.api.parser.BukkitCommandParser
+import ru.astrainteractive.astralibs.command.api.parser.CommandParser
 import ru.astrainteractive.astralibs.command.api.registry.BukkitCommandRegistry
 import ru.astrainteractive.astralibs.command.api.registry.BukkitCommandRegistryContext.Companion.toCommandRegistryContext
 import ru.astrainteractive.astralibs.command.api.sideeffect.BukkitCommandSideEffect
@@ -17,7 +18,7 @@ class DamageCommandRegistry(
 ) : DamageCommandDependencies by dependencies {
     private val alias = "adamage"
 
-    private inner class CommandParserImpl : BukkitCommandParser<DamageCommand.Result> {
+    private inner class CommandParserImpl : CommandParser<DamageCommand.Result, BukkitCommandContext> {
         override fun parse(commandContext: BukkitCommandContext): DamageCommand.Result {
             val hasPermission = commandContext.sender.toPermissible().hasPermission(PluginPermission.Damage)
             if (!hasPermission) return DamageCommand.Result.NoPermission
