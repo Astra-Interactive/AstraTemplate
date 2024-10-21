@@ -1,6 +1,5 @@
 package ru.astrainteractive.astratemplate
 
-import org.bukkit.event.HandlerList
 import org.bukkit.plugin.java.JavaPlugin
 import ru.astrainteractive.astralibs.lifecycle.Lifecycle
 import ru.astrainteractive.astralibs.logging.JUtiltLogger
@@ -12,7 +11,7 @@ import ru.astrainteractive.astratemplate.di.impl.RootModuleImpl
  */
 
 class AstraTemplate : JavaPlugin(), Logger by JUtiltLogger("AstraTemplate") {
-    private val rootModule = RootModuleImpl()
+    private val rootModule = RootModuleImpl(this)
     private val lifecycles: List<Lifecycle>
         get() = listOf(
             rootModule.coreModule.lifecycle,
@@ -20,10 +19,6 @@ class AstraTemplate : JavaPlugin(), Logger by JUtiltLogger("AstraTemplate") {
             rootModule.apiLocalModule.lifecycle,
             rootModule.commandModule.lifecycle
         )
-
-    init {
-        rootModule.bukkitModule.plugin.initialize(this)
-    }
 
     /**
      * This method called when server starts or PlugMan load plugin.
@@ -39,7 +34,6 @@ class AstraTemplate : JavaPlugin(), Logger by JUtiltLogger("AstraTemplate") {
      * This method called when server is shutting down or when PlugMan disable plugin.
      */
     override fun onDisable() {
-        HandlerList.unregisterAll(this)
         lifecycles.forEach(Lifecycle::onDisable)
     }
 

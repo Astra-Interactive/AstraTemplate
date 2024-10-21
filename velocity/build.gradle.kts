@@ -12,10 +12,8 @@ dependencies {
     implementation(libs.bundles.kotlin)
     // AstraLibs
     implementation(libs.minecraft.astralibs.core)
-    implementation(libs.minecraft.astralibs.orm)
-    // klibs
-    implementation(libs.klibs.kdi)
     implementation(libs.minecraft.astralibs.command)
+    implementation(libs.klibs.kstorage)
     // Velocity
     compileOnly(libs.minecraft.velocity.api)
     annotationProcessor(libs.minecraft.velocity.api)

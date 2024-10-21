@@ -1,38 +1,37 @@
 package ru.astrainteractive.astratemplate.gui.di
 
-import ru.astrainteractive.astralibs.async.BukkitDispatchers
 import ru.astrainteractive.astralibs.kyori.KyoriComponentSerializer
 import ru.astrainteractive.astratemplate.api.local.di.ApiLocalModule
 import ru.astrainteractive.astratemplate.core.PluginTranslation
 import ru.astrainteractive.astratemplate.core.di.CoreModule
+import ru.astrainteractive.astratemplate.core.util.getValue
 import ru.astrainteractive.astratemplate.di.BukkitModule
 import ru.astrainteractive.astratemplate.gui.api.ItemStackSpigotAPI
 import ru.astrainteractive.astratemplate.gui.domain.GetRandomColorUseCaseImpl
 import ru.astrainteractive.astratemplate.gui.domain.SetDisplayNameUseCaseImpl
 import ru.astrainteractive.astratemplate.gui.sample.DefaultSampleGUIComponent
-import ru.astrainteractive.klibs.kdi.Factory
-import ru.astrainteractive.klibs.kdi.getValue
+import ru.astrainteractive.klibs.mikro.core.dispatchers.KotlinDispatchers
 
 interface SampleGuiDependencies {
     val translation: PluginTranslation
-    val dispatchers: BukkitDispatchers
+    val dispatchers: KotlinDispatchers
     val kyoriComponentSerializer: KyoriComponentSerializer
-    val viewModelFactory: Factory<DefaultSampleGUIComponent>
+    fun createDefaultSampleGUIComponent(): DefaultSampleGUIComponent
 
     class Default(
         coreModule: CoreModule,
         bukkitModule: BukkitModule,
-        apiLocalModule: ApiLocalModule
+        private val apiLocalModule: ApiLocalModule
     ) : SampleGuiDependencies {
         override val translation by coreModule.translation
-        override val dispatchers by bukkitModule.bukkitDispatchers
+        override val dispatchers = bukkitModule.dispatchers
         override val kyoriComponentSerializer by bukkitModule.kyoriComponentSerializer
         private val getRandomColorUseCase = GetRandomColorUseCaseImpl()
         private val setDisplayNameUseCase = SetDisplayNameUseCaseImpl(getRandomColorUseCase)
-        override val viewModelFactory: Factory<DefaultSampleGUIComponent> = Factory {
-            val localApi = apiLocalModule.localApi
-            DefaultSampleGUIComponent(
-                localApi = localApi,
+        override fun createDefaultSampleGUIComponent(): DefaultSampleGUIComponent {
+            val localApi = apiLocalModule.localDao
+            return DefaultSampleGUIComponent(
+                localDao = localApi,
                 itemStackSpigotAPi = ItemStackSpigotAPI,
                 getRandomColorUseCase = getRandomColorUseCase,
                 setDisplayNameUseCase = setDisplayNameUseCase

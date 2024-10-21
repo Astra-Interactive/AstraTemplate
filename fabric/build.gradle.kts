@@ -18,11 +18,9 @@ dependencies {
     modImplementation(libs.minecraft.fabric.api.get())
     // AstraLibs
     implementation(libs.minecraft.astralibs.core)
-    implementation(libs.minecraft.astralibs.orm)
-    implementation(libs.klibs.kdi)
-    implementation(libs.klibs.kdi)
     implementation(libs.minecraft.astralibs.command)
     // klibs
+    implementation(libs.klibs.kstorage)
     implementation(libs.klibs.mikro.core)
     // Kotlin
     implementation(libs.bundles.kotlin)

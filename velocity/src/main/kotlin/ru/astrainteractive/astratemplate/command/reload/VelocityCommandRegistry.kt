@@ -1,26 +1,37 @@
 package ru.astrainteractive.astratemplate.command.reload
 
 import com.velocitypowered.api.command.SimpleCommand
-import ru.astrainteractive.astralibs.command.api.command.Command
-import ru.astrainteractive.astralibs.command.api.registry.CommandRegistry
+import ru.astrainteractive.astralibs.command.api.error.ErrorHandler
+import ru.astrainteractive.astralibs.command.api.executor.CommandExecutor
+import ru.astrainteractive.astralibs.command.api.parser.CommandParser
 import ru.astrainteractive.astratemplate.command.api.VelocityCommandContext
 import ru.astrainteractive.astratemplate.command.api.VelocityCommandRegistryContext
 
-object VelocityCommandRegistry : CommandRegistry<VelocityCommandRegistryContext, Command<VelocityCommandContext>> {
-    override fun register(command: Command<VelocityCommandContext>, registryContext: VelocityCommandRegistryContext) {
-        val commandMeta = registryContext.proxyServer.commandManager
-            .metaBuilder(command.alias)
-            .aliases(command.alias)
-            .plugin(registryContext.plugin)
+object VelocityCommandRegistry {
+    fun <T : Any> VelocityCommandRegistryContext.registerCommand(
+        alias: String,
+        commandParser: CommandParser<T, VelocityCommandContext>,
+        commandExecutor: CommandExecutor<T>,
+        errorHandler: ErrorHandler<VelocityCommandContext>
+    ) {
+        val commandMeta = this.proxyServer.commandManager
+            .metaBuilder(alias)
+            .aliases(alias)
+            .plugin(this.plugin)
             .build()
-        val velocityCommand = SimpleCommand {
+        val velocityCommand = SimpleCommand { invocation ->
             val commandContext = VelocityCommandContext(
-                alias = it.alias(),
-                source = it.source(),
-                arguments = it.arguments()
+                alias = invocation.alias(),
+                source = invocation.source(),
+                arguments = invocation.arguments()
             )
-            command.dispatch(commandContext)
+            try {
+                val result = commandParser.parse(commandContext)
+                commandExecutor.execute(result)
+            } catch (throwable: Throwable) {
+                errorHandler.handle(commandContext, throwable)
+            }
         }
-        registryContext.proxyServer.commandManager.register(commandMeta, velocityCommand)
+        proxyServer.commandManager.register(commandMeta, velocityCommand)
     }
 }

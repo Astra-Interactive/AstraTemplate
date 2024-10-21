@@ -28,7 +28,9 @@ interface RootModule {
 
         override val apiLocalModule: ApiLocalModule by lazy {
             ApiLocalModule.Default(
-                databasePath = File("data.db").path
+                dataFolder = File("./"),
+                configFlow = coreModule.configurationModule.cachedStateFlow,
+                scope = coreModule.pluginScope
             )
         }
 

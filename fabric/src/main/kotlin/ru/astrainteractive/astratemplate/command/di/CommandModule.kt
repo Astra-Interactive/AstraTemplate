@@ -21,7 +21,7 @@ interface CommandModule {
                 HelloWorldCommand(),
                 RickMortyCommand(
                     rickMortyApi = apiRemoteModule.rickMortyApi,
-                    scope = coreModule.pluginScope.value,
+                    scope = coreModule.pluginScope,
                     dispatchers = DefaultKotlinDispatchers
                 )
             )

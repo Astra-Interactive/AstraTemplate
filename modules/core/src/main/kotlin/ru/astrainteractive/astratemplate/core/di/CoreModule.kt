@@ -9,53 +9,46 @@ import ru.astrainteractive.astralibs.lifecycle.Lifecycle
 import ru.astrainteractive.astralibs.serialization.YamlStringFormat
 import ru.astrainteractive.astratemplate.core.PluginConfiguration
 import ru.astrainteractive.astratemplate.core.PluginTranslation
-import ru.astrainteractive.astratemplate.core.di.factory.MainConfigurationFactory
-import ru.astrainteractive.astratemplate.core.di.factory.TranslationFactory
-import ru.astrainteractive.klibs.kdi.Dependency
-import ru.astrainteractive.klibs.kdi.Reloadable
-import ru.astrainteractive.klibs.kdi.Single
+import ru.astrainteractive.astratemplate.core.di.factory.ConfigKrateFactory
+import ru.astrainteractive.klibs.kstorage.api.flow.StateFlowKrate
 import java.io.File
 
 interface CoreModule {
 
     val lifecycle: Lifecycle
-    val stringFormat: Dependency<StringFormat>
-    val pluginScope: Dependency<CoroutineScope>
-    val translation: Dependency<PluginTranslation>
-    val configurationModule: Dependency<PluginConfiguration>
+    val stringFormat: StringFormat
+    val pluginScope: CoroutineScope
+    val translation: StateFlowKrate<PluginTranslation>
+    val configurationModule: StateFlowKrate<PluginConfiguration>
 
     class Default(
         dataFolder: File
     ) : CoreModule {
-        override val stringFormat: Single<StringFormat> = Single {
-            YamlStringFormat()
-        }
+        override val stringFormat = YamlStringFormat()
 
-        override val pluginScope = Single {
-            CoroutineFeature.Default(Dispatchers.IO)
-        }
+        override val pluginScope = CoroutineFeature.Default(Dispatchers.IO)
 
-        override val translation: Reloadable<PluginTranslation> = Reloadable {
-            TranslationFactory(
-                dataFolder = dataFolder,
-                stringFormat = stringFormat.value
-            ).create()
-        }
+        override val translation = ConfigKrateFactory.create(
+            fileNameWithoutExtension = "translations",
+            stringFormat = stringFormat,
+            dataFolder = dataFolder,
+            factory = ::PluginTranslation
+        )
 
-        override val configurationModule: Reloadable<PluginConfiguration> = Reloadable {
-            MainConfigurationFactory(
-                dataFolder = dataFolder,
-                stringFormat = stringFormat.value
-            ).create()
-        }
+        override val configurationModule = ConfigKrateFactory.create(
+            fileNameWithoutExtension = "config",
+            stringFormat = stringFormat,
+            dataFolder = dataFolder,
+            factory = ::PluginConfiguration
+        )
         override val lifecycle: Lifecycle by lazy {
             Lifecycle.Lambda(
                 onReload = {
-                    configurationModule.reload()
-                    translation.reload()
+                    configurationModule.loadAndGet()
+                    translation.loadAndGet()
                 },
                 onDisable = {
-                    pluginScope.value.cancel()
+                    pluginScope.cancel()
                 }
             )
         }

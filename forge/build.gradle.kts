@@ -37,7 +37,7 @@ dependencies {
     // AstraLibs
     implementation(libs.minecraft.astralibs.core)
     implementation(libs.minecraft.astralibs.command)
-    implementation(libs.klibs.kdi)
+    implementation(libs.klibs.kstorage)
     // Kotlin
     implementation(libs.bundles.kotlin)
     // Local

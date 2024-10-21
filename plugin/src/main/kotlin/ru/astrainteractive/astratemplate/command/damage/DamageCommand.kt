@@ -1,14 +1,18 @@
 package ru.astrainteractive.astratemplate.command.damage
 
 import org.bukkit.entity.Player
+import ru.astrainteractive.astralibs.command.api.exception.CommandException
 
 interface DamageCommand {
-    sealed interface Result {
-        data object NoOp : Result
-        data object NoPermission : Result
-        data object PlayerNotExists : Result
-        class Success(val player: Player, val damage: Double, val damagerName: String) : Result
-    }
+    class Result(
+        val player: Player,
+        val damage: Double,
+        val damagerName: String
+    )
 
-    class Input(val player: Player, val damage: Double, val damagerName: String)
+    sealed class Error(message: String) : CommandException(message) {
+        data object NoOp : Error("NoOp")
+        data object NoPermission : Error("NoPermission")
+        data object PlayerNotExists : Error("PlayerNotExists")
+    }
 }

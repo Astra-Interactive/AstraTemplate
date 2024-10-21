@@ -6,6 +6,4 @@ plugins {
 dependencies {
     // Kotlin
     implementation(libs.bundles.kotlin)
-    // klibs
-    implementation(libs.klibs.kdi)
 }

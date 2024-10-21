@@ -7,7 +7,6 @@ import net.kyori.adventure.text.Component
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryClickEvent
-import org.bukkit.event.inventory.InventoryCloseEvent
 import org.bukkit.inventory.ItemStack
 import ru.astrainteractive.astralibs.kyori.KyoriComponentSerializer
 import ru.astrainteractive.astralibs.menu.holder.DefaultPlayerHolder
@@ -36,7 +35,7 @@ class SampleGUI(
 ) : PaginatedInventoryMenu(),
     SampleGuiDependencies by dependencies,
     KyoriComponentSerializer by dependencies.kyoriComponentSerializer {
-    private val sampleComponent = dependencies.viewModelFactory.create()
+    private val sampleComponent = dependencies.createDefaultSampleGUIComponent()
     override val childComponents: List<CoroutineScope>
         get() = listOf(sampleComponent)
 
@@ -94,11 +93,6 @@ class SampleGUI(
             .setDisplayName(translation.menu.menuPrevPage.let(::toComponent))
             .setOnClickListener { showPrevPage() }
             .build()
-
-    override fun onInventoryClosed(it: InventoryCloseEvent) {
-        super.onInventoryClosed(it)
-        sampleComponent.close()
-    }
 
     override fun onInventoryClicked(e: InventoryClickEvent) {
         super.onInventoryClicked(e)

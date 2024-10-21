@@ -14,7 +14,6 @@ import ru.astrainteractive.astralibs.logging.JUtiltLogger
 import ru.astrainteractive.astralibs.logging.Logger
 import ru.astrainteractive.astratemplate.command.api.VelocityCommandRegistryContext
 import ru.astrainteractive.astratemplate.command.reload.ReloadCommandRegistry
-import ru.astrainteractive.astratemplate.di.RootModule
 import ru.astrainteractive.astratemplate.di.impl.RootModuleImpl
 import java.nio.file.Path
 import org.slf4j.Logger as Slf4jLogger
@@ -35,7 +34,7 @@ class AstraTemplate @Inject constructor(
     @DataDirectory
     private val dataDirectory: Path
 ) : Logger by JUtiltLogger("AstraTemplate") {
-    private val rootModule: RootModule = RootModuleImpl()
+    private val rootModule = RootModuleImpl()
     private val lifecycles: List<Lifecycle>
         get() = listOf(
             rootModule.coreModule.lifecycle,
@@ -46,20 +45,20 @@ class AstraTemplate @Inject constructor(
         // Do some operation demanding access to the Velocity API here.
         // For instance, we could register an event:
         rootModule.velocityModule.apply {
-            this.injector.initialize(this@AstraTemplate.injector)
-            this.server.initialize(this@AstraTemplate.server)
-            this.logger.initialize(this@AstraTemplate.logger)
-            this.dataDirectory.initialize(this@AstraTemplate.dataDirectory)
-            this.plugin.initialize(this@AstraTemplate)
+            this.injector = (this@AstraTemplate.injector)
+            this.server = (this@AstraTemplate.server)
+            this.logger = (this@AstraTemplate.logger)
+            this.dataDirectory = (this@AstraTemplate.dataDirectory)
+            this.plugin = (this@AstraTemplate)
         }
 
         info { "Hello there! I made my first plugin with Velocity" }
-        info { "Here's your configuration: ${rootModule.coreModule.configurationModule.value}." }
+        info { "Here's your configuration: ${rootModule.coreModule.configurationModule}." }
 
         ReloadCommandRegistry(
             registryContext = VelocityCommandRegistryContext(
-                proxyServer = rootModule.velocityModule.server.value,
-                plugin = rootModule.velocityModule.plugin.value
+                proxyServer = rootModule.velocityModule.server,
+                plugin = rootModule.velocityModule.plugin
             )
         ).register()
     }

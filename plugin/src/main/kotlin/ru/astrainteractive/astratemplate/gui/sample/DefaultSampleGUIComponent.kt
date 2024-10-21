@@ -7,8 +7,8 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.bukkit.ChatColor
 import org.bukkit.event.inventory.ClickType
-import ru.astrainteractive.astralibs.async.AsyncComponent
-import ru.astrainteractive.astratemplate.api.local.LocalApi
+import ru.astrainteractive.astralibs.async.CoroutineFeature
+import ru.astrainteractive.astratemplate.api.local.dao.LocalDao
 import ru.astrainteractive.astratemplate.api.local.model.UserModel
 import ru.astrainteractive.astratemplate.gui.api.ItemStackSpigotAPI
 import ru.astrainteractive.astratemplate.gui.domain.GetRandomColorUseCase
@@ -20,11 +20,11 @@ import kotlin.random.Random
  * MVVM/MVI technique
  */
 class DefaultSampleGUIComponent(
-    private val localApi: LocalApi,
+    private val localDao: LocalDao,
     private val itemStackSpigotAPi: ItemStackSpigotAPI,
     private val getRandomColorUseCase: GetRandomColorUseCase,
     private val setDisplayNameUseCase: SetDisplayNameUseCase
-) : AsyncComponent(), SampleGuiComponent {
+) : CoroutineFeature by CoroutineFeature.Default(Dispatchers.IO), SampleGuiComponent {
 
     override val model = MutableStateFlow<Model>(Model.Loading)
 
@@ -32,7 +32,7 @@ class DefaultSampleGUIComponent(
         get() = getRandomColorUseCase.invoke().color
 
     override fun onModeChange() {
-        componentScope.launch(Dispatchers.IO) {
+        launch(Dispatchers.IO) {
             println("OnModeChanged")
             when (model.value) {
                 Model.Loading -> return@launch
@@ -56,8 +56,8 @@ class DefaultSampleGUIComponent(
     }
 
     override fun onAddUserClicked() {
-        componentScope.launch(Dispatchers.IO) {
-            localApi.insertUser(UserModel(-1, "id${Random.nextInt(20000)}", "mine${Random.nextInt(5000)}"))
+        launch(Dispatchers.IO) {
+            localDao.insertUser(UserModel(-1, "id${Random.nextInt(20000)}", "mine${Random.nextInt(5000)}"))
             loadUsersModel()
         }
     }
@@ -66,13 +66,13 @@ class DefaultSampleGUIComponent(
         val state = model.value as? Model.Users ?: return
         val users = state.users
         val user = users.getOrNull(slot) ?: return
-        componentScope.launch(Dispatchers.IO) {
+        launch(Dispatchers.IO) {
             when (clickType) {
-                ClickType.MIDDLE -> localApi.updateUser(user)
-                ClickType.LEFT -> localApi.deleteUser(user)
+                ClickType.MIDDLE -> localDao.updateUser(user)
+                ClickType.LEFT -> localDao.deleteUser(user)
                 else -> {
-                    println(localApi.selectRating(user))
-                    localApi.insertRating(user)
+                    println(localDao.selectRating(user))
+                    localDao.insertRating(user)
                 }
             }
             loadUsersModel()
@@ -97,11 +97,11 @@ class DefaultSampleGUIComponent(
     }
 
     private suspend fun loadUsersModel() {
-        model.value = Model.Users(localApi.getAllUsers())
+        model.value = Model.Users(localDao.getAllUsers())
     }
 
     override fun onUiCreated() {
-        componentScope.launch(Dispatchers.IO) {
+        launch(Dispatchers.IO) {
             delay(1000)
             loadItemsModel()
         }
