@@ -32,7 +32,7 @@ internal class ReloadCommandRegistry(
         override fun execute(input: ReloadCommand.Result) {
             with(kyori) {
                 input.sender.sendMessage(translation.general.reload.let(::toComponent))
-                (plugin as AstraTemplate).reloadPlugin()
+                (plugin as AstraTemplate).onReload()
                 input.sender.sendMessage(translation.general.reloadComplete.let(::toComponent))
             }
         }
