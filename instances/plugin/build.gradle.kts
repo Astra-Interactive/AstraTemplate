@@ -1,9 +1,10 @@
 import ru.astrainteractive.gradleplugin.property.extension.ModelPropertyValueExt.requireProjectInfo
-import ru.astrainteractive.gradleplugin.setupSpigotProcessor
-import ru.astrainteractive.gradleplugin.setupSpigotShadow
 
 plugins {
     kotlin("jvm")
+    alias(libs.plugins.klibs.gradle.java.core)
+    alias(libs.plugins.klibs.minecraft.shadow)
+    alias(libs.plugins.klibs.minecraft.resource.processor)
 }
 
 dependencies {
@@ -26,12 +27,30 @@ dependencies {
     implementation(projects.modules.core)
 }
 
-setupSpigotProcessor()
+minecraftProcessResource {
+    spigotResourceProcessor.process()
+}
 
-val destination = File("D:\\Minecraft Servers\\Servers\\esmp-configuration\\smp\\plugins")
-    .takeIf(File::exists)
-    ?: File(rootDir, "jars")
+setupShadow {
+    requireShadowJarTask {
+        destination = File("/home/makeevrserg/Desktop/server/data/plugins")
+            .takeIf { it.exists() }
+            ?: File(rootDir, "jars")
 
-setupSpigotShadow(destination) {
-    archiveBaseName.set("${requireProjectInfo.name}-bukkit")
+        val projectInfo = requireProjectInfo
+        isReproducibleFileOrder = true
+        mergeServiceFiles()
+        dependsOn(configurations)
+        archiveClassifier.set(null as String?)
+        relocate("org.bstats", projectInfo.group)
+
+        minimize {
+            exclude(dependency(libs.exposed.jdbc.get()))
+            exclude(dependency(libs.exposed.dao.get()))
+            exclude(dependency("org.jetbrains.kotlin:kotlin-stdlib:${libs.versions.kotlin.version.get()}"))
+        }
+        archiveVersion.set(projectInfo.versionString)
+        archiveBaseName.set("${projectInfo.name}-bukkit")
+        destinationDirectory.set(destination.get())
+    }
 }

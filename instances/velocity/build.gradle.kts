@@ -1,11 +1,11 @@
 import ru.astrainteractive.gradleplugin.property.extension.ModelPropertyValueExt.requireProjectInfo
-import ru.astrainteractive.gradleplugin.setupSpigotShadow
-import ru.astrainteractive.gradleplugin.setupVelocityProcessor
 
 plugins {
     kotlin("jvm")
     alias(libs.plugins.gradle.shadow)
     alias(libs.plugins.gradle.buildconfig)
+    alias(libs.plugins.klibs.minecraft.shadow)
+    alias(libs.plugins.klibs.minecraft.resource.processor)
 }
 
 dependencies {
@@ -22,12 +22,30 @@ dependencies {
     implementation(projects.modules.buildKonfig)
 }
 
-setupVelocityProcessor()
+minecraftProcessResource {
+    velocityResourceProcessor.process()
+}
 
-val destination = File("C:\\Users\\Roman\\Desktop\\ForgeTest\\mods")
-    .takeIf(File::exists)
-    ?: File(rootDir, "jars")
+setupShadow {
+    requireShadowJarTask {
+        destination = File("/home/makeevrserg/Desktop/server/data/plugins")
+            .takeIf { it.exists() }
+            ?: File(rootDir, "jars")
 
-setupSpigotShadow(destination) {
-    archiveBaseName.set("${requireProjectInfo.name}-velocity")
+        val projectInfo = requireProjectInfo
+        isReproducibleFileOrder = true
+        mergeServiceFiles()
+        dependsOn(configurations)
+        archiveClassifier.set(null as String?)
+        relocate("org.bstats", projectInfo.group)
+
+        minimize {
+            exclude(dependency(libs.exposed.jdbc.get()))
+            exclude(dependency(libs.exposed.dao.get()))
+            exclude(dependency("org.jetbrains.kotlin:kotlin-stdlib:${libs.versions.kotlin.version.get()}"))
+        }
+        archiveVersion.set(projectInfo.versionString)
+        archiveBaseName.set("${projectInfo.name}-velocity")
+        destinationDirectory.set(destination.get())
+    }
 }

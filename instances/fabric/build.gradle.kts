@@ -1,13 +1,14 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import net.fabricmc.loom.task.RemapJarTask
 import ru.astrainteractive.gradleplugin.property.extension.ModelPropertyValueExt.requireProjectInfo
-import ru.astrainteractive.gradleplugin.setupFabricProcessor
 
 plugins {
     kotlin("jvm")
     id("fabric-loom")
     id("com.github.johnrengelman.shadow")
     alias(libs.plugins.klibs.gradle.java.core)
+    alias(libs.plugins.klibs.minecraft.shadow)
+    alias(libs.plugins.klibs.minecraft.resource.processor)
 }
 
 dependencies {
@@ -75,4 +76,6 @@ artifacts {
     shadow(shadowJar)
 }
 
-setupFabricProcessor()
+minecraftProcessResource {
+    fabricResourceProcessor.process()
+}
