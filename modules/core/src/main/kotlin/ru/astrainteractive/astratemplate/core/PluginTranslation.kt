@@ -16,8 +16,21 @@ class PluginTranslation(
     val database: Database = Database(),
     val menu: Menu = Menu(),
     val custom: Custom = Custom(),
-    val general: General = General()
+    val general: General = General(),
+    val fault: Fault = Fault()
 ) {
+    @Serializable
+    data class Fault(
+        @SerialName("no_permission")
+        val noPermission: StringDesc.Raw = StringDesc.Raw("&#db2c18У вас нет прав!"),
+        @SerialName("not_player")
+        val notPlayer: StringDesc.Raw = StringDesc.Raw("&#db2c18Вы не игрок"),
+        @SerialName("player_not_exists")
+        val playerNotExists: StringDesc.Raw = StringDesc.Raw("&#db2c18Игрока нет!"),
+        @SerialName("item_not_found")
+        val itemNotFound: StringDesc.Raw = StringDesc.Raw("&#db2c18Предмет не найден"),
+    )
+
     @Serializable
     class Database(
         @SerialName("success")
@@ -34,10 +47,6 @@ class PluginTranslation(
         val reload: StringDesc.Raw = StringDesc.Raw("&#dbbb18Перезагрузка плагина"),
         @SerialName("reload_complete")
         val reloadComplete: StringDesc.Raw = StringDesc.Raw("&#42f596Перезагрузка успешно завершена"),
-        @SerialName("no_permission")
-        val noPermission: StringDesc.Raw = StringDesc.Raw("&#db2c18У вас нет прав!"),
-        @SerialName("not_player")
-        val notPlayer: StringDesc.Raw = StringDesc.Raw("&#db2c18Вы не игрок"),
         @SerialName("getByByCheck")
         val getByByCheck: StringDesc.Raw = StringDesc.Raw("&#db2c18getByByCheck")
     )

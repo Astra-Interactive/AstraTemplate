@@ -1,0 +1,33 @@
+main: '${main}'
+prefix: '${prefix}'
+description: '${description}'
+name: '${name}'
+version: '${version}'
+authors: [ "${authors}" ]
+#author: "${author}"
+website: "${url}"
+api-version: 1.18
+softdepend: [ ]
+depend: [ ]
+loadbefore: [ ]
+libraries:
+  - "org.xerial:sqlite-jdbc:3.46.1.0"
+  - "mysql:mysql-connector-java:8.0.33"
+  - "com.h2database:h2:2.2.224"
+commands:
+  add:
+  rickandmorty:
+  atempreload:
+    description: Reload plugin
+    permission: astra_template.reload
+    permission-message: You do not have permission!
+    usage: /<command>
+  adamage:
+    description: Damage player
+    permission: astra_template.damage
+    permission-message: You do not have permission!
+    usage: /<command> <player> amount
+  atempgui:
+    description: Shows template gui
+    usage: /<command>
+  translation:
