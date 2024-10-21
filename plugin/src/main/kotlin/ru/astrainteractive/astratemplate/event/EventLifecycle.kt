@@ -1,5 +1,6 @@
 package ru.astrainteractive.astratemplate.event
 
+import org.bukkit.event.HandlerList
 import ru.astrainteractive.astralibs.event.EventListener
 import ru.astrainteractive.astralibs.lifecycle.Lifecycle
 import ru.astrainteractive.astratemplate.event.di.EventDependencies
@@ -30,5 +31,6 @@ internal class EventLifecycle(
 
     override fun onDisable() {
         defaultStyleEvents.forEach(EventListener::onDisable)
+        HandlerList.unregisterAll(dependencies.plugin)
     }
 }

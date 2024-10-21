@@ -1,10 +1,9 @@
-package ru.astrainteractive.astratemplate.api.local
+package ru.astrainteractive.astratemplate.api.local.dao
 
 import ru.astrainteractive.astratemplate.api.local.model.RatingModel
 import ru.astrainteractive.astratemplate.api.local.model.UserModel
 
-interface LocalApi {
-
+interface LocalDao {
     suspend fun insertUser(user: UserModel): Int
 
     suspend fun insertRating(user: UserModel): Int

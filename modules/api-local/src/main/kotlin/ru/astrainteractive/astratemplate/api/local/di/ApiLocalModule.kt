@@ -1,49 +1,68 @@
 package ru.astrainteractive.astratemplate.api.local.di
 
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
+import org.jetbrains.exposed.sql.Database
+import org.jetbrains.exposed.sql.SchemaUtils
+import org.jetbrains.exposed.sql.Slf4jSqlDebugLogger
+import org.jetbrains.exposed.sql.addLogger
+import org.jetbrains.exposed.sql.transactions.TransactionManager
+import org.jetbrains.exposed.sql.transactions.transaction
+import ru.astrainteractive.astralibs.exposed.factory.DatabaseFactory
 import ru.astrainteractive.astralibs.lifecycle.Lifecycle
-import ru.astrainteractive.astralibs.orm.Database
-import ru.astrainteractive.astratemplate.api.local.LocalApi
-import ru.astrainteractive.astratemplate.api.local.LocalApiImpl
-import ru.astrainteractive.astratemplate.api.local.di.factory.DatabaseFactory
-import ru.astrainteractive.astratemplate.api.local.mapping.RatingMapper
-import ru.astrainteractive.astratemplate.api.local.mapping.RatingMapperImpl
-import ru.astrainteractive.astratemplate.api.local.mapping.UserMapper
-import ru.astrainteractive.astratemplate.api.local.mapping.UserMapperImpl
-import ru.astrainteractive.klibs.kdi.Provider
-import ru.astrainteractive.klibs.kdi.Single
-import ru.astrainteractive.klibs.kdi.getValue
+import ru.astrainteractive.astralibs.util.FlowExt.mapCached
+import ru.astrainteractive.astratemplate.api.local.dao.LocalDao
+import ru.astrainteractive.astratemplate.api.local.dao.LocalDaoImpl
+import ru.astrainteractive.astratemplate.api.local.entity.UserRatingTable
+import ru.astrainteractive.astratemplate.api.local.entity.UserTable
+import ru.astrainteractive.astratemplate.core.PluginConfiguration
+import java.io.File
 
 interface ApiLocalModule {
-    val database: Database
-    val localApi: LocalApi
+    val localDao: LocalDao
     val lifecycle: Lifecycle
 
-    class Default(databasePath: String) : ApiLocalModule {
+    class Default(
+        dataFolder: File,
+        configFlow: Flow<PluginConfiguration>,
+        scope: CoroutineScope
+    ) : ApiLocalModule {
 
-        override val database: Database by Single {
-            DatabaseFactory(databasePath).create()
-        }
+        private val databaseFlow = configFlow
+            .map { it.database }
+            .distinctUntilChanged()
+            .mapCached(scope) { config, previous: Database? ->
+                previous?.connector?.invoke()?.close()
+                previous?.run(TransactionManager::closeAndUnregister)
+                val database = DatabaseFactory(dataFolder).create(config)
+                TransactionManager.manager.defaultIsolationLevel = java.sql.Connection.TRANSACTION_SERIALIZABLE
+                transaction(database) {
+                    addLogger(Slf4jSqlDebugLogger)
+                    SchemaUtils.create(
+                        UserRatingTable,
+                        UserTable
+                    )
+                }
+                database
+            }
 
-        private val ratingMapper: RatingMapper by Provider {
-            RatingMapperImpl
-        }
+        override val localDao: LocalDao = LocalDaoImpl(
+            databaseFlow = databaseFlow,
+        )
 
-        private val userMapper: UserMapper by Provider {
-            UserMapperImpl
-        }
-
-        override val localApi: LocalApi by Provider {
-            LocalApiImpl(
-                database = database,
-                ratingMapper = ratingMapper,
-                userMapper = userMapper
-            )
-        }
         override val lifecycle: Lifecycle by lazy {
             Lifecycle.Lambda(
                 onDisable = {
-                    runBlocking { database.closeConnection() }
+                    runBlocking {
+                        databaseFlow.firstOrNull()?.let { database ->
+                            database.connector.invoke().close()
+                            database.run(TransactionManager::closeAndUnregister)
+                        }
+                    }
                 }
             )
         }

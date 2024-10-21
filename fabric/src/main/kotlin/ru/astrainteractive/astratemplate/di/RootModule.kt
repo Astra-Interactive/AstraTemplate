@@ -5,7 +5,6 @@ import ru.astrainteractive.astratemplate.api.local.di.ApiLocalModule
 import ru.astrainteractive.astratemplate.api.remote.di.ApiRemoteModule
 import ru.astrainteractive.astratemplate.command.di.CommandModule
 import ru.astrainteractive.astratemplate.core.di.CoreModule
-import java.io.File
 
 interface RootModule {
     val lifecycle: Lifecycle
@@ -33,7 +32,9 @@ interface RootModule {
 
         override val apiLocalModule: ApiLocalModule by lazy {
             ApiLocalModule.Default(
-                databasePath = "${fabricModule.configDir}${File.separator}data.db"
+                dataFolder = fabricModule.configDir,
+                configFlow = coreModule.configurationModule.cachedStateFlow,
+                scope = coreModule.pluginScope
             )
         }
 

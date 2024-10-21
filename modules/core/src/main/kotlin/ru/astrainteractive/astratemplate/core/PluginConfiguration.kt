@@ -2,6 +2,7 @@ package ru.astrainteractive.astratemplate.core
 
 import com.charleskorn.kaml.YamlComment
 import kotlinx.serialization.SerialName
+import ru.astrainteractive.astralibs.exposed.model.DatabaseConfiguration
 
 /**
  * Example config file with kotlinx.serialization
@@ -17,7 +18,8 @@ data class PluginConfiguration(
     val list: List<String> = listOf(),
     @SerialName("another_list")
     @YamlComment("Description for list")
-    val anotherList: List<Section> = listOf()
+    val anotherList: List<Section> = listOf(),
+    val database: DatabaseConfiguration = DatabaseConfiguration.H2("db")
 ) {
     @kotlinx.serialization.Serializable
     data class Section(

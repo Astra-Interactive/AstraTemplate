@@ -4,16 +4,13 @@ import ru.astrainteractive.astralibs.async.DefaultBukkitDispatchers
 import ru.astrainteractive.astralibs.kyori.KyoriComponentSerializer
 import ru.astrainteractive.astratemplate.AstraTemplate
 import ru.astrainteractive.astratemplate.di.BukkitModule
-import ru.astrainteractive.klibs.kdi.Lateinit
-import ru.astrainteractive.klibs.kdi.Single
+import ru.astrainteractive.klibs.kstorage.api.impl.DefaultStateFlowMutableKrate
 
-class BukkitModuleImpl : BukkitModule {
-    override val plugin = Lateinit<AstraTemplate>()
+class BukkitModuleImpl(override val plugin: AstraTemplate) : BukkitModule {
 
-    override val bukkitDispatchers = Single {
-        DefaultBukkitDispatchers(plugin.value)
-    }
-    override val kyoriComponentSerializer: Single<KyoriComponentSerializer> = Single {
-        KyoriComponentSerializer.Legacy
-    }
+    override val dispatchers = DefaultBukkitDispatchers(plugin)
+    override val kyoriComponentSerializer = DefaultStateFlowMutableKrate<KyoriComponentSerializer>(
+        loader = { null },
+        factory = { KyoriComponentSerializer.Legacy }
+    )
 }

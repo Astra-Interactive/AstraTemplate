@@ -8,8 +8,8 @@ dependencies {
     implementation(libs.bundles.kotlin)
     // AstraLibs
     implementation(libs.minecraft.astralibs.core)
-    // klibs
-    implementation(libs.klibs.kdi)
+    implementation(libs.minecraft.astralibs.exposed)
+    implementation(libs.klibs.kstorage)
     // Test
     testImplementation(libs.bundles.testing.kotlin)
     testImplementation(libs.tests.kotlin.test)

@@ -4,8 +4,8 @@ import org.bukkit.plugin.Plugin
 import ru.astrainteractive.astralibs.event.EventListener
 import ru.astrainteractive.astralibs.kyori.KyoriComponentSerializer
 import ru.astrainteractive.astratemplate.core.PluginTranslation
+import ru.astrainteractive.astratemplate.core.util.getValue
 import ru.astrainteractive.astratemplate.di.RootModule
-import ru.astrainteractive.klibs.kdi.getValue
 
 internal interface EventDependencies {
     val eventListener: EventListener
@@ -17,7 +17,7 @@ internal interface EventDependencies {
         rootModule: RootModule,
         override val eventListener: EventListener
     ) : EventDependencies {
-        override val plugin by rootModule.bukkitModule.plugin
+        override val plugin = rootModule.bukkitModule.plugin
         override val translation by rootModule.coreModule.translation
         override val kyoriComponentSerializer by rootModule.bukkitModule.kyoriComponentSerializer
     }

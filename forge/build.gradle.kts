@@ -33,11 +33,11 @@ minecraft {
 }
 
 dependencies {
-    minecraft("net.minecraftforge:forge:1.21-51.0.17")
+    minecraft("net.minecraftforge:forge:1.21.1-52.0.20")
     // AstraLibs
     implementation(libs.minecraft.astralibs.core)
     implementation(libs.minecraft.astralibs.command)
-    implementation(libs.klibs.kdi)
+    implementation(libs.klibs.kstorage)
     // Kotlin
     implementation(libs.bundles.kotlin)
     // Local
