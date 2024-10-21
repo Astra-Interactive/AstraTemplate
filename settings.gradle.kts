@@ -54,11 +54,8 @@ include("modules:api-remote")
 include("modules:api-local")
 include("modules:core")
 include("modules:build-konfig")
-// Spigot
-include("plugin")
-// Fabric
-include("fabric")
-// Velocity
-include("velocity")
-// Forge
-include("forge")
+// Instances
+include(":instances:plugin")
+include(":instances:fabric")
+include(":instances:velocity")
+include(":instances:forge")
