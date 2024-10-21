@@ -4,7 +4,7 @@ import org.bukkit.Material
 import org.bukkit.inventory.ItemStack
 import kotlin.random.Random
 
-object ItemStackSpigotAPI {
+internal object ItemStackSpigotAPI {
     fun randomItemStack(): ItemStack {
         val values = Material.entries
         val size = values.size

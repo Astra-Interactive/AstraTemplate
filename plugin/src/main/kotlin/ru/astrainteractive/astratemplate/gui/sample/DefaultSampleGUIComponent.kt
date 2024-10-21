@@ -8,6 +8,8 @@ import kotlinx.coroutines.launch
 import org.bukkit.ChatColor
 import org.bukkit.event.inventory.ClickType
 import ru.astrainteractive.astralibs.async.CoroutineFeature
+import ru.astrainteractive.astralibs.logging.JUtiltLogger
+import ru.astrainteractive.astralibs.logging.Logger
 import ru.astrainteractive.astratemplate.api.local.dao.LocalDao
 import ru.astrainteractive.astratemplate.api.local.model.UserModel
 import ru.astrainteractive.astratemplate.gui.api.ItemStackSpigotAPI
@@ -19,21 +21,30 @@ import kotlin.random.Random
 /**
  * MVVM/MVI technique
  */
-class DefaultSampleGUIComponent(
+internal class DefaultSampleGUIComponent(
     private val localDao: LocalDao,
     private val itemStackSpigotAPi: ItemStackSpigotAPI,
     private val getRandomColorUseCase: GetRandomColorUseCase,
     private val setDisplayNameUseCase: SetDisplayNameUseCase
-) : CoroutineFeature by CoroutineFeature.Default(Dispatchers.IO), SampleGuiComponent {
+) : CoroutineFeature by CoroutineFeature.Default(Dispatchers.IO),
+    SampleGuiComponent,
+    Logger by JUtiltLogger("AstraTemplate-DefaultSampleGUIComponent") {
 
     override val model = MutableStateFlow<Model>(Model.Loading)
 
     override val randomColor: ChatColor
         get() = getRandomColorUseCase.invoke().color
 
+    private fun getRandomUser(): UserModel {
+        return UserModel(
+            id = -1,
+            discordId = "id${Random.nextInt(20000)}",
+            minecraftUUID = "mine${Random.nextInt(5000)}"
+        )
+    }
+
     override fun onModeChange() {
         launch(Dispatchers.IO) {
-            println("OnModeChanged")
             when (model.value) {
                 Model.Loading -> return@launch
                 is Model.Items -> loadUsersModel()
@@ -44,7 +55,7 @@ class DefaultSampleGUIComponent(
 
     override fun onItemClicked(slot: Int, clickType: ClickType) {
         when (val state = model.value) {
-            Model.Loading -> {}
+            Model.Loading -> Unit
             is Model.Items -> {
                 onItemStackClicked(slot)
             }
@@ -57,7 +68,7 @@ class DefaultSampleGUIComponent(
 
     override fun onAddUserClicked() {
         launch(Dispatchers.IO) {
-            localDao.insertUser(UserModel(-1, "id${Random.nextInt(20000)}", "mine${Random.nextInt(5000)}"))
+            localDao.insertUser(getRandomUser())
             loadUsersModel()
         }
     }
@@ -70,10 +81,7 @@ class DefaultSampleGUIComponent(
             when (clickType) {
                 ClickType.MIDDLE -> localDao.updateUser(user)
                 ClickType.LEFT -> localDao.deleteUser(user)
-                else -> {
-                    println(localDao.selectRating(user))
-                    localDao.insertRating(user)
-                }
+                else -> localDao.insertRating(user)
             }
             loadUsersModel()
         }
@@ -87,17 +95,17 @@ class DefaultSampleGUIComponent(
             index = slot
         )
 
-        this.model.update {
+        model.update {
             state.copy(items = setDisplayNameUseCase.invoke(input).items)
         }
     }
 
     private suspend fun loadItemsModel() {
-        model.value = Model.Items(itemStackSpigotAPi.randomItemStackList())
+        model.update { Model.Items(itemStackSpigotAPi.randomItemStackList()) }
     }
 
     private suspend fun loadUsersModel() {
-        model.value = Model.Users(localDao.getAllUsers())
+        model.update { Model.Users(localDao.getAllUsers()) }
     }
 
     override fun onUiCreated() {

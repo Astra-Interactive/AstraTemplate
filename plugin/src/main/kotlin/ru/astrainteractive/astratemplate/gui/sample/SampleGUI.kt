@@ -29,7 +29,7 @@ import ru.astrainteractive.astratemplate.api.local.model.UserModel
 import ru.astrainteractive.astratemplate.gui.di.SampleGuiDependencies
 import ru.astrainteractive.astratemplate.gui.sample.SampleGuiComponent.Model
 
-class SampleGUI(
+internal class SampleGUI(
     player: Player,
     dependencies: SampleGuiDependencies
 ) : PaginatedInventoryMenu(),

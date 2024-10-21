@@ -12,7 +12,7 @@ import ru.astrainteractive.astratemplate.gui.domain.SetDisplayNameUseCaseImpl
 import ru.astrainteractive.astratemplate.gui.sample.DefaultSampleGUIComponent
 import ru.astrainteractive.klibs.mikro.core.dispatchers.KotlinDispatchers
 
-interface SampleGuiDependencies {
+internal interface SampleGuiDependencies {
     val translation: PluginTranslation
     val dispatchers: KotlinDispatchers
     val kyoriComponentSerializer: KyoriComponentSerializer

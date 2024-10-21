@@ -6,7 +6,7 @@ import ru.astrainteractive.astratemplate.command.DefaultErrorHandler
 import ru.astrainteractive.astratemplate.command.gui.di.GuiCommandDependencies
 import ru.astrainteractive.astratemplate.gui.router.Router
 
-class GuiCommandRegistry(
+internal class GuiCommandRegistry(
     dependencies: GuiCommandDependencies
 ) : GuiCommandDependencies by dependencies {
 
@@ -21,7 +21,10 @@ class GuiCommandRegistry(
             commandExecutor = { result ->
                 router.open(result.player, result.route)
             },
-            errorHandler = DefaultErrorHandler()
+            errorHandler = DefaultErrorHandler(
+                translationKrate = translationKrate,
+                kyoriKrate = kyoriKrate
+            )
         )
     }
 }

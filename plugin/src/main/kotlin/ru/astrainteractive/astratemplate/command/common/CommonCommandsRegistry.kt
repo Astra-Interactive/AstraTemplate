@@ -3,7 +3,7 @@ package ru.astrainteractive.astratemplate.command.common
 import ru.astrainteractive.astralibs.util.StringListExt.withEntry
 import ru.astrainteractive.astratemplate.command.common.di.CommonCommandsDependencies
 
-class CommonCommandsRegistry(
+internal class CommonCommandsRegistry(
     dependencies: CommonCommandsDependencies
 ) : CommonCommandsDependencies by dependencies {
 
@@ -16,7 +16,7 @@ class CommonCommandsRegistry(
             }
         }
         plugin.getCommand("translation")?.setExecutor { sender, command, label, args ->
-            sender.sendMessage(translation.general.getByByCheck.let(kyoriComponentSerializer::toComponent))
+            sender.sendMessage(translation.general.getByByCheck.let(kyori::toComponent))
             true
         }
     }

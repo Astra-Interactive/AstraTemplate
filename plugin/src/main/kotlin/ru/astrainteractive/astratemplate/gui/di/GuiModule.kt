@@ -3,10 +3,10 @@ package ru.astrainteractive.astratemplate.gui.di
 import ru.astrainteractive.astratemplate.api.local.di.ApiLocalModule
 import ru.astrainteractive.astratemplate.core.di.CoreModule
 import ru.astrainteractive.astratemplate.di.BukkitModule
-import ru.astrainteractive.astratemplate.gui.router.DefaultRouter
 import ru.astrainteractive.astratemplate.gui.router.Router
+import ru.astrainteractive.astratemplate.gui.router.RouterImpl
 
-interface GuiModule {
+internal interface GuiModule {
     val router: Router
 
     class Default(
@@ -14,7 +14,7 @@ interface GuiModule {
         bukkitModule: BukkitModule,
         apiLocalModule: ApiLocalModule
     ) : GuiModule {
-        override val router: Router = DefaultRouter(
+        override val router: Router = RouterImpl(
             scope = coreModule.pluginScope,
             dispatchers = bukkitModule.dispatchers,
             dependencies = SampleGuiDependencies.Default(

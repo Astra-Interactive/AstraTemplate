@@ -6,7 +6,7 @@ import org.bukkit.event.inventory.ClickType
 import org.bukkit.inventory.ItemStack
 import ru.astrainteractive.astratemplate.api.local.model.UserModel
 
-interface SampleGuiComponent {
+internal interface SampleGuiComponent {
     val model: StateFlow<Model>
 
     val randomColor: ChatColor

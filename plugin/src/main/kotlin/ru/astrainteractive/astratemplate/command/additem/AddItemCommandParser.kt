@@ -4,15 +4,17 @@ import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import ru.astrainteractive.astralibs.command.api.context.BukkitCommandContext
+import ru.astrainteractive.astralibs.command.api.exception.BukkitCommandException
 import ru.astrainteractive.astralibs.command.api.parser.CommandParser
 
 internal class AddItemCommandParser : CommandParser<AddItemCommand.Result, BukkitCommandContext> {
     override fun parse(commandContext: BukkitCommandContext): AddItemCommand.Result {
         if (commandContext.sender !is Player) throw AddItemCommand.Error.SenderNotPlayer
 
-        val player = commandContext.args.getOrNull(0)
+        val playerString = commandContext.args.getOrNull(0)
+        val player = playerString
             ?.let { value -> Bukkit.getOnlinePlayers().firstOrNull { it.name == value } }
-            ?: throw AddItemCommand.Error.PlayerNotExists
+            ?: throw BukkitCommandException.NoPlayerException(playerString.orEmpty())
 
         val amount = commandContext.args.getOrNull(2)
             ?.toIntOrNull() ?: 1

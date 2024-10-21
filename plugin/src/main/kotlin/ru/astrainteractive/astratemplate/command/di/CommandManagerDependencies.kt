@@ -12,7 +12,7 @@ import ru.astrainteractive.astratemplate.di.RootModule
 import ru.astrainteractive.astratemplate.gui.router.Router
 import kotlin.random.Random
 
-interface CommandManagerDependencies :
+internal interface CommandManagerDependencies :
     AddItemCommandDependencies,
     DamageCommandDependencies,
     ReloadCommandDependencies,
@@ -21,8 +21,11 @@ interface CommandManagerDependencies :
     GuiCommandDependencies {
     class Default(rootModule: RootModule) : CommandManagerDependencies {
         override val plugin = rootModule.bukkitModule.plugin
-        override val translation by rootModule.coreModule.translation
-        override val kyoriComponentSerializer by rootModule.bukkitModule.kyoriComponentSerializer
+        override val translationKrate = rootModule.coreModule.translation
+        override val kyoriKrate = rootModule.bukkitModule.kyoriComponentSerializer
+        override val translation by translationKrate
+        override val kyori by kyoriKrate
+
         override val scope: CoroutineScope = rootModule.coreModule.pluginScope
         override val rmApi = rootModule.apiRemoteModule.rickMortyApi
         override val dispatchers = rootModule.bukkitModule.dispatchers

@@ -8,7 +8,7 @@ import ru.astrainteractive.astratemplate.gui.di.SampleGuiDependencies
 import ru.astrainteractive.astratemplate.gui.sample.SampleGUI
 import ru.astrainteractive.klibs.mikro.core.dispatchers.KotlinDispatchers
 
-class DefaultRouter(
+internal class RouterImpl(
     private val dependencies: SampleGuiDependencies,
     private val scope: CoroutineScope,
     private val dispatchers: KotlinDispatchers

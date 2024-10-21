@@ -6,7 +6,7 @@ import ru.astrainteractive.astralibs.menu.event.DefaultInventoryClickEvent
 import ru.astrainteractive.astratemplate.di.RootModule
 import ru.astrainteractive.astratemplate.event.EventLifecycle
 
-interface EventModule {
+internal interface EventModule {
     val eventListener: EventListener
     val inventoryClickListener: EventListener
     val lifecycle: Lifecycle

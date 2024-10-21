@@ -2,6 +2,8 @@ package ru.astrainteractive.astratemplate.command.damage
 
 import org.bukkit.Bukkit
 import ru.astrainteractive.astralibs.command.api.context.BukkitCommandContext
+import ru.astrainteractive.astralibs.command.api.exception.BukkitCommandException
+import ru.astrainteractive.astralibs.command.api.exception.DefaultCommandException
 import ru.astrainteractive.astralibs.command.api.executor.CommandExecutor
 import ru.astrainteractive.astralibs.command.api.parser.CommandParser
 import ru.astrainteractive.astralibs.command.api.util.PluginExt.registerCommand
@@ -10,7 +12,7 @@ import ru.astrainteractive.astratemplate.command.DefaultErrorHandler
 import ru.astrainteractive.astratemplate.command.damage.di.DamageCommandDependencies
 import ru.astrainteractive.astratemplate.core.PluginPermission
 
-class DamageCommandRegistry(
+internal class DamageCommandRegistry(
     dependencies: DamageCommandDependencies
 ) : DamageCommandDependencies by dependencies {
     private val alias = "adamage"
@@ -18,11 +20,12 @@ class DamageCommandRegistry(
     private inner class CommandParserImpl : CommandParser<DamageCommand.Result, BukkitCommandContext> {
         override fun parse(commandContext: BukkitCommandContext): DamageCommand.Result {
             val hasPermission = commandContext.sender.toPermissible().hasPermission(PluginPermission.Damage)
-            if (!hasPermission) throw DamageCommand.Error.NoPermission
+            if (!hasPermission) throw DefaultCommandException.NoPermissionException(PluginPermission.Damage)
 
-            val player = commandContext.args.getOrNull(0)
+            val playerString = commandContext.args.getOrNull(0)
+            val player = playerString
                 ?.let(Bukkit::getPlayerExact)
-                ?: throw DamageCommand.Error.PlayerNotExists
+                ?: throw BukkitCommandException.NoPlayerException(playerString.orEmpty())
 
             val damage = commandContext.args.getOrNull(1)
                 ?.toDoubleOrNull()
@@ -38,7 +41,7 @@ class DamageCommandRegistry(
 
     private inner class CommandExecutorImpl : CommandExecutor<DamageCommand.Result> {
         override fun execute(input: DamageCommand.Result) {
-            with(kyoriComponentSerializer) {
+            with(kyori) {
                 input.player.sendMessage(translation.custom.damaged(input.damagerName).let(::toComponent))
             }
             input.player.damage(input.damage)
@@ -60,7 +63,10 @@ class DamageCommandRegistry(
             alias = alias,
             commandParser = CommandParserImpl(),
             commandExecutor = CommandExecutorImpl(),
-            errorHandler = DefaultErrorHandler()
+            errorHandler = DefaultErrorHandler(
+                translationKrate = translationKrate,
+                kyoriKrate = kyoriKrate
+            )
         )
     }
 }

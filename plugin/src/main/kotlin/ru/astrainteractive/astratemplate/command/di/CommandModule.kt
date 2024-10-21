@@ -9,7 +9,7 @@ import ru.astrainteractive.astratemplate.command.reload.ReloadCommandRegistry
 import ru.astrainteractive.astratemplate.command.rickmorty.RandomRickAndMortyCommandRegistry
 import ru.astrainteractive.astratemplate.di.RootModule
 
-interface CommandModule {
+internal interface CommandModule {
     val lifecycle: Lifecycle
 
     class Default(rootModule: RootModule) : CommandModule {

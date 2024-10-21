@@ -4,7 +4,7 @@ import org.bukkit.entity.Player
 import ru.astrainteractive.astralibs.command.api.exception.CommandException
 import ru.astrainteractive.astratemplate.gui.router.Router
 
-interface GuiCommand {
+internal interface GuiCommand {
     class Result(
         val player: Player,
         val route: Router.Route

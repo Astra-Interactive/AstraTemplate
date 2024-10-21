@@ -1,5 +1,5 @@
 package ru.astrainteractive.astratemplate.command.common
 
-interface CommonCommands {
+internal interface CommonCommands {
     data object Stub : CommonCommands
 }

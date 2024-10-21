@@ -8,7 +8,7 @@ import ru.astrainteractive.astralibs.util.StringListExt.withEntry
 import ru.astrainteractive.astratemplate.command.DefaultErrorHandler
 import ru.astrainteractive.astratemplate.command.additem.di.AddItemCommandDependencies
 
-class AddItemCommandRegistry(
+internal class AddItemCommandRegistry(
     dependencies: AddItemCommandDependencies
 ) : AddItemCommandDependencies by dependencies {
     private val alias = "add"
@@ -29,7 +29,10 @@ class AddItemCommandRegistry(
             alias = alias,
             commandParser = AddItemCommandParser(),
             commandExecutor = AddItemExecutor(),
-            errorHandler = DefaultErrorHandler()
+            errorHandler = DefaultErrorHandler(
+                translationKrate = translationKrate,
+                kyoriKrate = kyoriKrate
+            )
         )
     }
 }

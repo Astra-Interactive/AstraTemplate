@@ -5,7 +5,7 @@ import ru.astrainteractive.astralibs.command.api.util.PluginExt.registerCommand
 import ru.astrainteractive.astratemplate.command.DefaultErrorHandler
 import ru.astrainteractive.astratemplate.command.rickmorty.di.RickMortyCommandDependencies
 
-class RandomRickAndMortyCommandRegistry(
+internal class RandomRickAndMortyCommandRegistry(
     dependencies: RickMortyCommandDependencies
 ) : RickMortyCommandDependencies by dependencies {
 
@@ -28,7 +28,10 @@ class RandomRickAndMortyCommandRegistry(
                     }
                 }
             },
-            errorHandler = DefaultErrorHandler()
+            errorHandler = DefaultErrorHandler(
+                translationKrate = translationKrate,
+                kyoriKrate = kyoriKrate
+            )
         )
     }
 }

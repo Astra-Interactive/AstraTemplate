@@ -2,7 +2,7 @@ package ru.astrainteractive.astratemplate.gui.router
 
 import org.bukkit.entity.Player
 
-interface Router {
+internal interface Router {
     sealed interface Route {
         data object Sample : Route
     }
