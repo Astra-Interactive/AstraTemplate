@@ -10,7 +10,10 @@ api-version: 1.18
 softdepend: [ ]
 depend: [ ]
 loadbefore: [ ]
-#libraries: [ "${libraries}" ]
+libraries:
+  - "org.xerial:sqlite-jdbc:3.46.1.0"
+  - "mysql:mysql-connector-java:8.0.33"
+  - "com.h2database:h2:2.2.224"
 commands:
   add:
   rickandmorty:
