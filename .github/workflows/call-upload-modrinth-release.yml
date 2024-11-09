@@ -8,6 +8,17 @@ jobs:
   upload_github_release:
     name: Upload GitHub release
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - id: "fabric"
+            task: ":instances:fabric:assemble"
+          - id: "forge"
+            task: ":instances:forge:shadowJar"
+          - id: "velocity"
+            task: ":instances:velocity:shadowJar"
+          - id: "bukkit"
+            task: ":instances:bukkit:shadowJar"
     steps:
       - name: Checkout Git repo
         uses: actions/checkout@v4
@@ -19,46 +30,25 @@ jobs:
           properties: 'makeevrserg.project.name makeevrserg.project.version.string'
 
       - uses: actions/download-artifact@d0ce8fd1167ed839810201de977912a090ab10a7
-        name: "Download velocity"
+        name: "Download ${{ matrix.id }}"
         with:
-          name: velocity
-          path: ./jars/velocity
-      - uses: actions/download-artifact@d0ce8fd1167ed839810201de977912a090ab10a7
-        name: "Download forge"
-        with:
-          name: forge
-          path: ./jars/forge
-      - uses: actions/download-artifact@d0ce8fd1167ed839810201de977912a090ab10a7
-        name: "Download fabric"
-        with:
-          name: fabric
-          path: ./jars/fabric
-      - uses: actions/download-artifact@d0ce8fd1167ed839810201de977912a090ab10a7
-        name: "Download bukkit"
-        with:
-          name: bukkit
-          path: ./jars/bukkit
+          name: ${{ matrix.id }}
+          path: ./jars/${{ matrix.id }}
       - uses: Kir-Antipov/mc-publish@v3.3
         with:
           # Only include this section if you wish to publish
           # your assets on Modrinth.
           modrinth-id: 6NpNwzA1
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
-          name: ${{ steps.properties.outputs.makeevrserg-project-name }}
+          name: ${{ steps.properties.outputs.makeevrserg-project-name }}-${{ matrix.id }}
           version: ${{ steps.properties.outputs.makeevrserg-project-version-string }}
           changelog: ${{ join(github.event.commits.*.message, '\n') }}
           version_type: beta
           java: |
             21
           loaders: |
-            bukkit
-            velocity
-            forge
-            fabric
+            ${{ matrix.id }}
           game-versions: |
             [1.16,1.21.1)
           files: |
-            ./jars/bukkit/*.jar
-            ./jars/velocity/*.jar
-            ./jars/forge/*.jar
-            ./jars/fabric/*.jar   
+            ./jars/${{ matrix.id }}/*.jar
