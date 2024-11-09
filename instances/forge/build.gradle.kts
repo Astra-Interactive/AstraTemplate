@@ -134,7 +134,7 @@ val shadowJar by tasks.getting(ShadowJar::class) {
     }
     isReproducibleFileOrder = true
     archiveClassifier.set(null as String?)
-    archiveBaseName.set("${requireProjectInfo.name}-forge-shadow")
+    archiveBaseName.set("${requireProjectInfo.name}-forge")
     destinationDirectory.set(destination)
     finalizedBy(reobfShadowJar)
 }
