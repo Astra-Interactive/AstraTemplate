@@ -22,22 +22,22 @@ jobs:
         name: "Download velocity"
         with:
           name: velocity
-          path: ./jars
+          path: ./jars/velocity
       - uses: actions/download-artifact@d0ce8fd1167ed839810201de977912a090ab10a7
         name: "Download forge"
         with:
           name: forge
-          path: ./jars
+          path: ./jars/forge
       - uses: actions/download-artifact@d0ce8fd1167ed839810201de977912a090ab10a7
         name: "Download fabric"
         with:
           name: fabric
-          path: ./jars
+          path: ./jars/fabric
       - uses: actions/download-artifact@d0ce8fd1167ed839810201de977912a090ab10a7
         name: "Download bukkit"
         with:
           name: bukkit
-          path: ./jars
+          path: ./jars/bukkit
       - uses: Kir-Antipov/mc-publish@v3.3
         with:
           # Only include this section if you wish to publish
@@ -51,11 +51,14 @@ jobs:
           java: |
             21
           loaders: |
-            velocity
-            fabric
-            forge
             bukkit
+            velocity
+            forge
+            fabric
           game-versions: |
             [1.16,1.21.1)
           files: |
-            ./jars/*.jar   
+            ./jars/bukkit/*.jar
+            ./jars/velocity/*.jar
+            ./jars/forge/*.jar
+            ./jars/fabric/*.jar   
