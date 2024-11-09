@@ -11,6 +11,27 @@ plugins {
     id("com.github.johnrengelman.shadow")
 }
 
+val shade by configurations.creating
+
+val implementation by configurations.getting {
+    this.extendsFrom(shade)
+}
+
+dependencies {
+    minecraft("net.minecraftforge:forge:1.20.1-47.2.20")
+    // AstraLibs
+    shade(libs.minecraft.astralibs.core)
+    shade(libs.minecraft.astralibs.command)
+    shade(libs.klibs.kstorage)
+    // Kotlin
+    shade(libs.bundles.kotlin)
+    // Local
+    shade(projects.modules.apiLocal)
+    shade(projects.modules.apiRemote)
+    shade(projects.modules.core)
+    shade(projects.modules.buildKonfig)
+}
+
 minecraft {
     mappings("official", "1.20.1")
     runs {
@@ -32,21 +53,6 @@ minecraft {
     }
 }
 
-dependencies {
-    minecraft("net.minecraftforge:forge:1.21.1-52.0.20")
-    // AstraLibs
-    implementation(libs.minecraft.astralibs.core)
-    implementation(libs.minecraft.astralibs.command)
-    implementation(libs.klibs.kstorage)
-    // Kotlin
-    implementation(libs.bundles.kotlin)
-    // Local
-    implementation(projects.modules.apiLocal)
-    implementation(projects.modules.apiRemote)
-    implementation(projects.modules.core)
-    implementation(projects.modules.buildKonfig)
-}
-
 configurations {
     apiElements {
         artifacts.clear()
@@ -59,7 +65,7 @@ configurations {
     }
 }
 
-val processResources = project.tasks.withType<org.gradle.language.jvm.tasks.ProcessResources> {
+val processResources = project.tasks.withType<ProcessResources> {
     filteringCharset = "UTF-8"
     duplicatesStrategy = DuplicatesStrategy.INCLUDE
 
@@ -76,7 +82,7 @@ val processResources = project.tasks.withType<org.gradle.language.jvm.tasks.Proc
     }
 }
 
-val destination = File("C:\\Users\\Roman\\Desktop\\ForgeTest\\mods")
+val destination = File("D:\\Minecraft Servers\\server-docker-forge\\data\\mods")
     .takeIf(File::exists)
     ?: File(rootDir, "jars")
 
@@ -85,24 +91,36 @@ val reobfShadowJar = reobf.create("shadowJar")
 val shadowJar by tasks.getting(ShadowJar::class) {
     mustRunAfter(processResources)
     dependsOn(processResources)
+    configurations = listOf(shade)
     dependencies {
-        // Kotlin
-        include(dependency("ru.astrainteractive.klibs:kdi-jvm"))
-        include(dependency(libs.minecraft.astralibs.core.asProvider().get()))
-        include(dependency(libs.minecraft.astralibs.command.asProvider().get()))
-        include(dependency(projects.modules.core))
-        include(dependency(projects.modules.apiRemote))
-        include(dependency(projects.modules.apiLocal))
-        // TODO somehow fix the multiplatform libraries
-        include(dependency("ru.astrainteractive.klibs:kdi-jvm"))
-        include(dependency("ru.astrainteractive.klibs:kdi-jvm"))
-        include(dependency("org.jetbrains.kotlin:kotlin-stdlib"))
-        include(dependency("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm"))
-        include(dependency(libs.driver.jdbc.get()))
+        exclude(dependency("org.jetbrains:annotations"))
+        exclude("DebugProbesKt.bin")
+        exclude("_COROUTINE/**")
+        exclude("META-INF/*.kotlin_module")
+        exclude("META-INF/com.android.tools/**")
+        exclude("META-INF/gradle-plugins/**")
+        exclude("META-INF/maven/**")
+        exclude("META-INF/proguard/**")
+        exclude("META-INF/services/**")
+        exclude("META-INF/versions/**")
     }
-    relocate("kotlin", "${requireProjectInfo.group}.kotlin")
-    relocate("kotlinx", "${requireProjectInfo.group}.kotlinx")
-    relocate("org.jetbrains", "${requireProjectInfo.group}.org.jetbrains")
+    // Be sure to relocate EXACT PACKAGES!!
+    // For example, relocate org.some.package instead of org
+    // Becuase relocation org will break other non-relocated dependencies such as org.minecraft
+    listOf(
+        "okio",
+        "org.slf4j",
+        "kotlin",
+        "kotlinx",
+        "it.krzeminski",
+        "net.thauvin",
+        "org.jetbrains.exposed",
+        "org.jetbrains.kotlin",
+        "org.jetbrains.kotlinx",
+        "com.charleskorn",
+        "ru.astrainteractive.klibs",
+        "ru.astrainteractive.astralibs",
+    ).forEach { pattern -> relocate(pattern, "${requireProjectInfo.group}.shade.$pattern") }
     mergeServiceFiles()
     manifest {
         attributes(
@@ -116,7 +134,7 @@ val shadowJar by tasks.getting(ShadowJar::class) {
     }
     isReproducibleFileOrder = true
     archiveClassifier.set(null as String?)
-    archiveBaseName.set("${requireProjectInfo.name}-forge-shadow")
+    archiveBaseName.set("${requireProjectInfo.name}-forge")
     destinationDirectory.set(destination)
     finalizedBy(reobfShadowJar)
 }

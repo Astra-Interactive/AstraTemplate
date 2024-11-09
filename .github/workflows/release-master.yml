@@ -6,8 +6,17 @@ on:
 jobs:
   gradle_validation:
     uses: ./.github/workflows/call-gradle-wrapper-validation.yml
-  create_artifact:
+  upload_artifacts:
     needs: [ gradle_validation ]
-    uses: ./.github/workflows/call-create-artifacts.yml
+    uses: ./.github/workflows/call-upload-artifacts.yml
+  upload_github_artifacts:
+    needs: [ upload_artifacts ]
+    uses: ./.github/workflows/call-upload-github-release.yml
     secrets:
       ACTIONS_TOKEN: ${{ secrets.ACTIONS_TOKEN }}
+
+  upload_modrinth_artifacts:
+    needs: [ upload_artifacts ]
+    uses: ./.github/workflows/call-upload-modrinth-release.yml
+    secrets:
+      MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}

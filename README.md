@@ -8,7 +8,7 @@
 ### MultiPlatform (Plugin-first) Spigot/Velocity/Fabric/Forge plugin
 
 This is a Minecraft Multiplatform template that provides architecture and various tools you'll need to create new
-Spigot/Velocity plugins as fast as possible
+Spigot/Velocity/Fabric/Forge server-plugins as fast as possible
 
 <h4 align="center">☄️ Plugins based on AstraTemplate☄️ </h4>
 
@@ -25,30 +25,32 @@ Spigot/Velocity plugins as fast as possible
     <a href="https://github.com/Astra-Interactive/AstraShop">
         <img alt="spigot" src="https://img.shields.io/badge/github-AstraShop-1B76CA"/>
     </a>
-    <a href="https://github.com/Astra-Interactive/SynK">
-        <img alt="spigot" src="https://img.shields.io/badge/github-SynK[WIP]-1B76CA"/>
+    <a href="https://github.com/Astra-Interactive/SoulKeeper">
+        <img alt="spigot" src="https://img.shields.io/badge/github-SoulKeeper-1B76CA"/>
     </a>
 </p>
 
-## Novice developer?
+## Not for novice developers
 
 This project can be very difficult for novice developers. Especially for those who were working with java.
 
 ## Overview
 
-AstraTemplate and it's libs design after more than 2 years of developing spigot plugins and android applications.
-It contains powerful and scalable architecture template which will help you in your development.
+AstraTemplate and it's libs design after more than 3 years of developing spigot plugins and android applications.
+It contains powerful and scalable architecture template which will help in your development.
 
 ## 1. Directory structure
 
     ├── modules             
-    │   ├── api-local       # Local api with SQLite
+    │   ├── api-local       # Local api with runtime reloadable SQLite
     │   ├── api-remote      # Remote sample RickMorty API
+    │   ├── build-konfig    # Compile-time constants
     │   └── core            # Core multiplatform module
-    ├── forge               # Forge template mod
-    ├── fabric              # Fabric template mod
-    ├── velocity            # Velocity template plugin
-    └── plugin              # Bukkit template mod
+    ├── instances
+    │   ├── bukkit          # Paper API plugin
+    │   ├── forge           # Forge server mod
+    │   ├── fabric          # Fabric server mod
+    └── └── velocity        # Velocity plugin
 
 ## 2. Gradle plugin
 
@@ -62,12 +64,12 @@ My gradle plugin is well-documented and easy to use. [Please, see it](https://gi
 
 #### 3.1 `api-local`
 
-This module contains local API with sqlite database. It contains no spigot/velocity/fabric dependencies.
-Jvm only. Due to this factor, you can easily share this module between your spigot/velocity plugin or fabric/forge.
+This module contains local API with sqlite database. It's Jvm only. Due to this factor, you can easily share this module
+between your spigot/velocity plugin or fabric/forge.
 
 With this module you will be only dependent on LocalApi, which is an interface.
 
-Currently AstraLibs-orm is used for SQLite api-local, but you can replace it with anything you want.
+Currently Exposed is used for SQLite api-local, but you can replace it with anything you want.
 Only implementation will be changed, but LocalApi will be untouched, also as other functionality of your plugin/mod
 
 #### 3.2 `api-remote`
@@ -75,17 +77,18 @@ Only implementation will be changed, but LocalApi will be untouched, also as oth
 This module contains remote api with RickMortyApi. It will return random character with suspend async response.
 Like `api-local`, this module also contains only jvm dependencies, so can be used in spigot/fabrict and others.
 
-#### 3.3 `dto`
+#### 3.3 `build-konfig`
 
-Sometimes you need to share models between other modules, so this module contains shared data models.
+Sometimes you need to share constants generated at compile-time between other modules, so this module exactly what you
+need.
 
-#### 3.4 `shared`
+#### 3.4 `core`
 
-Usually all instances(forge/bukkit) have the same logic, which can be located here without depending on platform
+Usually this module contains shared translation/configuration or utilities.
 
 ## 4. Velocity/Fabric/Forge
 
-I've not been working with velocity too much, but this modules contains basic functionality with plugin
+I've not been working with this loaders too much, but th modules contains basic functionality with plugin
 information generation.
 
 ## 5. Quick overview
@@ -99,6 +102,8 @@ This plugin contains advanced and powerful spigot functionality
 - DI
 - Permissions
 - Configuration
+- ORM(database)
+- Reloading
 
 ## 6. Architecture overview
 
@@ -198,7 +203,9 @@ Firstly, change gradle/libs.versions.toml destination-xxx to your folder
     $ ./gradlew :fabric:build              # assemble the fabric .jar
     $ ./gradlew :forge:shadowJar           # assemble the forge .jar
 
-### Forge and fabirc is on pause
+### Test server
+
+There's located [docker-compose.yml](docker-compose.yml) which can launch any server you need for testing purposes.
 
 Also, checkout [AstraLearner](https://play.google.com/store/apps/details?id=com.makeevrserg.astralearner) - it will help
 you to learn foreign words easily!

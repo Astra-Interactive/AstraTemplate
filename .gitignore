@@ -1,22 +1,17 @@
 # root
 .gradle
 .idea
+.kotlin
 astra.properties
 local.properties
 build
 jars
-# build-logic
-build-logic/.gradle
-build-logic/plugins/convention/build
-# fabric
-fabric/build
-# forge
-forge/build
 # modules
 modules/api-local/build
 modules/api-remote/build
 modules/dto/build
-# plugin
-plugin/build
-# velocity
-velocity/build
+# instances
+instances/fabric
+instances/forge
+instances/plugin
+instances/velocity

@@ -55,7 +55,7 @@ include("modules:api-local")
 include("modules:core")
 include("modules:build-konfig")
 // Instances
-include(":instances:plugin")
+include(":instances:bukkit")
 include(":instances:fabric")
 include(":instances:velocity")
 include(":instances:forge")

@@ -7,7 +7,15 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        target: [ ":instances:fabric", ":instances:forge", ":instances:velocity", ":instances:plugin" ]
+        include:
+          - id: "fabric"
+            task: ":instances:fabric:build"
+          - id: "forge"
+            task: ":instances:forge:build"
+          - id: "velocity"
+            task: ":instances:velocity:build"
+          - id: "bukkit"
+            task: ":instances:bukkit:build"
     steps:
       - name: Checkout Git repo
         uses: actions/checkout@v4
@@ -21,4 +29,4 @@ jobs:
       - name: Build with Gradle
         uses: gradle/gradle-build-action@v3
         with:
-          arguments: ${{ matrix.target }}:build --stacktrace
+          arguments: ${{ matrix.task }} --stacktrace

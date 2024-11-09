@@ -1,0 +1,61 @@
+name: "Upload Modrinth release"
+on:
+  workflow_call:
+    secrets:
+      MODRINTH_TOKEN:
+        required: true
+jobs:
+  upload_github_release:
+    name: Upload GitHub release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Git repo
+        uses: actions/checkout@v4
+
+      - uses: christian-draeger/read-properties@1.1.1
+        id: properties
+        with:
+          path: './gradle.properties'
+          properties: 'makeevrserg.project.name makeevrserg.project.version.string'
+
+      - uses: actions/download-artifact@d0ce8fd1167ed839810201de977912a090ab10a7
+        name: "Download velocity"
+        with:
+          name: velocity
+          path: ./jars
+      - uses: actions/download-artifact@d0ce8fd1167ed839810201de977912a090ab10a7
+        name: "Download forge"
+        with:
+          name: forge
+          path: ./jars
+      - uses: actions/download-artifact@d0ce8fd1167ed839810201de977912a090ab10a7
+        name: "Download fabric"
+        with:
+          name: fabric
+          path: ./jars
+      - uses: actions/download-artifact@d0ce8fd1167ed839810201de977912a090ab10a7
+        name: "Download bukkit"
+        with:
+          name: bukkit
+          path: ./jars
+      - uses: Kir-Antipov/mc-publish@v3.3
+        with:
+          # Only include this section if you wish to publish
+          # your assets on Modrinth.
+          modrinth-id: 6NpNwzA1
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+          name: ${{ steps.properties.outputs.makeevrserg-project-name }}
+          version: ${{ steps.properties.outputs.makeevrserg-project-version-string }}
+          changelog: ${{ join(github.event.commits.*.message, '\n') }}
+          version_type: beta
+          java: |
+            21
+          loaders: |
+            velocity
+            fabric
+            forge
+            bukkit
+          game-versions: |
+            [1.16,1.21.1)
+          files: |
+            ./jars/*.jar   

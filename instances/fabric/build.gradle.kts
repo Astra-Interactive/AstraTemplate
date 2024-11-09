@@ -63,7 +63,7 @@ val remapJar = tasks.getByName<RemapJarTask>("remapJar") {
     mustRunAfter(shadowJar)
     inputFile = shadowJar.archiveFile
     addNestedDependencies.set(true)
-    archiveBaseName.set("${requireProjectInfo.name}-fabric-remap")
+    archiveBaseName.set("${requireProjectInfo.name}-fabric")
     destinationDirectory.set(destination)
 }
 
