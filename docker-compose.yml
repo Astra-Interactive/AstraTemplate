@@ -1,0 +1,29 @@
+services:
+  # For command call use `docker exec mc rcon-cli <your_command>`
+  mc_docker:
+    restart: no
+    container_name: mc_docker
+    image: itzg/minecraft-server # https://github.com/itzg/docker-minecraft-server
+    tty: true
+    stdin_open: true
+    ports:
+      - "25565:25565"
+    environment:
+      EULA: true
+      # Forge
+      TYPE: FORGE
+      VERSION: "1.20.1"
+      FORGE_VERSION: "47.2.20"
+      # Custom server
+      #TYPE: CUSTOM
+      #CUSTOM_SERVER: https://api.papermc.io/v2/projects/paper/versions/1.21.1/builds/121/downloads/paper-1.21.1-121.jar
+      #VERSION: 1.21.1
+    volumes:
+      # Forge
+      - ./build/forge:/data
+      # Bukkit/Paper/Spigot
+      - ./build/bukkit:/data
+      # Velocity
+      - ./build/velocity:/data
+      # Fabric
+      - ./build/fabric:/data
