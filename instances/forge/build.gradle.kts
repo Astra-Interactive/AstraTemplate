@@ -18,7 +18,7 @@ val implementation by configurations.getting {
 }
 
 dependencies {
-    minecraft("net.minecraftforge:forge:1.20.1-47.2.20")
+    minecraft("net.minecraftforge:forge:1.21.3-53.0.25")
     // AstraLibs
     shade(libs.minecraft.astralibs.core)
     shade(libs.minecraft.astralibs.command)

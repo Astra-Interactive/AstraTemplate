@@ -77,5 +77,5 @@ artifacts {
 }
 
 minecraftProcessResource {
-    fabricResourceProcessor.process()
+    fabric()
 }

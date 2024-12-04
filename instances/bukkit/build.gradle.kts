@@ -28,10 +28,10 @@ dependencies {
 }
 
 minecraftProcessResource {
-    spigotResourceProcessor.process()
+    bukkit()
 }
 
-setupShadow {
+astraShadowJar {
     requireShadowJarTask {
         destination = File("/home/makeevrserg/Desktop/server/data/plugins")
             .takeIf { it.exists() }
