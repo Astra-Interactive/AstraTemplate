@@ -18,7 +18,7 @@ minecraft-protocollib = "5.3.0"
 minecraft-wg = "7.0.7"
 minecraft-vault = "1.7.1" # https://github.com/MilkBowl/VaultAPI
 minecraft-coreprotect = "21.2"
-minecraft-astralibs = "3.16.2"
+minecraft-astralibs = "3.17.0" # https://github.com/Astra-Interactive/AstraLibs
 minecraft-bstats = "3.1.0"
 minecraft-mockbukkit = "4.9.0"
 
@@ -46,7 +46,7 @@ gradle-buildconfig = "5.5.1"
 exposed = "0.56.0"
 
 # klibs
-klibs-gradleplugin = "1.4.0" # https://github.com/makeevrserg/gradle-plugin
+klibs-gradleplugin = "1.5.0-alpha02" # https://github.com/makeevrserg/gradle-plugin
 klibs-kstorage = "3.2.0" # https://github.com/makeevrserg/klibs.kstorage
 klibs-mikro = "1.8.8" # https://github.com/makeevrserg/klibs.mikro
 
