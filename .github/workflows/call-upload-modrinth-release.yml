@@ -29,7 +29,7 @@ jobs:
           path: './gradle.properties'
           properties: 'makeevrserg.project.name makeevrserg.project.version.string'
 
-      - uses: actions/download-artifact@d0ce8fd1167ed839810201de977912a090ab10a7
+      - uses: actions/download-artifact@7fba95161a0924506ed1ae69cdbae8371ee00b3f
         name: "Download ${{ matrix.id }}"
         with:
           name: ${{ matrix.id }}
