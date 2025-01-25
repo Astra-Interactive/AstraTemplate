@@ -32,7 +32,6 @@ dependencyResolutionManagement {
         maven("https://mvn.lumine.io/repository/maven-public/") { metadataSources { artifact() } }
         maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")
         maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
-        maven("https://papermc.io/repo/repository/maven-public/")
         maven("https://nexus.scarsz.me/content/groups/public/")
         maven("https://repo.dmulloy2.net/repository/public/")
         maven("https://repo.essentialsx.net/snapshots/")
