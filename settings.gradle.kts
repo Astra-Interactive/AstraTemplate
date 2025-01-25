@@ -33,6 +33,10 @@ dependencyResolutionManagement {
         maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")
         maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
         maven("https://nexus.scarsz.me/content/groups/public/")
+        maven {
+            name = "papermc"
+            url = uri("https://repo.papermc.io/repository/maven-public/")
+        }
         maven("https://repo.dmulloy2.net/repository/public/")
         maven("https://repo.essentialsx.net/snapshots/")
         maven("https://repo.maven.apache.org/maven2/")
