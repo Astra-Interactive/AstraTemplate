@@ -2,10 +2,10 @@ package ru.astrainteractive.astratemplate.command.reload
 
 import org.bukkit.command.CommandSender
 import ru.astrainteractive.astralibs.command.api.context.BukkitCommandContext
-import ru.astrainteractive.astralibs.command.api.exception.DefaultCommandException
+import ru.astrainteractive.astralibs.command.api.exception.NoPermissionException
 import ru.astrainteractive.astralibs.command.api.executor.CommandExecutor
 import ru.astrainteractive.astralibs.command.api.parser.CommandParser
-import ru.astrainteractive.astralibs.command.api.util.PluginExt.registerCommand
+import ru.astrainteractive.astralibs.command.api.util.PluginExt.setCommandExecutor
 import ru.astrainteractive.astralibs.permission.BukkitPermissibleExt.toPermissible
 import ru.astrainteractive.astratemplate.AstraTemplate
 import ru.astrainteractive.astratemplate.command.DefaultErrorHandler
@@ -21,10 +21,10 @@ internal class ReloadCommandRegistry(
     }
 
     private inner class CommandParserImpl : CommandParser<ReloadCommand.Result, BukkitCommandContext> {
-        override fun parse(commandContext: BukkitCommandContext): ReloadCommand.Result {
-            val hasPermission = commandContext.sender.toPermissible().hasPermission(PluginPermission.Damage)
-            if (!hasPermission) throw DefaultCommandException.NoPermissionException(PluginPermission.Damage)
-            return ReloadCommand.Result(commandContext.sender)
+        override fun parse(ctx: BukkitCommandContext): ReloadCommand.Result {
+            val hasPermission = ctx.sender.toPermissible().hasPermission(PluginPermission.Damage)
+            if (!hasPermission) throw NoPermissionException(PluginPermission.Damage)
+            return ReloadCommand.Result(ctx.sender)
         }
     }
 
@@ -39,7 +39,7 @@ internal class ReloadCommandRegistry(
     }
 
     fun register() {
-        plugin.registerCommand(
+        plugin.setCommandExecutor(
             alias = "reload",
             commandParser = CommandParserImpl(),
             commandExecutor = CommandExecutorImpl(),

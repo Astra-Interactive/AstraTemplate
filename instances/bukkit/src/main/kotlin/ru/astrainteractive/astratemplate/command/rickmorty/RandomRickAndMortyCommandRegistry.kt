@@ -1,7 +1,7 @@
 package ru.astrainteractive.astratemplate.command.rickmorty
 
 import kotlinx.coroutines.launch
-import ru.astrainteractive.astralibs.command.api.util.PluginExt.registerCommand
+import ru.astrainteractive.astralibs.command.api.util.PluginExt.setCommandExecutor
 import ru.astrainteractive.astratemplate.command.DefaultErrorHandler
 import ru.astrainteractive.astratemplate.command.rickmorty.di.RickMortyCommandDependencies
 
@@ -10,7 +10,7 @@ internal class RandomRickAndMortyCommandRegistry(
 ) : RickMortyCommandDependencies by dependencies {
 
     fun register() {
-        plugin.registerCommand(
+        plugin.setCommandExecutor(
             alias = "rickandmorty",
             commandParser = { commandContext ->
                 RandomRickAndMortyCommand.Result(commandContext.sender)
