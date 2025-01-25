@@ -3,7 +3,7 @@ package ru.astrainteractive.astratemplate.command.additem
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.plugin.java.JavaPlugin
-import ru.astrainteractive.astralibs.command.api.util.PluginExt.registerCommand
+import ru.astrainteractive.astralibs.command.api.util.PluginExt.setCommandExecutor
 import ru.astrainteractive.astralibs.util.StringListExt.withEntry
 import ru.astrainteractive.astratemplate.command.DefaultErrorHandler
 import ru.astrainteractive.astratemplate.command.additem.di.AddItemCommandDependencies
@@ -25,7 +25,7 @@ internal class AddItemCommandRegistry(
 
     fun register() {
         tabCompleter(plugin)
-        plugin.registerCommand(
+        plugin.setCommandExecutor(
             alias = alias,
             commandParser = AddItemCommandParser(),
             commandExecutor = AddItemExecutor(),
