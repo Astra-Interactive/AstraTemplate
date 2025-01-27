@@ -11,16 +11,16 @@ driver-mysql = "8.0.33" # https://github.com/mysql/mysql-connector-j
 
 # Minecraft
 minecraft-version = "1.21"
-minecraft-velocity = "3.4.0-SNAPSHOT" # https://github.com/PaperMC/Velocity
+minecraft-velocity = "4.0.0-SNAPSHOT" # https://github.com/PaperMC/Velocity
 minecraft-spigot = "1.21.3-R0.1-SNAPSHOT" # https://github.com/PaperMC/Paper
 minecraft-papi = "2.11.6" # https://github.com/PlaceholderAPI/PlaceholderAPI
 minecraft-protocollib = "5.3.0"
 minecraft-wg = "7.0.7"
 minecraft-vault = "1.7.1" # https://github.com/MilkBowl/VaultAPI
 minecraft-coreprotect = "21.2"
-minecraft-astralibs = "3.19.2" # https://github.com/Astra-Interactive/AstraLibs
+minecraft-astralibs = "3.19.3" # https://github.com/Astra-Interactive/AstraLibs
 minecraft-bstats = "3.1.0"
-minecraft-mockbukkit = "4.27.0"
+minecraft-mockbukkit = "4.28.3"
 
 # Testing
 tests-org-testing = "7.10.2"
@@ -33,7 +33,7 @@ tests-junit-bom = "5.11.4"
 minecraft-fabric-loom = "1.9.2"
 minecraft-fabric-kotlin = "1.13.0+"
 minecraft-fabric-loader = "0.16.10"
-minecraft-fabric-api = "0.114.4+"
+minecraft-fabric-api = "0.115.1+"
 minecraft-fabric-yarn = "1.21+build.2"
 
 # Shadow
@@ -47,8 +47,8 @@ exposed = "0.58.0"
 
 # klibs
 klibs-gradleplugin = "1.5.0-alpha02" # https://github.com/makeevrserg/gradle-plugin
-klibs-kstorage = "3.2.3" # https://github.com/makeevrserg/klibs.kstorage
-klibs-mikro = "1.8.13" # https://github.com/makeevrserg/klibs.mikro
+klibs-kstorage = "3.2.4" # https://github.com/makeevrserg/klibs.kstorage
+klibs-mikro = "1.8.14" # https://github.com/makeevrserg/klibs.mikro
 
 [bundles]
 exposed = ["exposed-java-time", "exposed-jdbc", "exposed-dao", "exposed-core"]
