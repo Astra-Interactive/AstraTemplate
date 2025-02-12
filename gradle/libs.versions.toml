@@ -3,10 +3,10 @@
 kotlin-version = "2.0.0" # https://github.com/JetBrains/kotlin
 kotlin-coroutines = "1.10.1" # https://github.com/Kotlin/kotlinx.coroutines
 kotlin-json = "1.8.0" # https://github.com/Kotlin/kotlinx.serialization
-kotlin-kaml = "0.67.0" # https://github.com/charleskorn/kaml
+kotlin-kaml = "0.71.0" # https://github.com/charleskorn/kaml
 
 # Drivers
-driver-jdbc = "3.48.0.0" # https://github.com/xerial/sqlite-jdbc
+driver-jdbc = "3.49.0.0" # https://github.com/xerial/sqlite-jdbc
 driver-mysql = "8.0.33" # https://github.com/mysql/mysql-connector-j
 
 # Minecraft
@@ -20,7 +20,7 @@ minecraft-vault = "1.7.1" # https://github.com/MilkBowl/VaultAPI
 minecraft-coreprotect = "21.2"
 minecraft-astralibs = "3.19.3" # https://github.com/Astra-Interactive/AstraLibs
 minecraft-bstats = "3.1.0"
-minecraft-mockbukkit = "4.28.3"
+minecraft-mockbukkit = "4.32.0"
 
 # Testing
 tests-org-testing = "7.10.2"
@@ -31,9 +31,9 @@ tests-junit-bom = "5.11.4"
 
 # Fabric
 minecraft-fabric-loom = "1.9.2"
-minecraft-fabric-kotlin = "1.13.0+"
+minecraft-fabric-kotlin = "1.13.1+"
 minecraft-fabric-loader = "0.16.10"
-minecraft-fabric-api = "0.115.1+"
+minecraft-fabric-api = "0.116.0+"
 minecraft-fabric-yarn = "1.21+build.2"
 
 # Shadow
@@ -43,12 +43,12 @@ gradle-shadow = "8.1.1"
 gradle-buildconfig = "5.5.1"
 
 # Exposed
-exposed = "0.58.0"
+exposed = "0.59.0"
 
 # klibs
 klibs-gradleplugin = "1.5.0-alpha02" # https://github.com/makeevrserg/gradle-plugin
-klibs-kstorage = "3.2.4" # https://github.com/makeevrserg/klibs.kstorage
-klibs-mikro = "1.8.14" # https://github.com/makeevrserg/klibs.mikro
+klibs-kstorage = "3.2.6" # https://github.com/makeevrserg/klibs.kstorage
+klibs-mikro = "1.8.15" # https://github.com/makeevrserg/klibs.mikro
 
 [bundles]
 exposed = ["exposed-java-time", "exposed-jdbc", "exposed-dao", "exposed-core"]
