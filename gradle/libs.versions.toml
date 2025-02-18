@@ -11,8 +11,8 @@ driver-mysql = "8.0.33" # https://github.com/mysql/mysql-connector-j
 
 # Minecraft
 minecraft-version = "1.21"
-minecraft-velocity = "4.0.0-SNAPSHOT" # https://github.com/PaperMC/Velocity
-minecraft-spigot = "1.21.3-R0.1-SNAPSHOT" # https://github.com/PaperMC/Paper
+minecraft-velocity = "3.4.0-SNAPSHOT" # https://github.com/PaperMC/Velocity
+minecraft-spigot = "1.21.4-R0.1-SNAPSHOT" # https://github.com/PaperMC/Paper
 minecraft-papi = "2.11.6" # https://github.com/PlaceholderAPI/PlaceholderAPI
 minecraft-protocollib = "5.3.0"
 minecraft-wg = "7.0.7"
