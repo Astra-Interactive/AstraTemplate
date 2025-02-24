@@ -40,7 +40,7 @@ internal class ReloadCommandRegistry(
 
     fun register() {
         plugin.setCommandExecutor(
-            alias = "reload",
+            alias = "atempreload",
             commandParser = CommandParserImpl(),
             commandExecutor = CommandExecutorImpl(),
             errorHandler = DefaultErrorHandler(

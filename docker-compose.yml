@@ -1,5 +1,5 @@
 services:
-  # For command call use `docker exec mc rcon-cli <your_command>`
+  # For command call use `docker exec mc_docker rcon-cli <your_command>`
   mc_docker:
     restart: no
     container_name: mc_docker
@@ -11,19 +11,19 @@ services:
     environment:
       EULA: true
       # Forge
-      TYPE: FORGE
-      VERSION: "1.20.1"
-      FORGE_VERSION: "47.2.20"
+#      TYPE: FORGE
+#      VERSION: "1.20.1"
+#      FORGE_VERSION: "47.2.20"
       # Custom server
-      #TYPE: CUSTOM
+      TYPE: PAPER
       #CUSTOM_SERVER: https://api.papermc.io/v2/projects/paper/versions/1.21.1/builds/121/downloads/paper-1.21.1-121.jar
-      #VERSION: 1.21.1
+      VERSION: 1.21.4
     volumes:
       # Forge
-      - ./build/forge:/data
+#      - ./build/forge:/data
       # Bukkit/Paper/Spigot
       - ./build/bukkit:/data
       # Velocity
-      - ./build/velocity:/data
+#      - ./build/velocity:/data
       # Fabric
-      - ./build/fabric:/data
+#      - ./build/fabric:/data
