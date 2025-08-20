@@ -14,7 +14,7 @@ class AstraTemplate :
     JavaPlugin(),
     Logger by JUtiltLogger("AstraTemplate"),
     Lifecycle {
-    private val rootModule = RootModule.Default(this)
+    private val rootModule = RootModule(this)
 
     /**
      * This method called when server starts or PlugMan load plugin.

@@ -1,4 +1,4 @@
-package ru.astrainteractive.astratemplate.gui.sample
+package ru.astrainteractive.astratemplate.gui.sample.feature
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -15,7 +15,6 @@ import ru.astrainteractive.astratemplate.api.local.model.UserModel
 import ru.astrainteractive.astratemplate.gui.api.ItemStackSpigotAPI
 import ru.astrainteractive.astratemplate.gui.domain.GetRandomColorUseCase
 import ru.astrainteractive.astratemplate.gui.domain.SetDisplayNameUseCase
-import ru.astrainteractive.astratemplate.gui.sample.SampleGuiComponent.Model
 import kotlin.random.Random
 
 /**
@@ -30,7 +29,7 @@ internal class DefaultSampleGUIComponent(
     SampleGuiComponent,
     Logger by JUtiltLogger("AstraTemplate-DefaultSampleGUIComponent") {
 
-    override val model = MutableStateFlow<Model>(Model.Loading)
+    override val model = MutableStateFlow<SampleGuiComponent.Model>(SampleGuiComponent.Model.Loading)
 
     override val randomColor: ChatColor
         get() = getRandomColorUseCase.invoke().color
@@ -46,21 +45,21 @@ internal class DefaultSampleGUIComponent(
     override fun onModeChange() {
         launch(Dispatchers.IO) {
             when (model.value) {
-                Model.Loading -> return@launch
-                is Model.Items -> loadUsersModel()
-                is Model.Users -> loadItemsModel()
+                SampleGuiComponent.Model.Loading -> return@launch
+                is SampleGuiComponent.Model.Items -> loadUsersModel()
+                is SampleGuiComponent.Model.Users -> loadItemsModel()
             }
         }
     }
 
     override fun onItemClicked(slot: Int, clickType: ClickType) {
         when (val state = model.value) {
-            Model.Loading -> Unit
-            is Model.Items -> {
+            SampleGuiComponent.Model.Loading -> Unit
+            is SampleGuiComponent.Model.Items -> {
                 onItemStackClicked(slot)
             }
 
-            is Model.Users -> {
+            is SampleGuiComponent.Model.Users -> {
                 onPlayerHeadClicked(slot, clickType)
             }
         }
@@ -74,7 +73,7 @@ internal class DefaultSampleGUIComponent(
     }
 
     private fun onPlayerHeadClicked(slot: Int, clickType: ClickType) {
-        val state = model.value as? Model.Users ?: return
+        val state = model.value as? SampleGuiComponent.Model.Users ?: return
         val users = state.users
         val user = users.getOrNull(slot) ?: return
         launch(Dispatchers.IO) {
@@ -88,7 +87,7 @@ internal class DefaultSampleGUIComponent(
     }
 
     private fun onItemStackClicked(slot: Int) {
-        val state = model.value as? Model.Items ?: return
+        val state = model.value as? SampleGuiComponent.Model.Items ?: return
 
         val input = SetDisplayNameUseCase.Input(
             items = state.items,
@@ -101,11 +100,11 @@ internal class DefaultSampleGUIComponent(
     }
 
     private suspend fun loadItemsModel() {
-        model.update { Model.Items(itemStackSpigotAPi.randomItemStackList()) }
+        model.update { SampleGuiComponent.Model.Items(itemStackSpigotAPi.randomItemStackList()) }
     }
 
     private suspend fun loadUsersModel() {
-        model.update { Model.Users(localDao.getAllUsers()) }
+        model.update { SampleGuiComponent.Model.Users(localDao.getAllUsers()) }
     }
 
     override fun onUiCreated() {

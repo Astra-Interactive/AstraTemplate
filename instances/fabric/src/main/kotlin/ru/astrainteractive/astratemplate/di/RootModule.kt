@@ -25,21 +25,21 @@ interface RootModule {
         }
 
         override val coreModule: CoreModule by lazy {
-            CoreModule.Default(
+            CoreModule(
                 dataFolder = fabricModule.configDir
             )
         }
 
         override val apiLocalModule: ApiLocalModule by lazy {
-            ApiLocalModule.Default(
+            ApiLocalModule(
                 dataFolder = fabricModule.configDir,
-                configFlow = coreModule.configurationModule.cachedStateFlow,
-                scope = coreModule.pluginScope
+                configFlow = coreModule.configKrate.cachedStateFlow,
+                scope = coreModule.ioScope
             )
         }
 
         override val apiRemoteModule: ApiRemoteModule by lazy {
-            ApiRemoteModule.Default()
+            ApiRemoteModule()
         }
 
         override val commandModule: CommandModule by lazy {

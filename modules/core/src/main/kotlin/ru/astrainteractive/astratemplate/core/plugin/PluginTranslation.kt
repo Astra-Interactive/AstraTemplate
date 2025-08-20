@@ -1,11 +1,11 @@
 @file:Suppress("LongParameterList")
 
-package ru.astrainteractive.astratemplate.core
+package ru.astrainteractive.astratemplate.core.plugin
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import ru.astrainteractive.astralibs.string.StringDesc
-import ru.astrainteractive.astralibs.string.StringDescExt.replace
+import ru.astrainteractive.astralibs.string.replace
 
 /**
  * All translation stored here
