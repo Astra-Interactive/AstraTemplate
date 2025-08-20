@@ -5,7 +5,7 @@ import ru.astrainteractive.gradleplugin.property.extension.ModelPropertyValueExt
 plugins {
     kotlin("jvm")
     id("fabric-loom")
-    id("com.github.johnrengelman.shadow")
+    alias(libs.plugins.gradle.shadow)
     alias(libs.plugins.klibs.gradle.java.core)
     alias(libs.plugins.klibs.minecraft.shadow)
     alias(libs.plugins.klibs.minecraft.resource.processor)

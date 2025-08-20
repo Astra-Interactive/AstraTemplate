@@ -10,7 +10,7 @@ import ru.astrainteractive.astralibs.command.api.util.PluginExt.setCommandExecut
 import ru.astrainteractive.astralibs.permission.BukkitPermissibleExt.toPermissible
 import ru.astrainteractive.astratemplate.command.DefaultErrorHandler
 import ru.astrainteractive.astratemplate.command.damage.di.DamageCommandDependencies
-import ru.astrainteractive.astratemplate.core.PluginPermission
+import ru.astrainteractive.astratemplate.core.plugin.PluginPermission
 
 internal class DamageCommandRegistry(
     dependencies: DamageCommandDependencies

@@ -1,56 +1,51 @@
 package ru.astrainteractive.astratemplate.core.di
 
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
-import kotlinx.serialization.StringFormat
 import ru.astrainteractive.astralibs.async.CoroutineFeature
 import ru.astrainteractive.astralibs.lifecycle.Lifecycle
+import ru.astrainteractive.astralibs.serialization.StringFormatExt.parseOrWriteIntoDefault
 import ru.astrainteractive.astralibs.serialization.YamlStringFormat
-import ru.astrainteractive.astratemplate.core.PluginConfiguration
-import ru.astrainteractive.astratemplate.core.PluginTranslation
-import ru.astrainteractive.astratemplate.core.di.factory.ConfigKrateFactory
-import ru.astrainteractive.klibs.kstorage.api.flow.StateFlowKrate
+import ru.astrainteractive.astratemplate.core.plugin.PluginConfiguration
+import ru.astrainteractive.astratemplate.core.plugin.PluginTranslation
+import ru.astrainteractive.klibs.kstorage.api.impl.DefaultMutableKrate
+import ru.astrainteractive.klibs.kstorage.util.asCachedKrate
 import java.io.File
 
-interface CoreModule {
+class CoreModule(dataFolder: File) {
+    val yamlStringFormat = YamlStringFormat()
 
-    val lifecycle: Lifecycle
-    val stringFormat: StringFormat
-    val pluginScope: CoroutineScope
-    val translation: StateFlowKrate<PluginTranslation>
-    val configurationModule: StateFlowKrate<PluginConfiguration>
+    val ioScope = CoroutineFeature.Default(Dispatchers.IO)
 
-    class Default(
-        dataFolder: File
-    ) : CoreModule {
-        override val stringFormat = YamlStringFormat()
-
-        override val pluginScope = CoroutineFeature.Default(Dispatchers.IO)
-
-        override val translation = ConfigKrateFactory.create(
-            fileNameWithoutExtension = "translations",
-            stringFormat = stringFormat,
-            dataFolder = dataFolder,
-            factory = ::PluginTranslation
-        )
-
-        override val configurationModule = ConfigKrateFactory.create(
-            fileNameWithoutExtension = "config",
-            stringFormat = stringFormat,
-            dataFolder = dataFolder,
-            factory = ::PluginConfiguration
-        )
-        override val lifecycle: Lifecycle by lazy {
-            Lifecycle.Lambda(
-                onReload = {
-                    configurationModule.loadAndGet()
-                    translation.loadAndGet()
-                },
-                onDisable = {
-                    pluginScope.cancel()
-                }
+    val translationKrate = DefaultMutableKrate(
+        factory = ::PluginTranslation,
+        loader = {
+            yamlStringFormat.parseOrWriteIntoDefault(
+                file = dataFolder.resolve("translation.yml"),
+                default = ::PluginTranslation
             )
         }
+    ).asCachedKrate()
+
+    val configKrate = DefaultMutableKrate(
+        factory = ::PluginConfiguration,
+        loader = {
+            yamlStringFormat.parseOrWriteIntoDefault(
+                file = dataFolder.resolve("translation.yml"),
+                default = ::PluginConfiguration
+            )
+        }
+    ).asCachedKrate()
+
+    val lifecycle: Lifecycle by lazy {
+        Lifecycle.Lambda(
+            onReload = {
+                configKrate.getValue()
+                translationKrate.getValue()
+            },
+            onDisable = {
+                ioScope.cancel()
+            }
+        )
     }
 }

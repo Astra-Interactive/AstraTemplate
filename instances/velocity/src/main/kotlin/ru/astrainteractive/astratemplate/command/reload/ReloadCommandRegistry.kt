@@ -9,7 +9,7 @@ import ru.astrainteractive.astralibs.command.api.parser.CommandParser
 import ru.astrainteractive.astratemplate.command.api.VelocityCommandContext
 import ru.astrainteractive.astratemplate.command.api.VelocityCommandRegistryContext
 import ru.astrainteractive.astratemplate.command.reload.VelocityCommandRegistry.registerCommand
-import ru.astrainteractive.astratemplate.core.PluginPermission
+import ru.astrainteractive.astratemplate.core.plugin.PluginPermission
 
 class ReloadCommandRegistry(private val registryContext: VelocityCommandRegistryContext) {
 

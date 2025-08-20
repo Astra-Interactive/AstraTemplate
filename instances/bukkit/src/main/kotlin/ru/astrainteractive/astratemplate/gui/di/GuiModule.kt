@@ -15,7 +15,7 @@ internal interface GuiModule {
         apiLocalModule: ApiLocalModule
     ) : GuiModule {
         override val router: Router = RouterImpl(
-            scope = coreModule.pluginScope,
+            scope = coreModule.ioScope,
             dispatchers = bukkitModule.dispatchers,
             dependencies = SampleGuiDependencies.Default(
                 coreModule = coreModule,

@@ -4,18 +4,12 @@ import ru.astrainteractive.astratemplate.api.remote.RickMortyApi
 import ru.astrainteractive.astratemplate.api.remote.RickMortyApiImpl
 import java.net.http.HttpClient
 
-interface ApiRemoteModule {
-    val httpClient: HttpClient
-    val rickMortyApi: RickMortyApi
+class ApiRemoteModule {
+    val httpClient: HttpClient by lazy {
+        HttpClient.newHttpClient()
+    }
 
-    class Default : ApiRemoteModule {
-
-        override val httpClient: HttpClient by lazy {
-            HttpClient.newHttpClient()
-        }
-
-        override val rickMortyApi: RickMortyApi by lazy {
-            RickMortyApiImpl(httpClient)
-        }
+    val rickMortyApi: RickMortyApi by lazy {
+        RickMortyApiImpl(httpClient)
     }
 }

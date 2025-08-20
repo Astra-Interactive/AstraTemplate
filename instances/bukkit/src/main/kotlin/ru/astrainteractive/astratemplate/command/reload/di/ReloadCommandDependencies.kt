@@ -2,7 +2,7 @@ package ru.astrainteractive.astratemplate.command.reload.di
 
 import org.bukkit.plugin.java.JavaPlugin
 import ru.astrainteractive.astralibs.kyori.KyoriComponentSerializer
-import ru.astrainteractive.astratemplate.core.PluginTranslation
+import ru.astrainteractive.astratemplate.core.plugin.PluginTranslation
 import ru.astrainteractive.klibs.kstorage.api.Krate
 
 internal interface ReloadCommandDependencies {

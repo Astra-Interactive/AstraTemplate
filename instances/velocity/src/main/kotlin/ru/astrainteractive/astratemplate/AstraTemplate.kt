@@ -53,7 +53,7 @@ class AstraTemplate @Inject constructor(
         }
 
         info { "Hello there! I made my first plugin with Velocity" }
-        info { "Here's your configuration: ${rootModule.coreModule.configurationModule}." }
+        info { "Here's your configuration: ${rootModule.coreModule.configKrate}." }
 
         ReloadCommandRegistry(
             registryContext = VelocityCommandRegistryContext(

@@ -8,7 +8,7 @@ plugins {
     kotlin("jvm")
     alias(libs.plugins.klibs.gradle.java.core)
     id("net.minecraftforge.gradle") version ("[6.0,6.2)")
-    id("com.github.johnrengelman.shadow")
+    alias(libs.plugins.gradle.shadow)
 }
 
 val shade by configurations.creating

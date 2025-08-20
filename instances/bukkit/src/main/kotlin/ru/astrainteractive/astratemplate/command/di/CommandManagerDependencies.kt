@@ -21,12 +21,12 @@ internal interface CommandManagerDependencies :
     GuiCommandDependencies {
     class Default(rootModule: RootModule) : CommandManagerDependencies {
         override val plugin = rootModule.bukkitModule.plugin
-        override val translationKrate = rootModule.coreModule.translation
+        override val translationKrate = rootModule.coreModule.translationKrate
         override val kyoriKrate = rootModule.bukkitModule.kyoriComponentSerializer
         override val translation by translationKrate
         override val kyori by kyoriKrate
 
-        override val scope: CoroutineScope = rootModule.coreModule.pluginScope
+        override val scope: CoroutineScope = rootModule.coreModule.ioScope
         override val rmApi = rootModule.apiRemoteModule.rickMortyApi
         override val dispatchers = rootModule.bukkitModule.dispatchers
         override fun getRabdomInt(): Int = Random.nextInt(1, 100)

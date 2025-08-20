@@ -36,8 +36,8 @@ internal interface RootModule {
 
         override val apiLocalModule: ApiLocalModule = ApiLocalModule.Default(
             dataFolder = bukkitModule.plugin.dataFolder,
-            configFlow = coreModule.configurationModule.cachedStateFlow,
-            scope = coreModule.pluginScope
+            configFlow = coreModule.configKrate.cachedStateFlow,
+            scope = coreModule.ioScope
         )
 
         override val apiRemoteModule: ApiRemoteModule = ApiRemoteModule.Default()

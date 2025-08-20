@@ -12,8 +12,7 @@ import ru.astrainteractive.astralibs.logging.JUtiltLogger
 import ru.astrainteractive.astralibs.logging.Logger
 import ru.astrainteractive.astratemplate.command.additem.AddItemCommand
 import ru.astrainteractive.astratemplate.command.gui.GuiCommand
-import ru.astrainteractive.astratemplate.core.PluginTranslation
-import ru.astrainteractive.astratemplate.core.util.getValue
+import ru.astrainteractive.astratemplate.core.plugin.PluginTranslation
 import ru.astrainteractive.klibs.kstorage.api.Krate
 
 internal class DefaultErrorHandler(

@@ -2,7 +2,7 @@ package ru.astrainteractive.astratemplate.gui.di
 
 import ru.astrainteractive.astralibs.kyori.KyoriComponentSerializer
 import ru.astrainteractive.astratemplate.api.local.di.ApiLocalModule
-import ru.astrainteractive.astratemplate.core.PluginTranslation
+import ru.astrainteractive.astratemplate.core.plugin.PluginTranslation
 import ru.astrainteractive.astratemplate.core.di.CoreModule
 import ru.astrainteractive.astratemplate.core.util.getValue
 import ru.astrainteractive.astratemplate.di.BukkitModule
@@ -23,7 +23,7 @@ internal interface SampleGuiDependencies {
         bukkitModule: BukkitModule,
         private val apiLocalModule: ApiLocalModule
     ) : SampleGuiDependencies {
-        override val translation by coreModule.translation
+        override val translation by coreModule.translationKrate
         override val dispatchers = bukkitModule.dispatchers
         override val kyoriComponentSerializer by bukkitModule.kyoriComponentSerializer
         private val getRandomColorUseCase = GetRandomColorUseCaseImpl()

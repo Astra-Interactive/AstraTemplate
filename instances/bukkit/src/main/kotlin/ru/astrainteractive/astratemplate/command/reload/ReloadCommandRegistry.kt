@@ -10,7 +10,7 @@ import ru.astrainteractive.astralibs.permission.BukkitPermissibleExt.toPermissib
 import ru.astrainteractive.astratemplate.AstraTemplate
 import ru.astrainteractive.astratemplate.command.DefaultErrorHandler
 import ru.astrainteractive.astratemplate.command.reload.di.ReloadCommandDependencies
-import ru.astrainteractive.astratemplate.core.PluginPermission
+import ru.astrainteractive.astratemplate.core.plugin.PluginPermission
 
 internal class ReloadCommandRegistry(
     dependencies: ReloadCommandDependencies
