@@ -10,6 +10,7 @@ import ru.astrainteractive.astratemplate.core.plugin.PluginConfiguration
 import ru.astrainteractive.astratemplate.core.plugin.PluginTranslation
 import ru.astrainteractive.klibs.kstorage.api.impl.DefaultMutableKrate
 import ru.astrainteractive.klibs.kstorage.util.asCachedKrate
+import ru.astrainteractive.klibs.kstorage.util.asStateFlowKrate
 import java.io.File
 
 class CoreModule(dataFolder: File) {
@@ -35,7 +36,7 @@ class CoreModule(dataFolder: File) {
                 default = ::PluginConfiguration
             )
         }
-    ).asCachedKrate()
+    ).asStateFlowKrate()
 
     val lifecycle: Lifecycle by lazy {
         Lifecycle.Lambda(

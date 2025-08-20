@@ -1,4 +1,4 @@
-package ru.astrainteractive.astratemplate.gui.sample
+package ru.astrainteractive.astratemplate.gui.sample.gui
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.launchIn
@@ -9,6 +9,7 @@ import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.inventory.ItemStack
 import ru.astrainteractive.astralibs.kyori.KyoriComponentSerializer
+import ru.astrainteractive.astralibs.kyori.unwrap
 import ru.astrainteractive.astralibs.menu.holder.DefaultPlayerHolder
 import ru.astrainteractive.astralibs.menu.holder.PlayerHolder
 import ru.astrainteractive.astralibs.menu.inventory.PaginatedInventoryMenu
@@ -26,18 +27,21 @@ import ru.astrainteractive.astralibs.menu.slot.util.InventorySlotBuilderExt.setL
 import ru.astrainteractive.astralibs.menu.slot.util.InventorySlotBuilderExt.setMaterial
 import ru.astrainteractive.astralibs.menu.slot.util.InventorySlotBuilderExt.setOnClickListener
 import ru.astrainteractive.astratemplate.api.local.model.UserModel
-import ru.astrainteractive.astratemplate.gui.di.SampleGuiDependencies
-import ru.astrainteractive.astratemplate.gui.sample.SampleGuiComponent.Model
+import ru.astrainteractive.astratemplate.core.plugin.PluginTranslation
+import ru.astrainteractive.astratemplate.gui.sample.feature.SampleGuiComponent
+import ru.astrainteractive.klibs.kstorage.api.CachedKrate
+import ru.astrainteractive.klibs.kstorage.util.getValue
 
 internal class SampleGUI(
     player: Player,
-    dependencies: SampleGuiDependencies
+    kyoriKrate: CachedKrate<KyoriComponentSerializer>,
+    translationKrate: CachedKrate<PluginTranslation>,
+    private val sampleComponent: SampleGuiComponent
 ) : PaginatedInventoryMenu(),
-    SampleGuiDependencies by dependencies,
-    KyoriComponentSerializer by dependencies.kyoriComponentSerializer {
-    private val sampleComponent = dependencies.createDefaultSampleGUIComponent()
+    KyoriComponentSerializer by kyoriKrate.unwrap() {
     override val childComponents: List<CoroutineScope>
         get() = listOf(sampleComponent)
+    private val translation by translationKrate
 
     override val playerHolder: PlayerHolder = DefaultPlayerHolder(player)
     override var title: Component = translation.menu.menuTitle.let(::toComponent)
@@ -54,9 +58,9 @@ internal class SampleGUI(
             .setMaterial(Material.SUNFLOWER)
             .setDisplayName(
                 when (sampleComponent.model.value) {
-                    is Model.Items -> "Items"
-                    Model.Loading -> "Loading"
-                    is Model.Users -> "Users"
+                    is SampleGuiComponent.Model.Items -> "Items"
+                    SampleGuiComponent.Model.Loading -> "Loading"
+                    is SampleGuiComponent.Model.Users -> "Users"
                 }
             )
             .setOnClickListener { sampleComponent.onModeChange() }
@@ -104,9 +108,9 @@ internal class SampleGUI(
         sampleComponent.model
             .onEach { state ->
                 val maxItems = when (state) {
-                    is Model.Items -> state.items.size
-                    is Model.Users -> state.users.size
-                    Model.Loading -> 0
+                    is SampleGuiComponent.Model.Items -> state.items.size
+                    is SampleGuiComponent.Model.Users -> state.users.size
+                    SampleGuiComponent.Model.Loading -> 0
                 }
                 pageContext = pageContext.copy(maxItems = maxItems)
             }
@@ -116,7 +120,7 @@ internal class SampleGUI(
 
     override fun render() {
         super.render()
-        val state: Model = sampleComponent.model.value
+        val state: SampleGuiComponent.Model = sampleComponent.model.value
         inventory.clear()
         changeModeButton.setInventorySlot()
         prevPageButton.setInventorySlotIf { pageContext.page > 0 }
@@ -124,16 +128,16 @@ internal class SampleGUI(
         backPageButton.setInventorySlot()
 
         when (state) {
-            is Model.Items -> {
+            is SampleGuiComponent.Model.Items -> {
                 setItemStacks(state.items)
             }
 
-            is Model.Users -> {
+            is SampleGuiComponent.Model.Users -> {
                 addUserButton.setInventorySlot()
                 setUsers(state.users)
             }
 
-            Model.Loading -> Unit
+            SampleGuiComponent.Model.Loading -> Unit
         }
     }
 

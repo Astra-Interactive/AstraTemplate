@@ -5,18 +5,22 @@ import org.bukkit.event.HandlerList
 import org.bukkit.event.block.BlockPlaceEvent
 import ru.astrainteractive.astralibs.event.EventListener
 import ru.astrainteractive.astralibs.kyori.KyoriComponentSerializer
+import ru.astrainteractive.astralibs.kyori.unwrap
 import ru.astrainteractive.astratemplate.AstraTemplate
-import ru.astrainteractive.astratemplate.event.di.EventDependencies
+import ru.astrainteractive.astratemplate.core.plugin.PluginTranslation
+import ru.astrainteractive.klibs.kstorage.api.CachedKrate
+import ru.astrainteractive.klibs.kstorage.util.getValue
 
 /**
  * Template event class
  * @see [MultipleEventsDSL]
  */
 internal class TemplateEvent(
-    module: EventDependencies
+    kyoriKrate: CachedKrate<KyoriComponentSerializer>,
+    translationKrate: CachedKrate<PluginTranslation>
 ) : EventListener,
-    EventDependencies by module,
-    KyoriComponentSerializer by module.kyoriComponentSerializer {
+    KyoriComponentSerializer by kyoriKrate.unwrap() {
+    private val translation by translationKrate
 
     /**
      * Sample event which is called when Block is placed
