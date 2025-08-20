@@ -8,6 +8,6 @@ class RootModuleImpl : RootModule {
     override val velocityModule = VelocityModuleImpl()
 
     override val coreModule: CoreModule by lazy {
-        CoreModule.Default(velocityModule.dataDirectory.toFile())
+        CoreModule(velocityModule.dataDirectory.toFile())
     }
 }

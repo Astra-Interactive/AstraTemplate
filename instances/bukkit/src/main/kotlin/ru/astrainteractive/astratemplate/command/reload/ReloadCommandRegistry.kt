@@ -1,6 +1,5 @@
 package ru.astrainteractive.astratemplate.command.reload
 
-import kotlinx.coroutines.CoroutineScope
 import org.bukkit.command.CommandSender
 import org.bukkit.plugin.java.JavaPlugin
 import ru.astrainteractive.astralibs.command.api.context.BukkitCommandContext
@@ -13,12 +12,10 @@ import ru.astrainteractive.astralibs.kyori.KyoriComponentSerializer
 import ru.astrainteractive.astralibs.kyori.unwrap
 import ru.astrainteractive.astralibs.permission.BukkitPermissibleExt.toPermissible
 import ru.astrainteractive.astratemplate.AstraTemplate
-import ru.astrainteractive.astratemplate.api.remote.RickMortyApi
 import ru.astrainteractive.astratemplate.core.plugin.PluginPermission
 import ru.astrainteractive.astratemplate.core.plugin.PluginTranslation
 import ru.astrainteractive.klibs.kstorage.api.CachedKrate
 import ru.astrainteractive.klibs.kstorage.util.getValue
-import ru.astrainteractive.klibs.mikro.core.dispatchers.KotlinDispatchers
 
 internal class ReloadCommandRegistry(
     private val plugin: JavaPlugin,

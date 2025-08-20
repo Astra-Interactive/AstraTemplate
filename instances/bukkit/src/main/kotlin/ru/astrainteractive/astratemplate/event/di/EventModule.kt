@@ -9,7 +9,6 @@ import ru.astrainteractive.astratemplate.event.event.BetterAnotherEvent
 import ru.astrainteractive.astratemplate.event.event.MultipleEventsDSL
 import ru.astrainteractive.astratemplate.event.event.TemplateEvent
 
-
 internal class EventModule(rootModule: RootModule) {
     val eventListener: EventListener by lazy {
         EventListener.Default()

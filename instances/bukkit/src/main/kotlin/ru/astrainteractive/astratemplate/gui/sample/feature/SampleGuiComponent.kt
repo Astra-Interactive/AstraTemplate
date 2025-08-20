@@ -7,7 +7,7 @@ import org.bukkit.event.inventory.ClickType
 import org.bukkit.inventory.ItemStack
 import ru.astrainteractive.astratemplate.api.local.model.UserModel
 
-internal interface SampleGuiComponent: CoroutineScope {
+internal interface SampleGuiComponent : CoroutineScope {
     val model: StateFlow<Model>
 
     val randomColor: ChatColor

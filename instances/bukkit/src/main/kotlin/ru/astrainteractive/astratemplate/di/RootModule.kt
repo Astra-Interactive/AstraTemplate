@@ -9,7 +9,6 @@ import ru.astrainteractive.astratemplate.core.di.CoreModule
 import ru.astrainteractive.astratemplate.event.di.EventModule
 import ru.astrainteractive.astratemplate.gui.di.GuiModule
 
-
 internal class RootModule(plugin: AstraTemplate) {
 
     val bukkitModule: BukkitModule = BukkitModule(plugin)

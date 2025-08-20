@@ -21,13 +21,13 @@ interface RootModule {
     class Default : RootModule {
 
         override val coreModule: CoreModule by lazy {
-            CoreModule.Default(
+            CoreModule(
                 dataFolder = File("./")
             )
         }
 
         override val apiLocalModule: ApiLocalModule by lazy {
-            ApiLocalModule.Default(
+            ApiLocalModule(
                 dataFolder = File("./"),
                 configFlow = coreModule.configKrate.cachedStateFlow,
                 scope = coreModule.ioScope
@@ -35,7 +35,7 @@ interface RootModule {
         }
 
         override val apiRemoteModule: ApiRemoteModule by lazy {
-            ApiRemoteModule.Default()
+            ApiRemoteModule()
         }
 
         override val eventsModule: EventModule by lazy {

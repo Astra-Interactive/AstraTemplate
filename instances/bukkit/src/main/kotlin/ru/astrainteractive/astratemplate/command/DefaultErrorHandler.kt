@@ -15,7 +15,6 @@ import ru.astrainteractive.astratemplate.command.additem.AddItemCommand
 import ru.astrainteractive.astratemplate.command.gui.GuiCommand
 import ru.astrainteractive.astratemplate.core.plugin.PluginTranslation
 import ru.astrainteractive.klibs.kstorage.api.CachedKrate
-import ru.astrainteractive.klibs.kstorage.api.Krate
 import ru.astrainteractive.klibs.kstorage.util.getValue
 
 internal class DefaultErrorHandler(

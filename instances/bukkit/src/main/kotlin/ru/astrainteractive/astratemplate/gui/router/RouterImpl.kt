@@ -15,6 +15,7 @@ import ru.astrainteractive.astratemplate.gui.sample.gui.SampleGUI
 import ru.astrainteractive.klibs.kstorage.api.CachedKrate
 import ru.astrainteractive.klibs.mikro.core.dispatchers.KotlinDispatchers
 
+@Suppress("LongParameterList")
 internal class RouterImpl(
     private val scope: CoroutineScope,
     private val dispatchers: KotlinDispatchers,

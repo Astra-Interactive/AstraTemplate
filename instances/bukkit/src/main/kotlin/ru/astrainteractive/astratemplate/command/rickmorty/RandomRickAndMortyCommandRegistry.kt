@@ -1,6 +1,5 @@
 package ru.astrainteractive.astratemplate.command.rickmorty
 
-import kotlin.random.Random
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import org.bukkit.plugin.java.JavaPlugin
@@ -9,6 +8,7 @@ import ru.astrainteractive.astralibs.command.api.error.ErrorHandler
 import ru.astrainteractive.astralibs.command.api.util.PluginExt.setCommandExecutor
 import ru.astrainteractive.astratemplate.api.remote.RickMortyApi
 import ru.astrainteractive.klibs.mikro.core.dispatchers.KotlinDispatchers
+import kotlin.random.Random
 
 internal class RandomRickAndMortyCommandRegistry(
     private val plugin: JavaPlugin,
