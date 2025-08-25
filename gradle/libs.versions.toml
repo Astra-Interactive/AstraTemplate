@@ -11,7 +11,7 @@ driver-mysql = "8.0.33" # https://github.com/mysql/mysql-connector-j
 
 # Minecraft
 minecraft-version = "1.21"
-minecraft-velocity = "3.4.0-SNAPSHOT" # https://github.com/PaperMC/Velocity
+minecraft-velocity = "4.0.0-SNAPSHOT" # https://github.com/PaperMC/Velocity
 minecraft-spigot = "1.21.4-R0.1-SNAPSHOT" # https://github.com/PaperMC/Paper
 minecraft-papi = "2.11.6" # https://github.com/PlaceholderAPI/PlaceholderAPI
 minecraft-protocollib = "5.3.0"
@@ -30,10 +30,10 @@ tests-junit-jupiter-api = "5.13.4"
 tests-junit-bom = "5.13.4"
 
 # Fabric
-minecraft-fabric-loom = "1.10.1"
-minecraft-fabric-kotlin = "1.13.1+"
-minecraft-fabric-loader = "0.16.10"
-minecraft-fabric-api = "0.116.0+"
+minecraft-fabric-loom = "1.11.7"
+minecraft-fabric-kotlin = "1.13.5+"
+minecraft-fabric-loader = "0.17.2"
+minecraft-fabric-api = "0.132.1+"
 minecraft-fabric-yarn = "1.21+build.2"
 
 # Shadow
