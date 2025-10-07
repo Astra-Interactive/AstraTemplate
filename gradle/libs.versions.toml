@@ -3,7 +3,7 @@
 kotlin-version = "2.2.0" # https://github.com/JetBrains/kotlin
 kotlin-coroutines = "1.10.2" # https://github.com/Kotlin/kotlinx.coroutines
 kotlin-json = "1.9.0" # https://github.com/Kotlin/kotlinx.serialization
-kotlin-kaml = "0.92.0" # https://github.com/charleskorn/kaml
+kotlin-kaml = "0.97.0" # https://github.com/charleskorn/kaml
 
 # Drivers
 driver-jdbc = "3.50.3.0" # https://github.com/xerial/sqlite-jdbc
@@ -11,7 +11,7 @@ driver-mysql = "8.0.33" # https://github.com/mysql/mysql-connector-j
 
 # Minecraft
 minecraft-version = "1.21"
-minecraft-velocity = "3.4.0-SNAPSHOT" # https://github.com/PaperMC/Velocity
+minecraft-velocity = "4.0.0-SNAPSHOT" # https://github.com/PaperMC/Velocity
 minecraft-spigot = "1.21.4-R0.1-SNAPSHOT" # https://github.com/PaperMC/Paper
 minecraft-papi = "2.11.6" # https://github.com/PlaceholderAPI/PlaceholderAPI
 minecraft-protocollib = "5.3.0"
@@ -26,29 +26,29 @@ minecraft-mockbukkit = "4.33.2"
 tests-org-testing = "7.11.0"
 tests-junit = "4.12"
 tests-mockito = "4.0.0"
-tests-junit-jupiter-api = "5.13.4"
-tests-junit-bom = "5.13.4"
+tests-junit-jupiter-api = "6.0.0"
+tests-junit-bom = "6.0.0"
 
 # Fabric
-minecraft-fabric-loom = "1.10.1"
-minecraft-fabric-kotlin = "1.13.1+"
-minecraft-fabric-loader = "0.16.10"
-minecraft-fabric-api = "0.116.0+"
+minecraft-fabric-loom = "1.11.8"
+minecraft-fabric-kotlin = "1.13.6+"
+minecraft-fabric-loader = "0.17.2"
+minecraft-fabric-api = "0.134.1+"
 minecraft-fabric-yarn = "1.21+build.2"
 
 # Shadow
 gradle-shadow = "9.0.0-beta12" # https://github.com/johnrengelman/shadow
 
 # BuildConfig
-gradle-buildconfig = "5.6.7"
+gradle-buildconfig = "5.6.8"
 
 # Exposed
 exposed = "0.61.0"
 
 # klibs
 klibs-gradleplugin = "1.10.0" # https://github.com/makeevrserg/gradle-plugin
-klibs-kstorage = "4.2.2" # https://github.com/makeevrserg/klibs.kstorage
-klibs-mikro = "1.12.0" # https://github.com/makeevrserg/klibs.mikro
+klibs-kstorage = "4.2.3" # https://github.com/makeevrserg/klibs.kstorage
+klibs-mikro = "1.14.2" # https://github.com/makeevrserg/klibs.mikro
 
 [bundles]
 exposed = ["exposed-java-time", "exposed-jdbc", "exposed-dao", "exposed-core"]
