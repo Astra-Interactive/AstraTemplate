@@ -3,11 +3,12 @@ updates:
   - package-ecosystem: "gradle"
     directory: "/"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
       day: "monday"
       time: "08:00"
       timezone: "Europe/Moscow"
-    rebase-strategy: "disabled"
+    rebase-strategy: "auto"
+    open-pull-requests-limit: 1
     groups:
       versions:
         dependency-type: production
@@ -16,15 +17,16 @@ updates:
           - major
           - minor
           - patch
-    open-pull-requests-limit: 1
 
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "weekly"
+      interval: "monthly"
       day: "monday"
       time: "08:00"
       timezone: "Europe/Moscow"
+    rebase-strategy: "auto"
+    open-pull-requests-limit: 1
     groups:
       versions:
         dependency-type: production
@@ -33,5 +35,3 @@ updates:
           - major
           - minor
           - patch
-    rebase-strategy: "disabled"
-    open-pull-requests-limit: 1
