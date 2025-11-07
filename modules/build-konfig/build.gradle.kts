@@ -1,6 +1,5 @@
 import ru.astrainteractive.gradleplugin.property.extension.ModelPropertyValueExt.requireProjectInfo
 
-
 plugins {
     kotlin("jvm")
     alias(libs.plugins.gradle.buildconfig)

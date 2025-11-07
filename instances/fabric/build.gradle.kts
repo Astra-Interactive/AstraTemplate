@@ -4,16 +4,15 @@ import ru.astrainteractive.gradleplugin.property.extension.ModelPropertyValueExt
 
 plugins {
     kotlin("jvm")
-    id("fabric-loom")
+    alias(libs.plugins.fabric.loom)
     alias(libs.plugins.gradle.shadow)
     alias(libs.plugins.klibs.gradle.java.core)
-    alias(libs.plugins.klibs.minecraft.shadow)
     alias(libs.plugins.klibs.minecraft.resource.processor)
 }
 
 dependencies {
+    minecraft(libs.minecraft.fabric.mojang.get())
     mappings("net.fabricmc:yarn:${libs.versions.minecraft.fabric.yarn.get()}:v2")
-    minecraft(libs.minecraft.mojang.get())
     modImplementation(libs.minecraft.fabric.kotlin.get())
     modImplementation(libs.minecraft.fabric.loader.get())
     modImplementation(libs.minecraft.fabric.api.get())
@@ -24,7 +23,9 @@ dependencies {
     implementation(libs.klibs.kstorage)
     implementation(libs.klibs.mikro.core)
     // Kotlin
-    implementation(libs.bundles.kotlin)
+    implementation(libs.kotlin.coroutines.core)
+    implementation(libs.kotlin.serialization.json)
+    implementation(libs.kotlin.serialization.kaml)
     // Driver
     implementation(libs.driver.jdbc)
     // Local

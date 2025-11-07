@@ -13,8 +13,6 @@ import org.jetbrains.exposed.sql.Slf4jSqlDebugLogger
 import org.jetbrains.exposed.sql.addLogger
 import org.jetbrains.exposed.sql.transactions.TransactionManager
 import org.jetbrains.exposed.sql.transactions.transaction
-import ru.astrainteractive.astralibs.exposed.model.DatabaseConfiguration
-import ru.astrainteractive.astralibs.exposed.model.connect
 import ru.astrainteractive.astralibs.lifecycle.Lifecycle
 import ru.astrainteractive.astratemplate.api.local.dao.LocalDao
 import ru.astrainteractive.astratemplate.api.local.dao.LocalDaoImpl
@@ -23,20 +21,23 @@ import ru.astrainteractive.astratemplate.api.local.entity.UserTable
 import ru.astrainteractive.astratemplate.core.plugin.PluginConfiguration
 import ru.astrainteractive.klibs.mikro.core.coroutines.mapCached
 import java.io.File
+import ru.astrainteractive.klibs.mikro.exposed.model.DatabaseConfiguration
+import ru.astrainteractive.klibs.mikro.exposed.util.connect
 
 class ApiLocalModule(
     dataFolder: File,
     configFlow: Flow<PluginConfiguration>,
     scope: CoroutineScope
 ) {
-
     private val databaseFlow = configFlow
         .map { it.database }
         .distinctUntilChanged()
         .mapCached(scope) { config, previous: Database? ->
             previous?.connector?.invoke()?.close()
             previous?.run(TransactionManager::closeAndUnregister)
-            val database = DatabaseConfiguration.H2("users_db").connect(dataFolder)
+            val database = dataFolder.resolve("users_db").absolutePath
+                .let(DatabaseConfiguration::H2)
+                .connect()
             TransactionManager.manager.defaultIsolationLevel = java.sql.Connection.TRANSACTION_SERIALIZABLE
             transaction(database) {
                 addLogger(Slf4jSqlDebugLogger)

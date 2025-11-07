@@ -3,11 +3,8 @@ package ru.astrainteractive.astratemplate.core.plugin
 import com.charleskorn.kaml.YamlComment
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import ru.astrainteractive.astralibs.exposed.model.DatabaseConfiguration
+import ru.astrainteractive.klibs.mikro.exposed.model.DatabaseConfiguration
 
-/**
- * Example config file with kotlinx.serialization
- */
 @Serializable
 data class PluginConfiguration(
     @YamlComment("First line description for config1", "Second line description for config2")
