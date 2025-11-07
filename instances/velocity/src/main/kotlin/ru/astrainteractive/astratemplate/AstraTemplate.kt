@@ -10,11 +10,11 @@ import com.velocitypowered.api.plugin.Plugin
 import com.velocitypowered.api.plugin.annotation.DataDirectory
 import com.velocitypowered.api.proxy.ProxyServer
 import ru.astrainteractive.astralibs.lifecycle.Lifecycle
-import ru.astrainteractive.astralibs.logging.JUtiltLogger
-import ru.astrainteractive.astralibs.logging.Logger
 import ru.astrainteractive.astratemplate.command.api.VelocityCommandRegistryContext
 import ru.astrainteractive.astratemplate.command.reload.ReloadCommandRegistry
-import ru.astrainteractive.astratemplate.di.impl.RootModuleImpl
+import ru.astrainteractive.astratemplate.di.RootModule
+import ru.astrainteractive.klibs.mikro.core.logging.JUtiltLogger
+import ru.astrainteractive.klibs.mikro.core.logging.Logger
 import java.nio.file.Path
 import org.slf4j.Logger as Slf4jLogger
 
@@ -33,8 +33,8 @@ class AstraTemplate @Inject constructor(
     private val logger: Slf4jLogger,
     @DataDirectory
     private val dataDirectory: Path
-) : Logger by JUtiltLogger("AstraTemplate") {
-    private val rootModule = RootModuleImpl()
+) : Logger by JUtiltLogger("AstraTemplate").withoutParentHandlers() {
+    private val rootModule = RootModule()
     private val lifecycles: List<Lifecycle>
         get() = listOf(
             rootModule.coreModule.lifecycle,

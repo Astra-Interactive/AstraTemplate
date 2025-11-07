@@ -1,63 +1,72 @@
 package ru.astrainteractive.astratemplate.command.di
 
+import ru.astrainteractive.astralibs.command.api.registrar.PaperCommandRegistrarContext
 import ru.astrainteractive.astralibs.lifecycle.Lifecycle
-import ru.astrainteractive.astratemplate.command.DefaultErrorHandler
+import ru.astrainteractive.astratemplate.api.remote.di.ApiRemoteModule
 import ru.astrainteractive.astratemplate.command.additem.AddItemCommandRegistry
+import ru.astrainteractive.astratemplate.command.additem.AddItemExecutor
 import ru.astrainteractive.astratemplate.command.common.CommonCommandsRegistry
 import ru.astrainteractive.astratemplate.command.damage.DamageCommandRegistry
+import ru.astrainteractive.astratemplate.command.errorhandler.DefaultErrorHandler
 import ru.astrainteractive.astratemplate.command.gui.GuiCommandRegistry
 import ru.astrainteractive.astratemplate.command.reload.ReloadCommandRegistry
-import ru.astrainteractive.astratemplate.command.rickmorty.RandomRickAndMortyCommandRegistry
-import ru.astrainteractive.astratemplate.di.RootModule
+import ru.astrainteractive.astratemplate.command.rickmorty.RickMortyCommandRegistrar
+import ru.astrainteractive.astratemplate.core.di.CoreModule
+import ru.astrainteractive.astratemplate.di.BukkitModule
+import ru.astrainteractive.astratemplate.gui.di.GuiModule
 
-internal interface CommandModule {
-    val lifecycle: Lifecycle
-
-    class Default(rootModule: RootModule) : CommandModule {
-        override val lifecycle: Lifecycle by lazy {
-            Lifecycle.Lambda(
-                onEnable = {
-                    val errorHandler = DefaultErrorHandler(
-                        translationKrate = rootModule.coreModule.translationKrate,
-                        kyoriKrate = rootModule.bukkitModule.kyoriKrate
-                    )
-                    AddItemCommandRegistry(
-                        plugin = rootModule.bukkitModule.plugin,
-                        kyoriKrate = rootModule.bukkitModule.kyoriKrate,
-                        errorHandler = errorHandler
-                    ).register()
-                    CommonCommandsRegistry(
-                        plugin = rootModule.bukkitModule.plugin,
-                        kyoriKrate = rootModule.bukkitModule.kyoriKrate,
-                        translationKrate = rootModule.coreModule.translationKrate,
-                    ).register()
-                    DamageCommandRegistry(
-                        errorHandler = errorHandler,
-                        plugin = rootModule.bukkitModule.plugin,
-                        kyoriKrate = rootModule.bukkitModule.kyoriKrate,
-                        translationKrate = rootModule.coreModule.translationKrate,
-                    ).register()
-                    GuiCommandRegistry(
-                        errorHandler = errorHandler,
-                        plugin = rootModule.bukkitModule.plugin,
-                        kyoriKrate = rootModule.bukkitModule.kyoriKrate,
-                        router = rootModule.guiModule.router,
-                    ).register()
-                    ReloadCommandRegistry(
-                        errorHandler = errorHandler,
-                        plugin = rootModule.bukkitModule.plugin,
-                        kyoriKrate = rootModule.bukkitModule.kyoriKrate,
-                        translationKrate = rootModule.coreModule.translationKrate,
-                    ).register()
-                    RandomRickAndMortyCommandRegistry(
-                        scope = rootModule.coreModule.ioScope,
-                        dispatchers = rootModule.bukkitModule.dispatchers,
-                        rmApi = rootModule.apiRemoteModule.rickMortyApi,
-                        errorHandler = errorHandler,
-                        plugin = rootModule.bukkitModule.plugin,
-                    ).register()
-                }
-            )
-        }
+internal class CommandModule(
+    coreModule: CoreModule,
+    bukkitModule: BukkitModule,
+    guiModule: GuiModule,
+    apiRemoteModule: ApiRemoteModule,
+) {
+    private val commandRegistrarContext = PaperCommandRegistrarContext(
+        coreModule.mainScope,
+        bukkitModule.plugin
+    )
+    private val nodes = buildList {
+        val errorHandler = DefaultErrorHandler(
+            translationKrate = coreModule.translationKrate,
+            kyoriKrate = bukkitModule.kyoriKrate
+        )
+        AddItemCommandRegistry(
+            kyoriKrate = bukkitModule.kyoriKrate,
+            errorHandler = errorHandler,
+            executor = AddItemExecutor()
+        ).createNode().run(::add)
+        CommonCommandsRegistry(
+            kyoriKrate = bukkitModule.kyoriKrate,
+            translationKrate = coreModule.translationKrate,
+        ).createNode().run(::add)
+        DamageCommandRegistry(
+            errorHandler = errorHandler,
+            kyoriKrate = bukkitModule.kyoriKrate,
+            translationKrate = coreModule.translationKrate,
+        ).createNode().run(::add)
+        GuiCommandRegistry(
+            router = guiModule.router,
+            kyoriKrate = bukkitModule.kyoriKrate,
+            errorHandler = errorHandler,
+        ).createNode().run(::add)
+        ReloadCommandRegistry(
+            plugin = bukkitModule.plugin,
+            translationKrate = coreModule.translationKrate,
+            kyoriKrate = bukkitModule.kyoriKrate,
+            errorHandler = errorHandler,
+        ).createNode().run(::add)
+        RickMortyCommandRegistrar(
+            scope = coreModule.ioScope,
+            dispatchers = coreModule.dispatchers,
+            rmApi = apiRemoteModule.rickMortyApi,
+            errorHandler = errorHandler,
+        ).createNode().run(::add)
+    }
+    val lifecycle: Lifecycle by lazy {
+        Lifecycle.Lambda(
+            onEnable = {
+                nodes.forEach(commandRegistrarContext::registerWhenReady)
+            }
+        )
     }
 }

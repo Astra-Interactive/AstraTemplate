@@ -1,76 +1,54 @@
 package ru.astrainteractive.astratemplate.command.damage
 
+import com.mojang.brigadier.arguments.DoubleArgumentType
+import com.mojang.brigadier.arguments.StringArgumentType
+import com.mojang.brigadier.tree.LiteralCommandNode
+import io.papermc.paper.command.brigadier.CommandSourceStack
 import org.bukkit.Bukkit
-import org.bukkit.plugin.java.JavaPlugin
-import ru.astrainteractive.astralibs.command.api.context.BukkitCommandContext
-import ru.astrainteractive.astralibs.command.api.error.ErrorHandler
-import ru.astrainteractive.astralibs.command.api.exception.NoPermissionException
 import ru.astrainteractive.astralibs.command.api.exception.NoPlayerException
-import ru.astrainteractive.astralibs.command.api.executor.CommandExecutor
-import ru.astrainteractive.astralibs.command.api.parser.CommandParser
-import ru.astrainteractive.astralibs.command.api.util.PluginExt.setCommandExecutor
+import ru.astrainteractive.astralibs.command.api.util.argument
+import ru.astrainteractive.astralibs.command.api.util.command
+import ru.astrainteractive.astralibs.command.api.util.requireArgument
+import ru.astrainteractive.astralibs.command.api.util.requirePermission
+import ru.astrainteractive.astralibs.command.api.util.runs
 import ru.astrainteractive.astralibs.kyori.KyoriComponentSerializer
 import ru.astrainteractive.astralibs.kyori.unwrap
-import ru.astrainteractive.astralibs.permission.BukkitPermissibleExt.toPermissible
+import ru.astrainteractive.astratemplate.command.errorhandler.DefaultErrorHandler
 import ru.astrainteractive.astratemplate.core.plugin.PluginPermission
 import ru.astrainteractive.astratemplate.core.plugin.PluginTranslation
 import ru.astrainteractive.klibs.kstorage.api.CachedKrate
 import ru.astrainteractive.klibs.kstorage.util.getValue
 
 internal class DamageCommandRegistry(
-    private val plugin: JavaPlugin,
-    private val errorHandler: ErrorHandler<BukkitCommandContext>,
     translationKrate: CachedKrate<PluginTranslation>,
-    kyoriKrate: CachedKrate<KyoriComponentSerializer>
+    kyoriKrate: CachedKrate<KyoriComponentSerializer>,
+    private val errorHandler: DefaultErrorHandler
 ) : KyoriComponentSerializer by kyoriKrate.unwrap() {
     private val translation by translationKrate
-    private val alias = "adamage"
 
-    private inner class CommandParserImpl : CommandParser<DamageCommand.Result, BukkitCommandContext> {
-        override fun parse(commandContext: BukkitCommandContext): DamageCommand.Result {
-            val hasPermission = commandContext.sender.toPermissible().hasPermission(PluginPermission.Damage)
-            if (!hasPermission) throw NoPermissionException(PluginPermission.Damage)
+    fun createNode(): LiteralCommandNode<CommandSourceStack> {
+        return command("adamage") {
+            argument("player", StringArgumentType.word()) { playerArg ->
+                runs(errorHandler::handle) { ctx ->
+                    ctx.requirePermission(PluginPermission.Damage)
 
-            val playerString = commandContext.args.getOrNull(0)
-            val player = playerString
-                ?.let(Bukkit::getPlayerExact)
-                ?: throw NoPlayerException(playerString.orEmpty())
+                    val playerName = ctx.requireArgument(playerArg)
+                    val player = Bukkit.getPlayerExact(playerName) ?: throw NoPlayerException(playerName)
+                    player.sendMessage(translation.custom.damaged(ctx.source.sender.name).component)
+                    player.damage(0.0)
+                }
+                argument("damage", DoubleArgumentType.doubleArg(0.0)) { damageArg ->
+                    runs(errorHandler::handle) { ctx ->
+                        ctx.requirePermission(PluginPermission.Damage)
 
-            val damage = commandContext.args.getOrNull(1)
-                ?.toDoubleOrNull()
-                ?: 0.0
-
-            return DamageCommand.Result(
-                player = player,
-                damage = damage,
-                damagerName = commandContext.sender.name
-            )
-        }
-    }
-
-    private inner class CommandExecutorImpl : CommandExecutor<DamageCommand.Result> {
-        override fun execute(input: DamageCommand.Result) {
-            input.player.sendMessage(translation.custom.damaged(input.damagerName).let(::toComponent))
-            input.player.damage(input.damage)
-        }
-    }
-
-    private fun tabCompleter() = plugin.getCommand(alias)?.setTabCompleter { sender, command, label, args ->
-        when (args.size) {
-            0 -> listOf("adamage")
-            1 -> Bukkit.getOnlinePlayers().map { it.name }
-            2 -> listOf(translation.custom.damageHint.raw)
-            else -> Bukkit.getOnlinePlayers().map { it.name }
-        }
-    }
-
-    fun register() {
-        tabCompleter()
-        plugin.setCommandExecutor(
-            alias = alias,
-            commandParser = CommandParserImpl(),
-            commandExecutor = CommandExecutorImpl(),
-            errorHandler = errorHandler
-        )
+                        val playerName = ctx.requireArgument(playerArg)
+                        val player = Bukkit.getPlayerExact(playerName) ?: throw NoPlayerException(playerName)
+                        val damage = ctx.requireArgument(damageArg)
+                        player.sendMessage(translation.custom.damaged(ctx.source.sender.name).component)
+                        player.damage(damage)
+                    }
+                }
+            }
+        }.build()
     }
 }

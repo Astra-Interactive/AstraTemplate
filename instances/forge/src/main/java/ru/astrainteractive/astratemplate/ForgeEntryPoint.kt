@@ -2,50 +2,54 @@
 
 package ru.astrainteractive.astratemplate
 
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import net.minecraftforge.event.RegisterCommandsEvent
 import net.minecraftforge.event.server.ServerStartedEvent
 import net.minecraftforge.event.server.ServerStoppingEvent
-import net.minecraftforge.eventbus.api.SubscribeEvent
+import net.minecraftforge.eventbus.api.EventPriority
 import net.minecraftforge.fml.common.Mod
-import ru.astrainteractive.astralibs.logging.JUtiltLogger
-import ru.astrainteractive.astralibs.logging.Logger
-import ru.astrainteractive.astratemplate.command.CommandLoader
+import ru.astrainteractive.astralibs.event.flowEvent
+import ru.astrainteractive.astralibs.lifecycle.Lifecycle
 import ru.astrainteractive.astratemplate.di.RootModule
-import ru.astrainteractive.astratemplate.event.core.ForgeEventBusListener
+import ru.astrainteractive.klibs.mikro.core.logging.JUtiltLogger
+import ru.astrainteractive.klibs.mikro.core.logging.Logger
 import javax.annotation.ParametersAreNonnullByDefault
 
 @Mod(BuildKonfig.id)
 @ParametersAreNonnullByDefault
 class ForgeEntryPoint :
-    ForgeEventBusListener,
+    Lifecycle,
     Logger by JUtiltLogger("ForgeEntryPoint") {
-    private val rootModule: RootModule by lazy { RootModule.Default() }
+    private val rootModule: RootModule = RootModule()
 
-    @SubscribeEvent
-    fun onEnable(e: ServerStartedEvent) {
-        info { "#onEnable" }
+    override fun onEnable() {
         rootModule.lifecycle.onEnable()
     }
 
-    @SubscribeEvent
-    fun onDisable(e: ServerStoppingEvent) {
+    override fun onDisable() {
         info { "#onDisable" }
         rootModule.lifecycle.onDisable()
-        unregister()
     }
 
-    @SubscribeEvent
-    fun onCommandRegister(e: RegisterCommandsEvent) {
-        info { "#onCommandRegister" }
-        val commandLoader = CommandLoader()
-        commandLoader.registerCommands(e)
-    }
-
-    fun onReload() {
+    override fun onReload() {
         rootModule.lifecycle.onReload()
     }
 
-    init {
-        register()
-    }
+    val serverStartedEvent = flowEvent<ServerStartedEvent>(EventPriority.HIGHEST)
+        .onEach {
+            info { "#serverStartedEvent" }
+            onEnable()
+        }.launchIn(rootModule.coreModule.ioScope)
+
+    val serverStoppingEvent = flowEvent<ServerStoppingEvent>(EventPriority.HIGHEST)
+        .onEach {
+            info { "#serverStoppingEvent" }
+            onDisable()
+        }.launchIn(rootModule.coreModule.ioScope)
+
+    val registerCommandsEvent = flowEvent<RegisterCommandsEvent>(EventPriority.HIGHEST)
+        .onEach { e ->
+            info { "#registerCommandsEvent" }
+        }.launchIn(rootModule.coreModule.ioScope)
 }

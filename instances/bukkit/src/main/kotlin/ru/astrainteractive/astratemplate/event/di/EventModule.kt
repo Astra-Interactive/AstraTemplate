@@ -10,12 +10,8 @@ import ru.astrainteractive.astratemplate.event.event.MultipleEventsDSL
 import ru.astrainteractive.astratemplate.event.event.TemplateEvent
 
 internal class EventModule(rootModule: RootModule) {
-    val eventListener: EventListener by lazy {
-        EventListener.Default()
-    }
-    val inventoryClickListener: EventListener by lazy {
-        DefaultInventoryClickEvent()
-    }
+    val eventListener: EventListener = EventListener.Default()
+    val inventoryClickListener: EventListener = DefaultInventoryClickEvent()
 
     private val events = buildList {
         eventListener.run(::add)

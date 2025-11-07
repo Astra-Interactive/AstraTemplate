@@ -20,9 +20,9 @@ import ru.astrainteractive.astratemplate.api.local.entity.UserRatingTable
 import ru.astrainteractive.astratemplate.api.local.entity.UserTable
 import ru.astrainteractive.astratemplate.core.plugin.PluginConfiguration
 import ru.astrainteractive.klibs.mikro.core.coroutines.mapCached
-import java.io.File
 import ru.astrainteractive.klibs.mikro.exposed.model.DatabaseConfiguration
 import ru.astrainteractive.klibs.mikro.exposed.util.connect
+import java.io.File
 
 class ApiLocalModule(
     dataFolder: File,

@@ -6,10 +6,10 @@ import org.slf4j.Logger
 import ru.astrainteractive.astratemplate.AstraTemplate
 import java.nio.file.Path
 
-interface VelocityModule {
-    val injector: Injector
-    val server: ProxyServer
-    val plugin: AstraTemplate
-    val logger: Logger
-    val dataDirectory: Path
+class VelocityModule {
+    lateinit var injector: Injector
+    lateinit var server: ProxyServer
+    lateinit var plugin: AstraTemplate
+    lateinit var logger: Logger
+    lateinit var dataDirectory: Path
 }

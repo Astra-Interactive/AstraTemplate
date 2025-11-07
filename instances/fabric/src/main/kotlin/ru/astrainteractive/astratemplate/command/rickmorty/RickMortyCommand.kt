@@ -9,12 +9,12 @@ import ru.astrainteractive.klibs.mikro.core.dispatchers.KotlinDispatchers
 
 class RickMortyCommand(
     private val rickMortyApi: RickMortyApi,
-    private val scope: CoroutineScope,
+    private val ioScope: CoroutineScope,
     private val dispatchers: KotlinDispatchers
 ) : Command by DslCommand(
     alias = "rickmorty",
     block = {
-        scope.launch(dispatchers.IO) {
+        ioScope.launch(dispatchers.IO) {
             println("Getting character...")
             println(rickMortyApi.getRandomCharacter(1))
         }

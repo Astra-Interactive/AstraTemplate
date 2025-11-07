@@ -17,7 +17,7 @@ import ru.astrainteractive.klibs.mikro.core.dispatchers.KotlinDispatchers
 
 @Suppress("LongParameterList")
 internal class RouterImpl(
-    private val scope: CoroutineScope,
+    private val ioScope: CoroutineScope,
     private val dispatchers: KotlinDispatchers,
     private val kyoriKrate: CachedKrate<KyoriComponentSerializer>,
     private val translationKrate: CachedKrate<PluginTranslation>,
@@ -41,7 +41,7 @@ internal class RouterImpl(
     }
 
     override fun open(player: Player, route: Router.Route) {
-        scope.launch(dispatchers.IO) {
+        ioScope.launch {
             val gui = buildRoute(player, route)
             withContext(dispatchers.Main) { gui.open() }
         }
