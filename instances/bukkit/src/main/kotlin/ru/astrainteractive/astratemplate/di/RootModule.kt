@@ -28,14 +28,18 @@ internal class RootModule(plugin: AstraTemplate) {
     val apiRemoteModule: ApiRemoteModule = ApiRemoteModule()
 
     val eventModule: EventModule = EventModule(this)
-
-    val commandModule: CommandModule = CommandModule.Default(this)
-
     val guiModule: GuiModule = GuiModule(
         coreModule = coreModule,
         bukkitModule = bukkitModule,
         apiLocalModule = apiLocalModule
     )
+    val commandModule: CommandModule = CommandModule(
+        coreModule = coreModule,
+        bukkitModule = bukkitModule,
+        apiRemoteModule = apiRemoteModule,
+        guiModule = guiModule
+    )
+
     private val lifecycles: List<Lifecycle>
         get() = listOf(
             coreModule.lifecycle,

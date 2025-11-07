@@ -27,11 +27,11 @@ internal class DefaultErrorHandler(
         when (throwable) {
             is AddItemCommand.Error -> {
                 when (throwable) {
-                    AddItemCommand.Error.ItemNotfound -> {
+                    is AddItemCommand.Error.ItemNotfound -> {
                         ctx.source.sender.sendMessage(translation.fault.itemNotFound.component)
                     }
 
-                    AddItemCommand.Error.SenderNotPlayer -> {
+                    is AddItemCommand.Error.SenderNotPlayer -> {
                         ctx.source.sender.sendMessage(translation.fault.notPlayer.component)
                     }
                 }
