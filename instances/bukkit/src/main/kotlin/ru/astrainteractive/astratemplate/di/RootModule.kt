@@ -1,5 +1,6 @@
 package ru.astrainteractive.astratemplate.di
 
+import ru.astrainteractive.astralibs.async.DefaultBukkitDispatchers
 import ru.astrainteractive.astralibs.lifecycle.Lifecycle
 import ru.astrainteractive.astratemplate.AstraTemplate
 import ru.astrainteractive.astratemplate.api.local.di.ApiLocalModule
@@ -13,9 +14,10 @@ internal class RootModule(plugin: AstraTemplate) {
 
     val bukkitModule: BukkitModule = BukkitModule(plugin)
 
-    val coreModule: CoreModule by lazy {
-        CoreModule(bukkitModule.plugin.dataFolder)
-    }
+    val coreModule: CoreModule = CoreModule(
+        dataFolder = bukkitModule.plugin.dataFolder,
+        dispatchers = DefaultBukkitDispatchers(plugin)
+    )
 
     val apiLocalModule: ApiLocalModule = ApiLocalModule(
         dataFolder = bukkitModule.plugin.dataFolder,
@@ -26,14 +28,18 @@ internal class RootModule(plugin: AstraTemplate) {
     val apiRemoteModule: ApiRemoteModule = ApiRemoteModule()
 
     val eventModule: EventModule = EventModule(this)
-
-    val commandModule: CommandModule = CommandModule.Default(this)
-
     val guiModule: GuiModule = GuiModule(
         coreModule = coreModule,
         bukkitModule = bukkitModule,
         apiLocalModule = apiLocalModule
     )
+    val commandModule: CommandModule = CommandModule(
+        coreModule = coreModule,
+        bukkitModule = bukkitModule,
+        apiRemoteModule = apiRemoteModule,
+        guiModule = guiModule
+    )
+
     private val lifecycles: List<Lifecycle>
         get() = listOf(
             coreModule.lifecycle,

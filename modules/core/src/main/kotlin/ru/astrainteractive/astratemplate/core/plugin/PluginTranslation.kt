@@ -9,7 +9,7 @@ import ru.astrainteractive.astralibs.string.replace
 
 /**
  * All translation stored here
- * Each translation have default value so it's not necesarry to fetch it from resources
+ * Each translation have default value so it's not necessary to fetch it from resources
  */
 @Serializable
 class PluginTranslation(

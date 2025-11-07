@@ -12,7 +12,7 @@ internal interface AddItemCommand {
     )
 
     sealed class Error(message: String) : CommandException(message) {
-        data object SenderNotPlayer : Error("SenderNotPlayer")
-        data object ItemNotfound : Error("ItemNotfound")
+        class SenderNotPlayer : Error("SenderNotPlayer")
+        class ItemNotfound : Error("ItemNotfound")
     }
 }

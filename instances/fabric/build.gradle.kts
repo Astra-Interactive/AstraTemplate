@@ -4,16 +4,15 @@ import ru.astrainteractive.gradleplugin.property.extension.ModelPropertyValueExt
 
 plugins {
     kotlin("jvm")
-    id("fabric-loom")
-    alias(libs.plugins.gradle.shadow)
+    alias(libs.plugins.fabric.loom)
     alias(libs.plugins.klibs.gradle.java.core)
-    alias(libs.plugins.klibs.minecraft.shadow)
     alias(libs.plugins.klibs.minecraft.resource.processor)
+    alias(libs.plugins.gradle.shadow)
 }
 
 dependencies {
+    minecraft(libs.minecraft.fabric.mojang.get())
     mappings("net.fabricmc:yarn:${libs.versions.minecraft.fabric.yarn.get()}:v2")
-    minecraft(libs.minecraft.mojang.get())
     modImplementation(libs.minecraft.fabric.kotlin.get())
     modImplementation(libs.minecraft.fabric.loader.get())
     modImplementation(libs.minecraft.fabric.api.get())
@@ -24,7 +23,9 @@ dependencies {
     implementation(libs.klibs.kstorage)
     implementation(libs.klibs.mikro.core)
     // Kotlin
-    implementation(libs.bundles.kotlin)
+    implementation(libs.kotlin.coroutines.core)
+    implementation(libs.kotlin.serialization.json)
+    implementation(libs.kotlin.serialization.kaml)
     // Driver
     implementation(libs.driver.jdbc)
     // Local
@@ -33,29 +34,91 @@ dependencies {
     implementation(projects.modules.core)
 }
 
-val destination = File("C:\\Users\\Roman\\Desktop\\Fabric\\mods")
-    .takeIf(File::exists)
+minecraftProcessResource {
+    fabric()
+}
+
+val destination = rootDir.resolve("build")
+    .resolve("fabric")
+    .resolve("mods")
+    .takeIf { it.exists() }
     ?: File(rootDir, "jars")
 
 val shadowJar by tasks.getting(ShadowJar::class) {
-    dependencies {
-        // Kotlin
-        include(dependency(libs.minecraft.astralibs.core.asProvider().get()))
-        include(dependency(projects.modules.core))
-        include(dependency(projects.modules.apiRemote))
-        include(dependency(projects.modules.apiLocal))
-        // TODO somehow fix the multiplatform libraries
-        include(dependency("ru.astrainteractive.klibs:kdi-jvm"))
-        include(dependency("ru.astrainteractive.klibs:mikro-core-jvm"))
-        include(dependency(libs.driver.jdbc.get()))
-    }
-    exclude("mappings/")
-    dependsOn(configurations)
-    from(sourceSets.main.get().allSource)
     mergeServiceFiles()
+//    mustRunAfter(minecraftProcessResource.task)
+//    dependsOn(minecraftProcessResource.task)
+    configurations = listOf(project.configurations.shadow.get())
     isReproducibleFileOrder = true
-    archiveClassifier.set(null as String?)
-    archiveBaseName.set("${requireProjectInfo.name}-fabric-shadow")
+    archiveClassifier = null as String?
+    archiveVersion = requireProjectInfo.versionString
+    archiveBaseName = "${requireProjectInfo.name}-fabric"
+    dependencies {
+        // deps
+        exclude(dependency("org.jetbrains:annotations"))
+        // deps paths
+        exclude("co/touchlab/stately/**")
+        exclude("club/minnced/opus/**")
+        exclude("com/google/**")
+        exclude("com/sun/**")
+        exclude("google/protobuf/**")
+        exclude("io/github/**")
+        exclude("io/javalin/**")
+        exclude("jakarta/servlet/**")
+        exclude("javax/annotation/**")
+        exclude("javax/servlet/**")
+        exclude("natives/**")
+        exclude("nl/altindag/**")
+        exclude("org/eclipse/**")
+        exclude("org/bouncycastle/**")
+        exclude("org/checkerframework/**")
+        exclude("org/conscrypt/**")
+        exclude("tomp2p/opuswrapper/**")
+        exclude("DebugProbesKt.bin")
+        exclude("_COROUTINE/**")
+        // meta
+//        exclude("META-INF/services/**")
+        exclude("META-INF/*.kotlin_module")
+        exclude("META-INF/com.android.tools/**")
+        exclude("META-INF/gradle-plugins/**")
+        exclude("META-INF/maven/**")
+        exclude("META-INF/proguard/**")
+        exclude("META-INF/versions/**")
+        exclude("META-INF/native/**")
+        exclude("META-INF/**LICENCE**")
+    }
+    // Be sure to relocate EXACT PACKAGES!!
+    // For example, relocate org.some.package instead of org
+    // Becuase relocation org will break other non-relocated dependencies such as org.minecraft
+    listOf(
+        "com.fasterxml",
+        "net.kyori",
+        "org.h2",
+        "com.neovisionaries",
+        "gnu.trove",
+        "org.json",
+        "org.apache",
+        "org.telegram",
+        "okhttp3",
+        "net.dv8tion",
+        "okio",
+        "org.slf4j",
+        "kotlin",
+        "kotlinx",
+        "it.krzeminski",
+        "net.thauvin",
+        "org.jetbrains.exposed.dao",
+        "org.jetbrains.exposed.exceptions",
+        "org.jetbrains.exposed.sql",
+        "org.jetbrains.exposed.jdbc",
+        "org.jetbrains.kotlin",
+        "org.jetbrains.kotlinx",
+        "com.charleskorn.kaml",
+        "ru.astrainteractive.klibs",
+        "ru.astrainteractive.astralibs",
+        "club.minnced.discord",
+        "club.minnced.opus"
+    ).forEach { pattern -> relocate(pattern, "${requireProjectInfo.group}.shade.$pattern") }
 }
 
 val remapJar = tasks.getByName<RemapJarTask>("remapJar") {
@@ -65,6 +128,7 @@ val remapJar = tasks.getByName<RemapJarTask>("remapJar") {
     addNestedDependencies.set(true)
     archiveBaseName.set("${requireProjectInfo.name}-fabric")
     destinationDirectory.set(destination)
+    archiveVersion = requireProjectInfo.versionString
 }
 
 tasks.assemble {

@@ -1,19 +1,17 @@
 package ru.astrainteractive.astratemplate
 
-import org.bukkit.plugin.java.JavaPlugin
-import ru.astrainteractive.astralibs.lifecycle.Lifecycle
-import ru.astrainteractive.astralibs.logging.JUtiltLogger
-import ru.astrainteractive.astralibs.logging.Logger
+import ru.astrainteractive.astralibs.lifecycle.LifecyclePlugin
 import ru.astrainteractive.astratemplate.di.RootModule
+import ru.astrainteractive.klibs.mikro.core.logging.JUtiltLogger
+import ru.astrainteractive.klibs.mikro.core.logging.Logger
 
 /**
  * Initial class for your plugin
  */
 
 class AstraTemplate :
-    JavaPlugin(),
-    Logger by JUtiltLogger("AstraTemplate"),
-    Lifecycle {
+    LifecyclePlugin(),
+    Logger by JUtiltLogger("AstraTemplate") {
     private val rootModule = RootModule(this)
 
     /**

@@ -6,7 +6,7 @@ import ru.astrainteractive.astratemplate.di.RootModule
 class FabricEntryPoint : ModInitializer {
 
     private val rootModule: RootModule by lazy {
-        RootModule.Default()
+        RootModule()
     }
 
     override fun onInitialize() {

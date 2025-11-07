@@ -3,17 +3,17 @@ plugins {
 }
 
 dependencies {
-    // Kotlin
-    implementation(libs.bundles.kotlin)
-    // AstraLibs
+    implementation(libs.kotlin.coroutines.core)
+    implementation(libs.kotlin.serialization.json)
+    implementation(libs.kotlin.serialization.kaml)
+
     implementation(libs.minecraft.astralibs.core)
-    implementation(libs.minecraft.astralibs.exposed)
-    // mikro
+
     implementation(libs.klibs.kstorage)
-    // Exposed
-    implementation(libs.bundles.exposed)
-    // klibs
     implementation(libs.klibs.mikro.core)
-    // Local
+    implementation(libs.klibs.mikro.extensions)
+
+    implementation(libs.exposed.core)
+
     implementation(projects.modules.core)
 }

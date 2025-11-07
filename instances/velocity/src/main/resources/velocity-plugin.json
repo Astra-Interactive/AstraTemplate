@@ -6,6 +6,8 @@
   "authors": [
     "${authors}"
   ],
-  "dependencies": [],
+  "dependencies": [
+    "${dependencies}"
+  ],
   "main": "${main}"
 }

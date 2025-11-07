@@ -16,8 +16,8 @@ internal class GuiModule(
 ) {
     private val getRandomColorUseCase = GetRandomColorUseCaseImpl()
     val router: Router = RouterImpl(
-        scope = coreModule.ioScope,
-        dispatchers = bukkitModule.dispatchers,
+        ioScope = coreModule.ioScope,
+        dispatchers = coreModule.dispatchers,
         kyoriKrate = bukkitModule.kyoriKrate,
         translationKrate = coreModule.translationKrate,
         localDao = apiLocalModule.localDao,
