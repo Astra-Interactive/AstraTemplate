@@ -21,7 +21,7 @@ jobs:
             task: ":instances:bukkit:shadowJar"
     steps:
       - name: Checkout Git repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - uses: christian-draeger/read-properties@1.1.1
         id: properties
@@ -29,7 +29,7 @@ jobs:
           path: './gradle.properties'
           properties: 'makeevrserg.project.name makeevrserg.project.version.string'
 
-      - uses: actions/download-artifact@95815c38cf2ff2164869cbab79da8d1f422bc89e
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
         name: "Download ${{ matrix.id }}"
         with:
           name: ${{ matrix.id }}
