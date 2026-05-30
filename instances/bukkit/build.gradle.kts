@@ -38,6 +38,8 @@ dependencies {
     shadow(projects.modules.buildKonfig)
     shadow(projects.modules.core)
     shadow(projects.modules.featureCommand)
+    shadow(projects.modules.featureGui.api)
+    shadow(projects.modules.featureGui.bukkit)
 
     testImplementation(libs.tests.kotlin.test)
 }

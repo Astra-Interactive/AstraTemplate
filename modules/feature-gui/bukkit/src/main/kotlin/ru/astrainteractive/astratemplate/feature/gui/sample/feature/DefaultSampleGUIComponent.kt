@@ -1,5 +1,6 @@
-package ru.astrainteractive.astratemplate.gui.sample.feature
+package ru.astrainteractive.astratemplate.feature.gui.sample.feature
 
+import kotlin.random.Random
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -7,16 +8,15 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.bukkit.ChatColor
 import org.bukkit.event.inventory.ClickType
-import ru.astrainteractive.astralibs.async.withTimings
+import ru.astrainteractive.astralibs.coroutines.withTimings
 import ru.astrainteractive.astratemplate.api.local.dao.LocalDao
 import ru.astrainteractive.astratemplate.api.local.model.UserModel
-import ru.astrainteractive.astratemplate.gui.api.ItemStackSpigotAPI
-import ru.astrainteractive.astratemplate.gui.domain.GetRandomColorUseCase
-import ru.astrainteractive.astratemplate.gui.domain.SetDisplayNameUseCase
+import ru.astrainteractive.astratemplate.feature.gui.api.ItemStackSpigotAPI
+import ru.astrainteractive.astratemplate.feature.gui.domain.GetRandomColorUseCase
+import ru.astrainteractive.astratemplate.feature.gui.domain.SetDisplayNameUseCase
 import ru.astrainteractive.klibs.mikro.core.coroutines.CoroutineFeature
 import ru.astrainteractive.klibs.mikro.core.logging.JUtiltLogger
 import ru.astrainteractive.klibs.mikro.core.logging.Logger
-import kotlin.random.Random
 
 /**
  * MVVM/MVI technique

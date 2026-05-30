@@ -1,4 +1,4 @@
-package ru.astrainteractive.astratemplate.gui.sample.feature
+package ru.astrainteractive.astratemplate.feature.gui.sample.feature
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.StateFlow

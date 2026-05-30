@@ -1,24 +1,22 @@
-package ru.astrainteractive.astratemplate.gui.di
+package ru.astrainteractive.astratemplate.feature.gui.di
 
 import ru.astrainteractive.astratemplate.api.local.di.ApiLocalModule
 import ru.astrainteractive.astratemplate.core.di.CoreModule
-import ru.astrainteractive.astratemplate.di.BukkitModule
-import ru.astrainteractive.astratemplate.gui.api.ItemStackSpigotAPI
-import ru.astrainteractive.astratemplate.gui.domain.GetRandomColorUseCaseImpl
-import ru.astrainteractive.astratemplate.gui.domain.SetDisplayNameUseCaseImpl
-import ru.astrainteractive.astratemplate.gui.router.Router
-import ru.astrainteractive.astratemplate.gui.router.RouterImpl
+import ru.astrainteractive.astratemplate.feature.gui.api.ItemStackSpigotAPI
+import ru.astrainteractive.astratemplate.feature.gui.domain.GetRandomColorUseCaseImpl
+import ru.astrainteractive.astratemplate.feature.gui.domain.SetDisplayNameUseCaseImpl
+import ru.astrainteractive.astratemplate.feature.gui.router.Router
+import ru.astrainteractive.astratemplate.feature.gui.router.RouterImpl
 
 internal class GuiModule(
     coreModule: CoreModule,
-    bukkitModule: BukkitModule,
     apiLocalModule: ApiLocalModule
 ) {
     private val getRandomColorUseCase = GetRandomColorUseCaseImpl()
     val router: Router = RouterImpl(
         ioScope = coreModule.ioScope,
         dispatchers = coreModule.dispatchers,
-        kyoriKrate = bukkitModule.kyoriKrate,
+        kyoriKrate = coreModule.kyoriKrate,
         translationKrate = coreModule.translationKrate,
         localDao = apiLocalModule.localDao,
         itemStackSpigotAPi = ItemStackSpigotAPI,

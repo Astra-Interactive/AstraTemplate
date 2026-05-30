@@ -8,7 +8,7 @@ import ru.astrainteractive.astratemplate.api.remote.di.ApiRemoteModule
 import ru.astrainteractive.astratemplate.feature.command.di.CommandModule
 import ru.astrainteractive.astratemplate.core.di.CoreModule
 import ru.astrainteractive.astratemplate.event.di.EventModule
-import ru.astrainteractive.astratemplate.gui.di.GuiModule
+import ru.astrainteractive.astratemplate.feature.gui.di.GuiModule
 
 internal class RootModule(plugin: AstraTemplate) {
 

@@ -1,4 +1,4 @@
-package ru.astrainteractive.astratemplate.gui.sample.gui
+package ru.astrainteractive.astratemplate.feature.gui.sample.gui
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.launchIn
@@ -12,36 +12,31 @@ import ru.astrainteractive.astralibs.kyori.KyoriComponentSerializer
 import ru.astrainteractive.astralibs.kyori.unwrap
 import ru.astrainteractive.astralibs.menu.holder.DefaultPlayerHolder
 import ru.astrainteractive.astralibs.menu.holder.PlayerHolder
-import ru.astrainteractive.astralibs.menu.inventory.PaginatedInventoryMenu
+import ru.astrainteractive.astralibs.menu.inventory.api.InventoryMenu
 import ru.astrainteractive.astralibs.menu.inventory.model.InventorySize
-import ru.astrainteractive.astralibs.menu.inventory.model.PageContext
-import ru.astrainteractive.astralibs.menu.inventory.util.PageContextExt.getIndex
-import ru.astrainteractive.astralibs.menu.inventory.util.PageContextExt.isLastPage
-import ru.astrainteractive.astralibs.menu.inventory.util.PaginatedInventoryMenuExt.showNextPage
-import ru.astrainteractive.astralibs.menu.inventory.util.PaginatedInventoryMenuExt.showPrevPage
+import ru.astrainteractive.astralibs.menu.paginator.api.DefaultPaginator
 import ru.astrainteractive.astralibs.menu.slot.InventorySlot
-import ru.astrainteractive.astralibs.menu.slot.util.InventorySlotBuilderExt.setDisplayName
-import ru.astrainteractive.astralibs.menu.slot.util.InventorySlotBuilderExt.setIndex
-import ru.astrainteractive.astralibs.menu.slot.util.InventorySlotBuilderExt.setItemStack
-import ru.astrainteractive.astralibs.menu.slot.util.InventorySlotBuilderExt.setLore
-import ru.astrainteractive.astralibs.menu.slot.util.InventorySlotBuilderExt.setMaterial
-import ru.astrainteractive.astralibs.menu.slot.util.InventorySlotBuilderExt.setOnClickListener
+import ru.astrainteractive.astralibs.menu.slot.setDisplayName
+import ru.astrainteractive.astralibs.menu.slot.setIndex
+import ru.astrainteractive.astralibs.menu.slot.setMaterial
+import ru.astrainteractive.astralibs.menu.slot.setOnClickListener
 import ru.astrainteractive.astratemplate.api.local.model.UserModel
 import ru.astrainteractive.astratemplate.core.plugin.PluginTranslation
-import ru.astrainteractive.astratemplate.gui.sample.feature.SampleGuiComponent
+import ru.astrainteractive.astratemplate.feature.gui.sample.feature.SampleGuiComponent
 import ru.astrainteractive.klibs.kstorage.api.CachedKrate
-import ru.astrainteractive.klibs.kstorage.util.getValue
+import ru.astrainteractive.klibs.kstorage.api.getValue
 
 internal class SampleGUI(
     player: Player,
     kyoriKrate: CachedKrate<KyoriComponentSerializer>,
     translationKrate: CachedKrate<PluginTranslation>,
     private val sampleComponent: SampleGuiComponent
-) : PaginatedInventoryMenu(),
-    KyoriComponentSerializer by kyoriKrate.unwrap() {
+) : InventoryMenu(),
+    KyoriComponentSerializer by kyoriKrate.unwrap(), {
     override val childComponents: List<CoroutineScope>
         get() = listOf(sampleComponent)
     private val translation by translationKrate
+    private val paginator = DefaultPaginator()
 
     override val playerHolder: PlayerHolder = DefaultPlayerHolder(player)
     override var title: Component = translation.menu.menuTitle.let(::toComponent)

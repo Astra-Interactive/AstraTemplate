@@ -1,7 +1,7 @@
-package ru.astrainteractive.astratemplate.gui.domain
+package ru.astrainteractive.astratemplate.feature.gui.domain
 
 import org.bukkit.ChatColor
-import ru.astrainteractive.astratemplate.gui.domain.GetRandomColorUseCase.Output
+import ru.astrainteractive.astratemplate.feature.gui.domain.GetRandomColorUseCase.Output
 import kotlin.random.Random
 
 internal interface GetRandomColorUseCase {

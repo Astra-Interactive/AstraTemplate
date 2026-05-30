@@ -1,8 +1,8 @@
-package ru.astrainteractive.astratemplate.gui.domain
+package ru.astrainteractive.astratemplate.feature.gui.domain
 
 import org.bukkit.inventory.ItemStack
-import ru.astrainteractive.astratemplate.gui.domain.SetDisplayNameUseCase.Input
-import ru.astrainteractive.astratemplate.gui.domain.SetDisplayNameUseCase.Output
+import ru.astrainteractive.astratemplate.feature.gui.domain.SetDisplayNameUseCase.Input
+import ru.astrainteractive.astratemplate.feature.gui.domain.SetDisplayNameUseCase.Output
 
 internal interface SetDisplayNameUseCase {
     class Input(val items: List<ItemStack>, val index: Int)
