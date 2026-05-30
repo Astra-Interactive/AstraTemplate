@@ -1,7 +1,6 @@
 package ru.astrainteractive.astratemplate
 
 import net.neoforged.fml.common.Mod
-import ru.astrainteractive.aspekt.BuildKonfig
 import ru.astrainteractive.astralibs.lifecycle.ForgeLifecycleServer
 import ru.astrainteractive.astratemplate.di.RootModule
 import ru.astrainteractive.klibs.mikro.core.logging.JUtiltLogger

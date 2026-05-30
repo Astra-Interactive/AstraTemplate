@@ -109,9 +109,27 @@ class PluginTranslation(
             .plus("&#db2c18Вас продамажил игрок %player%!")
             .toRaw(),
         @SerialName("damage_hint")
-        val damageHint: StringDesc.Raw = StringDesc.Raw("<amount>")
+        val damageHint: StringDesc.Raw = StringDesc.Raw("<amount>"),
+        @SerialName("add_item_success")
+        private val addItemSuccess: StringDesc.Raw = PREFIX
+            .plus("&#18dbd1Добавлено %amount%x %item%!")
+            .toRaw(),
+        @SerialName("rick_morty_success")
+        private val rickMortySuccess: StringDesc.Raw = PREFIX
+            .plus("&#18dbd1Получен ответ: %result%")
+            .toRaw(),
+        @SerialName("rick_morty_fail")
+        private val rickMortyFail: StringDesc.Raw = PREFIX
+            .plus("&#db2c18Ошибка: %error%")
+            .toRaw()
     ) {
         fun damaged(player: String) = damaged.replace("%player%", player)
+        fun addItemSuccess(amount: Int, item: String) = addItemSuccess
+            .replace("%amount%", amount.toString())
+            .replace("%item%", item)
+
+        fun rickMortySuccess(result: String) = rickMortySuccess.replace("%result%", result)
+        fun rickMortyFail(error: String) = rickMortyFail.replace("%error%", error)
     }
 
     companion object {

@@ -38,7 +38,10 @@ class CommandModule(
                 registrarContext = commandRegistrarContext,
                 multiplatformCommand = multiplatformCommand,
                 errorHandler = errorHandler,
-                executor = AddItemExecutor()
+                executor = AddItemExecutor(
+                    translationKrate = coreModule.translationKrate,
+                    kyoriKrate = coreModule.kyoriKrate
+                )
             ).register()
             CommonCommandsRegistry(
                 kyoriKrate = coreModule.kyoriKrate,
@@ -74,7 +77,9 @@ class CommandModule(
                 rmApi = apiRemoteModule.rickMortyApi,
                 registrarContext = commandRegistrarContext,
                 multiplatformCommand = multiplatformCommand,
-                errorHandler = errorHandler
+                errorHandler = errorHandler,
+                translationKrate = coreModule.translationKrate,
+                kyoriKrate = coreModule.kyoriKrate
             ).register()
         }
     )
