@@ -9,7 +9,7 @@ import ru.astrainteractive.astratemplate.core.di.CoreModule
 import ru.astrainteractive.astratemplate.feature.event.event.BetterAnotherEvent
 import ru.astrainteractive.astratemplate.feature.event.event.TemplateEvent
 
-internal class EventModule(
+class EventModule(
     coreModule: CoreModule,
     plugin: JavaPlugin
 ) {

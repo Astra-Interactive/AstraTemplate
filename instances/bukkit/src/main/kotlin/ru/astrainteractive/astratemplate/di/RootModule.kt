@@ -12,10 +12,8 @@ import ru.astrainteractive.astratemplate.feature.gui.di.GuiModule
 
 internal class RootModule(plugin: AstraTemplate) {
 
-    val bukkitModule: BukkitModule = BukkitModule(plugin)
-
     val coreModule: CoreModule = CoreModule(
-        dataFolder = bukkitModule.plugin.dataFolder,
+        dataFolder = plugin.dataFolder,
         dispatchers = DefaultBukkitDispatchers(plugin)
     )
 
@@ -26,15 +24,13 @@ internal class RootModule(plugin: AstraTemplate) {
 
     val apiRemoteModule: ApiRemoteModule = ApiRemoteModule()
 
-    val eventModule: EventModule = EventModule(this)
+    val eventModule: EventModule = EventModule(coreModule, plugin)
     val guiModule: GuiModule = GuiModule(
         coreModule = coreModule,
-        bukkitModule = bukkitModule,
         apiLocalModule = apiLocalModule
     )
     val commandModule: CommandModule = CommandModule(
         coreModule = coreModule,
-        bukkitModule = bukkitModule,
         apiRemoteModule = apiRemoteModule,
         guiModule = guiModule
     )

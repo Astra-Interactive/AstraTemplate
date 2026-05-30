@@ -4,12 +4,12 @@ description: '${description}'
 name: '${name}'
 version: '${version}'
 authors: [ "${authors}" ]
-#author: "${author}"
+author: "${author}"
 website: "${url}"
 api-version: 1.18
-softdepend: [ ]
+softdepend: [ DiscordSRV, LuckPerms, Vault, Esssentials, Towny, PlaceholderAPI, packetevents ]
 depend: [ ]
-loadbefore: [ ]
+loadbefore: [ Towny ]
 libraries: ${libraries}
 commands:
   add:

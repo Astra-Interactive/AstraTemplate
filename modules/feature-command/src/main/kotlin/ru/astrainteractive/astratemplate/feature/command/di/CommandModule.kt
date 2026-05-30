@@ -15,9 +15,8 @@ import ru.astrainteractive.astratemplate.core.di.CoreModule
 import ru.astrainteractive.astratemplate.di.BukkitModule
 import ru.astrainteractive.astratemplate.gui.di.GuiModule
 
-internal class CommandModule(
+class CommandModule(
     coreModule: CoreModule,
-    bukkitModule: BukkitModule,
     guiModule: GuiModule,
     apiRemoteModule: ApiRemoteModule,
 ) {

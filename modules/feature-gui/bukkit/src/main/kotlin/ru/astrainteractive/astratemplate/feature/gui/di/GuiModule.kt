@@ -8,7 +8,7 @@ import ru.astrainteractive.astratemplate.feature.gui.domain.SetDisplayNameUseCas
 import ru.astrainteractive.astratemplate.feature.gui.router.Router
 import ru.astrainteractive.astratemplate.feature.gui.router.RouterImpl
 
-internal class GuiModule(
+class GuiModule(
     coreModule: CoreModule,
     apiLocalModule: ApiLocalModule
 ) {
