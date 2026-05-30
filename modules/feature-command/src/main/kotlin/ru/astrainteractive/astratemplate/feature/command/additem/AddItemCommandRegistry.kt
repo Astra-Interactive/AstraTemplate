@@ -1,4 +1,4 @@
-package ru.astrainteractive.astratemplate.command.additem
+package ru.astrainteractive.astratemplate.feature.command.additem
 
 import com.mojang.brigadier.arguments.IntegerArgumentType
 import com.mojang.brigadier.arguments.StringArgumentType
@@ -14,7 +14,7 @@ import ru.astrainteractive.astralibs.command.api.util.requireArgument
 import ru.astrainteractive.astralibs.command.api.util.runs
 import ru.astrainteractive.astralibs.kyori.KyoriComponentSerializer
 import ru.astrainteractive.astralibs.kyori.unwrap
-import ru.astrainteractive.astratemplate.command.errorhandler.DefaultErrorHandler
+import ru.astrainteractive.astratemplate.feature.command.errorhandler.DefaultErrorHandler
 import ru.astrainteractive.klibs.kstorage.api.CachedKrate
 
 internal class AddItemCommandRegistry(

@@ -1,4 +1,4 @@
-package ru.astrainteractive.astratemplate.command.reload
+package ru.astrainteractive.astratemplate.feature.command.reload
 
 import com.mojang.brigadier.tree.LiteralCommandNode
 import io.papermc.paper.command.brigadier.CommandSourceStack
@@ -8,11 +8,10 @@ import ru.astrainteractive.astralibs.command.api.util.runs
 import ru.astrainteractive.astralibs.kyori.KyoriComponentSerializer
 import ru.astrainteractive.astralibs.kyori.unwrap
 import ru.astrainteractive.astralibs.lifecycle.LifecyclePlugin
-import ru.astrainteractive.astratemplate.command.errorhandler.DefaultErrorHandler
+import ru.astrainteractive.astratemplate.feature.command.errorhandler.DefaultErrorHandler
 import ru.astrainteractive.astratemplate.core.plugin.PluginPermission
 import ru.astrainteractive.astratemplate.core.plugin.PluginTranslation
 import ru.astrainteractive.klibs.kstorage.api.CachedKrate
-import ru.astrainteractive.klibs.kstorage.util.getValue
 
 internal class ReloadCommandRegistry(
     translationKrate: CachedKrate<PluginTranslation>,

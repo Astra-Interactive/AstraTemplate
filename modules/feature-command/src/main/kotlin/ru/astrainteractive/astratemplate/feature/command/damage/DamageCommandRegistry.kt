@@ -1,4 +1,4 @@
-package ru.astrainteractive.astratemplate.command.damage
+package ru.astrainteractive.astratemplate.feature.command.damage
 
 import com.mojang.brigadier.arguments.DoubleArgumentType
 import com.mojang.brigadier.arguments.StringArgumentType
@@ -13,11 +13,10 @@ import ru.astrainteractive.astralibs.command.api.util.requirePermission
 import ru.astrainteractive.astralibs.command.api.util.runs
 import ru.astrainteractive.astralibs.kyori.KyoriComponentSerializer
 import ru.astrainteractive.astralibs.kyori.unwrap
-import ru.astrainteractive.astratemplate.command.errorhandler.DefaultErrorHandler
+import ru.astrainteractive.astratemplate.feature.command.errorhandler.DefaultErrorHandler
 import ru.astrainteractive.astratemplate.core.plugin.PluginPermission
 import ru.astrainteractive.astratemplate.core.plugin.PluginTranslation
 import ru.astrainteractive.klibs.kstorage.api.CachedKrate
-import ru.astrainteractive.klibs.kstorage.util.getValue
 
 internal class DamageCommandRegistry(
     translationKrate: CachedKrate<PluginTranslation>,

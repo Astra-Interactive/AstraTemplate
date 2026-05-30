@@ -1,4 +1,4 @@
-package ru.astrainteractive.astratemplate.command.rickmorty
+package ru.astrainteractive.astratemplate.feature.command.rickmorty
 
 import com.mojang.brigadier.arguments.IntegerArgumentType
 import com.mojang.brigadier.tree.LiteralCommandNode
@@ -12,7 +12,7 @@ import ru.astrainteractive.astralibs.command.api.util.literal
 import ru.astrainteractive.astralibs.command.api.util.requireArgument
 import ru.astrainteractive.astralibs.command.api.util.runs
 import ru.astrainteractive.astratemplate.api.remote.api.RickMortyApi
-import ru.astrainteractive.astratemplate.command.errorhandler.DefaultErrorHandler
+import ru.astrainteractive.astratemplate.feature.command.errorhandler.DefaultErrorHandler
 import ru.astrainteractive.klibs.mikro.core.dispatchers.KotlinDispatchers
 import kotlin.random.Random
 

@@ -1,12 +1,11 @@
 package ru.astrainteractive.astratemplate.di
 
-import ru.astrainteractive.astralibs.async.DefaultBukkitDispatchers
 import ru.astrainteractive.astralibs.coroutines.DefaultBukkitDispatchers
 import ru.astrainteractive.astralibs.lifecycle.Lifecycle
 import ru.astrainteractive.astratemplate.AstraTemplate
 import ru.astrainteractive.astratemplate.api.local.di.ApiLocalModule
 import ru.astrainteractive.astratemplate.api.remote.di.ApiRemoteModule
-import ru.astrainteractive.astratemplate.command.di.CommandModule
+import ru.astrainteractive.astratemplate.feature.command.di.CommandModule
 import ru.astrainteractive.astratemplate.core.di.CoreModule
 import ru.astrainteractive.astratemplate.event.di.EventModule
 import ru.astrainteractive.astratemplate.gui.di.GuiModule

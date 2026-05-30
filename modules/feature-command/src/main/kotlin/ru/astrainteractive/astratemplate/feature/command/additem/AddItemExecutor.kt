@@ -1,4 +1,4 @@
-package ru.astrainteractive.astratemplate.command.additem
+package ru.astrainteractive.astratemplate.feature.command.additem
 
 import org.bukkit.inventory.ItemStack
 

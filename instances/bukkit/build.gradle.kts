@@ -37,6 +37,7 @@ dependencies {
     shadow(projects.modules.api.remote)
     shadow(projects.modules.buildKonfig)
     shadow(projects.modules.core)
+    shadow(projects.modules.featureCommand)
 
     testImplementation(libs.tests.kotlin.test)
 }

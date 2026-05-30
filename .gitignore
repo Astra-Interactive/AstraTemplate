@@ -4,14 +4,6 @@
 .kotlin
 astra.properties
 local.properties
-build
+**/build/*
+**/runs/*
 jars
-# modules
-modules/api-local/build
-modules/api-remote/build
-modules/dto/build
-# instances
-instances/fabric/build
-instances/forge/build
-instances/plugin/build
-instances/velocity/build

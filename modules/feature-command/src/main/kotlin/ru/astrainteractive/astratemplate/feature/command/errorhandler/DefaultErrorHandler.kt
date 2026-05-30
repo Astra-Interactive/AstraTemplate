@@ -1,4 +1,4 @@
-package ru.astrainteractive.astratemplate.command.errorhandler
+package ru.astrainteractive.astratemplate.feature.command.errorhandler
 
 import com.mojang.brigadier.context.CommandContext
 import io.papermc.paper.command.brigadier.CommandSourceStack
@@ -9,10 +9,9 @@ import ru.astrainteractive.astralibs.command.api.exception.NoPlayerException
 import ru.astrainteractive.astralibs.command.api.exception.NoPotionEffectTypeException
 import ru.astrainteractive.astralibs.kyori.KyoriComponentSerializer
 import ru.astrainteractive.astralibs.kyori.unwrap
-import ru.astrainteractive.astratemplate.command.additem.AddItemCommand
+import ru.astrainteractive.astratemplate.feature.command.additem.AddItemCommand
 import ru.astrainteractive.astratemplate.core.plugin.PluginTranslation
 import ru.astrainteractive.klibs.kstorage.api.CachedKrate
-import ru.astrainteractive.klibs.kstorage.util.getValue
 import ru.astrainteractive.klibs.mikro.core.logging.JUtiltLogger
 import ru.astrainteractive.klibs.mikro.core.logging.Logger
 

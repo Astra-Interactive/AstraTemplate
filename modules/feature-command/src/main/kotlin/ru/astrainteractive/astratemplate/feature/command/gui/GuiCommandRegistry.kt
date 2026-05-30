@@ -1,4 +1,4 @@
-package ru.astrainteractive.astratemplate.command.gui
+package ru.astrainteractive.astratemplate.feature.command.gui
 
 import com.mojang.brigadier.tree.LiteralCommandNode
 import io.papermc.paper.command.brigadier.CommandSourceStack
@@ -7,7 +7,7 @@ import ru.astrainteractive.astralibs.command.api.util.requirePlayer
 import ru.astrainteractive.astralibs.command.api.util.runs
 import ru.astrainteractive.astralibs.kyori.KyoriComponentSerializer
 import ru.astrainteractive.astralibs.kyori.unwrap
-import ru.astrainteractive.astratemplate.command.errorhandler.DefaultErrorHandler
+import ru.astrainteractive.astratemplate.feature.command.errorhandler.DefaultErrorHandler
 import ru.astrainteractive.astratemplate.gui.router.Router
 import ru.astrainteractive.klibs.kstorage.api.CachedKrate
 

@@ -1,4 +1,4 @@
-package ru.astrainteractive.astratemplate.command.common
+package ru.astrainteractive.astratemplate.feature.command.common
 
 import com.mojang.brigadier.tree.LiteralCommandNode
 import io.papermc.paper.command.brigadier.CommandSourceStack

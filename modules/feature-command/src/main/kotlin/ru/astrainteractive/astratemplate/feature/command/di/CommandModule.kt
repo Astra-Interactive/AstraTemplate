@@ -1,16 +1,16 @@
-package ru.astrainteractive.astratemplate.command.di
+package ru.astrainteractive.astratemplate.feature.command.di
 
 import ru.astrainteractive.astralibs.command.api.registrar.PaperCommandRegistrarContext
 import ru.astrainteractive.astralibs.lifecycle.Lifecycle
 import ru.astrainteractive.astratemplate.api.remote.di.ApiRemoteModule
-import ru.astrainteractive.astratemplate.command.additem.AddItemCommandRegistry
-import ru.astrainteractive.astratemplate.command.additem.AddItemExecutor
-import ru.astrainteractive.astratemplate.command.common.CommonCommandsRegistry
-import ru.astrainteractive.astratemplate.command.damage.DamageCommandRegistry
-import ru.astrainteractive.astratemplate.command.errorhandler.DefaultErrorHandler
-import ru.astrainteractive.astratemplate.command.gui.GuiCommandRegistry
-import ru.astrainteractive.astratemplate.command.reload.ReloadCommandRegistry
-import ru.astrainteractive.astratemplate.command.rickmorty.RickMortyCommandRegistrar
+import ru.astrainteractive.astratemplate.feature.command.additem.AddItemCommandRegistry
+import ru.astrainteractive.astratemplate.feature.command.additem.AddItemExecutor
+import ru.astrainteractive.astratemplate.feature.command.common.CommonCommandsRegistry
+import ru.astrainteractive.astratemplate.feature.command.damage.DamageCommandRegistry
+import ru.astrainteractive.astratemplate.feature.command.errorhandler.DefaultErrorHandler
+import ru.astrainteractive.astratemplate.feature.command.gui.GuiCommandRegistry
+import ru.astrainteractive.astratemplate.feature.command.reload.ReloadCommandRegistry
+import ru.astrainteractive.astratemplate.feature.command.rickmorty.RickMortyCommandRegistrar
 import ru.astrainteractive.astratemplate.core.di.CoreModule
 import ru.astrainteractive.astratemplate.di.BukkitModule
 import ru.astrainteractive.astratemplate.gui.di.GuiModule
