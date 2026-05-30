@@ -1,19 +1,19 @@
 package ru.astrainteractive.astratemplate
 
+import net.minecraftforge.fml.common.Mod
+import ru.astrainteractive.aspekt.BuildKonfig
 import ru.astrainteractive.astralibs.lifecycle.ForgeLifecycleServer
+import ru.astrainteractive.astratemplate.di.RootModule
 import ru.astrainteractive.klibs.mikro.core.logging.JUtiltLogger
 import ru.astrainteractive.klibs.mikro.core.logging.Logger
 import javax.annotation.ParametersAreNonnullByDefault
-import net.minecraftforge.fml.common.Mod
-import ru.astrainteractive.aspekt.BuildKonfig
-import ru.astrainteractive.astratemplate.di.RootModule
 
 @Mod(BuildKonfig.id)
 @ParametersAreNonnullByDefault
 class ForgeEntryPoint :
     Logger by JUtiltLogger("${BuildKonfig.id}-ForgeEntryPoint"),
     ForgeLifecycleServer() {
-    private val rootModule = RootModule()
+    private val rootModule = RootModule(this)
 
     override fun onEnable() {
         info { "#onEnable" }

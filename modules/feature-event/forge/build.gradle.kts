@@ -19,7 +19,6 @@ dependencies {
     implementation(projects.modules.api.local)
 }
 
-
 dependencies {
     // We use this because forge plugin waste a lot of resources when enabled
     compileOnly(

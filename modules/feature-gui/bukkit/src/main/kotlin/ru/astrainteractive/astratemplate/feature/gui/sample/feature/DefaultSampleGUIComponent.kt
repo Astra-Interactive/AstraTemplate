@@ -1,6 +1,5 @@
 package ru.astrainteractive.astratemplate.feature.gui.sample.feature
 
-import kotlin.random.Random
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,6 +16,7 @@ import ru.astrainteractive.astratemplate.feature.gui.domain.SetDisplayNameUseCas
 import ru.astrainteractive.klibs.mikro.core.coroutines.CoroutineFeature
 import ru.astrainteractive.klibs.mikro.core.logging.JUtiltLogger
 import ru.astrainteractive.klibs.mikro.core.logging.Logger
+import kotlin.random.Random
 
 /**
  * MVVM/MVI technique

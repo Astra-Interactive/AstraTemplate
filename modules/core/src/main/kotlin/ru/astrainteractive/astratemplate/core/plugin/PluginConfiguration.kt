@@ -1,7 +1,6 @@
 package ru.astrainteractive.astratemplate.core.plugin
 
 import com.charleskorn.kaml.YamlComment
-import java.io.Serial
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import ru.astrainteractive.klibs.mikro.exposed.model.DatabaseConfiguration

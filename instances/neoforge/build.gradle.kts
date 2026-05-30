@@ -33,6 +33,7 @@ dependencies {
     shadow(projects.modules.core)
     shadow(projects.modules.featureEvent.neoforge)
     shadow(projects.modules.featureCommand)
+    shadow(projects.modules.featureGui.api)
 }
 
 minecraftProcessResource {

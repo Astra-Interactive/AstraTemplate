@@ -1,6 +1,5 @@
 package ru.astrainteractive.astratemplate.api.local.dao
 
-import java.util.UUID
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import org.jetbrains.exposed.v1.core.eq
@@ -14,6 +13,7 @@ import ru.astrainteractive.astratemplate.api.local.entity.UserRatingTable
 import ru.astrainteractive.astratemplate.api.local.entity.UserTable
 import ru.astrainteractive.astratemplate.api.local.model.RatingModel
 import ru.astrainteractive.astratemplate.api.local.model.UserModel
+import java.util.UUID
 
 internal class LocalDaoImpl(
     private val databaseFlow: Flow<Database>,

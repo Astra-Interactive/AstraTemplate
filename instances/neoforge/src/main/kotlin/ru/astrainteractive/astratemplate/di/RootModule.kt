@@ -1,16 +1,21 @@
 package ru.astrainteractive.astratemplate.di
 
-import java.io.File
 import net.neoforged.fml.loading.FMLPaths
+import ru.astrainteractive.astralibs.command.api.brigadier.command.MultiplatformCommand
+import ru.astrainteractive.astralibs.command.brigadier.command.MinecraftMultiplatformCommands
 import ru.astrainteractive.astralibs.command.registrar.NeoForgeCommandRegistrarContext
 import ru.astrainteractive.astralibs.coroutines.MinecraftDispatchers
+import ru.astrainteractive.astralibs.lifecycle.ForgeLifecycleServer
 import ru.astrainteractive.astralibs.lifecycle.Lifecycle
 import ru.astrainteractive.astratemplate.api.local.di.ApiLocalModule
 import ru.astrainteractive.astratemplate.api.remote.di.ApiRemoteModule
 import ru.astrainteractive.astratemplate.core.di.CoreModule
+import ru.astrainteractive.astratemplate.feature.command.di.CommandModule
 import ru.astrainteractive.astratemplate.feature.event.di.di.EventModule
+import ru.astrainteractive.astratemplate.feature.gui.di.StubGuiModule
+import java.io.File
 
-class RootModule {
+class RootModule(forgeLifecycleServer: ForgeLifecycleServer) {
     private val dataFolder = FMLPaths.CONFIGDIR.get()
         .resolve("AspeKt")
         .toAbsolutePath()
@@ -32,11 +37,15 @@ class RootModule {
     val apiRemoteModule: ApiRemoteModule by lazy {
         ApiRemoteModule()
     }
-
-
+    private val guiModule = StubGuiModule()
     private val commandModule by lazy {
         CommandModule(
-            commandRegistrarContext = commandRegistrarContext
+            coreModule = coreModule,
+            guiModule = guiModule,
+            apiRemoteModule = apiRemoteModule,
+            lifecyclePlugin = forgeLifecycleServer,
+            commandRegistrarContext = commandRegistrarContext,
+            multiplatformCommand = MultiplatformCommand(MinecraftMultiplatformCommands())
         )
     }
 
