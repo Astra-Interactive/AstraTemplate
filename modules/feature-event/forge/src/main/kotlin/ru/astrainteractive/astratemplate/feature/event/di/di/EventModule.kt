@@ -1,8 +1,8 @@
-package ru.astrainteractive.astratemplate.event.di
+package ru.astrainteractive.astratemplate.feature.event.di.di
 
 import ru.astrainteractive.astralibs.lifecycle.Lifecycle
 import ru.astrainteractive.astratemplate.core.di.CoreModule
-import ru.astrainteractive.astratemplate.event.TickEvent
+import ru.astrainteractive.astratemplate.feature.event.di.event.TickEvent
 
 class EventModule(coreModule: CoreModule) {
     @Suppress("UnusedPrivateProperty")
