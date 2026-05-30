@@ -11,7 +11,7 @@ import ru.astrainteractive.astralibs.command.api.util.command
 import ru.astrainteractive.astralibs.command.api.util.literal
 import ru.astrainteractive.astralibs.command.api.util.requireArgument
 import ru.astrainteractive.astralibs.command.api.util.runs
-import ru.astrainteractive.astratemplate.api.remote.RickMortyApi
+import ru.astrainteractive.astratemplate.api.remote.api.RickMortyApi
 import ru.astrainteractive.astratemplate.command.errorhandler.DefaultErrorHandler
 import ru.astrainteractive.klibs.mikro.core.dispatchers.KotlinDispatchers
 import kotlin.random.Random

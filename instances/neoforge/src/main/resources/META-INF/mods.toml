@@ -1,0 +1,10 @@
+license="MIT"
+modLoader="javafml"
+loaderVersion="[34,)"
+[[mods]]
+modId="${modId}"
+version="${version}"
+displayName="${displayName}"
+authors="${authors}"
+logoFile="icon.png"
+description="${description}"

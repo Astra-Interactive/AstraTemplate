@@ -5,7 +5,9 @@ package ru.astrainteractive.astratemplate.core.plugin
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import ru.astrainteractive.astralibs.string.StringDesc
+import ru.astrainteractive.astralibs.string.plus
 import ru.astrainteractive.astralibs.string.replace
+import ru.astrainteractive.astralibs.string.toRaw
 
 /**
  * All translation stored here
@@ -13,42 +15,63 @@ import ru.astrainteractive.astralibs.string.replace
  */
 @Serializable
 class PluginTranslation(
+    @SerialName("database")
     val database: Database = Database(),
+    @SerialName("menu")
     val menu: Menu = Menu(),
+    @SerialName("custom")
     val custom: Custom = Custom(),
+    @SerialName("general")
     val general: General = General(),
+    @SerialName("fault")
     val fault: Fault = Fault()
 ) {
     @Serializable
     data class Fault(
         @SerialName("no_permission")
-        val noPermission: StringDesc.Raw = StringDesc.Raw("&#db2c18У вас нет прав!"),
+        val noPermission: StringDesc.Raw = PREFIX
+            .plus("&#db2c18У вас нет прав!")
+            .toRaw(),
         @SerialName("not_player")
-        val notPlayer: StringDesc.Raw = StringDesc.Raw("&#db2c18Вы не игрок"),
+        val notPlayer: StringDesc.Raw = PREFIX
+            .plus("&#db2c18Вы не игрок")
+            .toRaw(),
         @SerialName("player_not_exists")
-        val playerNotExists: StringDesc.Raw = StringDesc.Raw("&#db2c18Игрока нет!"),
+        val playerNotExists: StringDesc.Raw = PREFIX
+            .plus("&#db2c18Игрока нет!")
+            .toRaw(),
         @SerialName("item_not_found")
-        val itemNotFound: StringDesc.Raw = StringDesc.Raw("&#db2c18Предмет не найден"),
+        val itemNotFound: StringDesc.Raw = PREFIX
+            .plus("&#db2c18Предмет не найден")
+            .toRaw(),
     )
 
     @Serializable
     class Database(
         @SerialName("success")
-        val dbSuccess: StringDesc.Raw = StringDesc.Raw("&#18dbd1Успешно подключено к базе данных"),
+        val dbSuccess: StringDesc.Raw = PREFIX
+            .plus("&#18dbd1Успешно подключено к базе данных")
+            .toRaw(),
         @SerialName("fail")
-        val dbFail: StringDesc.Raw = StringDesc.Raw("&#db2c18Нет подключения к базе данных"),
+        val dbFail: StringDesc.Raw = PREFIX
+            .plus("&#db2c18Нет подключения к базе данных")
+            .toRaw(),
     )
 
     @Serializable
     class General(
-        @SerialName("prefix")
-        val prefix: StringDesc.Raw = StringDesc.Raw("&#18dbd1[EmpireItems]"),
         @SerialName("reload")
-        val reload: StringDesc.Raw = StringDesc.Raw("&#dbbb18Перезагрузка плагина"),
+        val reload: StringDesc.Raw = PREFIX
+            .plus("&#dbbb18Перезагрузка плагина")
+            .toRaw(),
         @SerialName("reload_complete")
-        val reloadComplete: StringDesc.Raw = StringDesc.Raw("&#42f596Перезагрузка успешно завершена"),
+        val reloadComplete: StringDesc.Raw = PREFIX
+            .plus("&#42f596Перезагрузка успешно завершена")
+            .toRaw(),
         @SerialName("getByByCheck")
-        val getByByCheck: StringDesc.Raw = StringDesc.Raw("&#db2c18getByByCheck")
+        val getByByCheck: StringDesc.Raw = PREFIX
+            .plus(StringDesc.Raw("&#db2c18getByByCheck"))
+            .toRaw()
     )
 
     @Serializable
@@ -74,14 +97,24 @@ class PluginTranslation(
     @Serializable
     class Custom(
         @SerialName("block_placed")
-        val blockPlaced: StringDesc.Raw = StringDesc.Raw("&#18dbd1Блок поставлен!"),
+        val blockPlaced: StringDesc.Raw = PREFIX
+            .plus("&#18dbd1Блок поставлен!")
+            .toRaw(),
         @SerialName("no_player_name")
-        val noPlayerName: StringDesc.Raw = StringDesc.Raw("&#db2c18Вы не ввели имя игрока!"),
+        val noPlayerName: StringDesc.Raw = PREFIX
+            .plus("&#db2c18Вы не ввели имя игрока!")
+            .toRaw(),
         @SerialName("damaged")
-        private val damaged: StringDesc.Raw = StringDesc.Raw("&#db2c18Вас продамажил игрок %player%!"),
+        private val damaged: StringDesc.Raw = PREFIX
+            .plus("&#db2c18Вас продамажил игрок %player%!")
+            .toRaw(),
         @SerialName("damage_hint")
         val damageHint: StringDesc.Raw = StringDesc.Raw("<amount>")
     ) {
         fun damaged(player: String) = damaged.replace("%player%", player)
+    }
+
+    companion object {
+        private val PREFIX = StringDesc.Raw("&7[&#DBB72BTEMPLATE&7] ")
     }
 }

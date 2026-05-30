@@ -29,8 +29,8 @@ dependencies {
     // Driver
     implementation(libs.driver.jdbc)
     // Local
-    implementation(projects.modules.apiLocal)
-    implementation(projects.modules.apiRemote)
+    implementation(projects.modules.api.local)
+    implementation(projects.modules.api.remote)
     implementation(projects.modules.core)
 }
 

@@ -12,7 +12,13 @@ dependencies {
 
     implementation(libs.minecraft.astralibs.core)
 
+    implementation(libs.klibs.kstorage)
     implementation(libs.klibs.mikro.core)
     implementation(libs.klibs.mikro.extensions)
-    api(libs.klibs.kstorage)
+
+    implementation(libs.exposed.core)
+    implementation(libs.exposed.dao)
+    implementation(libs.exposed.jdbc)
+
+    implementation(projects.modules.core)
 }

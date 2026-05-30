@@ -1,6 +1,7 @@
 package ru.astrainteractive.astratemplate.di
 
 import ru.astrainteractive.astralibs.async.DefaultBukkitDispatchers
+import ru.astrainteractive.astralibs.coroutines.DefaultBukkitDispatchers
 import ru.astrainteractive.astralibs.lifecycle.Lifecycle
 import ru.astrainteractive.astratemplate.AstraTemplate
 import ru.astrainteractive.astratemplate.api.local.di.ApiLocalModule
@@ -20,9 +21,8 @@ internal class RootModule(plugin: AstraTemplate) {
     )
 
     val apiLocalModule: ApiLocalModule = ApiLocalModule(
-        dataFolder = bukkitModule.plugin.dataFolder,
         configFlow = coreModule.configKrate.cachedStateFlow,
-        scope = coreModule.ioScope
+        ioScope = coreModule.ioScope
     )
 
     val apiRemoteModule: ApiRemoteModule = ApiRemoteModule()

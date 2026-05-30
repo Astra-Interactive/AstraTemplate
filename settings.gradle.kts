@@ -1,49 +1,48 @@
 pluginManagement {
     repositories {
-        maven("https://maven.fabricmc.net/") { name = "Fabric" }
-        maven("https://files.minecraftforge.net/maven")
-        maven("https://dist.creeper.host/Sponge/maven")
-        maven("https://maven.minecraftforge.net/")
-        maven("https://plugins.gradle.org/m2/")
-        maven("https://jitpack.io")
+        mavenLocal()
+        mavenCentral()
         gradlePluginPortal()
-        mavenCentral()
-        mavenLocal()
-        google()
-    }
-}
-
-buildscript {
-    repositories {
+        maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")
+        maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
+        maven("https://papermc.io/repo/repository/maven-public/")
+        maven("https://repo.papermc.io/repository/maven-public/")
+        maven("https://oss.sonatype.org/content/groups/public/")
+        maven("https://nexus.scarsz.me/content/groups/public/")
+        maven("https://repo.dmulloy2.net/repository/public/")
+        maven("https://repo.essentialsx.net/snapshots/")
         maven("https://files.minecraftforge.net/maven")
-        maven("https://dist.creeper.host/Sponge/maven")
-        maven("https://maven.minecraftforge.net/")
-        maven("https://plugins.gradle.org/m2/")
-        mavenCentral()
-        mavenLocal()
+        maven("https://repo.maven.apache.org/maven2/")
+        maven("https://maven.neoforged.net/releases")
+        maven("https://maven.enginehub.org/repo/")
+        maven("https://maven.minecraftforge.net")
+        maven("https://repo1.maven.org/maven2/")
+        maven("https://maven.fabricmc.net/")
+        maven("https://maven.playpro.com")
+        maven("https://jitpack.io")
     }
 }
 
 dependencyResolutionManagement {
     repositories {
-        gradlePluginPortal()
-        mavenCentral()
         mavenLocal()
-        maven("https://mvn.lumine.io/repository/maven-public/") { metadataSources { artifact() } }
+        mavenCentral()
         maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")
         maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
+        maven("https://papermc.io/repo/repository/maven-public/")
+        maven("https://repo.papermc.io/repository/maven-public/")
+        maven("https://oss.sonatype.org/content/groups/public/")
         maven("https://nexus.scarsz.me/content/groups/public/")
-        maven {
-            name = "papermc"
-            url = uri("https://repo.papermc.io/repository/maven-public/")
-        }
         maven("https://repo.dmulloy2.net/repository/public/")
         maven("https://repo.essentialsx.net/snapshots/")
+        maven("https://repo.essentialsx.net/releases/")
+        maven("https://files.minecraftforge.net/maven")
         maven("https://repo.maven.apache.org/maven2/")
-        maven("https://maven.minecraftforge.net/")
         maven("https://maven.enginehub.org/repo/")
-        maven("https://m2.dv8tion.net/releases")
+        maven("https://maven.minecraftforge.net/")
+        maven("https://libraries.minecraft.net/")
         maven("https://repo1.maven.org/maven2/")
+        maven("https://maven.fabricmc.net/")
         maven("https://maven.playpro.com")
         maven("https://jitpack.io")
     }
@@ -52,13 +51,11 @@ dependencyResolutionManagement {
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 rootProject.name = "AstraTemplate"
 
-// Shared
-include("modules:api-remote")
-include("modules:api-local")
+include(":instances:bukkit")
+include(":instances:forge")
+include(":instances:neoforge")
+
+include("modules:api:remote")
+include("modules:api:local")
 include("modules:core")
 include("modules:build-konfig")
-// Instances
-include(":instances:bukkit")
-include(":instances:fabric")
-include(":instances:velocity")
-include(":instances:forge")
