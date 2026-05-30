@@ -1,5 +1,6 @@
 package ru.astrainteractive.astratemplate.feature.command.di
 
+import ru.astrainteractive.astralibs.command.api.registrar.CommandRegistrarContext
 import ru.astrainteractive.astralibs.command.api.registrar.PaperCommandRegistrarContext
 import ru.astrainteractive.astralibs.lifecycle.Lifecycle
 import ru.astrainteractive.astratemplate.api.remote.di.ApiRemoteModule
@@ -13,17 +14,15 @@ import ru.astrainteractive.astratemplate.feature.command.reload.ReloadCommandReg
 import ru.astrainteractive.astratemplate.feature.command.rickmorty.RickMortyCommandRegistrar
 import ru.astrainteractive.astratemplate.core.di.CoreModule
 import ru.astrainteractive.astratemplate.di.BukkitModule
+import ru.astrainteractive.astratemplate.feature.gui.di.GuiModule
 import ru.astrainteractive.astratemplate.gui.di.GuiModule
 
 class CommandModule(
     coreModule: CoreModule,
     guiModule: GuiModule,
     apiRemoteModule: ApiRemoteModule,
+    commandRegistrarContext: CommandRegistrarContext
 ) {
-    private val commandRegistrarContext = PaperCommandRegistrarContext(
-        coreModule.mainScope,
-        bukkitModule.plugin
-    )
     private val nodes = buildList {
         val errorHandler = DefaultErrorHandler(
             translationKrate = coreModule.translationKrate,

@@ -8,7 +8,7 @@ import ru.astrainteractive.astratemplate.api.remote.di.ApiRemoteModule
 import ru.astrainteractive.astratemplate.feature.command.di.CommandModule
 import ru.astrainteractive.astratemplate.core.di.CoreModule
 import ru.astrainteractive.astratemplate.feature.event.di.EventModule
-import ru.astrainteractive.astratemplate.feature.gui.di.GuiModule
+import ru.astrainteractive.astratemplate.feature.gui.di.BukkitGuiModule
 
 internal class RootModule(plugin: AstraTemplate) {
 
@@ -25,7 +25,7 @@ internal class RootModule(plugin: AstraTemplate) {
     val apiRemoteModule: ApiRemoteModule = ApiRemoteModule()
 
     val eventModule: EventModule = EventModule(coreModule, plugin)
-    val guiModule: GuiModule = GuiModule(
+    val guiModule: BukkitGuiModule = BukkitGuiModule(
         coreModule = coreModule,
         apiLocalModule = apiLocalModule
     )

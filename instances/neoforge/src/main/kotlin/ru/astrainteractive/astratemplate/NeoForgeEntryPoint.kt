@@ -1,17 +1,17 @@
 package ru.astrainteractive.astratemplate
 
+import net.neoforged.fml.common.Mod
 import ru.astrainteractive.astralibs.lifecycle.ForgeLifecycleServer
 import ru.astrainteractive.klibs.mikro.core.logging.JUtiltLogger
 import ru.astrainteractive.klibs.mikro.core.logging.Logger
 import javax.annotation.ParametersAreNonnullByDefault
-import net.minecraftforge.fml.common.Mod
 import ru.astrainteractive.aspekt.BuildKonfig
 import ru.astrainteractive.astratemplate.di.RootModule
 
 @Mod(BuildKonfig.id)
 @ParametersAreNonnullByDefault
-class ForgeEntryPoint :
-    Logger by JUtiltLogger("${BuildKonfig.id}-ForgeEntryPoint"),
+class NeoForgeEntryPoint :
+    Logger by JUtiltLogger("${BuildKonfig.id}-NeoForgeEntryPoint"),
     ForgeLifecycleServer() {
     private val rootModule = RootModule()
 

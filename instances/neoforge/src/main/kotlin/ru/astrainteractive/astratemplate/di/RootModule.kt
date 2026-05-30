@@ -1,31 +1,26 @@
 package ru.astrainteractive.astratemplate.di
 
-import kotlinx.coroutines.CoroutineDispatcher
-import net.minecraftforge.fml.loading.FMLPaths
-import ru.astrainteractive.astralibs.command.registrar.ForgeCommandRegistrarContext
-import ru.astrainteractive.astralibs.coroutine.ForgeMainDispatcher
+import java.io.File
+import net.neoforged.fml.loading.FMLPaths
+import ru.astrainteractive.astralibs.command.registrar.NeoForgeCommandRegistrarContext
+import ru.astrainteractive.astralibs.coroutines.MinecraftDispatchers
 import ru.astrainteractive.astralibs.lifecycle.Lifecycle
 import ru.astrainteractive.astratemplate.api.local.di.ApiLocalModule
 import ru.astrainteractive.astratemplate.api.remote.di.ApiRemoteModule
-import ru.astrainteractive.astratemplate.command.di.CommandModule
 import ru.astrainteractive.astratemplate.core.di.CoreModule
-import ru.astrainteractive.astratemplate.event.di.EventModule
-import ru.astrainteractive.klibs.mikro.core.dispatchers.DefaultKotlinDispatchers
-import ru.astrainteractive.klibs.mikro.core.dispatchers.KotlinDispatchers
+import ru.astrainteractive.astratemplate.feature.event.di.di.EventModule
 
 class RootModule {
-
-    val coreModule: CoreModule by lazy {
-        CoreModule(
-            dataFolder = FMLPaths.CONFIGDIR.get()
-                .resolve("AstraTemplate")
-                .toAbsolutePath()
-                .toFile(),
-            dispatchers = object : KotlinDispatchers by DefaultKotlinDispatchers {
-                override val Main: CoroutineDispatcher = ForgeMainDispatcher
-            }
-        )
-    }
+    private val dataFolder = FMLPaths.CONFIGDIR.get()
+        .resolve("AspeKt")
+        .toAbsolutePath()
+        .toFile()
+        .also(File::mkdirs)
+    private val coreModule: CoreModule = CoreModule(
+        dataFolder = dataFolder,
+        dispatchers = MinecraftDispatchers()
+    )
+    private val commandRegistrarContext = NeoForgeCommandRegistrarContext(coreModule.mainScope)
 
     val apiLocalModule: ApiLocalModule by lazy {
         ApiLocalModule(
@@ -38,22 +33,22 @@ class RootModule {
         ApiRemoteModule()
     }
 
-    val commandModule by lazy {
+
+    private val commandModule by lazy {
         CommandModule(
-            commandRegistrarContext = ForgeCommandRegistrarContext(
-                mainScope = coreModule.mainScope
-            )
+            commandRegistrarContext = commandRegistrarContext
         )
     }
 
-    val eventsModule: EventModule by lazy {
+    private val eventsModule by lazy {
         EventModule(coreModule = coreModule)
     }
 
     private val lifecycles: List<Lifecycle>
         get() = listOf(
+            coreModule.lifecycle,
             eventsModule.lifecycle,
-            commandModule.lifecycle
+            commandModule.lifecycle,
         )
 
     val lifecycle: Lifecycle by lazy {

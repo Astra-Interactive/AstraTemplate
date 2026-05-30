@@ -19,7 +19,7 @@ repositories {
 dependencies {
     shadow(libs.kotlin.coroutines.core)
     shadow(libs.minecraft.astralibs.core)
-    shadow(libs.minecraft.astralibs.core.forge)
+    shadow(libs.minecraft.astralibs.core.neoforge)
     shadow(libs.minecraft.astralibs.command)
     shadow(libs.kotlin.serialization.kaml)
     shadow(libs.klibs.mikro.core)
@@ -31,6 +31,8 @@ dependencies {
     shadow(projects.modules.api.remote)
     shadow(projects.modules.buildKonfig)
     shadow(projects.modules.core)
+    shadow(projects.modules.featureEvent.neoforge)
+    shadow(projects.modules.featureCommand)
 }
 
 minecraftProcessResource {

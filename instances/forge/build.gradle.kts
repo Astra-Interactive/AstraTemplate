@@ -38,6 +38,8 @@ dependencies {
     shadow(projects.modules.api.remote)
     shadow(projects.modules.buildKonfig)
     shadow(projects.modules.core)
+    shadow(projects.modules.featureEvent.forge)
+    shadow(projects.modules.featureCommand)
 }
 
 minecraftProcessResource {

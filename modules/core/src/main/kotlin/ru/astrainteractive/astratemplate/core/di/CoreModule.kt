@@ -27,7 +27,7 @@ class CoreModule(
     val dispatchers: KotlinDispatchers
 ) {
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
-        val logger = JUtiltLogger("CoroutineExceptionHandler-AspeKt")
+        val logger = JUtiltLogger("${BuildKonfig.id}-CoroutineExceptionHandler")
         logger.error(throwable) { "Error happened inside global coroutine scope!" }
     }
 
