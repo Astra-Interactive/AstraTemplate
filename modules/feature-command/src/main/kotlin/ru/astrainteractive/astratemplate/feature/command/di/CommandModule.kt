@@ -1,9 +1,10 @@
 package ru.astrainteractive.astratemplate.feature.command.di
 
+import ru.astrainteractive.astralibs.command.api.brigadier.command.MultiplatformCommand
 import ru.astrainteractive.astralibs.command.api.registrar.CommandRegistrarContext
-import ru.astrainteractive.astralibs.command.api.registrar.PaperCommandRegistrarContext
 import ru.astrainteractive.astralibs.lifecycle.Lifecycle
 import ru.astrainteractive.astratemplate.api.remote.di.ApiRemoteModule
+import ru.astrainteractive.astratemplate.core.di.CoreModule
 import ru.astrainteractive.astratemplate.feature.command.additem.AddItemCommandRegistry
 import ru.astrainteractive.astratemplate.feature.command.additem.AddItemExecutor
 import ru.astrainteractive.astratemplate.feature.command.common.CommonCommandsRegistry
@@ -12,59 +13,69 @@ import ru.astrainteractive.astratemplate.feature.command.errorhandler.DefaultErr
 import ru.astrainteractive.astratemplate.feature.command.gui.GuiCommandRegistry
 import ru.astrainteractive.astratemplate.feature.command.reload.ReloadCommandRegistry
 import ru.astrainteractive.astratemplate.feature.command.rickmorty.RickMortyCommandRegistrar
-import ru.astrainteractive.astratemplate.core.di.CoreModule
-import ru.astrainteractive.astratemplate.di.BukkitModule
 import ru.astrainteractive.astratemplate.feature.gui.di.GuiModule
-import ru.astrainteractive.astratemplate.gui.di.GuiModule
 
 class CommandModule(
-    coreModule: CoreModule,
-    guiModule: GuiModule,
-    apiRemoteModule: ApiRemoteModule,
-    commandRegistrarContext: CommandRegistrarContext
+    private val coreModule: CoreModule,
+    private val guiModule: GuiModule,
+    private val apiRemoteModule: ApiRemoteModule,
+    private val lifecyclePlugin: Lifecycle,
+    private val commandRegistrarContext: CommandRegistrarContext,
+    private val multiplatformCommand: MultiplatformCommand
 ) {
-    private val nodes = buildList {
-        val errorHandler = DefaultErrorHandler(
+    private val errorHandler by lazy {
+        DefaultErrorHandler(
+            multiplatformCommand = multiplatformCommand,
             translationKrate = coreModule.translationKrate,
-            kyoriKrate = bukkitModule.kyoriKrate
-        )
-        AddItemCommandRegistry(
-            kyoriKrate = bukkitModule.kyoriKrate,
-            errorHandler = errorHandler,
-            executor = AddItemExecutor()
-        ).createNode().run(::add)
-        CommonCommandsRegistry(
-            kyoriKrate = bukkitModule.kyoriKrate,
-            translationKrate = coreModule.translationKrate,
-        ).createNode().run(::add)
-        DamageCommandRegistry(
-            errorHandler = errorHandler,
-            kyoriKrate = bukkitModule.kyoriKrate,
-            translationKrate = coreModule.translationKrate,
-        ).createNode().run(::add)
-        GuiCommandRegistry(
-            router = guiModule.router,
-            kyoriKrate = bukkitModule.kyoriKrate,
-            errorHandler = errorHandler,
-        ).createNode().run(::add)
-        ReloadCommandRegistry(
-            plugin = bukkitModule.plugin,
-            translationKrate = coreModule.translationKrate,
-            kyoriKrate = bukkitModule.kyoriKrate,
-            errorHandler = errorHandler,
-        ).createNode().run(::add)
-        RickMortyCommandRegistrar(
-            scope = coreModule.ioScope,
-            dispatchers = coreModule.dispatchers,
-            rmApi = apiRemoteModule.rickMortyApi,
-            errorHandler = errorHandler,
-        ).createNode().run(::add)
-    }
-    val lifecycle: Lifecycle by lazy {
-        Lifecycle.Lambda(
-            onEnable = {
-                nodes.forEach(commandRegistrarContext::registerWhenReady)
-            }
+            kyoriKrate = coreModule.kyoriKrate
         )
     }
+
+    val lifecycle: Lifecycle = Lifecycle.Lambda(
+        onEnable = {
+            AddItemCommandRegistry(
+                kyoriKrate = coreModule.kyoriKrate,
+                registrarContext = commandRegistrarContext,
+                multiplatformCommand = multiplatformCommand,
+                errorHandler = errorHandler,
+                executor = AddItemExecutor()
+            ).register()
+            CommonCommandsRegistry(
+                kyoriKrate = coreModule.kyoriKrate,
+                translationKrate = coreModule.translationKrate,
+                registrarContext = commandRegistrarContext,
+                multiplatformCommand = multiplatformCommand
+            ).register()
+            DamageCommandRegistry(
+                kyoriKrate = coreModule.kyoriKrate,
+                translationKrate = coreModule.translationKrate,
+                registrarContext = commandRegistrarContext,
+                multiplatformCommand = multiplatformCommand,
+                errorHandler = errorHandler
+            ).register()
+            GuiCommandRegistry(
+                kyoriKrate = coreModule.kyoriKrate,
+                registrarContext = commandRegistrarContext,
+                multiplatformCommand = multiplatformCommand,
+                router = guiModule.router,
+                errorHandler = errorHandler
+            ).register()
+            ReloadCommandRegistry(
+                kyoriKrate = coreModule.kyoriKrate,
+                translationKrate = coreModule.translationKrate,
+                lifecyclePlugin = lifecyclePlugin,
+                registrarContext = commandRegistrarContext,
+                multiplatformCommand = multiplatformCommand,
+                errorHandler = errorHandler
+            ).register()
+            RickMortyCommandRegistrar(
+                scope = coreModule.ioScope,
+                dispatchers = coreModule.dispatchers,
+                rmApi = apiRemoteModule.rickMortyApi,
+                registrarContext = commandRegistrarContext,
+                multiplatformCommand = multiplatformCommand,
+                errorHandler = errorHandler
+            ).register()
+        }
+    )
 }

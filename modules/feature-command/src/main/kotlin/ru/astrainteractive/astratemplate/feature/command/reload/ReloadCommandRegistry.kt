@@ -1,34 +1,41 @@
 package ru.astrainteractive.astratemplate.feature.command.reload
 
-import com.mojang.brigadier.tree.LiteralCommandNode
-import io.papermc.paper.command.brigadier.CommandSourceStack
-import ru.astrainteractive.astralibs.command.api.util.command
-import ru.astrainteractive.astralibs.command.api.util.requirePermission
-import ru.astrainteractive.astralibs.command.api.util.runs
+import com.mojang.brigadier.builder.LiteralArgumentBuilder
+import ru.astrainteractive.astralibs.command.api.brigadier.command.MultiplatformCommand
+import ru.astrainteractive.astralibs.command.api.registrar.CommandRegistrarContext
 import ru.astrainteractive.astralibs.kyori.KyoriComponentSerializer
 import ru.astrainteractive.astralibs.kyori.unwrap
-import ru.astrainteractive.astralibs.lifecycle.LifecyclePlugin
-import ru.astrainteractive.astratemplate.feature.command.errorhandler.DefaultErrorHandler
+import ru.astrainteractive.astralibs.lifecycle.Lifecycle
 import ru.astrainteractive.astratemplate.core.plugin.PluginPermission
 import ru.astrainteractive.astratemplate.core.plugin.PluginTranslation
+import ru.astrainteractive.astratemplate.feature.command.errorhandler.DefaultErrorHandler
 import ru.astrainteractive.klibs.kstorage.api.CachedKrate
+import ru.astrainteractive.klibs.kstorage.api.getValue
 
 internal class ReloadCommandRegistry(
     translationKrate: CachedKrate<PluginTranslation>,
     kyoriKrate: CachedKrate<KyoriComponentSerializer>,
-    private val plugin: LifecyclePlugin,
+    private val lifecyclePlugin: Lifecycle,
+    private val registrarContext: CommandRegistrarContext,
+    private val multiplatformCommand: MultiplatformCommand,
     private val errorHandler: DefaultErrorHandler
 ) : KyoriComponentSerializer by kyoriKrate.unwrap() {
     private val translation by translationKrate
 
-    fun createNode(): LiteralCommandNode<CommandSourceStack> {
-        return command("atempreload") {
-            runs(errorHandler::handle) { ctx ->
-                ctx.requirePermission(PluginPermission.Damage)
-                ctx.source.sender.sendMessage(translation.general.reload.component)
-                plugin.onReload()
-                ctx.source.sender.sendMessage(translation.general.reloadComplete.component)
+    private fun createNode(): LiteralArgumentBuilder<*> {
+        return with(multiplatformCommand) {
+            command("atempreload") {
+                runs(errorHandler::handle) { ctx ->
+                    ctx.requirePermission(PluginPermission.Reload)
+                    ctx.getSender().sendMessage(translation.general.reload.component)
+                    lifecyclePlugin.onReload()
+                    ctx.getSender().sendMessage(translation.general.reloadComplete.component)
+                }
             }
-        }.build()
+        }
+    }
+
+    fun register() {
+        registrarContext.registerWhenReady(createNode())
     }
 }

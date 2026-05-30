@@ -1,10 +1,11 @@
 package ru.astrainteractive.astratemplate.feature.command.additem
 
-import org.bukkit.inventory.ItemStack
+import net.kyori.adventure.text.Component
 
 internal class AddItemExecutor {
     fun execute(input: AddItemCommand.Result) {
-        val itemStack = ItemStack(input.item, input.amount)
-        input.player.inventory.addItem(itemStack)
+        input.player.sendMessage(
+            Component.text("Added ${input.amount}x ${input.itemName}")
+        )
     }
 }

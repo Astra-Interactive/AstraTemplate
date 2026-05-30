@@ -1,16 +1,12 @@
 package ru.astrainteractive.astratemplate.feature.command.rickmorty
 
 import com.mojang.brigadier.arguments.IntegerArgumentType
-import com.mojang.brigadier.tree.LiteralCommandNode
-import io.papermc.paper.command.brigadier.CommandSourceStack
+import com.mojang.brigadier.builder.LiteralArgumentBuilder
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import org.bukkit.command.CommandSender
-import ru.astrainteractive.astralibs.command.api.util.argument
-import ru.astrainteractive.astralibs.command.api.util.command
-import ru.astrainteractive.astralibs.command.api.util.literal
-import ru.astrainteractive.astralibs.command.api.util.requireArgument
-import ru.astrainteractive.astralibs.command.api.util.runs
+import ru.astrainteractive.astralibs.command.api.brigadier.command.MultiplatformCommand
+import ru.astrainteractive.astralibs.command.api.brigadier.sender.KCommandSender
+import ru.astrainteractive.astralibs.command.api.registrar.CommandRegistrarContext
 import ru.astrainteractive.astratemplate.api.remote.api.RickMortyApi
 import ru.astrainteractive.astratemplate.feature.command.errorhandler.DefaultErrorHandler
 import ru.astrainteractive.klibs.mikro.core.dispatchers.KotlinDispatchers
@@ -20,42 +16,38 @@ internal class RickMortyCommandRegistrar(
     private val scope: CoroutineScope,
     private val dispatchers: KotlinDispatchers,
     private val rmApi: RickMortyApi,
+    private val registrarContext: CommandRegistrarContext,
+    private val multiplatformCommand: MultiplatformCommand,
     private val errorHandler: DefaultErrorHandler
 ) {
-
-    private fun send(sender: CommandSender, number: Int) {
+    private fun send(sender: KCommandSender, number: Int) {
         scope.launch(dispatchers.IO) {
-            val result = rmApi.getRandomCharacter(number)
-            result.onSuccess {
-                sender.sendMessage("Got response: $it")
-            }
-            result.onFailure {
-                it.printStackTrace()
-                sender.sendMessage("Fail: ${it.message}")
+            rmApi.getRandomCharacter(number)
+                .onSuccess { sender.sendMessage(net.kyori.adventure.text.Component.text("Got response: $it")) }
+                .onFailure { sender.sendMessage(net.kyori.adventure.text.Component.text("Fail: ${it.message}")) }
+        }
+    }
+
+    private fun createNode(): LiteralArgumentBuilder<*> {
+        return with(multiplatformCommand) {
+            command("rickandmorty") {
+                literal("random") {
+                    runs(errorHandler::handle) { ctx ->
+                        send(ctx.getSender(), Random.nextInt(0, 100))
+                    }
+                }
+                literal("specific") {
+                    argument("number", IntegerArgumentType.integer()) { numberArg ->
+                        runs(errorHandler::handle) { ctx ->
+                            send(ctx.getSender(), ctx.requireArgument(numberArg))
+                        }
+                    }
+                }
             }
         }
     }
 
-    fun createNode(): LiteralCommandNode<CommandSourceStack> {
-        return command("rickandmorty") {
-            literal("random") {
-                runs(errorHandler::handle) { ctx ->
-                    send(
-                        sender = ctx.source.sender,
-                        number = Random.nextInt(0, 100)
-                    )
-                }
-            }
-            literal("specific") {
-                argument("number", IntegerArgumentType.integer()) { numberArg ->
-                    runs(errorHandler::handle) { ctx ->
-                        send(
-                            sender = ctx.source.sender,
-                            number = ctx.requireArgument(numberArg)
-                        )
-                    }
-                }
-            }
-        }.build()
+    fun register() {
+        registrarContext.registerWhenReady(createNode())
     }
 }

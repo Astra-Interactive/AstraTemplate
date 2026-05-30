@@ -1,14 +1,13 @@
 package ru.astrainteractive.astratemplate.feature.command.additem
 
-import org.bukkit.Material
-import org.bukkit.entity.Player
 import ru.astrainteractive.astralibs.command.api.exception.CommandException
+import ru.astrainteractive.astralibs.server.player.OnlineKPlayer
 
 internal interface AddItemCommand {
     class Result(
-        val player: Player,
+        val player: OnlineKPlayer,
         val amount: Int,
-        val item: Material
+        val itemName: String
     )
 
     sealed class Error(message: String) : CommandException(message) {

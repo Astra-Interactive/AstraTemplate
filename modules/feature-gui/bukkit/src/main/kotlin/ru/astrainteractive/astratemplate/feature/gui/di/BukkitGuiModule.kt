@@ -3,6 +3,7 @@ package ru.astrainteractive.astratemplate.feature.gui.di
 import ru.astrainteractive.astratemplate.api.local.di.ApiLocalModule
 import ru.astrainteractive.astratemplate.core.di.CoreModule
 import ru.astrainteractive.astratemplate.feature.gui.api.ItemStackSpigotAPI
+import ru.astrainteractive.astratemplate.feature.gui.button.di.ButtonContext
 import ru.astrainteractive.astratemplate.feature.gui.domain.GetRandomColorUseCaseImpl
 import ru.astrainteractive.astratemplate.feature.gui.domain.SetDisplayNameUseCaseImpl
 import ru.astrainteractive.astratemplate.feature.gui.router.Router
@@ -13,11 +14,12 @@ class BukkitGuiModule(
     apiLocalModule: ApiLocalModule
 ) : GuiModule {
     private val getRandomColorUseCase = GetRandomColorUseCaseImpl()
+    private val buttonContext = ButtonContext.Default(coreModule)
+
     override val router: Router = RouterImpl(
         ioScope = coreModule.ioScope,
         dispatchers = coreModule.dispatchers,
-        kyoriKrate = coreModule.kyoriKrate,
-        translationKrate = coreModule.translationKrate,
+        buttonContext = buttonContext,
         localDao = apiLocalModule.localDao,
         itemStackSpigotAPi = ItemStackSpigotAPI,
         getRandomColorUseCase = getRandomColorUseCase,

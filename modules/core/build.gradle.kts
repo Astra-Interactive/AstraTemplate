@@ -15,4 +15,6 @@ dependencies {
     implementation(libs.klibs.mikro.core)
     implementation(libs.klibs.mikro.extensions)
     api(libs.klibs.kstorage)
+
+    implementation(projects.modules.buildKonfig)
 }
