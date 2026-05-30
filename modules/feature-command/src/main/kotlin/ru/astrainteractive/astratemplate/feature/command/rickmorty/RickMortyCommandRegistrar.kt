@@ -28,6 +28,7 @@ internal class RickMortyCommandRegistrar(
         }
     }
 
+    @Suppress("MagicNumber")
     private fun createNode(): LiteralArgumentBuilder<*> {
         return with(multiplatformCommand) {
             command("rickandmorty") {

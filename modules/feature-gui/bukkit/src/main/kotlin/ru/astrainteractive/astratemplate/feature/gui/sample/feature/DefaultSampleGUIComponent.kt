@@ -35,6 +35,7 @@ internal class DefaultSampleGUIComponent(
     override val randomColor: ChatColor
         get() = getRandomColorUseCase.invoke().color
 
+    @Suppress("MagicNumber")
     private fun getRandomUser(): UserModel {
         return UserModel(
             id = -1,
@@ -110,6 +111,7 @@ internal class DefaultSampleGUIComponent(
 
     override fun onUiCreated() {
         launch(Dispatchers.IO) {
+            @Suppress("MagicNumber")
             delay(1000)
             loadItemsModel()
         }

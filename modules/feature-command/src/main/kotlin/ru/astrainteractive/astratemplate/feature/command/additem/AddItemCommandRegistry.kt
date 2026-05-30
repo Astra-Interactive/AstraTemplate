@@ -25,6 +25,7 @@ internal class AddItemCommandRegistry(
         }
     }
 
+    @Suppress("MagicNumber")
     private fun createNode(): LiteralArgumentBuilder<*> {
         return with(multiplatformCommand) {
             command("add") {
