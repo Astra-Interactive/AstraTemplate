@@ -40,6 +40,7 @@ dependencies {
     shadow(projects.modules.featureCommand)
     shadow(projects.modules.featureGui.api)
     shadow(projects.modules.featureGui.bukkit)
+    shadow(projects.modules.featureEvent.bukkit)
 
     testImplementation(libs.tests.kotlin.test)
 }

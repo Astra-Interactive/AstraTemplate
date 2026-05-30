@@ -1,4 +1,4 @@
-package ru.astrainteractive.astratemplate.event.event
+package ru.astrainteractive.astratemplate.feature.event.event
 
 import org.bukkit.event.EventHandler
 import org.bukkit.event.HandlerList
@@ -6,14 +6,12 @@ import org.bukkit.event.block.BlockPlaceEvent
 import ru.astrainteractive.astralibs.event.EventListener
 import ru.astrainteractive.astralibs.kyori.KyoriComponentSerializer
 import ru.astrainteractive.astralibs.kyori.unwrap
-import ru.astrainteractive.astratemplate.AstraTemplate
 import ru.astrainteractive.astratemplate.core.plugin.PluginTranslation
 import ru.astrainteractive.klibs.kstorage.api.CachedKrate
-import ru.astrainteractive.klibs.kstorage.util.getValue
+import ru.astrainteractive.klibs.kstorage.api.getValue
 
 /**
  * Template event class
- * @see [MultipleEventsDSL]
  */
 internal class TemplateEvent(
     kyoriKrate: CachedKrate<KyoriComponentSerializer>,
@@ -34,7 +32,7 @@ internal class TemplateEvent(
     /**
      * As said in EventHandler, every Event must have onDisable method, which disabling events
      * Here BlockPlaceEvent is unregistering
-     * It's okay to not write anything here, since you call [HandlerList.unregister] in [AstraTemplate.onDisable]
+     * It's okay to not write anything here, since you call [HandlerList.unregister] in [ru.astrainteractive.astralibs.lifecycle.Lifecycle.onDisable]
      */
     public override fun onDisable() {
         super.onDisable()
