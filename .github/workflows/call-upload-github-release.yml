@@ -26,12 +26,12 @@ jobs:
       - uses: actions/download-artifact@d0ce8fd1167ed839810201de977912a090ab10a7
         name: "Download forge"
         with:
-          name: bungee
+          name: forge
           path: ./jars
       - uses: actions/download-artifact@d0ce8fd1167ed839810201de977912a090ab10a7
         name: "Download neoforge"
         with:
-          name: bungee
+          name: neoforge
           path: ./jars
 
       - name: Create release
