@@ -14,9 +14,3 @@ jobs:
     uses: ./.github/workflows/call-upload-github-release.yml
     secrets:
       ACTIONS_TOKEN: ${{ secrets.ACTIONS_TOKEN }}
-
-  upload_modrinth_artifacts:
-    needs: [ upload_artifacts ]
-    uses: ./.github/workflows/call-upload-modrinth-release.yml
-    secrets:
-      MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}

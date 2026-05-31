@@ -1,43 +1,50 @@
 package ru.astrainteractive.astratemplate.di
 
-import ru.astrainteractive.astralibs.async.DefaultBukkitDispatchers
+import ru.astrainteractive.astralibs.command.api.brigadier.command.MultiplatformCommand
+import ru.astrainteractive.astralibs.command.api.brigadier.command.PaperMultiplatformCommands
+import ru.astrainteractive.astralibs.command.api.registrar.PaperCommandRegistrarContext
+import ru.astrainteractive.astralibs.coroutines.DefaultBukkitDispatchers
 import ru.astrainteractive.astralibs.lifecycle.Lifecycle
 import ru.astrainteractive.astratemplate.AstraTemplate
 import ru.astrainteractive.astratemplate.api.local.di.ApiLocalModule
 import ru.astrainteractive.astratemplate.api.remote.di.ApiRemoteModule
-import ru.astrainteractive.astratemplate.command.di.CommandModule
 import ru.astrainteractive.astratemplate.core.di.CoreModule
-import ru.astrainteractive.astratemplate.event.di.EventModule
-import ru.astrainteractive.astratemplate.gui.di.GuiModule
+import ru.astrainteractive.astratemplate.feature.command.di.CommandModule
+import ru.astrainteractive.astratemplate.feature.event.di.EventModule
+import ru.astrainteractive.astratemplate.feature.gui.di.BukkitGuiModule
 
 internal class RootModule(plugin: AstraTemplate) {
 
-    val bukkitModule: BukkitModule = BukkitModule(plugin)
-
     val coreModule: CoreModule = CoreModule(
-        dataFolder = bukkitModule.plugin.dataFolder,
-        dispatchers = DefaultBukkitDispatchers(plugin)
+        dataFolder = plugin.dataFolder,
+        dispatchers = DefaultBukkitDispatchers(plugin),
+        commandRegistrarContextFactory = { mainScope ->
+            PaperCommandRegistrarContext(
+                mainScope = mainScope,
+                plugin = plugin
+            )
+        }
     )
 
     val apiLocalModule: ApiLocalModule = ApiLocalModule(
-        dataFolder = bukkitModule.plugin.dataFolder,
         configFlow = coreModule.configKrate.cachedStateFlow,
-        scope = coreModule.ioScope
+        ioScope = coreModule.ioScope
     )
 
     val apiRemoteModule: ApiRemoteModule = ApiRemoteModule()
 
-    val eventModule: EventModule = EventModule(this)
-    val guiModule: GuiModule = GuiModule(
+    val eventModule: EventModule = EventModule(coreModule, plugin)
+    val guiModule: BukkitGuiModule = BukkitGuiModule(
         coreModule = coreModule,
-        bukkitModule = bukkitModule,
         apiLocalModule = apiLocalModule
     )
     val commandModule: CommandModule = CommandModule(
         coreModule = coreModule,
-        bukkitModule = bukkitModule,
         apiRemoteModule = apiRemoteModule,
-        guiModule = guiModule
+        guiModule = guiModule,
+        lifecyclePlugin = plugin,
+        commandRegistrarContext = coreModule.commandRegistrarContext,
+        multiplatformCommand = MultiplatformCommand(PaperMultiplatformCommands())
     )
 
     private val lifecycles: List<Lifecycle>
@@ -49,7 +56,7 @@ internal class RootModule(plugin: AstraTemplate) {
         )
     val lifecycle = Lifecycle.Lambda(
         onEnable = { lifecycles.forEach(Lifecycle::onEnable) },
-        onDisable = { lifecycles.forEach(Lifecycle::onDisable) },
+        onDisable = { lifecycles.reversed().forEach(Lifecycle::onDisable) },
         onReload = { lifecycles.forEach(Lifecycle::onReload) }
     )
 }
