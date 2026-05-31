@@ -18,15 +18,15 @@ import java.io.File
 class RootModule(forgeLifecycleServer: ForgeLifecycleServer) {
 
     private val dataFolder = FMLPaths.CONFIGDIR.get()
-        .resolve("AspeKt")
+        .resolve("AstraTemplate")
         .toAbsolutePath()
         .toFile()
         .also(File::mkdirs)
     private val coreModule: CoreModule = CoreModule(
         dataFolder = dataFolder,
-        dispatchers = MinecraftDispatchers()
+        dispatchers = MinecraftDispatchers(),
+        commandRegistrarContextFactory = ::ForgeCommandRegistrarContext
     )
-    private val commandRegistrarContext = ForgeCommandRegistrarContext(coreModule.mainScope)
 
     private val apiLocalModule: ApiLocalModule by lazy {
         ApiLocalModule(
@@ -46,7 +46,7 @@ class RootModule(forgeLifecycleServer: ForgeLifecycleServer) {
             guiModule = guiModule,
             apiRemoteModule = apiRemoteModule,
             lifecyclePlugin = forgeLifecycleServer,
-            commandRegistrarContext = commandRegistrarContext,
+            commandRegistrarContext = coreModule.commandRegistrarContext,
             multiplatformCommand = MultiplatformCommand(MinecraftMultiplatformCommands())
         )
     }
@@ -60,6 +60,7 @@ class RootModule(forgeLifecycleServer: ForgeLifecycleServer) {
             coreModule.lifecycle,
             eventsModule.lifecycle,
             commandModule.lifecycle,
+            apiLocalModule.lifecycle
         )
 
     val lifecycle: Lifecycle by lazy {
@@ -68,7 +69,7 @@ class RootModule(forgeLifecycleServer: ForgeLifecycleServer) {
                 lifecycles.forEach(Lifecycle::onEnable)
             },
             onDisable = {
-                lifecycles.forEach(Lifecycle::onDisable)
+                lifecycles.reversed().forEach(Lifecycle::onDisable)
             },
             onReload = {
                 lifecycles.forEach(Lifecycle::onReload)

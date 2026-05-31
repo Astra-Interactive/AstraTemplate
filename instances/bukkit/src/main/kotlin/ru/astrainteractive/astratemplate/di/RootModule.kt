@@ -17,7 +17,13 @@ internal class RootModule(plugin: AstraTemplate) {
 
     val coreModule: CoreModule = CoreModule(
         dataFolder = plugin.dataFolder,
-        dispatchers = DefaultBukkitDispatchers(plugin)
+        dispatchers = DefaultBukkitDispatchers(plugin),
+        commandRegistrarContextFactory = { mainScope ->
+            PaperCommandRegistrarContext(
+                mainScope = mainScope,
+                plugin = plugin
+            )
+        }
     )
 
     val apiLocalModule: ApiLocalModule = ApiLocalModule(
@@ -37,10 +43,7 @@ internal class RootModule(plugin: AstraTemplate) {
         apiRemoteModule = apiRemoteModule,
         guiModule = guiModule,
         lifecyclePlugin = plugin,
-        commandRegistrarContext = PaperCommandRegistrarContext(
-            mainScope = coreModule.mainScope,
-            plugin = plugin
-        ),
+        commandRegistrarContext = coreModule.commandRegistrarContext,
         multiplatformCommand = MultiplatformCommand(PaperMultiplatformCommands())
     )
 
@@ -53,7 +56,7 @@ internal class RootModule(plugin: AstraTemplate) {
         )
     val lifecycle = Lifecycle.Lambda(
         onEnable = { lifecycles.forEach(Lifecycle::onEnable) },
-        onDisable = { lifecycles.forEach(Lifecycle::onDisable) },
+        onDisable = { lifecycles.reversed().forEach(Lifecycle::onDisable) },
         onReload = { lifecycles.forEach(Lifecycle::onReload) }
     )
 }

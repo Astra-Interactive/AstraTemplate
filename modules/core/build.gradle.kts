@@ -11,6 +11,7 @@ dependencies {
     implementation(libs.kotlin.serialization.kaml)
 
     implementation(libs.minecraft.astralibs.core)
+    implementation(libs.minecraft.astralibs.command)
 
     implementation(libs.klibs.mikro.core)
     implementation(libs.klibs.mikro.extensions)

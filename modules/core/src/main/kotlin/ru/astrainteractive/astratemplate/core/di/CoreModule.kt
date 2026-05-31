@@ -7,6 +7,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.serialization.StringFormat
+import ru.astrainteractive.astralibs.command.api.registrar.CommandRegistrarContext
 import ru.astrainteractive.astralibs.coroutines.withTimings
 import ru.astrainteractive.astralibs.kyori.KyoriComponentSerializer
 import ru.astrainteractive.astralibs.lifecycle.Lifecycle
@@ -25,7 +26,8 @@ import java.io.File
 
 class CoreModule(
     val dataFolder: File,
-    val dispatchers: KotlinDispatchers
+    val dispatchers: KotlinDispatchers,
+    commandRegistrarContextFactory: (mainScope: CoroutineScope) -> CommandRegistrarContext
 ) {
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
         val logger = JUtiltLogger("${BuildKonfig.id}-CoroutineExceptionHandler")
@@ -36,13 +38,18 @@ class CoreModule(
         .Default(dispatchers.IO + SupervisorJob() + coroutineExceptionHandler)
         .withTimings()
 
-    val mainScope: CoroutineScope = CoroutineFeature
-        .Default(dispatchers.Main + SupervisorJob() + coroutineExceptionHandler)
-        .withTimings()
+    // Main dispatcher is initialized later after server onCreate
+    val mainScope: CoroutineScope by lazy {
+        CoroutineFeature
+            .Default(dispatchers.Main + SupervisorJob() + coroutineExceptionHandler)
+            .withTimings()
+    }
 
     val unconfinedScope = CoroutineFeature
         .Default(dispatchers.Unconfined + SupervisorJob() + coroutineExceptionHandler)
         .withTimings()
+
+    val commandRegistrarContext = commandRegistrarContextFactory.invoke(unconfinedScope)
 
     val yamlFormat: StringFormat = YamlStringFormat(
         configuration = Yaml.default.configuration.copy(

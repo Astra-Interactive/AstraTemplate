@@ -17,15 +17,15 @@ import java.io.File
 
 class RootModule(forgeLifecycleServer: ForgeLifecycleServer) {
     private val dataFolder = FMLPaths.CONFIGDIR.get()
-        .resolve("AspeKt")
+        .resolve("AstraTemplate")
         .toAbsolutePath()
         .toFile()
         .also(File::mkdirs)
     private val coreModule: CoreModule = CoreModule(
         dataFolder = dataFolder,
-        dispatchers = MinecraftDispatchers()
+        dispatchers = MinecraftDispatchers(),
+        commandRegistrarContextFactory = ::NeoForgeCommandRegistrarContext
     )
-    private val commandRegistrarContext = NeoForgeCommandRegistrarContext(coreModule.mainScope)
 
     val apiLocalModule: ApiLocalModule by lazy {
         ApiLocalModule(
@@ -44,7 +44,7 @@ class RootModule(forgeLifecycleServer: ForgeLifecycleServer) {
             guiModule = guiModule,
             apiRemoteModule = apiRemoteModule,
             lifecyclePlugin = forgeLifecycleServer,
-            commandRegistrarContext = commandRegistrarContext,
+            commandRegistrarContext = coreModule.commandRegistrarContext,
             multiplatformCommand = MultiplatformCommand(MinecraftMultiplatformCommands())
         )
     }
