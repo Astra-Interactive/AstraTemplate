@@ -1,6 +1,6 @@
 [versions]
 cache4k = "0.14.0" # https://github.com/ReactiveCircus/cache4k
-checkerfraemwork-qual = "3.12.0" # https://github.com/typetools/checker-framework/
+checkerfraemwork-qual = "4.2.0" # https://github.com/typetools/checker-framework/
 discordsrv = "1.30.5" # https://github.com/DiscordSRV/DiscordSRV
 driver-h2 = "2.4.240" # https://github.com/h2database/h2database
 driver-jdbc = "3.53.2.0" # https://github.com/xerial/sqlite-jdbc
@@ -38,7 +38,7 @@ minecraft-fabric-kotlin = "1.13.12+" # https://github.com/FabricMC/fabric-langua
 minecraft-fabric-loader = "0.19.3" # https://github.com/FabricMC/fabric-loader
 minecraft-fabric-loom = "1.17.12" # https://github.com/FabricMC/fabric-loom
 minecraft-fabric-yarn = "1.20.1+build.10" # https://github.com/FabricMC/yarn
-minecraft-forge-bus = "6.0.5" # https://github.com/MinecraftForge/EventBus
+minecraft-forge-bus = "7.0.5" # https://github.com/MinecraftForge/EventBus
 minecraft-forgegradle = "7.0.29" # https://github.com/MinecraftForge/ForgeGradle
 minecraft-forge-jarjar = "0.2.3"
 minecraft-forgerenamer = "1.1.2" # https://github.com/MinecraftForge/renamer
@@ -56,7 +56,7 @@ minecraft-papi = "2.12.2" # https://github.com/PlaceholderAPI/PlaceholderAPI
 minecraft-protocollib = "5.4.0" # https://github.com/dmulloy2/ProtocolLib
 minecraft-spigot = "26.1.2.build.+" # https://www.spigotmc.org
 minecraft-vault = "1.7.1" # https://github.com/MilkBowl/VaultAPI
-minecraft-velocity = "3.5.0-SNAPSHOT" # https://github.com/PaperMC/Velocity
+minecraft-velocity = "4.0.0-SNAPSHOT" # https://github.com/PaperMC/Velocity
 telegrambots = "10.0.0" # https://github.com/rubenlagus/TelegramBots
 tests-junit-bom = "6.1.0" # https://github.com/junit-team/junit5
 tests-junit-jupiter-api = "6.1.0" # https://github.com/junit-team/junit5
