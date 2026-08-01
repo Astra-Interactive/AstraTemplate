@@ -15,7 +15,7 @@ jobs:
             task: ":instances:bukkit:shadowJar"
     steps:
       - name: Checkout Git repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - uses: christian-draeger/read-properties@1.1.1
         id: properties
