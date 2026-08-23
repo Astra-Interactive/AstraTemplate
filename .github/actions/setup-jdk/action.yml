@@ -1,0 +1,15 @@
+name: "setup-jdk"
+description: "Sets up the project JDK (Temurin) used across all workflows"
+inputs:
+  java-version:
+    description: "JDK version to install"
+    required: false
+    default: "25"
+runs:
+  using: "composite"
+  steps:
+    - name: Set up JDK ${{ inputs.java-version }}
+      uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5
+      with:
+        distribution: 'temurin'
+        java-version: ${{ inputs.java-version }}

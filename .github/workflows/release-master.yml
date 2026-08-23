@@ -1,16 +1,29 @@
-name: CI
+name: Release Master
 on:
   push:
     branches:
       - master
+
+# Explicit least-privilege token permissions so the workflow behaves
+# the same in personal repositories and organizations regardless of
+# the default GITHUB_TOKEN settings. Jobs that need more (e.g. creating
+# a release) elevate their permissions individually.
+permissions:
+  contents: read
+
 jobs:
-  gradle_validation:
+  gradle_wrapper_validation:
+    name: Validate Gradle wrapper
     uses: ./.github/workflows/call-gradle-wrapper-validation.yml
   upload_artifacts:
-    needs: [ gradle_validation ]
+    name: Build and upload artifacts
+    needs: [ gradle_wrapper_validation ]
     uses: ./.github/workflows/call-upload-artifacts.yml
-  upload_github_artifacts:
+  upload_github_release:
+    name: Upload GitHub release
     needs: [ upload_artifacts ]
+    permissions:
+      contents: write
     uses: ./.github/workflows/call-upload-github-release.yml
     secrets:
       ACTIONS_TOKEN: ${{ secrets.ACTIONS_TOKEN }}

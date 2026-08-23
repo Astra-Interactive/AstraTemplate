@@ -19,7 +19,9 @@ updates:
           - patch
 
   - package-ecosystem: "github-actions"
-    directory: "/"
+    directories:
+      - "/"
+      - "/.github/actions/*"
     schedule:
       interval: "monthly"
       day: "monday"

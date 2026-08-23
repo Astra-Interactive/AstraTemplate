@@ -1,9 +1,15 @@
-name: Check Develop
+name: Pull Request Check
 on:
   pull_request:
     branches:
       - 'develop'
       - 'master'
+
+# Explicit least-privilege token permissions so the workflow behaves
+# the same in personal repositories and organizations regardless of
+# the default GITHUB_TOKEN settings.
+permissions:
+  contents: read
 
 # Concurrency strategy:
 #   github.workflow: distinguish this workflow from others
@@ -15,21 +21,26 @@ on:
 #   https://docs.github.com/en/actions/using-jobs/using-concurrency
 #   https://docs.github.com/en/actions/learn-github-actions/contexts#github-context
 concurrency:
-  group: ${{ github.workflow }}-${{ github.event_name }}-${{github.ref_name}}-${{github.repository}}
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.ref_name }}-${{ github.repository }}
   cancel-in-progress: true
 
 jobs:
-  gradle_validation:
-    name: Validate gradle wrapper
+  gradle_wrapper_validation:
+    name: Validate Gradle wrapper
     uses: ./.github/workflows/call-gradle-wrapper-validation.yml
+  version_changed:
+    name: Validate version is changed
+    needs: gradle_wrapper_validation
+    uses: ./.github/workflows/call-version-changed.yml
   detekt_validation:
-    name: Check by detekt
-    needs: gradle_validation
+    name: Validate with detekt
+    needs: gradle_wrapper_validation
     uses: ./.github/workflows/call-detekt-validation.yml
   tests_validation:
-    needs: gradle_validation
+    name: Run tests
+    needs: gradle_wrapper_validation
     uses: ./.github/workflows/call-tests-validation.yml
-  build:
+  build_project:
     name: Build project
-    needs: [ gradle_validation, detekt_validation, tests_validation ]
+    needs: [ gradle_wrapper_validation, detekt_validation, tests_validation ]
     uses: ./.github/workflows/call-build-project.yml

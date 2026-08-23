@@ -1,43 +1,46 @@
-name: "Upload Modrinth release"
+name: "upload-modrinth-release"
 on:
   workflow_call:
     secrets:
       MODRINTH_TOKEN:
+        description: "Modrinth API token used to publish the release."
         required: true
+
+permissions:
+  contents: read
+
 jobs:
-  upload_github_release:
-    name: Upload GitHub release
+  upload_modrinth_release:
+    name: Upload ${{ matrix.id }} Modrinth release
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        include:
-          - id: "bukkit"
-            task: ":instances:bukkit:shadowJar"
+        id: [ "neoforge", "forge", "bukkit" ]
     steps:
       - name: Checkout Git repo
-        uses: actions/checkout@v6
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      - uses: christian-draeger/read-properties@1.1.1
+      - name: Read project properties
         id: properties
+        uses: christian-draeger/read-properties@908f99d3334be3802ec7cb528395a69d19914e7b # 1.1.1
         with:
           path: './gradle.properties'
           properties: 'klibs.project.name klibs.project.version.string'
 
-      - uses: actions/download-artifact@d0ce8fd1167ed839810201de977912a090ab10a7
-        name: "Download ${{ matrix.id }}"
+      - name: Download ${{ matrix.id }} dist
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
-          name: ${{ matrix.id }}
-          path: ./jars/${{ matrix.id }}
-      - uses: Kir-Antipov/mc-publish@v3.3
+          name: dist-${{ matrix.id }}
+          path: ./dist/${{ matrix.id }}
+      - name: Publish ${{ matrix.id }} to Modrinth
+        uses: Kir-Antipov/mc-publish@52307b03863581dec6b652b83e597aec02ebb075 # v3.3
         with:
-          # Only include this section if you wish to publish
-          # your assets on Modrinth.
           modrinth-id: 6NpNwzA1
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
           name: ${{ steps.properties.outputs.klibs-project-name }}-${{ matrix.id }}
           version: ${{ steps.properties.outputs.klibs-project-version-string }}
           changelog: ${{ join(github.event.commits.*.message, '\n') }}
-          version_type: beta
+          version-type: beta
           java: |
             21
           loaders: |
@@ -45,4 +48,4 @@ jobs:
           game-versions: |
             [1.16,1.21.1)
           files: |
-            ./jars/${{ matrix.id }}/*.jar
+            ./dist/${{ matrix.id }}/*.jar

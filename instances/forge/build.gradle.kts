@@ -83,83 +83,10 @@ val shadowJar by tasks.getting(ShadowJar::class) {
     dependencies {
         // Dependencies
         exclude(dependency("org.jetbrains:annotations"))
-        exclude("ch/qos/logback/**")
-        exclude("com/ibm/icu/**")
-        exclude("it/unimi/dsi/**")
-        exclude("javax/**")
-        exclude("mozilla/**")
-        exclude("org/apache/batik/**")
-        exclude("org/apache/commons/logging/**")
-        exclude("org/apache/xmlgraphics/**")
-        exclude("org/intellij/lang/annotations/**")
-        exclude("org/jetbrains/annotations/**")
-        exclude("org/slf4j/**")
-        exclude("org/w3c/dom/**")
-        exclude("org/jspecify/annotations/**")
-        // Root
-        if (project.name == "forge" || project.name == "neoforge") {
-            exclude("kotlin/**") // Use kotlin-neoforge or kotlin-forge
-        }
-        exclude("_COROUTINE/**")
-        exclude("DebugProbesKt.bin")
-        exclude("jetty-dir.css")
-        exclude("license/**")
-        exclude("**LICENCE**")
-        exclude("**LICENSE**")
-        // Other dependencies
-        exclude("club/minnced/opus/**")
-        exclude("com/google/**")
-        exclude("com/ibm/icu/**")
-        exclude("com/sun/**")
-        exclude("google/protobuf/**")
-        exclude("io/javalin/**")
-        exclude("jakarta/servlet/**")
-        exclude("javax/annotation/**")
-        exclude("javax/servlet/**")
-        exclude("natives/**")
-        exclude("net/luckperms/**")
-        exclude("nl/altindag/**")
-        exclude("org/bouncycastle/**")
-        exclude("org/checkerframework/**")
-        exclude("org/conscrypt/**")
-        exclude("org/apache/batik/**")
-        exclude("org/apache/xmlgraphics/**")
-        exclude("org/apache/xmlcommons/**")
-        exclude("org/eclipse/**")
-        exclude("jdk/xml/**")
-        exclude("org/w3c/**")
-        exclude("tomp2p/opuswrapper/**")
-        exclude("org/slf4j/**")
-        exclude("javax/xml/**")
-        exclude("org/xml/**")
-        if (project.name == "forge") {
-            exclude("org/sqlite/**") // Place jdbc in mods folder
-        }
-        // META
-        exclude("META-INF/**.md")
-        exclude("META-INF/**.MD")
-        exclude("META-INF/**.txt**")
-        exclude("META-INF/**LICENCE**")
-        exclude("META-INF/com.android.tools/**")
-        exclude("META-INF/gradle-plugins/**")
-        exclude("META-INF/imports/**")
-        if (project.name == "forge") {
-            exclude("META-INF/kotlin-reflection.kotlin_module") // Don't exclude on: forge]
-        }
-        exclude("META-INF/license/**")
-        exclude("META-INF/maven/**")
-        exclude("META-INF/native-image/**")
-        exclude("META-INF/native/**")
-        exclude("META-INF/proguard/**")
-        exclude("META-INF/rewrite/**")
-        if (project.name == "forge") {
-            exclude("META-INF/services/kotlin.reflect.**") // Don't exclude on: [*]
-        }
-        if (project.name != "forge") {
-            exclude("META-INF/versions/**") // Don't remove in: [forge]
-        }
-        // DEPENDENCIES
-        if (project.name == "bukkit") {
+    }
+    // DEPENDENCIES
+    if (project.name == "bukkit") {
+        dependencies {
             exclude(dependency("com.fasterxml.jackson.core:.*"))
             exclude(dependency("com.google.code.gson:.*"))
             exclude(dependency("com.google.crypto.tink:.*"))
@@ -177,6 +104,81 @@ val shadowJar by tasks.getting(ShadowJar::class) {
             exclude(dependency("org.eclipse.jetty:.*"))
             exclude(dependency("org.xerial:sqlite-jdbc"))
         }
+    }
+    exclude("ch/qos/logback/**")
+    exclude("com/ibm/icu/**")
+    exclude("it/unimi/dsi/**")
+    exclude("javax/**")
+    exclude("mozilla/**")
+    exclude("org/apache/batik/**")
+    exclude("org/apache/commons/logging/**")
+    exclude("org/apache/xmlgraphics/**")
+    exclude("org/intellij/lang/annotations/**")
+    exclude("org/jetbrains/annotations/**")
+    exclude("org/slf4j/**")
+    exclude("org/w3c/dom/**")
+    exclude("org/jspecify/annotations/**")
+    // Root
+    if (project.name == "forge" || project.name == "neoforge") {
+        exclude("kotlin/**") // Use kotlin-neoforge or kotlin-forge
+    }
+    exclude("_COROUTINE/**")
+    exclude("DebugProbesKt.bin")
+    exclude("jetty-dir.css")
+    exclude("license/**")
+    exclude("**LICENCE**")
+    exclude("**LICENSE**")
+    // Other dependencies
+    exclude("club/minnced/opus/**")
+    exclude("com/google/**")
+    exclude("com/ibm/icu/**")
+    exclude("com/sun/**")
+    exclude("google/protobuf/**")
+    exclude("io/javalin/**")
+    exclude("jakarta/servlet/**")
+    exclude("javax/annotation/**")
+    exclude("javax/servlet/**")
+    exclude("natives/**")
+    exclude("net/luckperms/**")
+    exclude("nl/altindag/**")
+    exclude("org/bouncycastle/**")
+    exclude("org/checkerframework/**")
+    exclude("org/conscrypt/**")
+    exclude("org/apache/batik/**")
+    exclude("org/apache/xmlgraphics/**")
+    exclude("org/apache/xmlcommons/**")
+    exclude("org/eclipse/**")
+    exclude("jdk/xml/**")
+    exclude("org/w3c/**")
+    exclude("tomp2p/opuswrapper/**")
+    exclude("org/slf4j/**")
+    exclude("javax/xml/**")
+    exclude("org/xml/**")
+    if (project.name == "forge") {
+        exclude("org/sqlite/**") // Place jdbc in mods folder
+    }
+    // META
+    exclude("META-INF/**.md")
+    exclude("META-INF/**.MD")
+    exclude("META-INF/**.txt**")
+    exclude("META-INF/**LICENCE**")
+    exclude("META-INF/com.android.tools/**")
+    exclude("META-INF/gradle-plugins/**")
+    exclude("META-INF/imports/**")
+    if (project.name == "forge") {
+        exclude("META-INF/kotlin-reflection.kotlin_module") // Don't exclude on: forge]
+    }
+    exclude("META-INF/license/**")
+    exclude("META-INF/maven/**")
+    exclude("META-INF/native-image/**")
+    exclude("META-INF/native/**")
+    exclude("META-INF/proguard/**")
+    exclude("META-INF/rewrite/**")
+    if (project.name == "forge") {
+        exclude("META-INF/services/kotlin.reflect.**") // Don't exclude on: [*]
+    }
+    if (project.name != "forge") {
+        exclude("META-INF/versions/**") // Don't remove in: [forge]
     }
 
     relocate("org.bstats", requireProjectInfo.group)

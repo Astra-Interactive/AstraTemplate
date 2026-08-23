@@ -1,0 +1,42 @@
+name: "version-changed"
+on:
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  version_changed:
+    name: Validate version is changed
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Git repo
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Checkout base branch
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.base_ref }}
+          path: base
+      - name: Read current version
+        id: current
+        uses: christian-draeger/read-properties@908f99d3334be3802ec7cb528395a69d19914e7b # 1.1.1
+        with:
+          path: './gradle.properties'
+          properties: 'klibs.project.version.string'
+      - name: Read base version
+        id: base
+        uses: christian-draeger/read-properties@908f99d3334be3802ec7cb528395a69d19914e7b # 1.1.1
+        with:
+          path: './base/gradle.properties'
+          properties: 'klibs.project.version.string'
+      - name: Check klibs.project.version.string is changed
+        env:
+          BASE_VERSION: ${{ steps.base.outputs.klibs-project-version-string }}
+          CURRENT_VERSION: ${{ steps.current.outputs.klibs-project-version-string }}
+        run: |
+          echo "Base version: ${BASE_VERSION}"
+          echo "Current version: ${CURRENT_VERSION}"
+          if [ -z "${CURRENT_VERSION}" ] || [ "${CURRENT_VERSION}" = "${BASE_VERSION}" ]; then
+            echo "::error file=gradle.properties::klibs.project.version.string is not changed (still ${CURRENT_VERSION}). Bump the version before merging."
+            exit 1
+          fi
