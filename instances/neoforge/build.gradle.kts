@@ -1,4 +1,5 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+import net.neoforged.gradle.common.tasks.ArtifactFromOutput
 import ru.astrainteractive.gradleplugin.property.util.requireProjectInfo
 
 plugins {
@@ -172,4 +173,14 @@ val shadowJar by tasks.getting(ShadowJar::class) {
 
 dependencies {
     compileOnly(libs.minecraft.neoforgeversion)
+}
+
+tasks.configureEach {
+    if (javaClass.name.startsWith("net.neoforged.gradle")) {
+        notCompatibleWithConfigurationCache("NeoGradle tasks access Task.project at execution time")
+    }
+}
+
+tasks.register("generateNeoforgeJar") {
+    dependsOn(tasks.withType<ArtifactFromOutput>())
 }
