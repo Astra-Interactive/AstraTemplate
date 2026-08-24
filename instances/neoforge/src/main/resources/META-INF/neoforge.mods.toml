@@ -1,5 +1,6 @@
 modLoader = "javafml"
 loaderVersion = "[1,)"
+license = "${mod_license}"
 
 [[mods]]
 modId = "${mod_id}"

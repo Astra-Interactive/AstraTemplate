@@ -38,11 +38,16 @@ dependencies {
 }
 
 minecraftProcessResource {
+    // NeoForge versions as MC_MINOR.MC_PATCH.BUILD: 21.1.129 targets Minecraft 1.21.1
+    val neoForgeMinecraftVersion = "1." + libs.versions.minecraft.neoforgeversion.get()
+        .split(".")
+        .take(2)
+        .joinToString(".")
     neoForge(
         customProperties = mapOf(
-            "minecraft_version" to libs.versions.minecraft.mojang.version.get(),
-            "minecraft_version_range" to listOf(libs.versions.minecraft.mojang.version.get())
-                .joinToString(","),
+            "minecraft_version" to neoForgeMinecraftVersion,
+            "minecraft_version_range" to neoForgeMinecraftVersion,
+            "mod_license" to "MIT License",
             "neo_version" to "neo_version",
             "neo_version_range" to "[${libs.versions.minecraft.neoforgeversion.get()},)",
         )
@@ -112,14 +117,14 @@ val shadowJar by tasks.getting(ShadowJar::class) {
     exclude("META-INF/com.android.tools/**")
     exclude("META-INF/gradle-plugins/**")
     exclude("META-INF/imports/**")
-    exclude("META-INF/kotlin-reflection.kotlin_module")
     exclude("META-INF/license/**")
     exclude("META-INF/maven/**")
     exclude("META-INF/native-image/**")
     exclude("META-INF/native/**")
     exclude("META-INF/proguard/**")
     exclude("META-INF/rewrite/**")
-    exclude("META-INF/services/kotlin.reflect.**")
+    // Keep META-INF/services/kotlin.reflect.** - kotlin-reflect is bundled here and
+    // Exposed fails with "No MetadataExtensions instances found" without its services.
 //    exclude("META-INF/versions/**") // Don't remove in Forge
 
     // Be sure to relocate EXACT PACKAGES!!
