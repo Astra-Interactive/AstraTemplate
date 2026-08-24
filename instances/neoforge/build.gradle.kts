@@ -1,4 +1,5 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
+import net.neoforged.gradle.common.tasks.ArtifactFromOutput
 import ru.astrainteractive.gradleplugin.property.util.requireProjectInfo
 
 plugins {
@@ -37,11 +38,16 @@ dependencies {
 }
 
 minecraftProcessResource {
+    // NeoForge versions as MC_MINOR.MC_PATCH.BUILD: 21.1.129 targets Minecraft 1.21.1
+    val neoForgeMinecraftVersion = "1." + libs.versions.minecraft.neoforgeversion.get()
+        .split(".")
+        .take(2)
+        .joinToString(".")
     neoForge(
         customProperties = mapOf(
-            "minecraft_version" to libs.versions.minecraft.mojang.version.get(),
-            "minecraft_version_range" to listOf(libs.versions.minecraft.mojang.version.get())
-                .joinToString(","),
+            "minecraft_version" to neoForgeMinecraftVersion,
+            "minecraft_version_range" to neoForgeMinecraftVersion,
+            "mod_license" to "MIT License",
             "neo_version" to "neo_version",
             "neo_version_range" to "[${libs.versions.minecraft.neoforgeversion.get()},)",
         )
@@ -66,60 +72,60 @@ val shadowJar by tasks.getting(ShadowJar::class) {
     dependencies {
         // Dependencies
         exclude(dependency("org.jetbrains:annotations"))
-        // Root
-//        exclude("kotlin/**") // Use kotlin-neoforge or kotlin-forge
-        exclude("_COROUTINE/**")
-        exclude("DebugProbesKt.bin")
-        exclude("jetty-dir.css")
-        exclude("license/**")
-        exclude("**LICENCE**")
-        exclude("**LICENSE**")
-        // Other dependencies
-        exclude("club/minnced/opus/**")
-        exclude("co/touchlab/stately/**")
-        exclude("com/google/**")
-        exclude("com/ibm/icu/**")
-        exclude("com/sun/**")
-        exclude("google/protobuf/**")
-        exclude("io/github/**")
-        exclude("io/javalin/**")
-        exclude("jakarta/servlet/**")
-        exclude("javax/annotation/**")
-        exclude("javax/servlet/**")
-        exclude("natives/**")
-        exclude("net/luckperms/**")
-        exclude("nl/altindag/**")
-        exclude("org/bouncycastle/**")
-        exclude("org/checkerframework/**")
-        exclude("org/conscrypt/**")
-        exclude("org/apache/batik/**")
-        exclude("org/apache/xmlgraphics/**")
-        exclude("org/apache/xmlcommons/**")
-        exclude("org/eclipse/**")
-        exclude("jdk/xml/**")
-        exclude("org/w3c/**")
-        exclude("tomp2p/opuswrapper/**")
-        exclude("org/slf4j/**")
-        exclude("javax/xml/**")
-        exclude("org/xml/**")
-        // META
-        exclude("META-INF/**.md")
-        exclude("META-INF/**.MD")
-        exclude("META-INF/**.txt**")
-        exclude("META-INF/**LICENCE**")
-        exclude("META-INF/com.android.tools/**")
-        exclude("META-INF/gradle-plugins/**")
-        exclude("META-INF/imports/**")
-        exclude("META-INF/kotlin-reflection.kotlin_module")
-        exclude("META-INF/license/**")
-        exclude("META-INF/maven/**")
-        exclude("META-INF/native-image/**")
-        exclude("META-INF/native/**")
-        exclude("META-INF/proguard/**")
-        exclude("META-INF/rewrite/**")
-        exclude("META-INF/services/kotlin.reflect.**")
-//        exclude("META-INF/versions/**") // Don't remove in Forge
     }
+    // Root
+//    exclude("kotlin/**") // Use kotlin-neoforge or kotlin-forge
+    exclude("_COROUTINE/**")
+    exclude("DebugProbesKt.bin")
+    exclude("jetty-dir.css")
+    exclude("license/**")
+    exclude("**LICENCE**")
+    exclude("**LICENSE**")
+    // Other dependencies
+    exclude("club/minnced/opus/**")
+    exclude("co/touchlab/stately/**")
+    exclude("com/google/**")
+    exclude("com/ibm/icu/**")
+    exclude("com/sun/**")
+    exclude("google/protobuf/**")
+    exclude("io/github/**")
+    exclude("io/javalin/**")
+    exclude("jakarta/servlet/**")
+    exclude("javax/annotation/**")
+    exclude("javax/servlet/**")
+    exclude("natives/**")
+    exclude("net/luckperms/**")
+    exclude("nl/altindag/**")
+    exclude("org/bouncycastle/**")
+    exclude("org/checkerframework/**")
+    exclude("org/conscrypt/**")
+    exclude("org/apache/batik/**")
+    exclude("org/apache/xmlgraphics/**")
+    exclude("org/apache/xmlcommons/**")
+    exclude("org/eclipse/**")
+    exclude("jdk/xml/**")
+    exclude("org/w3c/**")
+    exclude("tomp2p/opuswrapper/**")
+    exclude("org/slf4j/**")
+    exclude("javax/xml/**")
+    exclude("org/xml/**")
+    // META
+    exclude("META-INF/**.md")
+    exclude("META-INF/**.MD")
+    exclude("META-INF/**.txt**")
+    exclude("META-INF/**LICENCE**")
+    exclude("META-INF/com.android.tools/**")
+    exclude("META-INF/gradle-plugins/**")
+    exclude("META-INF/imports/**")
+    exclude("META-INF/license/**")
+    exclude("META-INF/maven/**")
+    exclude("META-INF/native-image/**")
+    exclude("META-INF/native/**")
+    exclude("META-INF/proguard/**")
+    exclude("META-INF/rewrite/**")
+    // Keep META-INF/services/kotlin.reflect.** - kotlin-reflect is bundled here and
+    // Exposed fails with "No MetadataExtensions instances found" without its services.
+//    exclude("META-INF/versions/**") // Don't remove in Forge
 
     // Be sure to relocate EXACT PACKAGES!!
     // For example, relocate org.some.package instead of org
@@ -172,4 +178,14 @@ val shadowJar by tasks.getting(ShadowJar::class) {
 
 dependencies {
     compileOnly(libs.minecraft.neoforgeversion)
+}
+
+tasks.configureEach {
+    if (javaClass.name.startsWith("net.neoforged.gradle")) {
+        notCompatibleWithConfigurationCache("NeoGradle tasks access Task.project at execution time")
+    }
+}
+
+tasks.register("generateNeoforgeJar") {
+    dependsOn(tasks.withType<ArtifactFromOutput>())
 }

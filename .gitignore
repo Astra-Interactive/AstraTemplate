@@ -1,9 +1,9 @@
-# root
+**/build
+**/runs/
+*.jar
+.claude
 .gradle
 .idea
 .kotlin
-astra.properties
-local.properties
-**/build/*
-**/runs/*
-jars
+AGENTS.md
+CLAUDE.md
