@@ -17,12 +17,12 @@ services:
       ONLINE_MODE: false
       # NeoForge --------------------
       #      TYPE: NEOFORGE
-      #      VERSION: "1.20.1"
-      #      NEOFORGE_VERSION: "21.1.129"
+      #      VERSION: "1.21.1"
+      #      NEOFORGE_VERSION: "21.1.248"
       # Forge --------------------
       TYPE: FORGE
-      VERSION: "1.20.1"
-      FORGE_VERSION: "47.4.12"
+      VERSION: "1.21.1"
+      FORGE_VERSION: "52.1.16"
       # Paper --------------------
 #      TYPE: PAPER
 #      VERSION: 1.21.8

@@ -6,7 +6,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import ru.astrainteractive.astralibs.command.api.brigadier.command.MultiplatformCommand
 import ru.astrainteractive.astralibs.command.api.brigadier.sender.KCommandSender
-import ru.astrainteractive.astralibs.command.api.registrar.CommandRegistrarContext
 import ru.astrainteractive.astralibs.kyori.KyoriComponentSerializer
 import ru.astrainteractive.astralibs.kyori.unwrap
 import ru.astrainteractive.astratemplate.api.remote.api.RickMortyApi
@@ -17,11 +16,10 @@ import ru.astrainteractive.klibs.kstorage.api.getValue
 import ru.astrainteractive.klibs.mikro.core.dispatchers.KotlinDispatchers
 import kotlin.random.Random
 
-internal class RickMortyCommandRegistrar(
+internal class RickMortyLiteralArgumentBuilder(
     private val scope: CoroutineScope,
     private val dispatchers: KotlinDispatchers,
     private val rmApi: RickMortyApi,
-    private val registrarContext: CommandRegistrarContext,
     private val multiplatformCommand: MultiplatformCommand,
     private val errorHandler: DefaultErrorHandler,
     translationKrate: CachedKrate<PluginTranslation>,
@@ -38,7 +36,7 @@ internal class RickMortyCommandRegistrar(
     }
 
     @Suppress("MagicNumber")
-    private fun createNode(): LiteralArgumentBuilder<*> {
+    fun create(): LiteralArgumentBuilder<*> {
         return with(multiplatformCommand) {
             command("rickandmorty") {
                 literal("random") {
@@ -55,9 +53,5 @@ internal class RickMortyCommandRegistrar(
                 }
             }
         }
-    }
-
-    fun register() {
-        registrarContext.registerWhenReady(createNode())
     }
 }

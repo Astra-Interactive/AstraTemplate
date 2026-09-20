@@ -9,7 +9,6 @@ plugins {
     id("ru.astrainteractive.gradleplugin.detekt")
     id("ru.astrainteractive.gradleplugin.java.version")
     alias(libs.plugins.gradle.forgegradle)
-    alias(libs.plugins.gradle.forgerenamer)
     alias(libs.plugins.gradle.shadow)
     alias(libs.plugins.klibs.minecraft.resource.processor)
     alias(libs.plugins.gradle.forge.jarjar)
@@ -249,14 +248,3 @@ dependencies {
         JarJarDependencyMethods.getJarJar(this).setVersion(libs.versions.driver.h2)
     }
 }
-
-renamer {
-    mappings.from(minecraft.dependency.toSrgFile)
-}
-
-val reobfShadowJar by renamer.classes(tasks.named<Jar>("shadowJar")) {
-    output = input
-}
-
-shadowJar.finalizedBy(reobfShadowJar)
-reobfShadowJar.mustRunAfter(shadowJar)

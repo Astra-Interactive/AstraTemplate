@@ -5,15 +5,13 @@ import com.mojang.brigadier.arguments.StringArgumentType
 import com.mojang.brigadier.builder.LiteralArgumentBuilder
 import ru.astrainteractive.astralibs.command.api.argumenttype.ArgumentConverter
 import ru.astrainteractive.astralibs.command.api.brigadier.command.MultiplatformCommand
-import ru.astrainteractive.astralibs.command.api.registrar.CommandRegistrarContext
 import ru.astrainteractive.astralibs.kyori.KyoriComponentSerializer
 import ru.astrainteractive.astralibs.kyori.unwrap
 import ru.astrainteractive.astratemplate.feature.command.errorhandler.DefaultErrorHandler
 import ru.astrainteractive.klibs.kstorage.api.CachedKrate
 
-internal class AddItemCommandRegistry(
+internal class AddItemLiteralArgumentBuilder(
     kyoriKrate: CachedKrate<KyoriComponentSerializer>,
-    private val registrarContext: CommandRegistrarContext,
     private val multiplatformCommand: MultiplatformCommand,
     private val errorHandler: DefaultErrorHandler,
     private val executor: AddItemExecutor
@@ -26,7 +24,7 @@ internal class AddItemCommandRegistry(
     }
 
     @Suppress("MagicNumber")
-    private fun createNode(): LiteralArgumentBuilder<*> {
+    fun create(): LiteralArgumentBuilder<*> {
         return with(multiplatformCommand) {
             command("add") {
                 argument("material", StringArgumentType.word()) { materialArg ->
@@ -47,9 +45,5 @@ internal class AddItemCommandRegistry(
                 }
             }
         }
-    }
-
-    fun register() {
-        registrarContext.registerWhenReady(createNode())
     }
 }
