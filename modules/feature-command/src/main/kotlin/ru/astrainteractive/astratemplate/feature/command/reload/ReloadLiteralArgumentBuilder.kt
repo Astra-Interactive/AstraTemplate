@@ -2,7 +2,6 @@ package ru.astrainteractive.astratemplate.feature.command.reload
 
 import com.mojang.brigadier.builder.LiteralArgumentBuilder
 import ru.astrainteractive.astralibs.command.api.brigadier.command.MultiplatformCommand
-import ru.astrainteractive.astralibs.command.api.registrar.CommandRegistrarContext
 import ru.astrainteractive.astralibs.kyori.KyoriComponentSerializer
 import ru.astrainteractive.astralibs.kyori.unwrap
 import ru.astrainteractive.astralibs.lifecycle.Lifecycle
@@ -12,17 +11,16 @@ import ru.astrainteractive.astratemplate.feature.command.errorhandler.DefaultErr
 import ru.astrainteractive.klibs.kstorage.api.CachedKrate
 import ru.astrainteractive.klibs.kstorage.api.getValue
 
-internal class ReloadCommandRegistry(
+internal class ReloadLiteralArgumentBuilder(
     translationKrate: CachedKrate<PluginTranslation>,
     kyoriKrate: CachedKrate<KyoriComponentSerializer>,
     private val lifecyclePlugin: Lifecycle,
-    private val registrarContext: CommandRegistrarContext,
     private val multiplatformCommand: MultiplatformCommand,
     private val errorHandler: DefaultErrorHandler
 ) : KyoriComponentSerializer by kyoriKrate.unwrap() {
     private val translation by translationKrate
 
-    private fun createNode(): LiteralArgumentBuilder<*> {
+    fun create(): LiteralArgumentBuilder<*> {
         return with(multiplatformCommand) {
             command("atempreload") {
                 runs(errorHandler::handle) { ctx ->
@@ -33,9 +31,5 @@ internal class ReloadCommandRegistry(
                 }
             }
         }
-    }
-
-    fun register() {
-        registrarContext.registerWhenReady(createNode())
     }
 }
