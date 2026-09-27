@@ -74,7 +74,7 @@ class CoreModule(
         factory = ::PluginConfiguration,
         loader = {
             yamlFormat.parseOrWriteIntoDefault(
-                file = dataFolder.resolve("translation.yml"),
+                file = dataFolder.resolve("config.yml"),
                 default = ::PluginConfiguration
             )
         }
