@@ -16,7 +16,7 @@ internal class CommonLiteralArgumentBuilder(
         return with(multiplatformCommand) {
             command("translation") {
                 runs { ctx ->
-                    ctx.getSender().sendMessage(translation.general.getByByCheck)
+                    ctx.getSender().sendMessage(translation.translationCheck.message)
                 }
             }
         }

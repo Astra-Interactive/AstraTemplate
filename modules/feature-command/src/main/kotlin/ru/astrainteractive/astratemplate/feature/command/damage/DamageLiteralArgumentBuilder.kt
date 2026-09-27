@@ -22,15 +22,15 @@ internal class DamageLiteralArgumentBuilder(
                 runs(errorHandler::handle) { ctx ->
                     ctx.requirePermission(PluginPermission.Damage)
                     val player = ctx.requirePlayer()
-                    player.sendMessage(translation.custom.damaged(player.name))
+                    player.sendMessage(translation.damage.damagedBy(player.name))
                 }
                 argument("damage", DoubleArgumentType.doubleArg(0.0)) { damageArg ->
                     runs(errorHandler::handle) { ctx ->
                         ctx.requirePermission(PluginPermission.Damage)
                         val player = ctx.requirePlayer()
                         ctx.requireArgument(damageArg)
-                        player.sendMessage(translation.custom.damaged(player.name))
-                        player.sendMessage(translation.custom.damageHint)
+                        player.sendMessage(translation.damage.damagedBy(player.name))
+                        player.sendMessage(translation.damage.hint)
                     }
                 }
             }

@@ -15,6 +15,6 @@ internal fun ButtonContext.back(
 ) = InventorySlot.Builder()
     .setIndex(index)
     .setMaterial(Material.BARRIER)
-    .setDisplayName(translation.menu.menuBack.toComponent(locale))
+    .setDisplayName(translation.menu.back.toComponent(locale))
     .setOnClickListener(click)
     .build()

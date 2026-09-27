@@ -26,15 +26,15 @@ internal class DefaultErrorHandler(
                 is AddItemCommand.Error -> {
                     when (throwable) {
                         is AddItemCommand.Error.ItemNotfound -> {
-                            sender.sendMessage(translation.fault.itemNotFound)
+                            sender.sendMessage(translation.addItem.itemNotFound)
                         }
                         is AddItemCommand.Error.SenderNotPlayer -> {
-                            sender.sendMessage(translation.fault.notPlayer)
+                            sender.sendMessage(translation.commandError.notPlayer)
                         }
                     }
                 }
                 is NoPermissionException -> {
-                    sender.sendMessage(translation.fault.noPermission)
+                    sender.sendMessage(translation.commandError.noPermission)
                 }
                 is NoPotionEffectTypeException,
                 is BadArgumentException,

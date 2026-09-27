@@ -15,6 +15,6 @@ internal fun ButtonContext.addUser(
 ) = InventorySlot.Builder()
     .setIndex(index)
     .setMaterial(Material.EMERALD)
-    .setDisplayName(translation.menu.menuAddPlayer.toComponent(locale))
+    .setDisplayName(translation.menu.addPlayer.toComponent(locale))
     .setOnClickListener(click)
     .build()

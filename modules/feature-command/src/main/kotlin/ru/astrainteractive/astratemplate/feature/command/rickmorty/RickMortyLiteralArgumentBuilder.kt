@@ -28,10 +28,10 @@ internal class RickMortyLiteralArgumentBuilder(
         scope.launch(dispatchers.IO) {
             rmApi.getRandomCharacter(number)
                 .onSuccess { character ->
-                    sender.sendMessage(translation.custom.rickMortySuccess(character.toString()))
+                    sender.sendMessage(translation.rickMorty.success(character.toString()))
                 }
                 .onFailure { error ->
-                    sender.sendMessage(translation.custom.rickMortyFail(error.message.orEmpty()))
+                    sender.sendMessage(translation.rickMorty.failure(error.message.orEmpty()))
                 }
         }
     }

@@ -15,6 +15,6 @@ internal fun ButtonContext.nextPage(
 ) = InventorySlot.Builder()
     .setIndex(index)
     .setMaterial(Material.PAPER)
-    .setDisplayName(translation.menu.menuNextPage.toComponent(locale))
+    .setDisplayName(translation.menu.nextPage.toComponent(locale))
     .setOnClickListener(click)
     .build()

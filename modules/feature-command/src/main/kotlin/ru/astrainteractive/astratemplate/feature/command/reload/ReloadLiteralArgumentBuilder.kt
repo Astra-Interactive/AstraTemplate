@@ -22,9 +22,9 @@ internal class ReloadLiteralArgumentBuilder(
             command("atempreload") {
                 runs(errorHandler::handle) { ctx ->
                     ctx.requirePermission(PluginPermission.Reload)
-                    ctx.getSender().sendMessage(translation.general.reload)
+                    ctx.getSender().sendMessage(translation.reload.started)
                     lifecyclePlugin.onReload()
-                    ctx.getSender().sendMessage(translation.general.reloadComplete)
+                    ctx.getSender().sendMessage(translation.reload.completed)
                 }
             }
         }

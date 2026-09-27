@@ -44,7 +44,7 @@ internal class SampleGUI(
     override val childComponents: List<CoroutineScope>
         get() = listOf(sampleComponent)
 
-    override val title: Component = buttonContext.translation.menu.menuTitle.toComponent(buttonContext.locale)
+    override val title: Component = buttonContext.translation.menu.title.toComponent(buttonContext.locale)
     override val inventorySize: InventorySize = InventorySize.XL
 
     override val menuScope: CoroutineScope = CoroutineFeature

@@ -15,6 +15,6 @@ internal fun ButtonContext.prevPage(
 ) = InventorySlot.Builder()
     .setIndex(index)
     .setMaterial(Material.PAPER)
-    .setDisplayName(translation.menu.menuPrevPage.toComponent(locale))
+    .setDisplayName(translation.menu.previousPage.toComponent(locale))
     .setOnClickListener(click)
     .build()

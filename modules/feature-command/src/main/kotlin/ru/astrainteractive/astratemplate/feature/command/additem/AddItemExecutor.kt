@@ -10,6 +10,6 @@ internal class AddItemExecutor(
     private val translation by translationKrate
 
     fun execute(input: AddItemCommand.Result) {
-        input.player.sendMessage(translation.custom.addItemSuccess(input.amount, input.itemName))
+        input.player.sendMessage(translation.addItem.success(input.amount, input.itemName))
     }
 }

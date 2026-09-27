@@ -12,24 +12,31 @@ import ru.astrainteractive.astralibs.localization.locale.MinecraftLocales
 import ru.astrainteractive.astralibs.localization.text.LocalizedText
 
 /**
- * All translation stored here
- * Each translation have default value so it's not necessary to fetch it from resources
+ * Texts of the plugin, grouped by the feature that sends them. Every text has a default, so the plugin works
+ * without `translation.yml` and a missing key keeps its default.
  */
 @Serializable
-class PluginTranslation(
-    @SerialName("database")
-    val database: Database = Database(),
+data class PluginTranslation(
+    @SerialName("command_error")
+    val commandError: CommandError = CommandError(),
+    @SerialName("reload")
+    val reload: Reload = Reload(),
+    @SerialName("translation_check")
+    val translationCheck: TranslationCheck = TranslationCheck(),
+    @SerialName("damage")
+    val damage: Damage = Damage(),
+    @SerialName("add_item")
+    val addItem: AddItem = AddItem(),
+    @SerialName("rick_morty")
+    val rickMorty: RickMorty = RickMorty(),
+    @SerialName("block_place")
+    val blockPlace: BlockPlace = BlockPlace(),
     @SerialName("menu")
-    val menu: Menu = Menu(),
-    @SerialName("custom")
-    val custom: Custom = Custom(),
-    @SerialName("general")
-    val general: General = General(),
-    @SerialName("fault")
-    val fault: Fault = Fault()
+    val menu: Menu = Menu()
 ) {
+    /** Failures any command can report. */
     @Serializable
-    data class Fault(
+    data class CommandError(
         @SerialName("no_permission")
         val noPermission: LocalizedText = PREFIX.concat(
             LocalizedText.build {
@@ -43,12 +50,61 @@ class PluginTranslation(
                 translation(MinecraftLocales.RU_RU, "&#db2c18Вы не игрок")
                 translation(MinecraftLocales.EN_US, "&#db2c18You are not a player")
             }
-        ),
-        @SerialName("player_not_exists")
-        val playerNotExists: LocalizedText = PREFIX.concat(
+        )
+    )
+
+    @Serializable
+    data class Reload(
+        @SerialName("started")
+        val started: LocalizedText = PREFIX.concat(
             LocalizedText.build {
-                translation(MinecraftLocales.RU_RU, "&#db2c18Игрока нет!")
-                translation(MinecraftLocales.EN_US, "&#db2c18Player does not exist!")
+                translation(MinecraftLocales.RU_RU, "&#dbbb18Перезагрузка плагина")
+                translation(MinecraftLocales.EN_US, "&#dbbb18Reloading the plugin")
+            }
+        ),
+        @SerialName("completed")
+        val completed: LocalizedText = PREFIX.concat(
+            LocalizedText.build {
+                translation(MinecraftLocales.RU_RU, "&#42f596Перезагрузка успешно завершена")
+                translation(MinecraftLocales.EN_US, "&#42f596Reload complete")
+            }
+        )
+    )
+
+    /** Sent by `/translation` to show which text a player gets in their language, e.g. after a reload. */
+    @Serializable
+    data class TranslationCheck(
+        @SerialName("message")
+        val message: LocalizedText = PREFIX.concat(
+            LocalizedText.build {
+                translation(MinecraftLocales.RU_RU, "&#18dbd1Этот текст показан на русском")
+                translation(MinecraftLocales.EN_US, "&#18dbd1This text is shown in English")
+            }
+        )
+    )
+
+    @Serializable
+    data class Damage(
+        @SerialName("damaged_by")
+        private val damagedBy: LocalizedText = PREFIX.concat(
+            LocalizedText.build {
+                translation(MinecraftLocales.RU_RU, "&#db2c18Вас продамажил игрок %player%!")
+                translation(MinecraftLocales.EN_US, "&#db2c18You were damaged by %player%!")
+            }
+        ),
+        @SerialName("hint")
+        val hint: LocalizedText = LocalizedText.shared("<amount>")
+    ) {
+        fun damagedBy(player: String): LocalizableComponent = damagedBy.replace("%player%", player)
+    }
+
+    @Serializable
+    data class AddItem(
+        @SerialName("success")
+        private val success: LocalizedText = PREFIX.concat(
+            LocalizedText.build {
+                translation(MinecraftLocales.RU_RU, "&#18dbd1Добавлено %amount%x %item%!")
+                translation(MinecraftLocales.EN_US, "&#18dbd1Added %amount%x %item%!")
             }
         ),
         @SerialName("item_not_found")
@@ -57,149 +113,75 @@ class PluginTranslation(
                 translation(MinecraftLocales.RU_RU, "&#db2c18Предмет не найден")
                 translation(MinecraftLocales.EN_US, "&#db2c18Item not found")
             }
-        ),
-    )
+        )
+    ) {
+        fun success(amount: Int, item: String): LocalizableComponent = success.replaceAll(
+            PlaceholderReplacement.plain("%amount%", amount.toString()),
+            PlaceholderReplacement.plain("%item%", item)
+        )
+    }
 
     @Serializable
-    class Database(
+    data class RickMorty(
         @SerialName("success")
-        val dbSuccess: LocalizedText = PREFIX.concat(
-            LocalizedText.build {
-                translation(MinecraftLocales.RU_RU, "&#18dbd1Успешно подключено к базе данных")
-                translation(MinecraftLocales.EN_US, "&#18dbd1Connected to the database")
-            }
-        ),
-        @SerialName("fail")
-        val dbFail: LocalizedText = PREFIX.concat(
-            LocalizedText.build {
-                translation(MinecraftLocales.RU_RU, "&#db2c18Нет подключения к базе данных")
-                translation(MinecraftLocales.EN_US, "&#db2c18No connection to the database")
-            }
-        ),
-    )
-
-    @Serializable
-    class General(
-        @SerialName("reload")
-        val reload: LocalizedText = PREFIX.concat(
-            LocalizedText.build {
-                translation(MinecraftLocales.RU_RU, "&#dbbb18Перезагрузка плагина")
-                translation(MinecraftLocales.EN_US, "&#dbbb18Reloading the plugin")
-            }
-        ),
-        @SerialName("reload_complete")
-        val reloadComplete: LocalizedText = PREFIX.concat(
-            LocalizedText.build {
-                translation(MinecraftLocales.RU_RU, "&#42f596Перезагрузка успешно завершена")
-                translation(MinecraftLocales.EN_US, "&#42f596Reload complete")
-            }
-        ),
-        @SerialName("getByByCheck")
-        val getByByCheck: LocalizedText = PREFIX.concat(LocalizedText.shared("&#db2c18getByByCheck"))
-    )
-
-    @Serializable
-    class Menu(
-        @SerialName("title")
-        val menuTitle: LocalizedText = LocalizedText.build {
-            translation(MinecraftLocales.RU_RU, "&#18dbd1Меню")
-            translation(MinecraftLocales.EN_US, "&#18dbd1Menu")
-        },
-        @SerialName("add_player")
-        val menuAddPlayer: LocalizedText = LocalizedText.build {
-            translation(MinecraftLocales.RU_RU, "&#18dbd1Добавить игрока")
-            translation(MinecraftLocales.EN_US, "&#18dbd1Add player")
-        },
-        @SerialName("first_page")
-        val menuFirstPage: LocalizedText = LocalizedText.build {
-            translation(MinecraftLocales.RU_RU, "&#dbbb18Вы на первой странице")
-            translation(MinecraftLocales.EN_US, "&#dbbb18You are on the first page")
-        },
-        @SerialName("last_page")
-        val menuLastPage: LocalizedText = LocalizedText.build {
-            translation(MinecraftLocales.RU_RU, "&#dbbb18Вы на последней странице")
-            translation(MinecraftLocales.EN_US, "&#dbbb18You are on the last page")
-        },
-        @SerialName("prev_page")
-        val menuPrevPage: LocalizedText = LocalizedText.build {
-            translation(MinecraftLocales.RU_RU, "&#18dbd1Пред. страницы")
-            translation(MinecraftLocales.EN_US, "&#18dbd1Previous page")
-        },
-        @SerialName("next_page")
-        val menuNextPage: LocalizedText = LocalizedText.build {
-            translation(MinecraftLocales.RU_RU, "&#18dbd1След. страница")
-            translation(MinecraftLocales.EN_US, "&#18dbd1Next page")
-        },
-        @SerialName("back")
-        val menuBack: LocalizedText = LocalizedText.build {
-            translation(MinecraftLocales.RU_RU, "&#18dbd1Назад")
-            translation(MinecraftLocales.EN_US, "&#18dbd1Back")
-        },
-        @SerialName("close")
-        val menuClose: LocalizedText = LocalizedText.build {
-            translation(MinecraftLocales.RU_RU, "&#18dbd1Закрыть)")
-            translation(MinecraftLocales.EN_US, "&#18dbd1Close")
-        }
-    )
-
-    @Serializable
-    class Custom(
-        @SerialName("block_placed")
-        val blockPlaced: LocalizedText = PREFIX.concat(
-            LocalizedText.build {
-                translation(MinecraftLocales.RU_RU, "&#18dbd1Блок поставлен!")
-                translation(MinecraftLocales.EN_US, "&#18dbd1Block placed!")
-            }
-        ),
-        @SerialName("no_player_name")
-        val noPlayerName: LocalizedText = PREFIX.concat(
-            LocalizedText.build {
-                translation(MinecraftLocales.RU_RU, "&#db2c18Вы не ввели имя игрока!")
-                translation(MinecraftLocales.EN_US, "&#db2c18You did not enter a player name!")
-            }
-        ),
-        @SerialName("damaged")
-        private val damaged: LocalizedText = PREFIX.concat(
-            LocalizedText.build {
-                translation(MinecraftLocales.RU_RU, "&#db2c18Вас продамажил игрок %player%!")
-                translation(MinecraftLocales.EN_US, "&#db2c18You were damaged by %player%!")
-            }
-        ),
-        @SerialName("damage_hint")
-        val damageHint: LocalizedText = LocalizedText.shared("<amount>"),
-        @SerialName("add_item_success")
-        private val addItemSuccess: LocalizedText = PREFIX.concat(
-            LocalizedText.build {
-                translation(MinecraftLocales.RU_RU, "&#18dbd1Добавлено %amount%x %item%!")
-                translation(MinecraftLocales.EN_US, "&#18dbd1Added %amount%x %item%!")
-            }
-        ),
-        @SerialName("rick_morty_success")
-        private val rickMortySuccess: LocalizedText = PREFIX.concat(
+        private val success: LocalizedText = PREFIX.concat(
             LocalizedText.build {
                 translation(MinecraftLocales.RU_RU, "&#18dbd1Получен ответ: %result%")
                 translation(MinecraftLocales.EN_US, "&#18dbd1Got a response: %result%")
             }
         ),
-        @SerialName("rick_morty_fail")
-        private val rickMortyFail: LocalizedText = PREFIX.concat(
+        @SerialName("failure")
+        private val failure: LocalizedText = PREFIX.concat(
             LocalizedText.build {
                 translation(MinecraftLocales.RU_RU, "&#db2c18Ошибка: %error%")
                 translation(MinecraftLocales.EN_US, "&#db2c18Error: %error%")
             }
         )
     ) {
-        fun damaged(player: String): LocalizableComponent = damaged.replace("%player%", player)
+        fun success(result: String): LocalizableComponent = success.replace("%result%", result)
 
-        fun addItemSuccess(amount: Int, item: String): LocalizableComponent = addItemSuccess.replaceAll(
-            PlaceholderReplacement.plain("%amount%", amount.toString()),
-            PlaceholderReplacement.plain("%item%", item)
-        )
-
-        fun rickMortySuccess(result: String): LocalizableComponent = rickMortySuccess.replace("%result%", result)
-
-        fun rickMortyFail(error: String): LocalizableComponent = rickMortyFail.replace("%error%", error)
+        fun failure(error: String): LocalizableComponent = failure.replace("%error%", error)
     }
+
+    @Serializable
+    data class BlockPlace(
+        @SerialName("message")
+        val message: LocalizedText = PREFIX.concat(
+            LocalizedText.build {
+                translation(MinecraftLocales.RU_RU, "&#18dbd1Блок поставлен!")
+                translation(MinecraftLocales.EN_US, "&#18dbd1Block placed!")
+            }
+        )
+    )
+
+    @Serializable
+    data class Menu(
+        @SerialName("title")
+        val title: LocalizedText = LocalizedText.build {
+            translation(MinecraftLocales.RU_RU, "&#18dbd1Меню")
+            translation(MinecraftLocales.EN_US, "&#18dbd1Menu")
+        },
+        @SerialName("add_player")
+        val addPlayer: LocalizedText = LocalizedText.build {
+            translation(MinecraftLocales.RU_RU, "&#18dbd1Добавить игрока")
+            translation(MinecraftLocales.EN_US, "&#18dbd1Add player")
+        },
+        @SerialName("previous_page")
+        val previousPage: LocalizedText = LocalizedText.build {
+            translation(MinecraftLocales.RU_RU, "&#18dbd1Пред. страница")
+            translation(MinecraftLocales.EN_US, "&#18dbd1Previous page")
+        },
+        @SerialName("next_page")
+        val nextPage: LocalizedText = LocalizedText.build {
+            translation(MinecraftLocales.RU_RU, "&#18dbd1След. страница")
+            translation(MinecraftLocales.EN_US, "&#18dbd1Next page")
+        },
+        @SerialName("back")
+        val back: LocalizedText = LocalizedText.build {
+            translation(MinecraftLocales.RU_RU, "&#18dbd1Назад")
+            translation(MinecraftLocales.EN_US, "&#18dbd1Back")
+        }
+    )
 
     companion object {
         private val PREFIX = LocalizedText.shared("&7[&#DBB72BTEMPLATE&7] ")

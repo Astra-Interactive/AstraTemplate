@@ -22,7 +22,7 @@ internal class TemplateEvent(
      */
     @EventHandler
     public fun blockPlaceEvent(e: BlockPlaceEvent) {
-        e.player.asKAudience().sendMessage(translation.custom.blockPlaced)
+        e.player.asKAudience().sendMessage(translation.blockPlace.message)
         return
     }
 
