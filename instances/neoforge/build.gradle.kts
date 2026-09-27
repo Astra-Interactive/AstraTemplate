@@ -27,6 +27,7 @@ dependencies {
     shadow(libs.klibs.kstorage)
     shadow(libs.minecraft.kyori.plain)
     shadow(libs.minecraft.kyori.legacy)
+    shadow(libs.minecraft.kyori.minimessage)
     shadow(libs.minecraft.kyori.gson)
     shadow(projects.modules.api.local)
     shadow(projects.modules.api.remote)
