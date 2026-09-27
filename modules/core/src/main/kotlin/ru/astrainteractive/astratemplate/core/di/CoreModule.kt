@@ -9,6 +9,7 @@ import kotlinx.coroutines.cancel
 import kotlinx.serialization.StringFormat
 import ru.astrainteractive.astralibs.command.api.registrar.CommandRegistrarContext
 import ru.astrainteractive.astralibs.coroutines.withTimings
+import ru.astrainteractive.astralibs.kyori.AutoComponentSerializer
 import ru.astrainteractive.astralibs.kyori.KyoriComponentSerializer
 import ru.astrainteractive.astralibs.lifecycle.Lifecycle
 import ru.astrainteractive.astralibs.util.YamlStringFormat
@@ -81,7 +82,7 @@ class CoreModule(
 
     val kyoriKrate = DefaultMutableKrate<KyoriComponentSerializer>(
         loader = { null },
-        factory = { KyoriComponentSerializer.Legacy }
+        factory = { AutoComponentSerializer }
     ).asCachedKrate()
 
     val lifecycle: Lifecycle by lazy {
