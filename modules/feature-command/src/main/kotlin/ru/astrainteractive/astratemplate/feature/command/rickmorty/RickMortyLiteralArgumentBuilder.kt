@@ -6,8 +6,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import ru.astrainteractive.astralibs.command.api.brigadier.command.MultiplatformCommand
 import ru.astrainteractive.astralibs.command.api.brigadier.sender.KCommandSender
-import ru.astrainteractive.astralibs.kyori.KyoriComponentSerializer
-import ru.astrainteractive.astralibs.kyori.unwrap
 import ru.astrainteractive.astratemplate.api.remote.api.RickMortyApi
 import ru.astrainteractive.astratemplate.core.plugin.PluginTranslation
 import ru.astrainteractive.astratemplate.feature.command.errorhandler.DefaultErrorHandler
@@ -22,16 +20,19 @@ internal class RickMortyLiteralArgumentBuilder(
     private val rmApi: RickMortyApi,
     private val multiplatformCommand: MultiplatformCommand,
     private val errorHandler: DefaultErrorHandler,
-    translationKrate: CachedKrate<PluginTranslation>,
-    kyoriKrate: CachedKrate<KyoriComponentSerializer>
-) : KyoriComponentSerializer by kyoriKrate.unwrap() {
+    translationKrate: CachedKrate<PluginTranslation>
+) {
     private val translation by translationKrate
 
     private fun send(sender: KCommandSender, number: Int) {
         scope.launch(dispatchers.IO) {
             rmApi.getRandomCharacter(number)
-                .onSuccess { sender.sendMessage(translation.custom.rickMortySuccess(it.toString()).component) }
-                .onFailure { sender.sendMessage(translation.custom.rickMortyFail(it.message.orEmpty()).component) }
+                .onSuccess { character ->
+                    sender.sendMessage(translation.custom.rickMortySuccess(character.toString()))
+                }
+                .onFailure { error ->
+                    sender.sendMessage(translation.custom.rickMortyFail(error.message.orEmpty()))
+                }
         }
     }
 

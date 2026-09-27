@@ -17,21 +17,22 @@ import ru.astrainteractive.klibs.mikro.core.dispatchers.KotlinDispatchers
 import ru.astrainteractive.klibs.mikro.core.logging.JUtiltLogger
 import ru.astrainteractive.klibs.mikro.core.logging.Logger
 import ru.astrainteractive.klibs.mikro.core.util.tryCast
+import java.util.Locale
 
 @Suppress("LongParameterList")
 internal class RouterImpl(
     private val ioScope: CoroutineScope,
     private val dispatchers: KotlinDispatchers,
-    private val buttonContext: ButtonContext,
+    private val createButtonContext: (Locale) -> ButtonContext,
     private val localDao: LocalDao,
     private val itemStackSpigotAPi: ItemStackSpigotAPI,
     private val getRandomColorUseCase: GetRandomColorUseCase,
     private val setDisplayNameUseCase: SetDisplayNameUseCase
 ) : Router, Logger by JUtiltLogger("Router") {
-    private fun buildRoute(route: Router.Route): Inventory {
+    private fun buildRoute(route: Router.Route, locale: Locale): Inventory {
         return when (route) {
             Router.Route.Sample -> SampleGUI(
-                buttonContext = buttonContext,
+                buttonContext = createButtonContext(locale),
                 dispatchers = dispatchers,
                 sampleComponent = DefaultSampleGUIComponent(
                     localDao = localDao,
@@ -50,7 +51,7 @@ internal class RouterImpl(
                 error { "#open Could not cast OnlineKPlayer to BukkitOnlineKPlayer" }
                 return@launch
             }
-            val inventory = buildRoute(route)
+            val inventory = buildRoute(route, player.locale)
             withContext(dispatchers.Main) { bukkitPlayer.openInventory(inventory) }
         }
     }

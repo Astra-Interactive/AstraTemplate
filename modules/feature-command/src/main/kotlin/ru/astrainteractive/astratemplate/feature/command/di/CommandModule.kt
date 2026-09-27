@@ -26,39 +26,32 @@ class CommandModule(
 ) {
     private val errorHandler = DefaultErrorHandler(
         multiplatformCommand = multiplatformCommand,
-        translationKrate = coreModule.translationKrate,
-        kyoriKrate = coreModule.kyoriKrate
+        translationKrate = coreModule.translationKrate
     )
 
     private val nodes = listOf(
         AddItemLiteralArgumentBuilder(
-            kyoriKrate = coreModule.kyoriKrate,
             multiplatformCommand = multiplatformCommand,
             errorHandler = errorHandler,
             executor = AddItemExecutor(
-                translationKrate = coreModule.translationKrate,
-                kyoriKrate = coreModule.kyoriKrate
+                translationKrate = coreModule.translationKrate
             )
         ).create(),
         CommonLiteralArgumentBuilder(
-            kyoriKrate = coreModule.kyoriKrate,
             translationKrate = coreModule.translationKrate,
             multiplatformCommand = multiplatformCommand
         ).create(),
         DamageLiteralArgumentBuilder(
-            kyoriKrate = coreModule.kyoriKrate,
             translationKrate = coreModule.translationKrate,
             multiplatformCommand = multiplatformCommand,
             errorHandler = errorHandler
         ).create(),
         GuiLiteralArgumentBuilder(
-            kyoriKrate = coreModule.kyoriKrate,
             multiplatformCommand = multiplatformCommand,
             router = guiModule.router,
             errorHandler = errorHandler
         ).create(),
         ReloadLiteralArgumentBuilder(
-            kyoriKrate = coreModule.kyoriKrate,
             translationKrate = coreModule.translationKrate,
             lifecyclePlugin = lifecyclePlugin,
             multiplatformCommand = multiplatformCommand,
@@ -70,8 +63,7 @@ class CommandModule(
             rmApi = apiRemoteModule.rickMortyApi,
             multiplatformCommand = multiplatformCommand,
             errorHandler = errorHandler,
-            translationKrate = coreModule.translationKrate,
-            kyoriKrate = coreModule.kyoriKrate
+            translationKrate = coreModule.translationKrate
         ).create()
     )
 

@@ -14,12 +14,11 @@ class BukkitGuiModule(
     apiLocalModule: ApiLocalModule
 ) : GuiModule {
     private val getRandomColorUseCase = GetRandomColorUseCaseImpl()
-    private val buttonContext = ButtonContext.Default(coreModule)
 
     override val router: Router = RouterImpl(
         ioScope = coreModule.ioScope,
         dispatchers = coreModule.dispatchers,
-        buttonContext = buttonContext,
+        createButtonContext = { locale -> ButtonContext.Default(coreModule, locale) },
         localDao = apiLocalModule.localDao,
         itemStackSpigotAPi = ItemStackSpigotAPI,
         getRandomColorUseCase = getRandomColorUseCase,

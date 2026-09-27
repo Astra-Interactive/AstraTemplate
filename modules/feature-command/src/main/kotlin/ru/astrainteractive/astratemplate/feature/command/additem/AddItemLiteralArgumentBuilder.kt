@@ -5,17 +5,13 @@ import com.mojang.brigadier.arguments.StringArgumentType
 import com.mojang.brigadier.builder.LiteralArgumentBuilder
 import ru.astrainteractive.astralibs.command.api.argumenttype.ArgumentConverter
 import ru.astrainteractive.astralibs.command.api.brigadier.command.MultiplatformCommand
-import ru.astrainteractive.astralibs.kyori.KyoriComponentSerializer
-import ru.astrainteractive.astralibs.kyori.unwrap
 import ru.astrainteractive.astratemplate.feature.command.errorhandler.DefaultErrorHandler
-import ru.astrainteractive.klibs.kstorage.api.CachedKrate
 
 internal class AddItemLiteralArgumentBuilder(
-    kyoriKrate: CachedKrate<KyoriComponentSerializer>,
     private val multiplatformCommand: MultiplatformCommand,
     private val errorHandler: DefaultErrorHandler,
     private val executor: AddItemExecutor
-) : KyoriComponentSerializer by kyoriKrate.unwrap() {
+) {
 
     private object ItemNameArgumentConverter : ArgumentConverter<String> {
         override fun transform(argument: String): String {

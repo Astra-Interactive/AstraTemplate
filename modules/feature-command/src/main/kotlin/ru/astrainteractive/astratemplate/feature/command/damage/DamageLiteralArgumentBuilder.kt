@@ -3,8 +3,6 @@ package ru.astrainteractive.astratemplate.feature.command.damage
 import com.mojang.brigadier.arguments.DoubleArgumentType
 import com.mojang.brigadier.builder.LiteralArgumentBuilder
 import ru.astrainteractive.astralibs.command.api.brigadier.command.MultiplatformCommand
-import ru.astrainteractive.astralibs.kyori.KyoriComponentSerializer
-import ru.astrainteractive.astralibs.kyori.unwrap
 import ru.astrainteractive.astratemplate.core.plugin.PluginPermission
 import ru.astrainteractive.astratemplate.core.plugin.PluginTranslation
 import ru.astrainteractive.astratemplate.feature.command.errorhandler.DefaultErrorHandler
@@ -13,10 +11,9 @@ import ru.astrainteractive.klibs.kstorage.api.getValue
 
 internal class DamageLiteralArgumentBuilder(
     translationKrate: CachedKrate<PluginTranslation>,
-    kyoriKrate: CachedKrate<KyoriComponentSerializer>,
     private val multiplatformCommand: MultiplatformCommand,
     private val errorHandler: DefaultErrorHandler
-) : KyoriComponentSerializer by kyoriKrate.unwrap() {
+) {
     private val translation by translationKrate
 
     fun create(): LiteralArgumentBuilder<*> {
@@ -25,15 +22,15 @@ internal class DamageLiteralArgumentBuilder(
                 runs(errorHandler::handle) { ctx ->
                     ctx.requirePermission(PluginPermission.Damage)
                     val player = ctx.requirePlayer()
-                    player.sendMessage(translation.custom.damaged(player.name).component)
+                    player.sendMessage(translation.custom.damaged(player.name))
                 }
                 argument("damage", DoubleArgumentType.doubleArg(0.0)) { damageArg ->
                     runs(errorHandler::handle) { ctx ->
                         ctx.requirePermission(PluginPermission.Damage)
                         val player = ctx.requirePlayer()
                         ctx.requireArgument(damageArg)
-                        player.sendMessage(translation.custom.damaged(player.name).component)
-                        player.sendMessage(translation.custom.damageHint.component)
+                        player.sendMessage(translation.custom.damaged(player.name))
+                        player.sendMessage(translation.custom.damageHint)
                     }
                 }
             }
