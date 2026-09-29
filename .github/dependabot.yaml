@@ -15,6 +15,10 @@ updates:
     patterns: [ "*" ]
     multi-ecosystem-group: "versions"
     rebase-strategy: "disabled"
+    ignore:
+      # Paper ships Adventure 4.x
+      - dependency-name: "net.kyori:*"
+        update-types: [ "version-update:semver-major" ]
 
   - package-ecosystem: "github-actions"
     directory: "/"
