@@ -20,7 +20,6 @@ class EventModule(
         eventListener.run(::add)
         inventoryClickListener.run(::add)
         TemplateEvent(
-            kyoriKrate = coreModule.kyoriKrate,
             translationKrate = coreModule.translationKrate
         ).run(::add)
         BetterAnotherEvent().run(::add)

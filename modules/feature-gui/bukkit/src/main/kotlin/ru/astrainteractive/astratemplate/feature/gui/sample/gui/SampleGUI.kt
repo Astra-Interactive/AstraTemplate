@@ -7,7 +7,6 @@ import net.kyori.adventure.text.Component
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.inventory.InventoryOpenEvent
 import ru.astrainteractive.astralibs.coroutines.withTimings
-import ru.astrainteractive.astralibs.kyori.KyoriComponentSerializer
 import ru.astrainteractive.astralibs.menu.core.setInventorySlot
 import ru.astrainteractive.astralibs.menu.inventory.api.InventoryMenu
 import ru.astrainteractive.astralibs.menu.inventory.model.InventorySize
@@ -40,13 +39,12 @@ internal class SampleGUI(
     private val buttonContext: ButtonContext,
     private val dispatchers: KotlinDispatchers,
     private val sampleComponent: SampleGuiComponent
-) : InventoryMenu(),
-    KyoriComponentSerializer by buttonContext {
+) : InventoryMenu() {
 
     override val childComponents: List<CoroutineScope>
         get() = listOf(sampleComponent)
 
-    override val title: Component = toComponent(buttonContext.translation.menu.menuTitle)
+    override val title: Component = buttonContext.translation.menu.title.toComponent(buttonContext.locale)
     override val inventorySize: InventorySize = InventorySize.XL
 
     override val menuScope: CoroutineScope = CoroutineFeature

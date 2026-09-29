@@ -6,8 +6,6 @@ import ru.astrainteractive.astralibs.command.api.exception.ArgumentConverterExce
 import ru.astrainteractive.astralibs.command.api.exception.BadArgumentException
 import ru.astrainteractive.astralibs.command.api.exception.NoPermissionException
 import ru.astrainteractive.astralibs.command.api.exception.NoPotionEffectTypeException
-import ru.astrainteractive.astralibs.kyori.KyoriComponentSerializer
-import ru.astrainteractive.astralibs.kyori.unwrap
 import ru.astrainteractive.astratemplate.core.plugin.PluginTranslation
 import ru.astrainteractive.astratemplate.feature.command.additem.AddItemCommand
 import ru.astrainteractive.klibs.kstorage.api.CachedKrate
@@ -17,10 +15,8 @@ import ru.astrainteractive.klibs.mikro.core.logging.Logger
 
 internal class DefaultErrorHandler(
     private val multiplatformCommand: MultiplatformCommand,
-    translationKrate: CachedKrate<PluginTranslation>,
-    kyoriKrate: CachedKrate<KyoriComponentSerializer>
-) : Logger by JUtiltLogger("AstraTemplate-DefaultErrorHandler"),
-    KyoriComponentSerializer by kyoriKrate.unwrap() {
+    translationKrate: CachedKrate<PluginTranslation>
+) : Logger by JUtiltLogger("AstraTemplate-DefaultErrorHandler") {
     private val translation by translationKrate
 
     fun handle(ctx: CommandContext<Any>, throwable: Throwable) {
@@ -30,15 +26,15 @@ internal class DefaultErrorHandler(
                 is AddItemCommand.Error -> {
                     when (throwable) {
                         is AddItemCommand.Error.ItemNotfound -> {
-                            sender.sendMessage(translation.fault.itemNotFound.component)
+                            sender.sendMessage(translation.addItem.itemNotFound)
                         }
                         is AddItemCommand.Error.SenderNotPlayer -> {
-                            sender.sendMessage(translation.fault.notPlayer.component)
+                            sender.sendMessage(translation.commandError.notPlayer)
                         }
                     }
                 }
                 is NoPermissionException -> {
-                    sender.sendMessage(translation.fault.noPermission.component)
+                    sender.sendMessage(translation.commandError.noPermission)
                 }
                 is NoPotionEffectTypeException,
                 is BadArgumentException,

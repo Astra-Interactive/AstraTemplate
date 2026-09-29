@@ -2,8 +2,6 @@ package ru.astrainteractive.astratemplate.feature.command.reload
 
 import com.mojang.brigadier.builder.LiteralArgumentBuilder
 import ru.astrainteractive.astralibs.command.api.brigadier.command.MultiplatformCommand
-import ru.astrainteractive.astralibs.kyori.KyoriComponentSerializer
-import ru.astrainteractive.astralibs.kyori.unwrap
 import ru.astrainteractive.astralibs.lifecycle.Lifecycle
 import ru.astrainteractive.astratemplate.core.plugin.PluginPermission
 import ru.astrainteractive.astratemplate.core.plugin.PluginTranslation
@@ -13,11 +11,10 @@ import ru.astrainteractive.klibs.kstorage.api.getValue
 
 internal class ReloadLiteralArgumentBuilder(
     translationKrate: CachedKrate<PluginTranslation>,
-    kyoriKrate: CachedKrate<KyoriComponentSerializer>,
     private val lifecyclePlugin: Lifecycle,
     private val multiplatformCommand: MultiplatformCommand,
     private val errorHandler: DefaultErrorHandler
-) : KyoriComponentSerializer by kyoriKrate.unwrap() {
+) {
     private val translation by translationKrate
 
     fun create(): LiteralArgumentBuilder<*> {
@@ -25,9 +22,9 @@ internal class ReloadLiteralArgumentBuilder(
             command("atempreload") {
                 runs(errorHandler::handle) { ctx ->
                     ctx.requirePermission(PluginPermission.Reload)
-                    ctx.getSender().sendMessage(translation.general.reload.component)
+                    ctx.getSender().sendMessage(translation.reload.started)
                     lifecyclePlugin.onReload()
-                    ctx.getSender().sendMessage(translation.general.reloadComplete.component)
+                    ctx.getSender().sendMessage(translation.reload.completed)
                 }
             }
         }
