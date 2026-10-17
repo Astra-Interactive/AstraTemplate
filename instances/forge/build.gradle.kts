@@ -37,7 +37,6 @@ dependencies {
     shadow(projects.modules.data.dao)
     shadow(projects.modules.data.exposed)
     shadow(projects.modules.integrationRickmorty)
-    shadow(projects.modules.buildKonfig)
     shadow(projects.modules.core)
     shadow(projects.modules.featureEvent.forge)
     shadow(projects.modules.featureCommand)
