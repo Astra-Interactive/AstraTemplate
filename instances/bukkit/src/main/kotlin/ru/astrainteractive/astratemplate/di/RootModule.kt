@@ -6,9 +6,9 @@ import ru.astrainteractive.astralibs.command.api.registrar.PaperCommandRegistrar
 import ru.astrainteractive.astralibs.coroutines.DefaultBukkitDispatchers
 import ru.astrainteractive.astralibs.lifecycle.Lifecycle
 import ru.astrainteractive.astratemplate.AstraTemplate
-import ru.astrainteractive.astratemplate.api.local.di.ApiLocalModule
 import ru.astrainteractive.astratemplate.api.remote.di.ApiRemoteModule
 import ru.astrainteractive.astratemplate.core.di.CoreModule
+import ru.astrainteractive.astratemplate.data.exposed.di.ExposedModule
 import ru.astrainteractive.astratemplate.feature.command.di.CommandModule
 import ru.astrainteractive.astratemplate.feature.event.di.EventModule
 import ru.astrainteractive.astratemplate.feature.gui.di.BukkitGuiModule
@@ -26,7 +26,7 @@ internal class RootModule(plugin: AstraTemplate) {
         }
     )
 
-    val apiLocalModule: ApiLocalModule = ApiLocalModule(
+    val exposedModule: ExposedModule = ExposedModule(
         configFlow = coreModule.configKrate.cachedStateFlow,
         ioScope = coreModule.ioScope
     )
@@ -36,7 +36,7 @@ internal class RootModule(plugin: AstraTemplate) {
     val eventModule: EventModule = EventModule(coreModule, plugin)
     val guiModule: BukkitGuiModule = BukkitGuiModule(
         coreModule = coreModule,
-        apiLocalModule = apiLocalModule
+        userRepository = exposedModule.userRepository
     )
     val commandModule: CommandModule = CommandModule(
         coreModule = coreModule,
@@ -51,7 +51,7 @@ internal class RootModule(plugin: AstraTemplate) {
         get() = listOf(
             coreModule.lifecycle,
             eventModule.lifecycle,
-            apiLocalModule.lifecycle,
+            exposedModule.lifecycle,
             commandModule.lifecycle
         )
     val lifecycle = Lifecycle.Lambda(

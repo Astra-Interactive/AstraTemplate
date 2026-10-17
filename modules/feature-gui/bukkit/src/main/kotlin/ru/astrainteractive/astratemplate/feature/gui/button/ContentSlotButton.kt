@@ -12,7 +12,7 @@ import ru.astrainteractive.astralibs.menu.slot.setItemStack
 import ru.astrainteractive.astralibs.menu.slot.setLore
 import ru.astrainteractive.astralibs.menu.slot.setMaterial
 import ru.astrainteractive.astralibs.menu.slot.setOnClickListener
-import ru.astrainteractive.astratemplate.api.local.model.UserModel
+import ru.astrainteractive.astratemplate.data.dao.user.model.User
 import ru.astrainteractive.astratemplate.feature.gui.button.di.ButtonContext
 
 internal fun ButtonContext.itemSlot(
@@ -27,7 +27,7 @@ internal fun ButtonContext.itemSlot(
 
 internal fun ButtonContext.userSlot(
     index: Int,
-    user: UserModel,
+    user: User,
     randomColor: ChatColor,
     click: Click
 ) = InventorySlot.Builder()

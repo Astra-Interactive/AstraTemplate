@@ -20,5 +20,5 @@ dependencies {
 
     implementation(projects.modules.featureGui.api)
     implementation(projects.modules.core)
-    implementation(projects.modules.api.local)
+    implementation(projects.modules.data.dao)
 }

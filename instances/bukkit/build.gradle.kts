@@ -33,7 +33,8 @@ dependencies {
     shadow(libs.minecraft.astralibs.menu.bukkit)
     shadow(libs.minecraft.bstats)
 
-    shadow(projects.modules.api.local)
+    shadow(projects.modules.data.dao)
+    shadow(projects.modules.data.exposed)
     shadow(projects.modules.api.remote)
     shadow(projects.modules.buildKonfig)
     shadow(projects.modules.core)

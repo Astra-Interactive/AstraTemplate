@@ -6,7 +6,7 @@ import kotlinx.coroutines.withContext
 import org.bukkit.inventory.Inventory
 import ru.astrainteractive.astralibs.server.player.BukkitOnlineKPlayer
 import ru.astrainteractive.astralibs.server.player.OnlineKPlayer
-import ru.astrainteractive.astratemplate.api.local.dao.LocalDao
+import ru.astrainteractive.astratemplate.data.dao.user.api.UserRepository
 import ru.astrainteractive.astratemplate.feature.gui.api.ItemStackSpigotAPI
 import ru.astrainteractive.astratemplate.feature.gui.button.di.ButtonContext
 import ru.astrainteractive.astratemplate.feature.gui.domain.GetRandomColorUseCase
@@ -24,7 +24,7 @@ internal class RouterImpl(
     private val ioScope: CoroutineScope,
     private val dispatchers: KotlinDispatchers,
     private val createButtonContext: (Locale) -> ButtonContext,
-    private val localDao: LocalDao,
+    private val userRepository: UserRepository,
     private val itemStackSpigotAPi: ItemStackSpigotAPI,
     private val getRandomColorUseCase: GetRandomColorUseCase,
     private val setDisplayNameUseCase: SetDisplayNameUseCase
@@ -35,7 +35,7 @@ internal class RouterImpl(
                 buttonContext = createButtonContext(locale),
                 dispatchers = dispatchers,
                 sampleComponent = DefaultSampleGUIComponent(
-                    localDao = localDao,
+                    userRepository = userRepository,
                     itemStackSpigotAPi = itemStackSpigotAPi,
                     getRandomColorUseCase = getRandomColorUseCase,
                     setDisplayNameUseCase = setDisplayNameUseCase

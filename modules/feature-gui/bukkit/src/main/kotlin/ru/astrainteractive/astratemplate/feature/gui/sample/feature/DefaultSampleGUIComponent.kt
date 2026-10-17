@@ -8,8 +8,8 @@ import kotlinx.coroutines.launch
 import org.bukkit.ChatColor
 import org.bukkit.event.inventory.ClickType
 import ru.astrainteractive.astralibs.coroutines.withTimings
-import ru.astrainteractive.astratemplate.api.local.dao.LocalDao
-import ru.astrainteractive.astratemplate.api.local.model.UserModel
+import ru.astrainteractive.astratemplate.data.dao.user.api.UserRepository
+import ru.astrainteractive.astratemplate.data.dao.user.model.User
 import ru.astrainteractive.astratemplate.feature.gui.api.ItemStackSpigotAPI
 import ru.astrainteractive.astratemplate.feature.gui.domain.GetRandomColorUseCase
 import ru.astrainteractive.astratemplate.feature.gui.domain.SetDisplayNameUseCase
@@ -22,7 +22,7 @@ import kotlin.random.Random
  * MVVM/MVI technique
  */
 internal class DefaultSampleGUIComponent(
-    private val localDao: LocalDao,
+    private val userRepository: UserRepository,
     private val itemStackSpigotAPi: ItemStackSpigotAPI,
     private val getRandomColorUseCase: GetRandomColorUseCase,
     private val setDisplayNameUseCase: SetDisplayNameUseCase
@@ -36,8 +36,8 @@ internal class DefaultSampleGUIComponent(
         get() = getRandomColorUseCase.invoke().color
 
     @Suppress("MagicNumber")
-    private fun getRandomUser(): UserModel {
-        return UserModel(
+    private fun getRandomUser(): User {
+        return User(
             id = -1,
             discordId = "id${Random.nextInt(20000)}",
             minecraftUUID = "mine${Random.nextInt(5000)}"
@@ -69,7 +69,7 @@ internal class DefaultSampleGUIComponent(
 
     override fun onAddUserClicked() {
         launch(Dispatchers.IO) {
-            localDao.insertUser(getRandomUser())
+            userRepository.insertUser(getRandomUser())
             loadUsersModel()
         }
     }
@@ -80,9 +80,9 @@ internal class DefaultSampleGUIComponent(
         val user = users.getOrNull(slot) ?: return
         launch(Dispatchers.IO) {
             when (clickType) {
-                ClickType.MIDDLE -> localDao.updateUser(user)
-                ClickType.LEFT -> localDao.deleteUser(user)
-                else -> localDao.insertRating(user)
+                ClickType.MIDDLE -> userRepository.updateUser(user)
+                ClickType.LEFT -> userRepository.deleteUser(user)
+                else -> userRepository.insertRating(user)
             }
             loadUsersModel()
         }
@@ -106,7 +106,7 @@ internal class DefaultSampleGUIComponent(
     }
 
     private suspend fun loadUsersModel() {
-        model.update { SampleGuiComponent.Model.Users(localDao.getAllUsers()) }
+        model.update { SampleGuiComponent.Model.Users(userRepository.getAllUsers()) }
     }
 
     override fun onUiCreated() {

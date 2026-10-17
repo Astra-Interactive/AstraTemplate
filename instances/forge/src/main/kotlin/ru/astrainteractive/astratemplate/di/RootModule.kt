@@ -7,9 +7,9 @@ import ru.astrainteractive.astralibs.command.registrar.ForgeCommandRegistrarCont
 import ru.astrainteractive.astralibs.coroutines.MinecraftDispatchers
 import ru.astrainteractive.astralibs.lifecycle.ForgeLifecycleServer
 import ru.astrainteractive.astralibs.lifecycle.Lifecycle
-import ru.astrainteractive.astratemplate.api.local.di.ApiLocalModule
 import ru.astrainteractive.astratemplate.api.remote.di.ApiRemoteModule
 import ru.astrainteractive.astratemplate.core.di.CoreModule
+import ru.astrainteractive.astratemplate.data.exposed.di.ExposedModule
 import ru.astrainteractive.astratemplate.feature.command.di.CommandModule
 import ru.astrainteractive.astratemplate.feature.event.di.di.EventModule
 import ru.astrainteractive.astratemplate.feature.gui.di.StubGuiModule
@@ -28,8 +28,8 @@ class RootModule(forgeLifecycleServer: ForgeLifecycleServer) {
         commandRegistrarContextFactory = ::ForgeCommandRegistrarContext
     )
 
-    private val apiLocalModule: ApiLocalModule by lazy {
-        ApiLocalModule(
+    private val exposedModule: ExposedModule by lazy {
+        ExposedModule(
             configFlow = coreModule.configKrate.cachedStateFlow,
             ioScope = coreModule.ioScope
         )
@@ -60,7 +60,7 @@ class RootModule(forgeLifecycleServer: ForgeLifecycleServer) {
             coreModule.lifecycle,
             eventsModule.lifecycle,
             commandModule.lifecycle,
-            apiLocalModule.lifecycle
+            exposedModule.lifecycle
         )
 
     val lifecycle: Lifecycle by lazy {

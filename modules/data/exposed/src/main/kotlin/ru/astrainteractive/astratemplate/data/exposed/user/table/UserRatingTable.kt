@@ -1,4 +1,4 @@
-package ru.astrainteractive.astratemplate.api.local.entity
+package ru.astrainteractive.astratemplate.data.exposed.user.table
 
 import org.jetbrains.exposed.v1.core.dao.id.IntIdTable
 

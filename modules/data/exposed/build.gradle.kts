@@ -21,4 +21,9 @@ dependencies {
     implementation(libs.exposed.jdbc)
 
     implementation(projects.modules.core)
+    implementation(projects.modules.data.dao)
+
+    testImplementation(libs.driver.jdbc)
+    testImplementation(libs.kotlin.coroutines.test)
+    testImplementation(libs.tests.kotlin.test)
 }

@@ -1,4 +1,4 @@
-package ru.astrainteractive.astratemplate.api.local.di
+package ru.astrainteractive.astratemplate.data.exposed.di
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
@@ -12,14 +12,14 @@ import org.jetbrains.exposed.v1.jdbc.SchemaUtils
 import org.jetbrains.exposed.v1.jdbc.transactions.TransactionManager
 import org.jetbrains.exposed.v1.jdbc.transactions.transaction
 import ru.astrainteractive.astralibs.lifecycle.Lifecycle
-import ru.astrainteractive.astratemplate.api.local.dao.LocalDao
-import ru.astrainteractive.astratemplate.api.local.dao.LocalDaoImpl
-import ru.astrainteractive.astratemplate.api.local.entity.UserRatingTable
-import ru.astrainteractive.astratemplate.api.local.entity.UserTable
 import ru.astrainteractive.astratemplate.core.plugin.PluginConfiguration
+import ru.astrainteractive.astratemplate.data.dao.user.api.UserRepository
+import ru.astrainteractive.astratemplate.data.exposed.user.ExposedUserRepository
+import ru.astrainteractive.astratemplate.data.exposed.user.table.UserRatingTable
+import ru.astrainteractive.astratemplate.data.exposed.user.table.UserTable
 import ru.astrainteractive.klibs.mikro.exposed.util.connectAsFlow
 
-class ApiLocalModule(
+class ExposedModule(
     configFlow: Flow<PluginConfiguration>,
     ioScope: CoroutineScope
 ) {
@@ -35,7 +35,7 @@ class ApiLocalModule(
         }
         .shareIn(ioScope, SharingStarted.Eagerly, 1)
 
-    val localDao: LocalDao = LocalDaoImpl(
+    val userRepository: UserRepository = ExposedUserRepository(
         databaseFlow = databaseFlow,
     )
 
