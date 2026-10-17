@@ -1,6 +1,6 @@
 package ru.astrainteractive.astratemplate.feature.command.additem
 
-import ru.astrainteractive.astratemplate.core.plugin.PluginTranslation
+import ru.astrainteractive.astratemplate.core.plugin.model.PluginTranslation
 import ru.astrainteractive.klibs.kstorage.api.CachedKrate
 import ru.astrainteractive.klibs.kstorage.api.getValue
 

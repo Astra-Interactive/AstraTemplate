@@ -1,6 +1,6 @@
 @file:Suppress("LongParameterList")
 
-package ru.astrainteractive.astratemplate.core.plugin
+package ru.astrainteractive.astratemplate.core.plugin.model
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

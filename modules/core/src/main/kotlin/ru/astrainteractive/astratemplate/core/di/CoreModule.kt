@@ -13,8 +13,8 @@ import ru.astrainteractive.astralibs.lifecycle.Lifecycle
 import ru.astrainteractive.astralibs.util.YamlStringFormat
 import ru.astrainteractive.astralibs.util.parseOrWriteIntoDefault
 import ru.astrainteractive.astratemplate.BuildKonfig
-import ru.astrainteractive.astratemplate.core.plugin.PluginConfiguration
-import ru.astrainteractive.astratemplate.core.plugin.PluginTranslation
+import ru.astrainteractive.astratemplate.core.plugin.model.PluginConfiguration
+import ru.astrainteractive.astratemplate.core.plugin.model.PluginTranslation
 import ru.astrainteractive.klibs.kstorage.api.asCachedKrate
 import ru.astrainteractive.klibs.kstorage.api.asStateFlowKrate
 import ru.astrainteractive.klibs.kstorage.api.impl.DefaultMutableKrate

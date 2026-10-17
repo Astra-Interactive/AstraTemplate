@@ -6,7 +6,7 @@ import ru.astrainteractive.astralibs.command.api.exception.ArgumentConverterExce
 import ru.astrainteractive.astralibs.command.api.exception.BadArgumentException
 import ru.astrainteractive.astralibs.command.api.exception.NoPermissionException
 import ru.astrainteractive.astralibs.command.api.exception.NoPotionEffectTypeException
-import ru.astrainteractive.astratemplate.core.plugin.PluginTranslation
+import ru.astrainteractive.astratemplate.core.plugin.model.PluginTranslation
 import ru.astrainteractive.astratemplate.feature.command.additem.AddItemCommand
 import ru.astrainteractive.klibs.kstorage.api.CachedKrate
 import ru.astrainteractive.klibs.kstorage.api.getValue

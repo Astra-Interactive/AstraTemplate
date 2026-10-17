@@ -12,7 +12,7 @@ import org.jetbrains.exposed.v1.jdbc.SchemaUtils
 import org.jetbrains.exposed.v1.jdbc.transactions.TransactionManager
 import org.jetbrains.exposed.v1.jdbc.transactions.transaction
 import ru.astrainteractive.astralibs.lifecycle.Lifecycle
-import ru.astrainteractive.astratemplate.core.plugin.PluginConfiguration
+import ru.astrainteractive.astratemplate.core.plugin.model.PluginConfiguration
 import ru.astrainteractive.astratemplate.data.dao.user.api.UserRepository
 import ru.astrainteractive.astratemplate.data.exposed.user.ExposedUserRepository
 import ru.astrainteractive.astratemplate.data.exposed.user.table.UserRatingTable
