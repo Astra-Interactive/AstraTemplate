@@ -1,0 +1,22 @@
+name: "architecture-validation"
+on:
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  architecture_validation:
+    name: Validate project architecture
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Git repo
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Set up JDK
+        uses: ./.github/actions/setup-jdk
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@9c971963bec38e04b3d30dcc455b5382be2fdbfb # v6
+      - name: Give gradle permission
+        run: chmod +x gradlew
+      - name: Run architecture checks
+        run: ./gradlew architectureCheck

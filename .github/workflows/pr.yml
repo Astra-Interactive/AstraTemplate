@@ -36,11 +36,15 @@ jobs:
     name: Validate with detekt
     needs: gradle_wrapper_validation
     uses: ./.github/workflows/call-detekt-validation.yml
+  architecture_validation:
+    name: Validate architecture
+    needs: gradle_wrapper_validation
+    uses: ./.github/workflows/call-architecture-validation.yml
   tests_validation:
     name: Run tests
     needs: gradle_wrapper_validation
     uses: ./.github/workflows/call-tests-validation.yml
   build_project:
     name: Build project
-    needs: [ gradle_wrapper_validation, detekt_validation, tests_validation ]
+    needs: [ gradle_wrapper_validation, detekt_validation, architecture_validation, tests_validation ]
     uses: ./.github/workflows/call-build-project.yml
