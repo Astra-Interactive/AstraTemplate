@@ -39,7 +39,7 @@ dependencies {
     shadow(projects.modules.integrationRickmorty)
     shadow(projects.modules.core)
     shadow(projects.modules.featureEvent.forge)
-    shadow(projects.modules.featureCommand)
+    shadow(projects.modules.command)
     shadow(projects.modules.featureGui.api)
 }
 

@@ -1,0 +1,16 @@
+package ru.astrainteractive.astratemplate.command.additem.command
+
+import ru.astrainteractive.astratemplate.command.additem.model.AddItemCommand
+import ru.astrainteractive.astratemplate.core.plugin.model.PluginTranslation
+import ru.astrainteractive.klibs.kstorage.api.CachedKrate
+import ru.astrainteractive.klibs.kstorage.api.getValue
+
+internal class AddItemExecutor(
+    translationKrate: CachedKrate<PluginTranslation>
+) {
+    private val translation by translationKrate
+
+    fun execute(input: AddItemCommand) {
+        input.player.sendMessage(translation.addItem.success(input.amount, input.itemName))
+    }
+}

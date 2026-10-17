@@ -37,7 +37,7 @@ dependencies {
     shadow(projects.modules.data.exposed)
     shadow(projects.modules.integrationRickmorty)
     shadow(projects.modules.core)
-    shadow(projects.modules.featureCommand)
+    shadow(projects.modules.command)
     shadow(projects.modules.featureGui.api)
     shadow(projects.modules.featureGui.bukkit)
     shadow(projects.modules.featureEvent.bukkit)

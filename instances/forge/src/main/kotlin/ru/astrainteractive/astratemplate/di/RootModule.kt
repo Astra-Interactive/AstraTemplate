@@ -7,9 +7,9 @@ import ru.astrainteractive.astralibs.command.registrar.ForgeCommandRegistrarCont
 import ru.astrainteractive.astralibs.coroutines.MinecraftDispatchers
 import ru.astrainteractive.astralibs.lifecycle.ForgeLifecycleServer
 import ru.astrainteractive.astralibs.lifecycle.Lifecycle
+import ru.astrainteractive.astratemplate.command.di.CommandModule
 import ru.astrainteractive.astratemplate.core.di.CoreModule
 import ru.astrainteractive.astratemplate.data.exposed.di.ExposedModule
-import ru.astrainteractive.astratemplate.feature.command.di.CommandModule
 import ru.astrainteractive.astratemplate.feature.event.di.di.EventModule
 import ru.astrainteractive.astratemplate.feature.gui.di.StubGuiModule
 import ru.astrainteractive.astratemplate.integration.rickmorty.di.RickMortyModule
