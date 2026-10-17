@@ -19,7 +19,7 @@ dependencies {
     implementation(libs.minecraft.astralibs.core)
 
     implementation(projects.modules.core)
-    implementation(projects.modules.featureGui.api)
+    implementation(projects.modules.gui.api)
     implementation(projects.modules.integrationRickmorty)
 
     testImplementation(libs.kotlin.coroutines.test)

@@ -13,7 +13,7 @@ import ru.astrainteractive.astratemplate.command.rickmorty.command.RickMortyLite
 import ru.astrainteractive.astratemplate.command.sample.command.GuiLiteralArgumentBuilder
 import ru.astrainteractive.astratemplate.command.translation.command.TranslationLiteralArgumentBuilder
 import ru.astrainteractive.astratemplate.core.di.CoreModule
-import ru.astrainteractive.astratemplate.feature.gui.di.GuiModule
+import ru.astrainteractive.astratemplate.gui.api.di.GuiModule
 import ru.astrainteractive.astratemplate.integration.rickmorty.di.RickMortyModule
 
 class CommandModule(

@@ -11,7 +11,7 @@ import ru.astrainteractive.astratemplate.command.di.CommandModule
 import ru.astrainteractive.astratemplate.core.di.CoreModule
 import ru.astrainteractive.astratemplate.data.exposed.di.ExposedModule
 import ru.astrainteractive.astratemplate.feature.event.di.di.EventModule
-import ru.astrainteractive.astratemplate.feature.gui.di.StubGuiModule
+import ru.astrainteractive.astratemplate.gui.api.di.StubGuiModule
 import ru.astrainteractive.astratemplate.integration.rickmorty.di.RickMortyModule
 import java.io.File
 

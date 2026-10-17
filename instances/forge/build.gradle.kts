@@ -40,7 +40,7 @@ dependencies {
     shadow(projects.modules.core)
     shadow(projects.modules.featureEvent.forge)
     shadow(projects.modules.command)
-    shadow(projects.modules.featureGui.api)
+    shadow(projects.modules.gui.api)
 }
 
 minecraftProcessResource {
