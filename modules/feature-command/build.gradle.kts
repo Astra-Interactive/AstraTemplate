@@ -21,8 +21,6 @@ dependencies {
     implementation(projects.modules.core)
     implementation(projects.modules.featureGui.api)
     implementation(projects.modules.api.remote)
-    implementation(projects.modules.api.local)
-    implementation(projects.modules.buildKonfig)
 
     testImplementation(libs.kotlin.coroutines.test)
     testImplementation(libs.tests.kotlin.test)

@@ -16,9 +16,7 @@ dependencies {
     implementation(libs.minecraft.astralibs.core)
     implementation(libs.minecraft.astralibs.core.neoforge)
 
-    implementation(projects.modules.featureGui.api)
     implementation(projects.modules.core)
-    implementation(projects.modules.api.local)
 }
 
 dependencies {
