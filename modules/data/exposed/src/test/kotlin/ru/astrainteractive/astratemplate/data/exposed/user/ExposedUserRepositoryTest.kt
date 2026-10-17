@@ -43,7 +43,9 @@ class ExposedUserRepositoryTest {
         databaseFile.delete()
     }
 
-    private fun newUser(discordId: String): User = User(id = -1, discordId = discordId, minecraftUUID = "uuid-$discordId")
+    private fun newUser(discordId: String): User {
+        return User(id = -1, discordId = discordId, minecraftUUID = "uuid-$discordId")
+    }
 
     @Test
     fun GIVEN_new_user_WHEN_inserted_THEN_it_is_listed_with_its_new_id() = runTest {
@@ -73,8 +75,8 @@ class ExposedUserRepositoryTest {
 
     @Test
     fun GIVEN_user_with_ratings_WHEN_ratings_are_selected_THEN_only_that_users_ratings_return() = runTest {
-        val alex = User(id = repository.insertUser(newUser("alex")), discordId = "alex", minecraftUUID = "uuid-alex")
-        val steve = User(id = repository.insertUser(newUser("steve")), discordId = "steve", minecraftUUID = "uuid-steve")
+        val alex = newUser("alex").let { user -> user.copy(id = repository.insertUser(user)) }
+        val steve = newUser("steve").let { user -> user.copy(id = repository.insertUser(user)) }
         val firstRatingId = repository.insertRating(alex)
         val secondRatingId = repository.insertRating(alex)
         repository.insertRating(steve)

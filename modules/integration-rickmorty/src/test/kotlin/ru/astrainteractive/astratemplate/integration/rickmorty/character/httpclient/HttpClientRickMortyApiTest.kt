@@ -43,7 +43,9 @@ class HttpClientRickMortyApiTest {
 
     @Test
     fun GIVEN_character_response_WHEN_character_is_requested_THEN_returns_it_and_ignores_unknown_fields() = runTest {
-        responseBody = """{"id":2,"name":"Morty Smith","status":"Alive","species":"Human","gender":"Male","origin":{}}"""
+        responseBody = """
+            {"id":2,"name":"Morty Smith","status":"Alive","species":"Human","gender":"Male","origin":{}}
+        """.trimIndent()
 
         val result = api.getRandomCharacter(2)
 

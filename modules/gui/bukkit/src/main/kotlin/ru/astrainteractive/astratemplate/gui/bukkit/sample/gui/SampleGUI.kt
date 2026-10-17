@@ -113,7 +113,7 @@ internal class SampleGUI(
                         slotContext.itemSlot(
                             index = slotIndex,
                             itemStack = item,
-                            click = { sampleComponent.onItemClicked(dataIndex, it.click) }
+                            click = { event -> sampleComponent.onItemClicked(dataIndex, event.click) }
                         )
                     }
                     is SampleGuiComponent.Model.Users -> state.users.getOrNull(dataIndex)?.let { user ->
@@ -121,13 +121,27 @@ internal class SampleGUI(
                             index = slotIndex,
                             user = user,
                             randomColor = sampleComponent.randomColor,
-                            click = { sampleComponent.onItemClicked(dataIndex, it.click) }
+                            click = { event -> sampleComponent.onItemClicked(dataIndex, event.click) }
                         )
                     }
                     SampleGuiComponent.Model.Loading -> null
                 }
             }
         }
+
+    override fun render() {
+        super.render()
+        setInventorySlot(borderButtons)
+        setInventorySlot(changeModeButton)
+        setInventorySlot(backButton)
+        if (!paginator.context.isFirstPage) setInventorySlot(prevPageButton)
+        if (!paginator.context.isLastPage) setInventorySlot(nextPageButton)
+        val state = sampleComponent.model.value
+        if (state is SampleGuiComponent.Model.Users) {
+            setInventorySlot(addUserButton)
+        }
+        setInventorySlot(contentSlots)
+    }
 
     private fun onNextPageClicked() {
         paginator.openNextPage()
@@ -158,19 +172,5 @@ internal class SampleGUI(
             }
             .onEach { render() }
             .launchIn(menuScope)
-    }
-
-    override fun render() {
-        super.render()
-        setInventorySlot(borderButtons)
-        setInventorySlot(changeModeButton)
-        setInventorySlot(backButton)
-        if (!paginator.context.isFirstPage) setInventorySlot(prevPageButton)
-        if (!paginator.context.isLastPage) setInventorySlot(nextPageButton)
-        val state = sampleComponent.model.value
-        if (state is SampleGuiComponent.Model.Users) {
-            setInventorySlot(addUserButton)
-        }
-        setInventorySlot(contentSlots)
     }
 }

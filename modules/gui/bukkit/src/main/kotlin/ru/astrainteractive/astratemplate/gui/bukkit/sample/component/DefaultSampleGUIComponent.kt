@@ -42,6 +42,36 @@ internal class DefaultSampleGUIComponent(
         )
     }
 
+    private suspend fun loadItemsModel() {
+        model.update { SampleGuiComponent.Model.Items(random.nextItemStacks(SAMPLE_ITEMS_COUNT)) }
+    }
+
+    private suspend fun loadUsersModel() {
+        model.update { SampleGuiComponent.Model.Users(userRepository.getAllUsers()) }
+    }
+
+    private fun onItemStackClicked(slot: Int) {
+        val state = model.value as? SampleGuiComponent.Model.Items ?: return
+
+        model.update {
+            state.copy(items = state.items.withColoredDisplayName(index = slot, color = random.nextChatColor()))
+        }
+    }
+
+    private fun onPlayerHeadClicked(slot: Int, clickType: ClickType) {
+        val state = model.value as? SampleGuiComponent.Model.Users ?: return
+        val users = state.users
+        val user = users.getOrNull(slot) ?: return
+        launch(Dispatchers.IO) {
+            when (clickType) {
+                ClickType.MIDDLE -> userRepository.updateUser(user)
+                ClickType.LEFT -> userRepository.deleteUser(user)
+                else -> userRepository.insertRating(user)
+            }
+            loadUsersModel()
+        }
+    }
+
     override fun onModeChange() {
         launch(Dispatchers.IO) {
             when (model.value) {
@@ -70,36 +100,6 @@ internal class DefaultSampleGUIComponent(
             userRepository.insertUser(getRandomUser())
             loadUsersModel()
         }
-    }
-
-    private fun onPlayerHeadClicked(slot: Int, clickType: ClickType) {
-        val state = model.value as? SampleGuiComponent.Model.Users ?: return
-        val users = state.users
-        val user = users.getOrNull(slot) ?: return
-        launch(Dispatchers.IO) {
-            when (clickType) {
-                ClickType.MIDDLE -> userRepository.updateUser(user)
-                ClickType.LEFT -> userRepository.deleteUser(user)
-                else -> userRepository.insertRating(user)
-            }
-            loadUsersModel()
-        }
-    }
-
-    private fun onItemStackClicked(slot: Int) {
-        val state = model.value as? SampleGuiComponent.Model.Items ?: return
-
-        model.update {
-            state.copy(items = state.items.withColoredDisplayName(index = slot, color = random.nextChatColor()))
-        }
-    }
-
-    private suspend fun loadItemsModel() {
-        model.update { SampleGuiComponent.Model.Items(random.nextItemStacks(SAMPLE_ITEMS_COUNT)) }
-    }
-
-    private suspend fun loadUsersModel() {
-        model.update { SampleGuiComponent.Model.Users(userRepository.getAllUsers()) }
     }
 
     override fun onUiCreated() {
