@@ -40,7 +40,7 @@ dependencies {
     shadow(projects.modules.command)
     shadow(projects.modules.gui.api)
     shadow(projects.modules.gui.bukkit)
-    shadow(projects.modules.featureEvent.bukkit)
+    shadow(projects.modules.event.bukkit)
 
     testImplementation(libs.tests.kotlin.test)
 }

@@ -33,7 +33,7 @@ dependencies {
     shadow(projects.modules.data.exposed)
     shadow(projects.modules.integrationRickmorty)
     shadow(projects.modules.core)
-    shadow(projects.modules.featureEvent.neoforge)
+    shadow(projects.modules.event.neoforge)
     shadow(projects.modules.command)
     shadow(projects.modules.gui.api)
 }

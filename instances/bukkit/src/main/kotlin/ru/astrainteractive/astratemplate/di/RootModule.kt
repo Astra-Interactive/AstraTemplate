@@ -9,7 +9,7 @@ import ru.astrainteractive.astratemplate.AstraTemplate
 import ru.astrainteractive.astratemplate.command.di.CommandModule
 import ru.astrainteractive.astratemplate.core.di.CoreModule
 import ru.astrainteractive.astratemplate.data.exposed.di.ExposedModule
-import ru.astrainteractive.astratemplate.feature.event.di.EventModule
+import ru.astrainteractive.astratemplate.event.di.EventModule
 import ru.astrainteractive.astratemplate.gui.bukkit.di.BukkitGuiModule
 import ru.astrainteractive.astratemplate.integration.rickmorty.di.RickMortyModule
 
