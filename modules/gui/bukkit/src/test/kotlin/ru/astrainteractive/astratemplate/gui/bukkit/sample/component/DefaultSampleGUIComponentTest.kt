@@ -77,4 +77,26 @@ class DefaultSampleGUIComponentTest {
         }
         assertEquals(1, repository.selectRating(user).size)
     }
+
+    @Test
+    fun GIVEN_shown_user_WHEN_middle_clicked_THEN_user_stays_stored() = runBlocking {
+        component.onAddUserClicked()
+        val user = awaitUsers(count = 1).users.single()
+
+        component.onItemClicked(slot = 0, clickType = ClickType.MIDDLE)
+
+        assertEquals(listOf(user), awaitUsers(count = 1).users)
+        assertEquals(listOf(user), repository.getAllUsers())
+    }
+
+    @Test
+    fun GIVEN_two_added_users_WHEN_listed_THEN_they_keep_their_insertion_order() = runBlocking {
+        component.onAddUserClicked()
+        awaitUsers(count = 1)
+        component.onAddUserClicked()
+
+        val users = awaitUsers(count = 2).users
+
+        assertEquals(listOf(1, 2), users.map { user -> user.id })
+    }
 }
