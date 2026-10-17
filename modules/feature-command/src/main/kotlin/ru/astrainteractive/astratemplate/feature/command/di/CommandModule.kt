@@ -4,7 +4,6 @@ import ru.astrainteractive.astralibs.command.api.brigadier.command.Multiplatform
 import ru.astrainteractive.astralibs.command.api.registrar.CommandRegistrarContext
 import ru.astrainteractive.astralibs.command.api.registrar.registerWhenReady
 import ru.astrainteractive.astralibs.lifecycle.Lifecycle
-import ru.astrainteractive.astratemplate.api.remote.di.ApiRemoteModule
 import ru.astrainteractive.astratemplate.core.di.CoreModule
 import ru.astrainteractive.astratemplate.feature.command.additem.AddItemExecutor
 import ru.astrainteractive.astratemplate.feature.command.additem.AddItemLiteralArgumentBuilder
@@ -15,11 +14,12 @@ import ru.astrainteractive.astratemplate.feature.command.gui.GuiLiteralArgumentB
 import ru.astrainteractive.astratemplate.feature.command.reload.ReloadLiteralArgumentBuilder
 import ru.astrainteractive.astratemplate.feature.command.rickmorty.RickMortyLiteralArgumentBuilder
 import ru.astrainteractive.astratemplate.feature.gui.di.GuiModule
+import ru.astrainteractive.astratemplate.integration.rickmorty.di.RickMortyModule
 
 class CommandModule(
     private val coreModule: CoreModule,
     guiModule: GuiModule,
-    apiRemoteModule: ApiRemoteModule,
+    rickMortyModule: RickMortyModule,
     lifecyclePlugin: Lifecycle,
     private val commandRegistrarContext: CommandRegistrarContext,
     multiplatformCommand: MultiplatformCommand
@@ -60,7 +60,7 @@ class CommandModule(
         RickMortyLiteralArgumentBuilder(
             scope = coreModule.ioScope,
             dispatchers = coreModule.dispatchers,
-            rmApi = apiRemoteModule.rickMortyApi,
+            rmApi = rickMortyModule.rickMortyApi,
             multiplatformCommand = multiplatformCommand,
             errorHandler = errorHandler,
             translationKrate = coreModule.translationKrate

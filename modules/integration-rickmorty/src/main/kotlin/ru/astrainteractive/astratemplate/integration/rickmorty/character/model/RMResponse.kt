@@ -1,4 +1,4 @@
-package ru.astrainteractive.astratemplate.api.remote.model
+package ru.astrainteractive.astratemplate.integration.rickmorty.character.model
 
 import kotlinx.serialization.Serializable
 

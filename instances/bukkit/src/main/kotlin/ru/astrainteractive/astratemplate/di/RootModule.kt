@@ -6,12 +6,12 @@ import ru.astrainteractive.astralibs.command.api.registrar.PaperCommandRegistrar
 import ru.astrainteractive.astralibs.coroutines.DefaultBukkitDispatchers
 import ru.astrainteractive.astralibs.lifecycle.Lifecycle
 import ru.astrainteractive.astratemplate.AstraTemplate
-import ru.astrainteractive.astratemplate.api.remote.di.ApiRemoteModule
 import ru.astrainteractive.astratemplate.core.di.CoreModule
 import ru.astrainteractive.astratemplate.data.exposed.di.ExposedModule
 import ru.astrainteractive.astratemplate.feature.command.di.CommandModule
 import ru.astrainteractive.astratemplate.feature.event.di.EventModule
 import ru.astrainteractive.astratemplate.feature.gui.di.BukkitGuiModule
+import ru.astrainteractive.astratemplate.integration.rickmorty.di.RickMortyModule
 
 internal class RootModule(plugin: AstraTemplate) {
 
@@ -31,7 +31,7 @@ internal class RootModule(plugin: AstraTemplate) {
         ioScope = coreModule.ioScope
     )
 
-    val apiRemoteModule: ApiRemoteModule = ApiRemoteModule()
+    val rickMortyModule: RickMortyModule = RickMortyModule()
 
     val eventModule: EventModule = EventModule(coreModule, plugin)
     val guiModule: BukkitGuiModule = BukkitGuiModule(
@@ -40,7 +40,7 @@ internal class RootModule(plugin: AstraTemplate) {
     )
     val commandModule: CommandModule = CommandModule(
         coreModule = coreModule,
-        apiRemoteModule = apiRemoteModule,
+        rickMortyModule = rickMortyModule,
         guiModule = guiModule,
         lifecyclePlugin = plugin,
         commandRegistrarContext = coreModule.commandRegistrarContext,

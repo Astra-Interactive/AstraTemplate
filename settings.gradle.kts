@@ -55,7 +55,7 @@ include(":instances:bukkit")
 include(":instances:forge")
 include(":instances:neoforge")
 
-include("modules:api:remote")
+include("modules:integration-rickmorty")
 include("modules:data:dao")
 include("modules:data:exposed")
 include("modules:core")

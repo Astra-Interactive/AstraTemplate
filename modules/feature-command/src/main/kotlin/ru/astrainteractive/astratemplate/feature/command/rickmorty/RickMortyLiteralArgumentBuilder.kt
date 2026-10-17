@@ -6,9 +6,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import ru.astrainteractive.astralibs.command.api.brigadier.command.MultiplatformCommand
 import ru.astrainteractive.astralibs.command.api.brigadier.sender.KCommandSender
-import ru.astrainteractive.astratemplate.api.remote.api.RickMortyApi
 import ru.astrainteractive.astratemplate.core.plugin.PluginTranslation
 import ru.astrainteractive.astratemplate.feature.command.errorhandler.DefaultErrorHandler
+import ru.astrainteractive.astratemplate.integration.rickmorty.character.api.RickMortyApi
 import ru.astrainteractive.klibs.kstorage.api.CachedKrate
 import ru.astrainteractive.klibs.kstorage.api.getValue
 import ru.astrainteractive.klibs.mikro.core.dispatchers.KotlinDispatchers
