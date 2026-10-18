@@ -1,6 +1,6 @@
 @file:Suppress("FunctionNaming")
 
-package ru.astrainteractive.astratemplate.integration.rickmorty.character.httpclient
+package ru.astrainteractive.astratemplate.integration.rickmorty.character
 
 import com.sun.net.httpserver.HttpServer
 import kotlinx.coroutines.test.runTest

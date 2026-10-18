@@ -1,4 +1,4 @@
-package ru.astrainteractive.astratemplate.integration.rickmorty.character.httpclient
+package ru.astrainteractive.astratemplate.integration.rickmorty.character
 
 import kotlinx.serialization.json.Json
 import ru.astrainteractive.astratemplate.integration.rickmorty.character.api.RickMortyApi

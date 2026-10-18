@@ -1,7 +1,7 @@
 package ru.astrainteractive.astratemplate.integration.rickmorty.di
 
+import ru.astrainteractive.astratemplate.integration.rickmorty.character.HttpClientRickMortyApi
 import ru.astrainteractive.astratemplate.integration.rickmorty.character.api.RickMortyApi
-import ru.astrainteractive.astratemplate.integration.rickmorty.character.httpclient.HttpClientRickMortyApi
 import java.net.URI
 import java.net.http.HttpClient
 
