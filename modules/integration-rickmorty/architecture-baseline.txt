@@ -1,1 +1,0 @@
-KindShape	src/main/kotlin/ru/astrainteractive/astratemplate/integration/rickmorty/character/httpclient/HttpClientRickMortyApi.kt	HttpClientRickMortyApi
