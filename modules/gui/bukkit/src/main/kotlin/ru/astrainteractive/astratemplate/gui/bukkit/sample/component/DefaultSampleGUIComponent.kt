@@ -34,7 +34,7 @@ internal class DefaultSampleGUIComponent(
         get() = random.nextChatColor()
 
     @Suppress("MagicNumber")
-    private fun getRandomUser(): User {
+    private fun buildRandomUser(): User {
         return User(
             id = -1,
             discordId = "id${random.nextInt(20000)}",
@@ -47,7 +47,7 @@ internal class DefaultSampleGUIComponent(
     }
 
     private suspend fun loadUsersModel() {
-        model.update { SampleGuiComponent.Model.Users(userRepository.getAllUsers()) }
+        model.update { SampleGuiComponent.Model.Users(userRepository.loadUsers()) }
     }
 
     private fun onItemStackClicked(slot: Int) {
@@ -97,7 +97,7 @@ internal class DefaultSampleGUIComponent(
 
     override fun onAddUserClicked() {
         launch(Dispatchers.IO) {
-            userRepository.insertUser(getRandomUser())
+            userRepository.insertUser(buildRandomUser())
             loadUsersModel()
         }
     }

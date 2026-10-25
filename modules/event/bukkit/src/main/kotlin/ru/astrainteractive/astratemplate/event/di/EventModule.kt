@@ -37,10 +37,10 @@ class EventModule(
     val lifecycle: Lifecycle = Lifecycle.Lambda(
         onEnable = {
             listeners.forEach { listener -> listener.onEnable(plugin) }
-            eventJobs.forEach { job -> job.start() }
+            eventJobs.forEach(Job::start)
         },
         onDisable = {
-            eventJobs.forEach { job -> job.cancel() }
+            eventJobs.forEach(Job::cancel)
             listeners.forEach(EventListener::onDisable)
             HandlerList.unregisterAll(plugin)
         }

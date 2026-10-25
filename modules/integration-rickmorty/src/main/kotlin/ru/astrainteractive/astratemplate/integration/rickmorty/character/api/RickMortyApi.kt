@@ -7,5 +7,5 @@ interface RickMortyApi {
      * Returns random character by its id
      * @param id - id of the character
      */
-    suspend fun getRandomCharacter(id: Int): Result<RMResponse>
+    suspend fun fetchRandomCharacter(id: Int): Result<RMResponse>
 }

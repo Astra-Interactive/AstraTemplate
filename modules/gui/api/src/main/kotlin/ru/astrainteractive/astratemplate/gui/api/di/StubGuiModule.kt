@@ -8,6 +8,8 @@ class StubGuiModule : GuiModule {
         override fun open(
             player: OnlineKPlayer,
             route: Router.Route
-        ) = Unit
+        ) {
+            Unit
+        }
     }
 }

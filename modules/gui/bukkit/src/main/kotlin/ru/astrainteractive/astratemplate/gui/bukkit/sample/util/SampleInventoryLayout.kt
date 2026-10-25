@@ -6,50 +6,54 @@ import ru.astrainteractive.astralibs.menu.slot.InventorySlot
 import ru.astrainteractive.astratemplate.gui.bukkit.sample.model.SampleSlotKey
 
 @Suppress("MagicNumber")
-private fun compactSampleLayout() = slotInventoryLayout {
-    repeat(5) {
-        row(9, SampleSlotKey.CONTENT_ITEM)
+private fun compactSampleLayout(): InventoryLayout<SampleSlotKey, InventorySlot> {
+    return slotInventoryLayout {
+        repeat(5) {
+            row(9, SampleSlotKey.CONTENT_ITEM)
+        }
+        row(
+            SampleSlotKey.PREV_PAGE,
+            SampleSlotKey.EMPTY,
+            SampleSlotKey.EMPTY,
+            SampleSlotKey.ADD_USER,
+            SampleSlotKey.BACK,
+            SampleSlotKey.CHANGE_MODE,
+            SampleSlotKey.EMPTY,
+            SampleSlotKey.EMPTY,
+            SampleSlotKey.NEXT_PAGE
+        )
     }
-    row(
-        SampleSlotKey.PREV_PAGE,
-        SampleSlotKey.EMPTY,
-        SampleSlotKey.EMPTY,
-        SampleSlotKey.ADD_USER,
-        SampleSlotKey.BACK,
-        SampleSlotKey.CHANGE_MODE,
-        SampleSlotKey.EMPTY,
-        SampleSlotKey.EMPTY,
-        SampleSlotKey.NEXT_PAGE
-    )
 }
 
 @Suppress("MagicNumber")
-private fun borderedSampleLayout() = slotInventoryLayout {
-    row(9, SampleSlotKey.BORDER)
-    repeat(4) {
+private fun borderedSampleLayout(): InventoryLayout<SampleSlotKey, InventorySlot> {
+    return slotInventoryLayout {
+        row(9, SampleSlotKey.BORDER)
+        repeat(4) {
+            row(
+                SampleSlotKey.BORDER,
+                SampleSlotKey.CONTENT_ITEM,
+                SampleSlotKey.CONTENT_ITEM,
+                SampleSlotKey.CONTENT_ITEM,
+                SampleSlotKey.CONTENT_ITEM,
+                SampleSlotKey.CONTENT_ITEM,
+                SampleSlotKey.CONTENT_ITEM,
+                SampleSlotKey.CONTENT_ITEM,
+                SampleSlotKey.BORDER
+            )
+        }
         row(
             SampleSlotKey.BORDER,
-            SampleSlotKey.CONTENT_ITEM,
-            SampleSlotKey.CONTENT_ITEM,
-            SampleSlotKey.CONTENT_ITEM,
-            SampleSlotKey.CONTENT_ITEM,
-            SampleSlotKey.CONTENT_ITEM,
-            SampleSlotKey.CONTENT_ITEM,
-            SampleSlotKey.CONTENT_ITEM,
+            SampleSlotKey.PREV_PAGE,
+            SampleSlotKey.EMPTY,
+            SampleSlotKey.ADD_USER,
+            SampleSlotKey.BACK,
+            SampleSlotKey.CHANGE_MODE,
+            SampleSlotKey.EMPTY,
+            SampleSlotKey.NEXT_PAGE,
             SampleSlotKey.BORDER
         )
     }
-    row(
-        SampleSlotKey.BORDER,
-        SampleSlotKey.PREV_PAGE,
-        SampleSlotKey.EMPTY,
-        SampleSlotKey.ADD_USER,
-        SampleSlotKey.BACK,
-        SampleSlotKey.CHANGE_MODE,
-        SampleSlotKey.EMPTY,
-        SampleSlotKey.NEXT_PAGE,
-        SampleSlotKey.BORDER
-    )
 }
 
 internal fun sampleInventoryLayout(isCompact: Boolean): InventoryLayout<SampleSlotKey, InventorySlot> {

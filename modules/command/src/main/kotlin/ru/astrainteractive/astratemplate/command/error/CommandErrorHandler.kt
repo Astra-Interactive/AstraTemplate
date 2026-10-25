@@ -19,7 +19,7 @@ internal class CommandErrorHandler(
 ) : Logger by JUtiltLogger("AstraTemplate-CommandErrorHandler") {
     private val translation by translationKrate
 
-    fun handle(ctx: CommandContext<Any>, throwable: Throwable) {
+    fun onFailure(ctx: CommandContext<Any>, throwable: Throwable) {
         with(multiplatformCommand) {
             val sender = ctx.getSender()
             when (throwable) {

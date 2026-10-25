@@ -26,7 +26,7 @@ internal class RickMortyLiteralArgumentBuilder(
 
     private fun send(sender: KCommandSender, number: Int) {
         scope.launch(dispatchers.IO) {
-            rmApi.getRandomCharacter(number)
+            rmApi.fetchRandomCharacter(number)
                 .onSuccess { character ->
                     sender.sendMessage(translation.rickMorty.success(character.toString()))
                 }
@@ -41,13 +41,13 @@ internal class RickMortyLiteralArgumentBuilder(
         return with(multiplatformCommand) {
             command("rickandmorty") {
                 literal("random") {
-                    runs(errorHandler::handle) { ctx ->
+                    runs(errorHandler::onFailure) { ctx ->
                         send(ctx.getSender(), Random.nextInt(0, 100))
                     }
                 }
                 literal("specific") {
                     argument("number", IntegerArgumentType.integer()) { numberArg ->
-                        runs(errorHandler::handle) { ctx ->
+                        runs(errorHandler::onFailure) { ctx ->
                             send(ctx.getSender(), ctx.requireArgument(numberArg))
                         }
                     }

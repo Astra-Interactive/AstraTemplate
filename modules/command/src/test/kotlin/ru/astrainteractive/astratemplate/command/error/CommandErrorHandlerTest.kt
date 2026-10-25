@@ -37,7 +37,7 @@ class CommandErrorHandlerTest {
     private fun executeFailing(failure: Throwable) {
         val command = with(multiplatformCommand) {
             command("template") {
-                runs(handler::handle) { _ -> throw failure }
+                runs(handler::onFailure) { _ -> throw failure }
             }
         }
         execute(command, "template")
@@ -51,7 +51,7 @@ class CommandErrorHandlerTest {
     fun GIVEN_sender_without_permission_WHEN_command_requires_it_THEN_sender_reads_no_permission() {
         val command = with(multiplatformCommand) {
             command("atempreload") {
-                runs(handler::handle) { ctx -> ctx.requirePermission(PluginPermission.Reload) }
+                runs(handler::onFailure) { ctx -> ctx.requirePermission(PluginPermission.Reload) }
             }
         }
 

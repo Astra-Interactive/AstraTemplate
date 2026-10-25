@@ -87,14 +87,14 @@ internal class SampleGUI(
             return slotContext.changeModeSlot(
                 index = inventoryMap.firstIndexOf(SampleSlotKey.CHANGE_MODE),
                 label = label,
-                click = { sampleComponent.onModeChange() }
+                click = sampleComponent::onModeChange
             )
         }
 
     private val addUserButton: InventorySlot
         get() = slotContext.addUserSlot(
             index = inventoryMap.firstIndexOf(SampleSlotKey.ADD_USER),
-            click = { sampleComponent.onAddUserClicked() }
+            click = sampleComponent::onAddUserClicked
         )
 
     private val backButton: InventorySlot

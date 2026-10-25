@@ -13,9 +13,11 @@ internal fun SlotContext.changeModeSlot(
     index: Int,
     label: String,
     click: Click
-) = InventorySlot.Builder()
-    .setIndex(index)
-    .setMaterial(Material.SUNFLOWER)
-    .setDisplayName(label)
-    .setOnClickListener(click)
-    .build()
+): InventorySlot {
+    return InventorySlot.Builder()
+        .setIndex(index)
+        .setMaterial(Material.SUNFLOWER)
+        .setDisplayName(label)
+        .setOnClickListener(click)
+        .build()
+}

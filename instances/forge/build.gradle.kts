@@ -6,7 +6,7 @@ import ru.astrainteractive.gradleplugin.property.util.requireProjectInfo
 plugins {
     id("org.jetbrains.kotlin.jvm")
     id("org.jetbrains.kotlin.plugin.serialization")
-    id("ru.astrainteractive.gradleplugin.linter")
+    id("ru.astrainteractive.klibs.rules.gradle.linter")
     id("ru.astrainteractive.gradleplugin.java.version")
     alias(libs.plugins.gradle.forgegradle)
     alias(libs.plugins.gradle.shadow)
@@ -22,7 +22,14 @@ repositories {
     maven(fg.minecraftLibsMaven)
 }
 
+configurations.api {
+    dependencies.removeIf { dependency ->
+        dependency.group == "org.jetbrains.kotlin" && dependency.name == "kotlin-stdlib"
+    }
+}
+
 dependencies {
+    implementation(kotlin("stdlib"))
     shadow(libs.kotlin.coroutines.core)
     shadow(libs.minecraft.astralibs.core)
     shadow(libs.minecraft.astralibs.core.forge)
@@ -63,8 +70,8 @@ val shadowJar by tasks.getting(ShadowJar::class) {
     dependsOn(tasks.withType<JarJar>())
     from(
         tasks.withType<JarJar>()
-            .map { task -> task.archiveFile }
-            .map { archiveFile -> project.zipTree(archiveFile) },
+            .map(JarJar::getArchiveFile)
+            .map(project::zipTree),
         { include("META-INF/jarjar/**") }
     )
 
