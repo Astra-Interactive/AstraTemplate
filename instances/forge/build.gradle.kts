@@ -22,14 +22,7 @@ repositories {
     maven(fg.minecraftLibsMaven)
 }
 
-configurations.api {
-    dependencies.removeIf { dependency ->
-        dependency.group == "org.jetbrains.kotlin" && dependency.name == "kotlin-stdlib"
-    }
-}
-
 dependencies {
-    implementation(kotlin("stdlib"))
     shadow(libs.kotlin.coroutines.core)
     shadow(libs.minecraft.astralibs.core)
     shadow(libs.minecraft.astralibs.core.forge)

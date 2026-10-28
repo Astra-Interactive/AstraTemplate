@@ -12,14 +12,7 @@ plugins {
     alias(libs.plugins.klibs.minecraft.resource.processor)
 }
 
-configurations.api {
-    dependencies.removeIf { dependency ->
-        dependency.group == "org.jetbrains.kotlin" && dependency.name == "kotlin-stdlib"
-    }
-}
-
 dependencies {
-    implementation(kotlin("stdlib"))
     compileOnly(libs.driver.h2)
     compileOnly(libs.driver.jdbc)
     compileOnly(libs.driver.mysql)

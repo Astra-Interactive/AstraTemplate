@@ -5,14 +5,7 @@ plugins {
     id("ru.astrainteractive.gradleplugin.java.version")
 }
 
-configurations.api {
-    dependencies.removeIf { dependency ->
-        dependency.group == "org.jetbrains.kotlin" && dependency.name == "kotlin-stdlib"
-    }
-}
-
 dependencies {
-    implementation(kotlin("stdlib"))
     implementation(libs.klibs.kstorage)
     implementation(libs.klibs.mikro.core)
     implementation(libs.klibs.mikro.extensions)

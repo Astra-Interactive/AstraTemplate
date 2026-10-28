@@ -8,14 +8,7 @@ plugins {
     alias(libs.plugins.gradle.buildconfig)
 }
 
-configurations.api {
-    dependencies.removeIf { dependency ->
-        dependency.group == "org.jetbrains.kotlin" && dependency.name == "kotlin-stdlib"
-    }
-}
-
 dependencies {
-    implementation(kotlin("stdlib"))
     implementation(libs.kotlin.coroutines.core)
     implementation(libs.kotlin.serialization.json)
     implementation(libs.kotlin.serialization.kaml)
