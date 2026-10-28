@@ -1,8 +1,0 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<SmellBaseline>
-  <ManuallySuppressedIssues/>
-  <CurrentIssues>
-    <ID>FunctionSignature:StubGuiModule.kt:StubGuiModule.&lt;no name provided>$override fun open</ID>
-    <ID>TrailingCommaOnDeclarationSite:StubGuiModule.kt:StubGuiModule.&lt;no name provided>$( player: OnlineKPlayer, route: Router.Route )</ID>
-  </CurrentIssues>
-</SmellBaseline>
