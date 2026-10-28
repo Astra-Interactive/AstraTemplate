@@ -77,6 +77,7 @@ internal class SampleGUI(
             click = { onPrevPageClicked() }
         )
 
+    @Suppress("TrivialLambdaReference")
     private val changeModeButton: InventorySlot
         get() {
             val label = when (sampleComponent.model.value) {
@@ -87,14 +88,15 @@ internal class SampleGUI(
             return slotContext.changeModeSlot(
                 index = inventoryMap.firstIndexOf(SampleSlotKey.CHANGE_MODE),
                 label = label,
-                click = sampleComponent::onModeChange
+                click = { sampleComponent.onModeChange() }
             )
         }
 
+    @Suppress("TrivialLambdaReference")
     private val addUserButton: InventorySlot
         get() = slotContext.addUserSlot(
             index = inventoryMap.firstIndexOf(SampleSlotKey.ADD_USER),
-            click = sampleComponent::onAddUserClicked
+            click = { sampleComponent.onAddUserClicked() }
         )
 
     private val backButton: InventorySlot

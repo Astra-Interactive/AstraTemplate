@@ -1,3 +1,5 @@
+@file:Suppress("RootModuleConstruction")
+
 package ru.astrainteractive.astratemplate.di
 
 import net.minecraftforge.fml.loading.FMLPaths
