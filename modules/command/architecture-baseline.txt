@@ -1,2 +1,0 @@
-ApiConfiguration	build.gradle.kts	api: org.jetbrains.kotlin:kotlin-stdlib
-UnitDependency	build.gradle.kts	:modules:integration-rickmorty

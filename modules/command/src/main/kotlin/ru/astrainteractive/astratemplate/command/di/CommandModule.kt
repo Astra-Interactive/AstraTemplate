@@ -14,12 +14,11 @@ import ru.astrainteractive.astratemplate.command.sample.command.GuiLiteralArgume
 import ru.astrainteractive.astratemplate.command.translation.command.TranslationLiteralArgumentBuilder
 import ru.astrainteractive.astratemplate.core.di.CoreModule
 import ru.astrainteractive.astratemplate.gui.api.di.GuiModule
-import ru.astrainteractive.astratemplate.integration.rickmorty.di.RickMortyModule
 
 class CommandModule(
     private val coreModule: CoreModule,
     guiModule: GuiModule,
-    rickMortyModule: RickMortyModule,
+    fetchRandomCharacter: suspend (Int) -> Result<Any>,
     lifecyclePlugin: Lifecycle,
     private val commandRegistrarContext: CommandRegistrarContext,
     multiplatformCommand: MultiplatformCommand
@@ -60,7 +59,7 @@ class CommandModule(
         RickMortyLiteralArgumentBuilder(
             scope = coreModule.ioScope,
             dispatchers = coreModule.dispatchers,
-            rmApi = rickMortyModule.rickMortyApi,
+            fetchRandomCharacter = fetchRandomCharacter,
             multiplatformCommand = multiplatformCommand,
             errorHandler = errorHandler,
             translationKrate = coreModule.translationKrate

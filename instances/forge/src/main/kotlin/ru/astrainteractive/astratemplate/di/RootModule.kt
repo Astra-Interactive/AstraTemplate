@@ -46,7 +46,7 @@ class RootModule(forgeLifecycleServer: ForgeLifecycleServer) {
         CommandModule(
             coreModule = coreModule,
             guiModule = guiModule,
-            rickMortyModule = rickMortyModule,
+            fetchRandomCharacter = rickMortyModule.rickMortyApi::fetchRandomCharacter,
             lifecyclePlugin = forgeLifecycleServer,
             commandRegistrarContext = coreModule.commandRegistrarContext,
             multiplatformCommand = MultiplatformCommand(MinecraftMultiplatformCommands())

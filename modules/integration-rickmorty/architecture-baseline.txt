@@ -1,1 +1,0 @@
-ApiConfiguration	build.gradle.kts	api: org.jetbrains.kotlin:kotlin-stdlib

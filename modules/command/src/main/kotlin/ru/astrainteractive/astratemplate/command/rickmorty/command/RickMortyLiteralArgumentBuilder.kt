@@ -8,7 +8,6 @@ import ru.astrainteractive.astralibs.command.api.brigadier.command.Multiplatform
 import ru.astrainteractive.astralibs.command.api.brigadier.sender.KCommandSender
 import ru.astrainteractive.astratemplate.command.error.CommandErrorHandler
 import ru.astrainteractive.astratemplate.core.plugin.model.PluginTranslation
-import ru.astrainteractive.astratemplate.integration.rickmorty.character.api.RickMortyApi
 import ru.astrainteractive.klibs.kstorage.api.CachedKrate
 import ru.astrainteractive.klibs.kstorage.api.getValue
 import ru.astrainteractive.klibs.mikro.core.dispatchers.KotlinDispatchers
@@ -17,7 +16,7 @@ import kotlin.random.Random
 internal class RickMortyLiteralArgumentBuilder(
     private val scope: CoroutineScope,
     private val dispatchers: KotlinDispatchers,
-    private val rmApi: RickMortyApi,
+    private val fetchRandomCharacter: suspend (Int) -> Result<Any>,
     private val multiplatformCommand: MultiplatformCommand,
     private val errorHandler: CommandErrorHandler,
     translationKrate: CachedKrate<PluginTranslation>
@@ -26,7 +25,7 @@ internal class RickMortyLiteralArgumentBuilder(
 
     private fun send(sender: KCommandSender, number: Int) {
         scope.launch(dispatchers.IO) {
-            rmApi.fetchRandomCharacter(number)
+            fetchRandomCharacter.invoke(number)
                 .onSuccess { character ->
                     sender.sendMessage(translation.rickMorty.success(character.toString()))
                 }

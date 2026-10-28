@@ -20,7 +20,6 @@ dependencies {
 
     implementation(projects.modules.core)
     implementation(projects.modules.gui.api)
-    implementation(projects.modules.integrationRickmorty)
 
     testImplementation(libs.kotlin.coroutines.test)
     testImplementation(libs.minecraft.brigadier)
