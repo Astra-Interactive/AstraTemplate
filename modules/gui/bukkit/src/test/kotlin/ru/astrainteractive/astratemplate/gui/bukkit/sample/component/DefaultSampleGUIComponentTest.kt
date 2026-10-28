@@ -1,11 +1,10 @@
-@file:Suppress("FunctionNaming")
+@file:Suppress("FunctionNaming", "RunBlockingInTest")
 
 package ru.astrainteractive.astratemplate.gui.bukkit.sample.component
 
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.withTimeout
 import org.bukkit.event.inventory.ClickType
 import ru.astrainteractive.astratemplate.data.dao.user.memory.InMemoryUserRepository
@@ -47,7 +46,7 @@ class DefaultSampleGUIComponentTest {
 
     @Test
     fun GIVEN_menu_WHEN_add_user_is_clicked_THEN_new_user_is_stored_and_shown() {
-        runTest {
+        kotlinx.coroutines.runBlocking {
             component.onAddUserClicked()
 
             val users = awaitUsers(count = 1).users
@@ -59,7 +58,7 @@ class DefaultSampleGUIComponentTest {
 
     @Test
     fun GIVEN_shown_user_WHEN_left_clicked_THEN_user_is_deleted() {
-        runTest {
+        kotlinx.coroutines.runBlocking {
             component.onAddUserClicked()
             awaitUsers(count = 1)
 
@@ -72,7 +71,7 @@ class DefaultSampleGUIComponentTest {
 
     @Test
     fun GIVEN_shown_user_WHEN_right_clicked_THEN_rating_is_added_for_that_user() {
-        runTest {
+        kotlinx.coroutines.runBlocking {
             component.onAddUserClicked()
             val user = awaitUsers(count = 1).users.single()
 
@@ -87,7 +86,7 @@ class DefaultSampleGUIComponentTest {
 
     @Test
     fun GIVEN_shown_user_WHEN_middle_clicked_THEN_user_stays_stored() {
-        runTest {
+        kotlinx.coroutines.runBlocking {
             component.onAddUserClicked()
             val user = awaitUsers(count = 1).users.single()
 
@@ -100,7 +99,7 @@ class DefaultSampleGUIComponentTest {
 
     @Test
     fun GIVEN_two_added_users_WHEN_listed_THEN_they_keep_their_insertion_order() {
-        runTest {
+        kotlinx.coroutines.runBlocking {
             component.onAddUserClicked()
             awaitUsers(count = 1)
             component.onAddUserClicked()

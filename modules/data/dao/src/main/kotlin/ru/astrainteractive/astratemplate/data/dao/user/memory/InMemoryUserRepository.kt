@@ -7,7 +7,8 @@ import ru.astrainteractive.astratemplate.data.dao.user.model.Rating
 import ru.astrainteractive.astratemplate.data.dao.user.model.User
 import java.util.UUID
 
-internal class InMemoryUserRepository : UserRepository {
+@Suppress("ImplementationVisibility")
+class InMemoryUserRepository : UserRepository {
     private val mutex = Mutex()
     private val users = mutableListOf<User>()
     private val ratings = mutableListOf<Rating>()

@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>ClassSignature:HttpClientRickMortyApi.kt:HttpClientRickMortyApi : RickMortyApi</ID>
+    <ID>ClassSignature:RMResponse.kt:RMResponse</ID>
+    <ID>FunctionExpressionBody:HttpClientRickMortyApi.kt:HttpClientRickMortyApi${ return runCatching { val request: HttpRequest = HttpRequest.newBuilder() .uri(baseUri.resolve("character/$id")) .GET() .build() val response = httpClient.send(request, BodyHandlers.ofString()) jsonConfiguration.decodeFromString&lt;RMResponse>(response.body()) }.propagateCancellationException() }</ID>
+    <ID>TrailingCommaOnCallSite:HttpClientRickMortyApiTest.kt:HttpClientRickMortyApiTest$( RMResponse( name = "Morty Smith", status = "Alive", species = "Human", gender = "Male" ), result.getOrThrow() )</ID>
+    <ID>TrailingCommaOnCallSite:HttpClientRickMortyApiTest.kt:HttpClientRickMortyApiTest$( httpClient = HttpClient.newHttpClient(), baseUri = URI("http://127.0.0.1:${server.address.port}/api/") )</ID>
+    <ID>TrailingCommaOnCallSite:HttpClientRickMortyApiTest.kt:HttpClientRickMortyApiTest$( name = "Morty Smith", status = "Alive", species = "Human", gender = "Male" )</ID>
+    <ID>TrailingCommaOnCallSite:RickMortyModule.kt:RickMortyModule$( httpClient = httpClient, baseUri = URI("https://rickandmortyapi.com/api/") )</ID>
+    <ID>TrailingCommaOnDeclarationSite:HttpClientRickMortyApi.kt:HttpClientRickMortyApi$( private val httpClient: HttpClient, private val baseUri: URI )</ID>
+  </CurrentIssues>
+</SmellBaseline>

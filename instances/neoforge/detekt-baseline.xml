@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>ClassSignature:NeoForgeEntryPoint.kt:NeoForgeEntryPoint : LoggerForgeLifecycleServer</ID>
+    <ID>TrailingCommaOnCallSite:RootModule.kt:RootModule$( configFlow = coreModule.configKrate.cachedStateFlow, ioScope = coreModule.ioScope )</ID>
+    <ID>TrailingCommaOnCallSite:RootModule.kt:RootModule$( coreModule = coreModule, guiModule = guiModule, rickMortyModule = rickMortyModule, lifecyclePlugin = forgeLifecycleServer, commandRegistrarContext = coreModule.commandRegistrarContext, multiplatformCommand = MultiplatformCommand(MinecraftMultiplatformCommands()) )</ID>
+    <ID>TrailingCommaOnCallSite:RootModule.kt:RootModule$( dataFolder = dataFolder, dispatchers = MinecraftDispatchers(), commandRegistrarContextFactory = ::NeoForgeCommandRegistrarContext )</ID>
+    <ID>TrailingCommaOnCallSite:RootModule.kt:RootModule$( onEnable = { lifecycles.forEach(Lifecycle::onEnable) }, onDisable = { lifecycles.forEach(Lifecycle::onDisable) }, onReload = { lifecycles.forEach(Lifecycle::onReload) } )</ID>
+  </CurrentIssues>
+</SmellBaseline>

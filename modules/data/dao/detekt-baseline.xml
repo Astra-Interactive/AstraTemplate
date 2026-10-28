@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<SmellBaseline>
+  <ManuallySuppressedIssues/>
+  <CurrentIssues>
+    <ID>ClassSignature:Rating.kt:Rating</ID>
+    <ID>ClassSignature:User.kt:User</ID>
+    <ID>FunctionExpressionBody:InMemoryUserRepository.kt:InMemoryUserRepository${ return mutex.withLock { lastRatingId += 1 ratings += Rating( id = lastRatingId, userID = user.id, reason = UUID.randomUUID().toString() ) lastRatingId } }</ID>
+    <ID>FunctionExpressionBody:InMemoryUserRepository.kt:InMemoryUserRepository${ return mutex.withLock { lastUserId += 1 users += user.copy(id = lastUserId) lastUserId } }</ID>
+    <ID>FunctionExpressionBody:InMemoryUserRepository.kt:InMemoryUserRepository${ return mutex.withLock { ratings.filter { rating -> rating.userID == user.id } } }</ID>
+    <ID>FunctionExpressionBody:InMemoryUserRepository.kt:InMemoryUserRepository${ return mutex.withLock { users.toList() } }</ID>
+    <ID>TrailingCommaOnCallSite:InMemoryUserRepository.kt:InMemoryUserRepository$( id = lastRatingId, userID = user.id, reason = UUID.randomUUID().toString() )</ID>
+    <ID>TrailingCommaOnDeclarationSite:Rating.kt:Rating$( val id: Int, val userID: Int, val reason: String )</ID>
+    <ID>TrailingCommaOnDeclarationSite:User.kt:User$( val id: Int, val discordId: String, val minecraftUUID: String )</ID>
+  </CurrentIssues>
+</SmellBaseline>
