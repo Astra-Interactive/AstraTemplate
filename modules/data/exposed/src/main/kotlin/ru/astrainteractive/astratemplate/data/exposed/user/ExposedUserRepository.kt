@@ -21,68 +21,70 @@ internal class ExposedUserRepository(
 ) : UserRepository {
     private suspend fun requireDatabase() = databaseFlow.first()
 
-    override suspend fun insertUser(
-        user: User
-    ): Int = transaction(requireDatabase()) {
-        UserTable.insertAndGetId { statement ->
-            statement[UserTable.discordId] = user.discordId
-            statement[UserTable.minecraftUuid] = user.minecraftUUID
-        }.value
+    override suspend fun insertUser(user: User): Int {
+        return transaction(requireDatabase()) {
+            UserTable.insertAndGetId { statement ->
+                statement[UserTable.discordId] = user.discordId
+                statement[UserTable.minecraftUuid] = user.minecraftUUID
+            }.value
+        }
     }
 
-    override suspend fun insertRating(
-        user: User
-    ): Int = transaction(requireDatabase()) {
-        UserRatingTable.insertAndGetId { statement ->
-            statement[UserRatingTable.userID] = user.id
-            statement[UserRatingTable.reason] = UUID.randomUUID().toString()
-        }.value
+    override suspend fun insertRating(user: User): Int {
+        return transaction(requireDatabase()) {
+            UserRatingTable.insertAndGetId { statement ->
+                statement[UserRatingTable.userID] = user.id
+                statement[UserRatingTable.reason] = UUID.randomUUID().toString()
+            }.value
+        }
     }
 
-    override suspend fun selectRating(
-        user: User
-    ): List<Rating> = transaction(requireDatabase()) {
-        UserRatingTable.selectAll()
-            .where { UserRatingTable.userID.eq(user.id) }
-            .map { row ->
-                Rating(
-                    id = row[UserRatingTable.id].value,
-                    userID = row[UserRatingTable.userID],
-                    reason = row[UserRatingTable.reason]
-                )
-            }
-    }
-
-    override suspend fun updateUser(
-        user: User
-    ): Unit = transaction(requireDatabase()) {
-        UserTable
-            .update(
-                where = {
-                    UserTable.id.eq(user.id)
-                },
-                body = { statement ->
-                    statement[UserTable.minecraftUuid] = user.minecraftUUID
-                    statement[UserTable.discordId] = user.discordId
+    override suspend fun selectRating(user: User): List<Rating> {
+        return transaction(requireDatabase()) {
+            UserRatingTable.selectAll()
+                .where { UserRatingTable.userID.eq(user.id) }
+                .map { row ->
+                    Rating(
+                        id = row[UserRatingTable.id].value,
+                        userID = row[UserRatingTable.userID],
+                        reason = row[UserRatingTable.reason]
+                    )
                 }
-            )
+        }
     }
 
-    override suspend fun deleteUser(
-        user: User
-    ): Unit = transaction(requireDatabase()) {
-        UserTable.deleteWhere { UserTable.id.eq(user.id) }
-    }
-
-    override suspend fun getAllUsers(): List<User> = transaction(requireDatabase()) {
-        UserTable
-            .selectAll()
-            .map { row ->
-                User(
-                    id = row[UserTable.id].value,
-                    discordId = row[UserTable.discordId],
-                    minecraftUUID = row[UserTable.minecraftUuid]
+    override suspend fun updateUser(user: User) {
+        return transaction(requireDatabase()) {
+            UserTable
+                .update(
+                    where = {
+                        UserTable.id.eq(user.id)
+                    },
+                    body = { statement ->
+                        statement[UserTable.minecraftUuid] = user.minecraftUUID
+                        statement[UserTable.discordId] = user.discordId
+                    }
                 )
-            }
+        }
+    }
+
+    override suspend fun deleteUser(user: User) {
+        return transaction(requireDatabase()) {
+            UserTable.deleteWhere { UserTable.id.eq(user.id) }
+        }
+    }
+
+    override suspend fun loadUsers(): List<User> {
+        return transaction(requireDatabase()) {
+            UserTable
+                .selectAll()
+                .map { row ->
+                    User(
+                        id = row[UserTable.id].value,
+                        discordId = row[UserTable.discordId],
+                        minecraftUUID = row[UserTable.minecraftUuid]
+                    )
+                }
+        }
     }
 }

@@ -12,9 +12,11 @@ import ru.astrainteractive.astratemplate.gui.bukkit.context.SlotContext
 internal fun SlotContext.backSlot(
     index: Int,
     click: Click
-) = InventorySlot.Builder()
-    .setIndex(index)
-    .setMaterial(Material.BARRIER)
-    .setDisplayName(translation.menu.back.toComponent(locale))
-    .setOnClickListener(click)
-    .build()
+): InventorySlot {
+    return InventorySlot.Builder()
+        .setIndex(index)
+        .setMaterial(Material.BARRIER)
+        .setDisplayName(translation.menu.back.toComponent(locale))
+        .setOnClickListener(click)
+        .build()
+}

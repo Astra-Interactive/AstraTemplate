@@ -6,6 +6,8 @@ import ru.astrainteractive.astratemplate.gui.api.di.GuiModule
 import ru.astrainteractive.astratemplate.gui.api.router.api.Router
 import ru.astrainteractive.astratemplate.gui.bukkit.context.SlotContext
 import ru.astrainteractive.astratemplate.gui.bukkit.router.BukkitRouter
+import ru.astrainteractive.astratemplate.gui.bukkit.sample.component.DefaultSampleGUIComponent
+import ru.astrainteractive.astratemplate.gui.bukkit.sample.gui.SampleGUI
 import kotlin.random.Random
 
 class BukkitGuiModule(
@@ -17,6 +19,14 @@ class BukkitGuiModule(
         dispatchers = coreModule.dispatchers,
         createSlotContext = { locale -> SlotContext(coreModule.translationKrate, locale) },
         userRepository = userRepository,
-        random = Random.Default
+        random = Random.Default,
+        sampleComponentFactory = ::DefaultSampleGUIComponent,
+        sampleGuiFactory = { slotContext, sampleComponent ->
+            SampleGUI(
+                slotContext = slotContext,
+                dispatchers = coreModule.dispatchers,
+                sampleComponent = sampleComponent
+            )
+        }
     )
 }

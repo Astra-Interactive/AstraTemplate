@@ -19,29 +19,33 @@ internal fun SlotContext.itemSlot(
     index: Int,
     itemStack: ItemStack,
     click: Click
-) = InventorySlot.Builder()
-    .setIndex(index)
-    .setItemStack(itemStack)
-    .setOnClickListener(click)
-    .build()
+): InventorySlot {
+    return InventorySlot.Builder()
+        .setIndex(index)
+        .setItemStack(itemStack)
+        .setOnClickListener(click)
+        .build()
+}
 
 internal fun SlotContext.userSlot(
     index: Int,
     user: User,
     randomColor: ChatColor,
     click: Click
-) = InventorySlot.Builder()
-    .setIndex(index)
-    .setMaterial(Material.PLAYER_HEAD)
-    .setDisplayName(user.id.toString())
-    .setLore(
-        listOf(
-            "${randomColor}discordID: ${user.discordId}",
-            "${randomColor}minecraftUUID: ${user.minecraftUUID}",
-            "${randomColor}Press LeftClick to delete user",
-            "${randomColor}Press MiddleClick to update user",
-            "${randomColor}Press RightClick to add relation"
-        ).map(Component::text)
-    )
-    .setOnClickListener(click)
-    .build()
+): InventorySlot {
+    return InventorySlot.Builder()
+        .setIndex(index)
+        .setMaterial(Material.PLAYER_HEAD)
+        .setDisplayName(user.id.toString())
+        .setLore(
+            listOf(
+                "${randomColor}discordID: ${user.discordId}",
+                "${randomColor}minecraftUUID: ${user.minecraftUUID}",
+                "${randomColor}Press LeftClick to delete user",
+                "${randomColor}Press MiddleClick to update user",
+                "${randomColor}Press RightClick to add relation"
+            ).map(Component::text)
+        )
+        .setOnClickListener(click)
+        .build()
+}

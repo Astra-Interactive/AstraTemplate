@@ -42,25 +42,34 @@ class HttpClientRickMortyApiTest {
     }
 
     @Test
-    fun GIVEN_character_response_WHEN_character_is_requested_THEN_returns_it_and_ignores_unknown_fields() = runTest {
-        responseBody = """
-            {"id":2,"name":"Morty Smith","status":"Alive","species":"Human","gender":"Male","origin":{}}
-        """.trimIndent()
+    fun GIVEN_character_response_WHEN_character_is_requested_THEN_returns_it_and_ignores_unknown_fields() {
+        runTest {
+            responseBody = """
+                {"id":2,"name":"Morty Smith","status":"Alive","species":"Human","gender":"Male","origin":{}}
+            """.trimIndent()
 
-        val result = api.getRandomCharacter(2)
+            val result = api.fetchRandomCharacter(2)
 
-        assertEquals(
-            RMResponse(name = "Morty Smith", status = "Alive", species = "Human", gender = "Male"),
-            result.getOrThrow()
-        )
-        assertEquals(listOf("/api/character/2"), requestedPaths)
+            assertEquals(
+                RMResponse(
+                    name = "Morty Smith",
+                    status = "Alive",
+                    species = "Human",
+                    gender = "Male"
+                ),
+                result.getOrThrow()
+            )
+            assertEquals(listOf("/api/character/2"), requestedPaths)
+        }
     }
 
     @Test
-    fun GIVEN_malformed_response_WHEN_character_is_requested_THEN_returns_failure() = runTest {
-        responseBody = "not json"
+    fun GIVEN_malformed_response_WHEN_character_is_requested_THEN_returns_failure() {
+        runTest {
+            responseBody = "not json"
 
-        assertTrue(api.getRandomCharacter(1).isFailure)
+            assertTrue(api.fetchRandomCharacter(1).isFailure)
+        }
     }
 
     private companion object {

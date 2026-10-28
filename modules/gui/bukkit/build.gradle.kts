@@ -1,7 +1,7 @@
 plugins {
     id("org.jetbrains.kotlin.jvm")
     id("org.jetbrains.kotlin.plugin.serialization")
-    id("ru.astrainteractive.gradleplugin.linter")
+    id("ru.astrainteractive.klibs.rules.gradle.linter")
     id("ru.astrainteractive.gradleplugin.java.version")
 }
 
@@ -22,6 +22,7 @@ dependencies {
     implementation(projects.modules.core)
     implementation(projects.modules.data.dao)
 
+    testImplementation(libs.kotlin.coroutines.test)
     testImplementation(libs.minecraft.paper.api)
     testImplementation(libs.tests.kotlin.test)
 }

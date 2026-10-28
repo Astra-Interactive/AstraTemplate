@@ -6,7 +6,7 @@ import ru.astrainteractive.gradleplugin.property.util.requireProjectInfo
 plugins {
     id("org.jetbrains.kotlin.jvm")
     id("org.jetbrains.kotlin.plugin.serialization")
-    id("ru.astrainteractive.gradleplugin.linter")
+    id("ru.astrainteractive.klibs.rules.gradle.linter")
     id("ru.astrainteractive.gradleplugin.java.version")
     alias(libs.plugins.gradle.shadow)
     alias(libs.plugins.klibs.minecraft.resource.processor)
@@ -23,6 +23,7 @@ dependencies {
     compileOnly(libs.minecraft.vaultapi)
     compileOnly(libs.minecraft.kyori.api)
 
+    shadow(libs.klibs.kstorage)
     shadow(libs.klibs.mikro.core)
     shadow(libs.kotlin.coroutines.core)
     shadow(libs.kotlin.serialization.json)
@@ -53,7 +54,11 @@ minecraftProcessResource {
                 libs.driver.jdbc.get(),
                 libs.driver.mysql.get(),
                 libs.driver.mariadb.get()
-            ).joinToString("\",\"", "[\"", "\"]")
+            ).joinToString(
+                separator = "\",\"",
+                prefix = "[\"",
+                postfix = "\"]"
+            )
         )
     )
 }

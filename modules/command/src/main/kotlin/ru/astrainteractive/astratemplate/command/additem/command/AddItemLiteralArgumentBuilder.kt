@@ -18,7 +18,7 @@ internal class AddItemLiteralArgumentBuilder(
             command("add") {
                 argument("material", StringArgumentType.word()) { materialArg ->
                     argument("amount", IntegerArgumentType.integer(1, 64)) { amountArg ->
-                        runs(errorHandler::handle) { ctx ->
+                        runs(errorHandler::onFailure) { ctx ->
                             val player = ctx.requirePlayer()
                             val itemName = ctx.requireArgument(materialArg, ItemNameArgumentConverter)
                             val amount = ctx.requireArgument(amountArg)

@@ -77,6 +77,7 @@ internal class SampleGUI(
             click = { onPrevPageClicked() }
         )
 
+    @Suppress("TrivialLambdaReference")
     private val changeModeButton: InventorySlot
         get() {
             val label = when (sampleComponent.model.value) {
@@ -91,6 +92,7 @@ internal class SampleGUI(
             )
         }
 
+    @Suppress("TrivialLambdaReference")
     private val addUserButton: InventorySlot
         get() = slotContext.addUserSlot(
             index = inventoryMap.firstIndexOf(SampleSlotKey.ADD_USER),

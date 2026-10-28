@@ -1,3 +1,5 @@
+@file:Suppress("FieldDependencyConstruction")
+
 package ru.astrainteractive.astratemplate
 
 import net.neoforged.fml.common.Mod
@@ -7,6 +9,7 @@ import ru.astrainteractive.klibs.mikro.core.logging.JUtiltLogger
 import ru.astrainteractive.klibs.mikro.core.logging.Logger
 import javax.annotation.ParametersAreNonnullByDefault
 
+@Suppress("FieldDependencyConstruction")
 @Mod(BuildKonfig.id)
 @ParametersAreNonnullByDefault
 class NeoForgeEntryPoint :

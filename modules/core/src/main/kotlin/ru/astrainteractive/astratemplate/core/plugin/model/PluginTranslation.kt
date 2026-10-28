@@ -1,4 +1,4 @@
-@file:Suppress("LongParameterList")
+@file:Suppress("LongParameterList", "DataClassContainsFunctions")
 
 package ru.astrainteractive.astratemplate.core.plugin.model
 
@@ -115,10 +115,12 @@ data class PluginTranslation(
             }
         )
     ) {
-        fun success(amount: Int, item: String): LocalizableComponent = success.replaceAll(
-            PlaceholderReplacement.plain("%amount%", amount.toString()),
-            PlaceholderReplacement.plain("%item%", item)
-        )
+        fun success(amount: Int, item: String): LocalizableComponent {
+            return success.replaceAll(
+                PlaceholderReplacement.plain("%amount%", amount.toString()),
+                PlaceholderReplacement.plain("%item%", item)
+            )
+        }
     }
 
     @Serializable

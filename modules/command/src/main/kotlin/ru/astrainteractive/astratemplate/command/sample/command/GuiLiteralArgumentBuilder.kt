@@ -14,7 +14,7 @@ internal class GuiLiteralArgumentBuilder(
     fun create(): LiteralArgumentBuilder<*> {
         return with(multiplatformCommand) {
             command("atempgui") {
-                runs(errorHandler::handle) { ctx ->
+                runs(errorHandler::onFailure) { ctx ->
                     val player = ctx.requirePlayer()
                     router.open(player, Router.Route.Sample)
                 }

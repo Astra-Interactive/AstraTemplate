@@ -12,9 +12,11 @@ import ru.astrainteractive.astratemplate.gui.bukkit.context.SlotContext
 internal fun SlotContext.prevPageSlot(
     index: Int,
     click: Click
-) = InventorySlot.Builder()
-    .setIndex(index)
-    .setMaterial(Material.PAPER)
-    .setDisplayName(translation.menu.previousPage.toComponent(locale))
-    .setOnClickListener(click)
-    .build()
+): InventorySlot {
+    return InventorySlot.Builder()
+        .setIndex(index)
+        .setMaterial(Material.PAPER)
+        .setDisplayName(translation.menu.previousPage.toComponent(locale))
+        .setOnClickListener(click)
+        .build()
+}

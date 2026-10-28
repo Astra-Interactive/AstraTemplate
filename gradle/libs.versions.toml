@@ -19,6 +19,7 @@ joml = "1.10.9" # https://github.com/JOML-CI/JOML
 klibs-gradleplugin = "2.9.1" # https://github.com/makeevrserg/gradle-plugin
 klibs-kstorage = "5.3.1" # https://github.com/makeevrserg/klibs.kstorage
 klibs-mikro = "1.28.1" # https://github.com/makeevrserg/klibs.mikro
+klibs-rules = "0.7.0" # https://github.com/Astra-Interactive/rules-architecture
 kotlin-benchmark = "0.4.19" # https://github.com/Kotlin/kotlinx-benchmark
 kotlin-coroutines = "1.11.0" # https://github.com/Kotlin/kotlinx.coroutines
 kotlin-datetime = "0.8.0" # https://github.com/Kotlin/kotlinx-datetime
@@ -164,12 +165,9 @@ gradle-forgerenamer = { id = "net.minecraftforge.renamer", version.ref = "minecr
 gradle-ftp = { id = "ru.astrainteractive.ftpplugin.gradleftp", version.ref = "gradle-ftp" }
 gradle-neoforgegradle = { id = "net.neoforged.gradle.userdev", version.ref = "minecraft-neoforgegradle" }
 gradle-shadow = { id = "com.gradleup.shadow", version.ref = "gradle-shadow" }
-klibs-gradle-detekt = { id = "ru.astrainteractive.gradleplugin.detekt", version.ref = "klibs-gradleplugin" }
-klibs-gradle-detekt-compose = { id = "ru.astrainteractive.gradleplugin.detekt.compose", version.ref = "klibs-gradleplugin" }
 klibs-gradle-dokka = { id = "ru.astrainteractive.gradleplugin.dokka", version.ref = "klibs-gradleplugin" }
 klibs-gradle-java-core = { id = "ru.astrainteractive.gradleplugin.java.core", version.ref = "klibs-gradleplugin" }
 klibs-gradle-java-version = { id = "ru.astrainteractive.gradleplugin.java.version", version.ref = "klibs-gradleplugin" }
-klibs-gradle-linter = { id = "ru.astrainteractive.gradleplugin.linter", version.ref = "klibs-gradleplugin" }
 klibs-gradle-minecraft-empty = { id = "ru.astrainteractive.gradleplugin.minecraft.empty", version.ref = "klibs-gradleplugin" }
 klibs-gradle-minecraft-multiplatform = { id = "ru.astrainteractive.gradleplugin.minecraft.multiplatform", version.ref = "klibs-gradleplugin" }
 klibs-gradle-minecraft-platform = { id = "ru.astrainteractive.gradleplugin.minecraft.platform", version.ref = "klibs-gradleplugin" }
@@ -178,6 +176,7 @@ klibs-gradle-rootinfo = { id = "ru.astrainteractive.gradleplugin.rootinfo", vers
 klibs-gradle-stub-javadoc = { id = "ru.astrainteractive.gradleplugin.stub.javadoc", version.ref = "klibs-gradleplugin" }
 klibs-minecraft-resource-processor = { id = "ru.astrainteractive.gradleplugin.minecraft.resource.processor", version.ref = "klibs-gradleplugin" }
 klibs-minecraft-shadow = { id = "ru.astrainteractive.gradleplugin.minecraft.shadow", version.ref = "klibs-gradleplugin" }
+klibs-rules-gradle-linter = { id = "ru.astrainteractive.klibs.rules.gradle.linter", version.ref = "klibs-rules" }
 kotlin-allopen = { id = "org.jetbrains.kotlin.plugin.allopen", version.ref = "kotlin-version" }
 kotlin-benchmark = { id = "org.jetbrains.kotlinx.benchmark", version.ref = "kotlin-benchmark" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin-version" }

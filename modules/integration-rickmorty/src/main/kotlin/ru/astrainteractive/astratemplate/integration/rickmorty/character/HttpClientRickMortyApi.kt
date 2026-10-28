@@ -3,11 +3,11 @@ package ru.astrainteractive.astratemplate.integration.rickmorty.character
 import kotlinx.serialization.json.Json
 import ru.astrainteractive.astratemplate.integration.rickmorty.character.api.RickMortyApi
 import ru.astrainteractive.astratemplate.integration.rickmorty.character.model.RMResponse
+import ru.astrainteractive.klibs.mikro.core.coroutines.propagateCancellationException
 import java.net.URI
 import java.net.http.HttpClient
 import java.net.http.HttpRequest
 import java.net.http.HttpResponse.BodyHandlers
-import kotlin.coroutines.cancellation.CancellationException
 
 internal class HttpClientRickMortyApi(
     private val httpClient: HttpClient,
@@ -18,7 +18,7 @@ internal class HttpClientRickMortyApi(
         isLenient = true
     }
 
-    override suspend fun getRandomCharacter(id: Int): Result<RMResponse> {
+    override suspend fun fetchRandomCharacter(id: Int): Result<RMResponse> {
         return runCatching {
             val request: HttpRequest = HttpRequest.newBuilder()
                 .uri(baseUri.resolve("character/$id"))
@@ -26,6 +26,6 @@ internal class HttpClientRickMortyApi(
                 .build()
             val response = httpClient.send(request, BodyHandlers.ofString())
             jsonConfiguration.decodeFromString<RMResponse>(response.body())
-        }.onFailure { throwable -> if (throwable is CancellationException) throw throwable }
+        }.propagateCancellationException()
     }
 }

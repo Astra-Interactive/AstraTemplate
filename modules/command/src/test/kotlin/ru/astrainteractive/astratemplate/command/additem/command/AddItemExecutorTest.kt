@@ -22,7 +22,13 @@ class AddItemExecutorTest {
     fun GIVEN_add_item_command_WHEN_executed_THEN_player_reads_how_many_items_were_added() {
         val player = FakeOnlineKPlayer()
 
-        executor.execute(AddItemCommand(player = player, amount = 3, itemName = "diamond"))
+        executor.execute(
+            AddItemCommand(
+                player = player,
+                amount = 3,
+                itemName = "diamond"
+            )
+        )
 
         val messages = player.messages.map { message ->
             PlainTextComponentSerializer.plainText().serialize(message.toComponent(Locale.US))

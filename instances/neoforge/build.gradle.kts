@@ -5,7 +5,7 @@ import ru.astrainteractive.gradleplugin.property.util.requireProjectInfo
 plugins {
     id("org.jetbrains.kotlin.jvm")
     id("org.jetbrains.kotlin.plugin.serialization")
-    id("ru.astrainteractive.gradleplugin.linter")
+    id("ru.astrainteractive.klibs.rules.gradle.linter")
     id("ru.astrainteractive.gradleplugin.java.version")
     alias(libs.plugins.gradle.neoforgegradle)
     alias(libs.plugins.klibs.minecraft.resource.processor)
@@ -182,9 +182,10 @@ dependencies {
 }
 
 tasks.configureEach {
-    if (javaClass.name.startsWith("net.neoforged.gradle")) {
-        notCompatibleWithConfigurationCache("NeoGradle tasks access Task.project at execution time")
+    if (!javaClass.name.startsWith("net.neoforged.gradle")) {
+        return@configureEach
     }
+    notCompatibleWithConfigurationCache("NeoGradle tasks access Task.project at execution time")
 }
 
 tasks.register("generateNeoforgeJar") {
