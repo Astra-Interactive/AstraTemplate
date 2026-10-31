@@ -11,7 +11,7 @@ import ru.astrainteractive.klibs.mikro.core.logging.Logger
 import kotlin.time.Duration.Companion.seconds
 
 internal class TickEvent(mainScope: CoroutineScope) : Logger by JUtiltLogger("AstraTemplate-TickEvent") {
-    val tickEvent = flowEvent<TickEvent>()
+    val tickJob = flowEvent<TickEvent>()
         .debounce(1.seconds)
         .onEach { info { "#tickEvent -> flow onEach with 1.second debounce" } }
         .launchIn(mainScope)

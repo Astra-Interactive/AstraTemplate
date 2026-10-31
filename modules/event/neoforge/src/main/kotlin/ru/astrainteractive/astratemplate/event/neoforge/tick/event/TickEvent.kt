@@ -9,7 +9,7 @@ import ru.astrainteractive.klibs.mikro.core.logging.JUtiltLogger
 import ru.astrainteractive.klibs.mikro.core.logging.Logger
 
 internal class TickEvent(mainScope: CoroutineScope) : Logger by JUtiltLogger("AstraTemplate-TickEvent") {
-    val tickEvent = flowEvent<ServerTickEvent>()
+    val tickJob = flowEvent<ServerTickEvent>()
         .onEach { info { "#tickEvent -> flow onEach" } }
         .launchIn(mainScope)
 }
