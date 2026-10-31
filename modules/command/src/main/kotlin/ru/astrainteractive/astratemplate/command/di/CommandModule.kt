@@ -16,11 +16,11 @@ import ru.astrainteractive.astratemplate.core.di.CoreModule
 import ru.astrainteractive.astratemplate.gui.api.di.GuiModule
 
 class CommandModule(
-    private val coreModule: CoreModule,
+    coreModule: CoreModule,
     guiModule: GuiModule,
     fetchRandomCharacter: suspend (Int) -> Result<Any>,
     lifecyclePlugin: Lifecycle,
-    private val commandRegistrarContext: CommandRegistrarContext,
+    commandRegistrarContext: CommandRegistrarContext,
     multiplatformCommand: MultiplatformCommand
 ) {
     private val errorHandler = CommandErrorHandler(
