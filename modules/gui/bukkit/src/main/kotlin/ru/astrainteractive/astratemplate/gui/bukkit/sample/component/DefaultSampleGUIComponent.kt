@@ -1,6 +1,5 @@
 package ru.astrainteractive.astratemplate.gui.bukkit.sample.component
 
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
@@ -39,7 +38,7 @@ internal class DefaultSampleGUIComponent(
         )
     }
 
-    private suspend fun loadItemsModel() {
+    private fun loadItemsModel() {
         model.update { SampleGuiComponent.Model.Items(random.nextItemStacks(SAMPLE_ITEMS_COUNT)) }
     }
 
@@ -59,7 +58,7 @@ internal class DefaultSampleGUIComponent(
         val state = model.value as? SampleGuiComponent.Model.Users ?: return
         val users = state.users
         val user = users.getOrNull(slot) ?: return
-        launch(Dispatchers.IO) {
+        launch {
             when (clickType) {
                 ClickType.MIDDLE -> userRepository.updateUser(user)
                 ClickType.LEFT -> userRepository.deleteUser(user)
@@ -70,7 +69,7 @@ internal class DefaultSampleGUIComponent(
     }
 
     override fun onModeChange() {
-        launch(Dispatchers.IO) {
+        launch {
             when (model.value) {
                 SampleGuiComponent.Model.Loading -> return@launch
                 is SampleGuiComponent.Model.Items -> loadUsersModel()
@@ -80,7 +79,7 @@ internal class DefaultSampleGUIComponent(
     }
 
     override fun onItemClicked(slot: Int, clickType: ClickType) {
-        when (val state = model.value) {
+        when (model.value) {
             SampleGuiComponent.Model.Loading -> Unit
             is SampleGuiComponent.Model.Items -> {
                 onItemStackClicked(slot)
@@ -93,14 +92,14 @@ internal class DefaultSampleGUIComponent(
     }
 
     override fun onAddUserClicked() {
-        launch(Dispatchers.IO) {
+        launch {
             userRepository.insertUser(buildRandomUser())
             loadUsersModel()
         }
     }
 
     override fun onUiCreated() {
-        launch(Dispatchers.IO) {
+        launch {
             @Suppress("MagicNumber")
             delay(1000)
             loadItemsModel()
