@@ -2,6 +2,6 @@ package ru.astrainteractive.astratemplate.integration.rickmorty.character.api
 
 import ru.astrainteractive.astratemplate.integration.rickmorty.character.model.RMResponse
 
-interface RickMortyApi {
+interface CharacterRepository {
     suspend fun fetchRandomCharacter(id: Int): Result<RMResponse>
 }

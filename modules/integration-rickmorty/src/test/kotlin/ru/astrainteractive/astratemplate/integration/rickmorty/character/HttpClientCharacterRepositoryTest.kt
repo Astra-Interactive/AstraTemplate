@@ -14,9 +14,9 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-class HttpClientRickMortyApiTest {
+class HttpClientCharacterRepositoryTest {
     private lateinit var server: HttpServer
-    private lateinit var api: HttpClientRickMortyApi
+    private lateinit var api: HttpClientCharacterRepository
     private val requestedPaths = mutableListOf<String>()
     private var responseBody = ""
 
@@ -30,7 +30,7 @@ class HttpClientRickMortyApiTest {
             exchange.responseBody.use { body -> body.write(bytes) }
         }
         server.start()
-        api = HttpClientRickMortyApi(
+        api = HttpClientCharacterRepository(
             httpClient = HttpClient.newHttpClient(),
             baseUri = URI("http://127.0.0.1:${server.address.port}/api/")
         )

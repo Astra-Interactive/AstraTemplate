@@ -42,7 +42,7 @@ internal class RootModule(plugin: AstraTemplate) {
     )
     val commandModule: CommandModule = CommandModule(
         coreModule = coreModule,
-        fetchRandomCharacter = rickMortyModule.rickMortyApi::fetchRandomCharacter,
+        fetchRandomCharacter = rickMortyModule.characterRepository::fetchRandomCharacter,
         guiModule = guiModule,
         lifecyclePlugin = plugin,
         commandRegistrarContext = coreModule.commandRegistrarContext,
