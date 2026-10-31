@@ -58,7 +58,6 @@ class CommandModule(
         ).create(),
         RickMortyLiteralArgumentBuilder(
             scope = coreModule.ioScope,
-            dispatchers = coreModule.dispatchers,
             fetchRandomCharacter = fetchRandomCharacter,
             multiplatformCommand = multiplatformCommand,
             errorHandler = errorHandler,
