@@ -24,7 +24,10 @@ internal class DamageLiteralArgumentBuilder(
                     val player = ctx.requirePlayer()
                     player.sendMessage(translation.damage.damagedBy(player.name))
                 }
-                argument("damage", DoubleArgumentType.doubleArg(0.0)) { damageArg ->
+                argument(
+                    "damage",
+                    DoubleArgumentType.doubleArg(0.0)
+                ) { damageArg ->
                     runs(errorHandler::onFailure) { ctx ->
                         ctx.requirePermission(PluginPermission.Damage)
                         val player = ctx.requirePlayer()

@@ -45,7 +45,10 @@ internal class RickMortyLiteralArgumentBuilder(
                     }
                 }
                 literal("specific") {
-                    argument("number", IntegerArgumentType.integer()) { numberArg ->
+                    argument(
+                        "number",
+                        IntegerArgumentType.integer()
+                    ) { numberArg ->
                         runs(errorHandler::onFailure) { ctx ->
                             send(ctx.getSender(), ctx.requireArgument(numberArg))
                         }

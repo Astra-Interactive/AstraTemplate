@@ -16,8 +16,14 @@ internal class AddItemLiteralArgumentBuilder(
     fun create(): LiteralArgumentBuilder<*> {
         return with(multiplatformCommand) {
             command("add") {
-                argument("material", StringArgumentType.word()) { materialArg ->
-                    argument("amount", IntegerArgumentType.integer(1, 64)) { amountArg ->
+                argument(
+                    "material",
+                    StringArgumentType.word()
+                ) { materialArg ->
+                    argument(
+                        "amount",
+                        IntegerArgumentType.integer(1, 64)
+                    ) { amountArg ->
                         runs(errorHandler::onFailure) { ctx ->
                             val player = ctx.requirePlayer()
                             val itemName = ctx.requireArgument(materialArg, ItemNameArgumentConverter)
