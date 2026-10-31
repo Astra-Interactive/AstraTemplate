@@ -3,6 +3,7 @@
 package ru.astrainteractive.astratemplate.integration.rickmorty.character
 
 import com.sun.net.httpserver.HttpServer
+import kotlinx.coroutines.test.TestResult
 import kotlinx.coroutines.test.runTest
 import ru.astrainteractive.astratemplate.integration.rickmorty.character.model.RMResponse
 import java.net.InetSocketAddress
@@ -16,7 +17,7 @@ import kotlin.test.assertTrue
 
 class HttpClientCharacterRepositoryTest {
     private lateinit var server: HttpServer
-    private lateinit var api: HttpClientCharacterRepository
+    private lateinit var repository: HttpClientCharacterRepository
     private val requestedPaths = mutableListOf<String>()
     private var responseBody = ""
 
@@ -30,7 +31,7 @@ class HttpClientCharacterRepositoryTest {
             exchange.responseBody.use { body -> body.write(bytes) }
         }
         server.start()
-        api = HttpClientCharacterRepository(
+        repository = HttpClientCharacterRepository(
             httpClient = HttpClient.newHttpClient(),
             baseUri = URI("http://127.0.0.1:${server.address.port}/api/")
         )
@@ -42,13 +43,13 @@ class HttpClientCharacterRepositoryTest {
     }
 
     @Test
-    fun GIVEN_character_response_WHEN_character_is_requested_THEN_returns_it_and_ignores_unknown_fields() {
-        runTest {
+    fun GIVEN_character_response_WHEN_character_is_requested_THEN_returns_it_and_ignores_unknown_fields(): TestResult {
+        return runTest {
             responseBody = """
                 {"id":2,"name":"Morty Smith","status":"Alive","species":"Human","gender":"Male","origin":{}}
             """.trimIndent()
 
-            val result = api.fetchRandomCharacter(2)
+            val result = repository.fetchRandomCharacter(2)
 
             assertEquals(
                 RMResponse(
@@ -64,11 +65,11 @@ class HttpClientCharacterRepositoryTest {
     }
 
     @Test
-    fun GIVEN_malformed_response_WHEN_character_is_requested_THEN_returns_failure() {
-        runTest {
+    fun GIVEN_malformed_response_WHEN_character_is_requested_THEN_returns_failure(): TestResult {
+        return runTest {
             responseBody = "not json"
 
-            assertTrue(api.fetchRandomCharacter(1).isFailure)
+            assertTrue(repository.fetchRandomCharacter(1).isFailure)
         }
     }
 
