@@ -6,7 +6,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import ru.astrainteractive.astralibs.command.api.brigadier.command.MultiplatformCommand
 import ru.astrainteractive.astralibs.command.api.brigadier.sender.KCommandSender
-import ru.astrainteractive.astratemplate.command.error.CommandErrorHandler
+import ru.astrainteractive.astratemplate.command.api.CommandErrorHandler
 import ru.astrainteractive.astratemplate.core.plugin.model.PluginTranslation
 import ru.astrainteractive.klibs.kstorage.api.CachedKrate
 import ru.astrainteractive.klibs.kstorage.api.getValue

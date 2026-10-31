@@ -6,8 +6,8 @@ import ru.astrainteractive.astralibs.command.api.registrar.registerWhenReady
 import ru.astrainteractive.astralibs.lifecycle.Lifecycle
 import ru.astrainteractive.astratemplate.command.additem.command.AddItemExecutor
 import ru.astrainteractive.astratemplate.command.additem.command.AddItemLiteralArgumentBuilder
+import ru.astrainteractive.astratemplate.command.api.CommandErrorHandler
 import ru.astrainteractive.astratemplate.command.damage.command.DamageLiteralArgumentBuilder
-import ru.astrainteractive.astratemplate.command.error.CommandErrorHandler
 import ru.astrainteractive.astratemplate.command.reload.command.ReloadLiteralArgumentBuilder
 import ru.astrainteractive.astratemplate.command.rickmorty.command.RickMortyLiteralArgumentBuilder
 import ru.astrainteractive.astratemplate.command.sample.command.GuiLiteralArgumentBuilder

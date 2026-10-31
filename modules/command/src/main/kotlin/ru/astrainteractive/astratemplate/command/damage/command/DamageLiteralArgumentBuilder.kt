@@ -3,7 +3,7 @@ package ru.astrainteractive.astratemplate.command.damage.command
 import com.mojang.brigadier.arguments.DoubleArgumentType
 import com.mojang.brigadier.builder.LiteralArgumentBuilder
 import ru.astrainteractive.astralibs.command.api.brigadier.command.MultiplatformCommand
-import ru.astrainteractive.astratemplate.command.error.CommandErrorHandler
+import ru.astrainteractive.astratemplate.command.api.CommandErrorHandler
 import ru.astrainteractive.astratemplate.core.plugin.model.PluginPermission
 import ru.astrainteractive.astratemplate.core.plugin.model.PluginTranslation
 import ru.astrainteractive.klibs.kstorage.api.CachedKrate

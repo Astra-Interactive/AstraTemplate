@@ -5,7 +5,7 @@ import com.mojang.brigadier.arguments.StringArgumentType
 import com.mojang.brigadier.builder.LiteralArgumentBuilder
 import ru.astrainteractive.astralibs.command.api.brigadier.command.MultiplatformCommand
 import ru.astrainteractive.astratemplate.command.additem.model.AddItemCommand
-import ru.astrainteractive.astratemplate.command.error.CommandErrorHandler
+import ru.astrainteractive.astratemplate.command.api.CommandErrorHandler
 
 internal class AddItemLiteralArgumentBuilder(
     private val multiplatformCommand: MultiplatformCommand,
