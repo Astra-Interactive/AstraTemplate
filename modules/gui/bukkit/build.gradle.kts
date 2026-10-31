@@ -5,6 +5,10 @@ plugins {
     id("ru.astrainteractive.gradleplugin.java.version")
 }
 
+linter {
+    extensionKinds.add("slot")
+}
+
 dependencies {
     compileOnly(libs.minecraft.paper.api)
     compileOnly(libs.minecraft.vaultapi)
