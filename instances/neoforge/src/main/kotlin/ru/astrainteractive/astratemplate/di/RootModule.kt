@@ -12,7 +12,7 @@ import ru.astrainteractive.astralibs.lifecycle.Lifecycle
 import ru.astrainteractive.astratemplate.command.di.CommandModule
 import ru.astrainteractive.astratemplate.core.di.CoreModule
 import ru.astrainteractive.astratemplate.data.exposed.di.ExposedModule
-import ru.astrainteractive.astratemplate.event.di.EventModule
+import ru.astrainteractive.astratemplate.event.neoforge.di.EventModule
 import ru.astrainteractive.astratemplate.gui.api.di.StubGuiModule
 import ru.astrainteractive.astratemplate.integration.rickmorty.di.RickMortyModule
 import java.io.File
