@@ -18,9 +18,6 @@ import ru.astrainteractive.klibs.mikro.core.logging.JUtiltLogger
 import ru.astrainteractive.klibs.mikro.core.logging.Logger
 import kotlin.random.Random
 
-/**
- * MVVM/MVI technique
- */
 internal class DefaultSampleGUIComponent(
     private val userRepository: UserRepository,
     private val random: Random
