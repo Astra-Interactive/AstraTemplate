@@ -17,7 +17,7 @@ import ru.astrainteractive.astratemplate.gui.api.di.StubGuiModule
 import ru.astrainteractive.astratemplate.integration.rickmorty.di.RickMortyModule
 import java.io.File
 
-class RootModule(forgeLifecycleServer: ForgeLifecycleServer) {
+internal class RootModule(forgeLifecycleServer: ForgeLifecycleServer) {
 
     private val dataFolder = FMLPaths.CONFIGDIR.get()
         .resolve("AstraTemplate")
