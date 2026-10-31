@@ -12,12 +12,12 @@ import ru.astrainteractive.astralibs.lifecycle.Lifecycle
 import ru.astrainteractive.astratemplate.command.di.CommandModule
 import ru.astrainteractive.astratemplate.core.di.CoreModule
 import ru.astrainteractive.astratemplate.data.exposed.di.ExposedModule
-import ru.astrainteractive.astratemplate.event.di.EventModule
+import ru.astrainteractive.astratemplate.event.forge.di.EventModule
 import ru.astrainteractive.astratemplate.gui.api.di.StubGuiModule
 import ru.astrainteractive.astratemplate.integration.rickmorty.di.RickMortyModule
 import java.io.File
 
-class RootModule(forgeLifecycleServer: ForgeLifecycleServer) {
+internal class RootModule(forgeLifecycleServer: ForgeLifecycleServer) {
 
     private val dataFolder = FMLPaths.CONFIGDIR.get()
         .resolve("AstraTemplate")
@@ -46,7 +46,7 @@ class RootModule(forgeLifecycleServer: ForgeLifecycleServer) {
         CommandModule(
             coreModule = coreModule,
             guiModule = guiModule,
-            fetchRandomCharacter = rickMortyModule.rickMortyApi::fetchRandomCharacter,
+            fetchRandomCharacter = rickMortyModule.characterRepository::fetchRandomCharacter,
             lifecyclePlugin = forgeLifecycleServer,
             commandRegistrarContext = coreModule.commandRegistrarContext,
             multiplatformCommand = MultiplatformCommand(MinecraftMultiplatformCommands())

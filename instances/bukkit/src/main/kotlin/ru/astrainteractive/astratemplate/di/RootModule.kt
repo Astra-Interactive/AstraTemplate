@@ -11,7 +11,7 @@ import ru.astrainteractive.astratemplate.AstraTemplate
 import ru.astrainteractive.astratemplate.command.di.CommandModule
 import ru.astrainteractive.astratemplate.core.di.CoreModule
 import ru.astrainteractive.astratemplate.data.exposed.di.ExposedModule
-import ru.astrainteractive.astratemplate.event.di.EventModule
+import ru.astrainteractive.astratemplate.event.bukkit.di.EventModule
 import ru.astrainteractive.astratemplate.gui.bukkit.di.BukkitGuiModule
 import ru.astrainteractive.astratemplate.integration.rickmorty.di.RickMortyModule
 
@@ -42,7 +42,7 @@ internal class RootModule(plugin: AstraTemplate) {
     )
     val commandModule: CommandModule = CommandModule(
         coreModule = coreModule,
-        fetchRandomCharacter = rickMortyModule.rickMortyApi::fetchRandomCharacter,
+        fetchRandomCharacter = rickMortyModule.characterRepository::fetchRandomCharacter,
         guiModule = guiModule,
         lifecyclePlugin = plugin,
         commandRegistrarContext = coreModule.commandRegistrarContext,

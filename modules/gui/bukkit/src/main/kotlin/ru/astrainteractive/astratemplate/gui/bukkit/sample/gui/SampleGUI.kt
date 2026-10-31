@@ -37,7 +37,7 @@ import ru.astrainteractive.klibs.mikro.core.dispatchers.KotlinDispatchers
 
 internal class SampleGUI(
     private val slotContext: SlotContext,
-    private val dispatchers: KotlinDispatchers,
+    dispatchers: KotlinDispatchers,
     private val sampleComponent: SampleGuiComponent
 ) : InventoryMenu() {
 

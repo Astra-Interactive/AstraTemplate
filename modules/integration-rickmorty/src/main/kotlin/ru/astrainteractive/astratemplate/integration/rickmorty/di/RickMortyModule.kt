@@ -1,7 +1,7 @@
 package ru.astrainteractive.astratemplate.integration.rickmorty.di
 
-import ru.astrainteractive.astratemplate.integration.rickmorty.character.HttpClientRickMortyApi
-import ru.astrainteractive.astratemplate.integration.rickmorty.character.api.RickMortyApi
+import ru.astrainteractive.astratemplate.integration.rickmorty.character.HttpClientCharacterRepository
+import ru.astrainteractive.astratemplate.integration.rickmorty.character.api.CharacterRepository
 import java.net.URI
 import java.net.http.HttpClient
 
@@ -10,8 +10,8 @@ class RickMortyModule {
         HttpClient.newHttpClient()
     }
 
-    val rickMortyApi: RickMortyApi by lazy {
-        HttpClientRickMortyApi(
+    val characterRepository: CharacterRepository by lazy {
+        HttpClientCharacterRepository(
             httpClient = httpClient,
             baseUri = URI("https://rickandmortyapi.com/api/")
         )
