@@ -7,7 +7,7 @@ import ru.astrainteractive.astralibs.command.api.brigadier.command.PaperMultipla
 import ru.astrainteractive.astralibs.command.api.registrar.PaperCommandRegistrarContext
 import ru.astrainteractive.astralibs.coroutines.DefaultBukkitDispatchers
 import ru.astrainteractive.astralibs.lifecycle.Lifecycle
-import ru.astrainteractive.astratemplate.AstraTemplate
+import ru.astrainteractive.astralibs.lifecycle.LifecyclePlugin
 import ru.astrainteractive.astratemplate.command.di.CommandModule
 import ru.astrainteractive.astratemplate.core.di.CoreModule
 import ru.astrainteractive.astratemplate.data.exposed.di.ExposedModule
@@ -15,7 +15,7 @@ import ru.astrainteractive.astratemplate.event.bukkit.di.EventModule
 import ru.astrainteractive.astratemplate.gui.bukkit.di.BukkitGuiModule
 import ru.astrainteractive.astratemplate.integration.rickmorty.di.RickMortyModule
 
-internal class RootModule(plugin: AstraTemplate) {
+internal class RootModule(plugin: LifecyclePlugin) {
 
     val coreModule: CoreModule = CoreModule(
         dataFolder = plugin.dataFolder,
