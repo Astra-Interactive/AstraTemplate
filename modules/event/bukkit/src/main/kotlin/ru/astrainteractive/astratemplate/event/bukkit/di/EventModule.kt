@@ -1,4 +1,4 @@
-package ru.astrainteractive.astratemplate.event.di
+package ru.astrainteractive.astratemplate.event.bukkit.di
 
 import kotlinx.coroutines.Job
 import org.bukkit.event.HandlerList
@@ -7,8 +7,8 @@ import ru.astrainteractive.astralibs.event.EventListener
 import ru.astrainteractive.astralibs.lifecycle.Lifecycle
 import ru.astrainteractive.astralibs.menu.event.DefaultInventoryClickEvent
 import ru.astrainteractive.astratemplate.core.di.CoreModule
-import ru.astrainteractive.astratemplate.event.block.event.BlockBreakLogEvent
-import ru.astrainteractive.astratemplate.event.block.event.BlockPlaceMessageEvent
+import ru.astrainteractive.astratemplate.event.bukkit.block.event.BlockBreakLogEvent
+import ru.astrainteractive.astratemplate.event.bukkit.block.event.BlockPlaceMessageEvent
 
 class EventModule(
     coreModule: CoreModule,

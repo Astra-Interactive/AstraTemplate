@@ -1,18 +1,15 @@
-package ru.astrainteractive.astratemplate.event.tick.event
+package ru.astrainteractive.astratemplate.event.neoforge.tick.event
 
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import net.minecraftforge.event.TickEvent
+import net.neoforged.neoforge.event.tick.ServerTickEvent
 import ru.astrainteractive.astralibs.event.flowEvent
 import ru.astrainteractive.klibs.mikro.core.logging.JUtiltLogger
 import ru.astrainteractive.klibs.mikro.core.logging.Logger
-import kotlin.time.Duration.Companion.seconds
 
 internal class TickEvent(mainScope: CoroutineScope) : Logger by JUtiltLogger("AstraTemplate-TickEvent") {
-    val tickEvent = flowEvent<TickEvent>()
-        .debounce(1.seconds)
-        .onEach { info { "#tickEvent -> flow onEach with 1.second debounce" } }
+    val tickJob = flowEvent<ServerTickEvent>()
+        .onEach { info { "#tickEvent -> flow onEach" } }
         .launchIn(mainScope)
 }

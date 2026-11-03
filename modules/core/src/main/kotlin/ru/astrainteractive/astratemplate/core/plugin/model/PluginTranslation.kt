@@ -11,10 +11,6 @@ import ru.astrainteractive.astralibs.localization.component.replaceAll
 import ru.astrainteractive.astralibs.localization.locale.MinecraftLocales
 import ru.astrainteractive.astralibs.localization.text.LocalizedText
 
-/**
- * Texts of the plugin, grouped by the feature that sends them. Every text has a default, so the plugin works
- * without `translation.yml` and a missing key keeps its default.
- */
 @Serializable
 data class PluginTranslation(
     @SerialName("command_error")
@@ -34,7 +30,6 @@ data class PluginTranslation(
     @SerialName("menu")
     val menu: Menu = Menu()
 ) {
-    /** Failures any command can report. */
     @Serializable
     data class CommandError(
         @SerialName("no_permission")
@@ -71,7 +66,6 @@ data class PluginTranslation(
         )
     )
 
-    /** Sent by `/translation` to show which text a player gets in their language, e.g. after a reload. */
     @Serializable
     data class TranslationCheck(
         @SerialName("message")

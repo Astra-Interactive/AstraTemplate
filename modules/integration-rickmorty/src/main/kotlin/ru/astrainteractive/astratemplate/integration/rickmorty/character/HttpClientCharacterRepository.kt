@@ -1,7 +1,7 @@
 package ru.astrainteractive.astratemplate.integration.rickmorty.character
 
 import kotlinx.serialization.json.Json
-import ru.astrainteractive.astratemplate.integration.rickmorty.character.api.RickMortyApi
+import ru.astrainteractive.astratemplate.integration.rickmorty.character.api.CharacterRepository
 import ru.astrainteractive.astratemplate.integration.rickmorty.character.model.RMResponse
 import ru.astrainteractive.klibs.mikro.core.coroutines.propagateCancellationException
 import java.net.URI
@@ -9,10 +9,10 @@ import java.net.http.HttpClient
 import java.net.http.HttpRequest
 import java.net.http.HttpResponse.BodyHandlers
 
-internal class HttpClientRickMortyApi(
+internal class HttpClientCharacterRepository(
     private val httpClient: HttpClient,
     private val baseUri: URI
-) : RickMortyApi {
+) : CharacterRepository {
     private val jsonConfiguration = Json {
         ignoreUnknownKeys = true
         isLenient = true

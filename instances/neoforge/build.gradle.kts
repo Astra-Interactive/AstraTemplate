@@ -182,9 +182,7 @@ dependencies {
 }
 
 tasks.configureEach {
-    if (!javaClass.name.startsWith("net.neoforged.gradle")) {
-        return@configureEach
-    }
+    if (!javaClass.name.startsWith("net.neoforged.gradle")) return@configureEach
     notCompatibleWithConfigurationCache("NeoGradle tasks access Task.project at execution time")
 }
 

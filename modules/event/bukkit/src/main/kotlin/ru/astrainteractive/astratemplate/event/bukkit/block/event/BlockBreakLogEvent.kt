@@ -1,4 +1,4 @@
-package ru.astrainteractive.astratemplate.event.block.event
+package ru.astrainteractive.astratemplate.event.bukkit.block.event
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.CoroutineStart
