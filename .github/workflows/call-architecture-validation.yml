@@ -19,4 +19,11 @@ jobs:
       - name: Give gradle permission
         run: chmod +x gradlew
       - name: Run architecture checks
-        run: ./gradlew architectureCheck
+        run: ./gradlew architectureLint --continue
+      - name: Upload API ownership report
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: api-ownership-report
+          path: build/reports/architecture/api-ownership.txt
+          if-no-files-found: warn
