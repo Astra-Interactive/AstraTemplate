@@ -19,4 +19,4 @@ jobs:
       - name: Give gradle permission
         run: chmod +x gradlew
       - name: Run architecture checks
-        run: ./gradlew architectureCheck
+        run: ./gradlew architectureLint --continue
