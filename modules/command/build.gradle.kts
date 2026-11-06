@@ -5,6 +5,11 @@ plugins {
     id("ru.astrainteractive.gradleplugin.java.version")
 }
 
+linter {
+    unit(ru.astrainteractive.klibs.rules.core.unit.model.UnitRole.Context())
+    rootPackage.set("ru.astrainteractive.astratemplate.command")
+}
+
 dependencies {
     compileOnly(libs.guava)
     compileOnly(libs.minecraft.brigadier)

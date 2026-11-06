@@ -6,6 +6,8 @@ plugins {
 }
 
 linter {
+    unit(ru.astrainteractive.klibs.rules.core.unit.model.UnitRole.Platform())
+    rootPackage.set("ru.astrainteractive.astratemplate.gui.bukkit")
     extensionKinds.add("slot")
 }
 
