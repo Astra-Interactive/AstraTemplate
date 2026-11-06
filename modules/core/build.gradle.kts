@@ -8,6 +8,11 @@ plugins {
     alias(libs.plugins.gradle.buildconfig)
 }
 
+linter {
+    unit(ru.astrainteractive.klibs.rules.core.unit.model.UnitRole.CoreApi())
+    rootPackage.set("ru.astrainteractive.astratemplate.core")
+}
+
 dependencies {
     implementation(libs.kotlin.coroutines.core)
     implementation(libs.kotlin.serialization.json)

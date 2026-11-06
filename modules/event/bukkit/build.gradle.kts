@@ -5,6 +5,11 @@ plugins {
     id("ru.astrainteractive.gradleplugin.java.version")
 }
 
+linter {
+    unit(ru.astrainteractive.klibs.rules.core.unit.model.UnitRole.Platform())
+    rootPackage.set("ru.astrainteractive.astratemplate.event.bukkit")
+}
+
 dependencies {
     compileOnly(libs.minecraft.paper.api)
     compileOnly(libs.minecraft.vaultapi)

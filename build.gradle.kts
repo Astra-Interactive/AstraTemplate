@@ -14,3 +14,7 @@ plugins {
     alias(libs.plugins.kotlin.jvm) apply false
     alias(libs.plugins.kotlin.serialization) apply false
 }
+
+linter {
+    productKind(ru.astrainteractive.klibs.rules.core.unit.model.ProductKind.PLATFORM_PLUGIN)
+}

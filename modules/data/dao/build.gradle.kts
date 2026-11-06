@@ -4,6 +4,11 @@ plugins {
     id("ru.astrainteractive.gradleplugin.java.version")
 }
 
+linter {
+    unit(ru.astrainteractive.klibs.rules.core.unit.model.UnitRole.StorageContract())
+    rootPackage.set("ru.astrainteractive.astratemplate.data.dao")
+}
+
 dependencies {
     implementation(libs.kotlin.coroutines.core)
 

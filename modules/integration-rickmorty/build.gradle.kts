@@ -7,6 +7,7 @@ plugins {
 
 linter {
     unit(ru.astrainteractive.klibs.rules.core.unit.model.UnitRole.Technology())
+    rootPackage.set("ru.astrainteractive.astratemplate.integration.rickmorty")
 }
 
 dependencies {
